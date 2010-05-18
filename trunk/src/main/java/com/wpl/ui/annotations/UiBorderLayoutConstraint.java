@@ -5,9 +5,18 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * BorderLayout constraint.
+ */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( {ElementType.FIELD})
+@Target( { ElementType.FIELD })
 public @interface UiBorderLayoutConstraint {
 
-    String value();
+	/**
+	 * One of BorderLayout.CENTER, BorderLayout.NORTH, BorderLayout.EAST,
+	 * BorderLayout.SOUTH, BorderLayout.WEST
+	 * 
+	 * @return
+	 */
+	String value();
 }
