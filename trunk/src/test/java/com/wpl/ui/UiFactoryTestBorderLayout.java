@@ -12,12 +12,12 @@ import javax.swing.JTextField;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.wpl.ui.annotations.UiBorderLayoutConstraint;
 import com.wpl.ui.annotations.UiFont;
 import com.wpl.ui.annotations.UiInit;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiSize;
 import com.wpl.ui.annotations.UiText;
+import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
 
 @UiLayout(BorderLayout.class)
 @UiSize(height = 480, width = 640)

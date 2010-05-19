@@ -4,7 +4,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.lang.reflect.AnnotatedElement;
 
-import com.wpl.ui.annotations.UiBorderLayoutConstraint;
+import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
 
 public class BorderLayoutHandler implements ILayoutHandler {
 

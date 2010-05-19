@@ -6,11 +6,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.wpl.ui.NullLayoutManager;
+import com.wpl.ui.NullLayout;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target( {ElementType.TYPE})
 public @interface UiLayout {
 
-    Class<? extends LayoutManager> value() default NullLayoutManager.class;
+    Class<? extends LayoutManager> value() default NullLayout.class;
 }

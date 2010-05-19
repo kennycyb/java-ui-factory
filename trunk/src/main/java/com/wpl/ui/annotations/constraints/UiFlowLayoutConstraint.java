@@ -1,4 +1,4 @@
-package com.wpl.ui.annotations;
+package com.wpl.ui.annotations.constraints;
 
 import java.awt.FlowLayout;
 

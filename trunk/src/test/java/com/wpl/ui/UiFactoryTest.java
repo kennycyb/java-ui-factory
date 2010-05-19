@@ -19,7 +19,7 @@ import com.wpl.ui.annotations.UiSize;
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.annotations.UiType;
 
-@UiLayout(NullLayoutManager.class)
+@UiLayout(NullLayout.class)
 @UiSize(height = 480, width = 640)
 public class UiFactoryTest extends JPanel {
 

@@ -7,7 +7,7 @@ import java.lang.annotation.Annotation;
 
 import javax.swing.JComponent;
 
-import com.wpl.ui.NullLayoutManager;
+import com.wpl.ui.NullLayout;
 import com.wpl.ui.annotations.UiFont;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiLocation;
@@ -65,7 +65,7 @@ public abstract class AbstractUiFactory implements IUiFactory {
                 if (annotate.annotationType() == UiLayout.class) {
                     UiLayout layout = (UiLayout)annotate;
 
-                    if (layout.value() == NullLayoutManager.class) {
+                    if (layout.value() == NullLayout.class) {
                         jcomp.setLayout(null);
                     }
                     else {

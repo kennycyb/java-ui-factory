@@ -4,7 +4,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.lang.reflect.AnnotatedElement;
 
-import com.wpl.ui.annotations.UiFlowLayoutConstraint;
+import com.wpl.ui.annotations.constraints.UiFlowLayoutConstraint;
 
 public class FlowLayoutHandler implements ILayoutHandler {
 

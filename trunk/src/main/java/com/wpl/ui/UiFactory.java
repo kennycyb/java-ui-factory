@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import org.slf4j.Logger;
@@ -19,17 +20,18 @@ import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.annotations.UiInit;
 import com.wpl.ui.annotations.UiLayout;
+import com.wpl.ui.annotations.UiPreInit;
 import com.wpl.ui.annotations.UiType;
 import com.wpl.ui.factory.ButtonFactory;
 import com.wpl.ui.factory.IUiFactory;
 import com.wpl.ui.factory.LabelFactory;
 import com.wpl.ui.factory.PanelFactory;
+import com.wpl.ui.factory.TextAreaFactory;
 import com.wpl.ui.factory.TextFieldFactory;
 import com.wpl.ui.layout.BorderLayoutHandler;
 import com.wpl.ui.layout.FlowLayoutHandler;
 import com.wpl.ui.layout.ILayoutHandler;
 import com.wpl.ui.layout.NullLayoutHandler;
-
 /**
  * A Factory that build the UI, set it's properties using annotations.
  */
@@ -47,10 +49,11 @@ public final class UiFactory {
         setUiFactory(JButton.class, new ButtonFactory());
         setUiFactory(JPanel.class, new PanelFactory());
         setUiFactory(JTextField.class, new TextFieldFactory());
+        setUiFactory(JTextArea.class, new TextAreaFactory());
 
         // Initialize default Layout handler.
         setLayoutHandler(BorderLayout.class, new BorderLayoutHandler());
-        setLayoutHandler(NullLayoutManager.class, new NullLayoutHandler());
+        setLayoutHandler(NullLayout.class, new NullLayoutHandler());
         setLayoutHandler(FlowLayout.class, new FlowLayoutHandler());
     }
 
@@ -94,7 +97,8 @@ public final class UiFactory {
 
     private class MethodInfo {
 
-        public Method initMethod;
+        public Method onPreInit;
+        public Method onInit;
 
     }
 
@@ -115,7 +119,7 @@ public final class UiFactory {
 
     private ILayoutHandler findLayoutHandler(Class<?> type) {
         if (type == Object.class || type.isPrimitive() || type.isEnum()) {
-            return findLayoutHandler(NullLayoutManager.class);
+            return findLayoutHandler(NullLayout.class);
         }
 
         ILayoutHandler handler = this.mLayoutHandlerMap.get(type);
@@ -132,7 +136,12 @@ public final class UiFactory {
         MethodInfo info = new MethodInfo();
         for (Method m : methods) {
             if (m.getAnnotation(UiInit.class) != null) {
-                info.initMethod = m;
+                info.onInit = m;
+                continue;
+            }
+
+            if (m.getAnnotation(UiPreInit.class) != null) {
+                info.onPreInit = m;
                 continue;
             }
         }
@@ -144,6 +153,8 @@ public final class UiFactory {
 
         try {
 
+            MethodInfo methodInfo = findMethodInfo(panelClazz.getDeclaredMethods());
+
             // It's impossible that JPanel.class factory is not found, so no null checking is
             // required.
             IUiFactory panelFactory = findFactory(panelClazz);
@@ -151,13 +162,16 @@ public final class UiFactory {
             T panel = panelClazz.cast(panelFactory.createComponent(panelClazz, panelClazz
                     .getAnnotations()));
 
-            MethodInfo methodInfo = findMethodInfo(panelClazz.getDeclaredMethods());
+            if (methodInfo.onPreInit != null) {
+                methodInfo.onPreInit.setAccessible(true);
+                methodInfo.onPreInit.invoke(panel);
+            }
 
             UiLayout layout = panelClazz.getAnnotation(UiLayout.class);
 
             ILayoutHandler layoutHandler;
             if (layout == null) {
-                layoutHandler = findLayoutHandler(NullLayoutManager.class);
+                layoutHandler = findLayoutHandler(NullLayout.class);
             }
             else {
                 layoutHandler = findLayoutHandler(layout.value());
@@ -168,6 +182,10 @@ public final class UiFactory {
             Field[] fields = panelClazz.getDeclaredFields();
 
             for (Field f : fields) {
+
+                if (f.get(panel) != null) {
+                    // Do not create if it's already created
+                }
 
                 IUiFactory factory = this.mUiFactoryMap.get(f.getType());
                 if (factory != null) {
@@ -197,9 +215,9 @@ public final class UiFactory {
                 }
             }
 
-            if (methodInfo.initMethod != null) {
-                methodInfo.initMethod.setAccessible(true);
-                methodInfo.initMethod.invoke(panel);
+            if (methodInfo.onInit != null) {
+                methodInfo.onInit.setAccessible(true);
+                methodInfo.onInit.invoke(panel);
             }
 
             return panel;
