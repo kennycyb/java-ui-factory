@@ -5,6 +5,8 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -23,10 +25,11 @@ import javax.swing.JTextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiInit;
 import com.wpl.ui.annotations.UiLayout;
-import com.wpl.ui.annotations.UiPreInit;
+import com.wpl.ui.annotations.UiName;
 import com.wpl.ui.annotations.UiType;
+import com.wpl.ui.factory.ComponentInfo;
+import com.wpl.ui.factory.FactoryInfo;
 import com.wpl.ui.factory.IUiFactory;
 import com.wpl.ui.factory.JButtonFactory;
 import com.wpl.ui.factory.JFrameFactory;
@@ -39,7 +42,6 @@ import com.wpl.ui.layout.FlowLayoutHandler;
 import com.wpl.ui.layout.ILayoutHandler;
 import com.wpl.ui.layout.NullLayoutHandler;
 
-
 /**
  * A Factory that build the UI, set it's properties using annotations.
  */
@@ -49,6 +51,8 @@ public final class UiFactory {
 
     private final Map<Class<?>, IUiFactory> mUiFactoryMap = new HashMap<Class<?>, IUiFactory>();
     private final Map<Class<?>, ILayoutHandler> mLayoutHandlerMap = new HashMap<Class<?>, ILayoutHandler>();
+
+    private String mFieldPrefix = "m";
 
     public UiFactory() {
 
@@ -64,6 +68,14 @@ public final class UiFactory {
         setLayoutHandler(BorderLayout.class, new BorderLayoutHandler());
         setLayoutHandler(NullLayout.class, new NullLayoutHandler());
         setLayoutHandler(FlowLayout.class, new FlowLayoutHandler());
+    }
+
+    public void setFieldPrefix(String fieldPrefix) {
+        mFieldPrefix = fieldPrefix;
+    }
+
+    public String getFieldPrefix() {
+        return mFieldPrefix;
     }
 
     public void setLayoutHandler(Class<?> clazz, ILayoutHandler handler) {
@@ -104,46 +116,6 @@ public final class UiFactory {
         mUiFactoryMap.put(clazz, uiFactory);
     }
 
-    private class MethodInfo {
-
-        public Object object;
-
-        public Method preInitMethod;
-        public Method initMethod;
-
-        public void onPreInit() {
-            invoke(preInitMethod);
-        }
-
-        public void onInit() {
-            invoke(initMethod);
-        }
-
-        private void invoke(Method method) {
-            if (method == null) {
-                return;
-            }
-
-            method.setAccessible(true);
-
-            try {
-                method.invoke(object);
-            }
-            catch (IllegalArgumentException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            catch (IllegalAccessException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            catch (InvocationTargetException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-    }
-
     private IUiFactory findFactory(Class<?> type) {
 
         if (type == Object.class || type.isPrimitive() || type.isEnum()) {
@@ -171,29 +143,10 @@ public final class UiFactory {
         }
 
         return findLayoutHandler(type.getSuperclass());
-
     }
 
-    private MethodInfo findMethodInfo(Object object) {
-        MethodInfo info = new MethodInfo();
-        info.object = object;
-        Method[] methods = object.getClass().getDeclaredMethods();
-        for (Method m : methods) {
-            if (m.getAnnotation(UiInit.class) != null) {
-                info.initMethod = m;
-                continue;
-            }
-
-            if (m.getAnnotation(UiPreInit.class) != null) {
-                info.preInitMethod = m;
-                continue;
-            }
-        }
-
-        return info;
-    }
-
-    private void createFields(Object object, Class<? extends Component> clazz, Container container) {
+    private void createFields(FactoryInfo factoryInfo, Object object,
+                              Class<? extends Component> clazz, Container container) {
 
         UiLayout layout = clazz.getAnnotation(UiLayout.class);
 
@@ -232,13 +185,27 @@ public final class UiFactory {
                 Class<? extends Component> type = (uiType == null ? (Class<? extends Component>)f
                         .getType() : uiType.value());
 
-                Component component = createComponent(type, f);
+                Component component = createComponent(factoryInfo, object, type, f);
 
                 if (component == null) {
                     continue;
                 }
 
                 f.set(object, component);
+
+                UiName uiName = f.getAnnotation(UiName.class);
+
+                String id = uiName == null ? f.getName() : uiName.value();
+
+                ComponentInfo cInfo = factoryInfo.mComponents.get(id);
+                if (cInfo == null) {
+                    cInfo = new ComponentInfo(id);
+                    factoryInfo.mComponents.put(id, cInfo);
+                }
+
+                cInfo.setComponent(component);
+                cInfo.setField(f);
+                cInfo.setContainer(container);
 
                 if (layoutHandler.handleComponent(container, component, f)) {
                     if (LOGGER.isDebugEnabled()) {
@@ -265,8 +232,8 @@ public final class UiFactory {
             }
 
         }
-
     }
+
 
     public <T extends JFrame> T createFrame(Class<T> frameClazz) {
 
@@ -274,21 +241,30 @@ public final class UiFactory {
 
         IUiFactory frameFactory = findFactory(frameClazz);
 
+        Class[] innerClasses = frameClazz.getDeclaredClasses();
+
         T frame = frameClazz.cast(frameFactory.createComponent(frameClazz, frameClazz
                 .getAnnotations()));
 
-        MethodInfo methodInfo = findMethodInfo(frame);
+        FactoryInfo factoryInfo = new FactoryInfo(frame);
 
-        methodInfo.onPreInit();
+        factoryInfo.onPreInit();
 
-        createFields(frame, frameClazz, frame.getContentPane());
+        createFields(factoryInfo, frame, frameClazz, frame.getContentPane());
 
-        methodInfo.onInit();
+        factoryInfo.onInit();
+
+        factoryInfo.wireComponents();
 
         return frame;
     }
 
     public <T extends Container> T createContainer(Class<T> containerClass) {
+        return createContainer(null, containerClass, null);
+    }
+
+    private <T extends Container> T createContainer(FactoryInfo factoryInfo,
+                                                    Class<T> containerClass, Object outer) {
 
         LOGGER.debug("creating container from: {}", containerClass.getSimpleName());
 
@@ -298,23 +274,32 @@ public final class UiFactory {
 
         T container = containerClass.cast(panelFactory.createComponent(containerClass,
                                                                        containerClass
-                                                                               .getAnnotations()));
+                                                                               .getAnnotations(),
+                                                                       outer));
+
+        if (container == null) {
+            LOGGER.warn("Failed to create container from {}", containerClass.getSimpleName());
+            return null;
+        }
+
+        if (factoryInfo == null) {
+            factoryInfo = new FactoryInfo(container);
+        }
 
         LOGGER.debug("created {} from type {}", container.getClass().getSimpleName(),
                      containerClass.getSimpleName());
 
-        MethodInfo methodInfo = findMethodInfo(container);
+        factoryInfo.onPreInit();
 
-        methodInfo.onPreInit();
+        createFields(factoryInfo, container, containerClass, container);
 
-        createFields(container, containerClass, container);
-
-        methodInfo.onInit();
+        factoryInfo.onInit();
 
         return container;
     }
 
-    private <T extends Component> T createComponent(Class<T> componentClass,
+    private <T extends Component> T createComponent(FactoryInfo factoryInfo, Object outer,
+                                                    Class<T> componentClass,
                                                     AnnotatedElement annotate) {
 
         if (componentClass == Component.class) {
@@ -326,7 +311,9 @@ public final class UiFactory {
 
         if (JPanel.class.isAssignableFrom(componentClass)
             || Panel.class.isAssignableFrom(componentClass)) {
-            return componentClass.cast(createContainer((Class<? extends Container>)componentClass));
+            return componentClass.cast(createContainer(factoryInfo,
+                                                       (Class<? extends Container>)componentClass,
+                                                       outer));
         }
 
         IUiFactory factory = findFactory(componentClass);

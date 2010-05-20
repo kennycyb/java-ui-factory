@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -46,8 +47,58 @@ public abstract class ComponentFactory implements IUiFactory {
         }
     }
 
+    @Override
+    public Component createComponent(Class<? extends Component> clazz, Annotation[] annotations,
+                                     Object outer) {
+
+        if (outer == null) {
+            return createComponent(clazz, annotations);
+        }
+
+        try {
+            Constructor<? extends Component> innerConstructor = clazz.getConstructor(outer
+                    .getClass());
+            Component innerObject = innerConstructor.newInstance(outer);
+            return init(innerObject, annotations);
+        }
+        catch (SecurityException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (NoSuchMethodException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (InstantiationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (InvocationTargetException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     protected Component createComponent(Class<? extends Component> clazz) {
         try {
+
+            Class<?> enclosingClass = clazz.getEnclosingClass();
+
+            if (enclosingClass != null) {
+                LOGGER.debug("This is inner class");
+                return null;
+            }
+
             return clazz.newInstance();
         }
         catch (InstantiationException e) {
@@ -91,6 +142,10 @@ public abstract class ComponentFactory implements IUiFactory {
     }
 
     protected Component init(Component component, Annotation[] annotations) {
+
+        if (component == null) {
+            return null;
+        }
 
         // Build the current component.
 
