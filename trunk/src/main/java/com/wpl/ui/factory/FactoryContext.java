@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010 Kenny Chong (wongpeiling.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.wpl.ui.factory;
 
 import java.awt.event.ActionEvent;
@@ -13,7 +28,7 @@ import com.wpl.ui.annotations.UiAutoWired;
 import com.wpl.ui.annotations.UiInit;
 import com.wpl.ui.annotations.UiPreInit;
 
-public class FactoryInfo {
+public class FactoryContext {
 
 	/**
 	 * The object that was being manufactured.
@@ -32,7 +47,7 @@ public class FactoryInfo {
 
 	private boolean mAutoWired = true;
 
-	public FactoryInfo(Object object) {
+	public FactoryContext(Object object) {
 
 		this.mObject = object;
 
@@ -104,7 +119,7 @@ public class FactoryInfo {
 								try {
 									entry.getValue().setAccessible(true);
 									entry.getValue().invoke(
-											FactoryInfo.this.mObject);
+											FactoryContext.this.mObject);
 								} catch (IllegalArgumentException e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();

@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010 Kenny Chong (wongpeiling.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.wpl.ui;
 
 import java.awt.BorderLayout;
@@ -5,16 +20,11 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Panel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,14 +39,14 @@ import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiName;
 import com.wpl.ui.annotations.UiType;
 import com.wpl.ui.factory.ComponentInfo;
-import com.wpl.ui.factory.FactoryInfo;
-import com.wpl.ui.factory.IUiFactory;
-import com.wpl.ui.factory.JButtonFactory;
-import com.wpl.ui.factory.JFrameFactory;
-import com.wpl.ui.factory.JLabelFactory;
-import com.wpl.ui.factory.JPanelFactory;
-import com.wpl.ui.factory.JTextAreaFactory;
-import com.wpl.ui.factory.JTextFieldFactory;
+import com.wpl.ui.factory.FactoryContext;
+import com.wpl.ui.factory.IComponentFactory;
+import com.wpl.ui.factory.components.JButtonFactory;
+import com.wpl.ui.factory.components.JFrameFactory;
+import com.wpl.ui.factory.components.JLabelFactory;
+import com.wpl.ui.factory.components.JPanelFactory;
+import com.wpl.ui.factory.components.JTextAreaFactory;
+import com.wpl.ui.factory.components.JTextFieldFactory;
 import com.wpl.ui.layout.BorderLayoutHandler;
 import com.wpl.ui.layout.FlowLayoutHandler;
 import com.wpl.ui.layout.ILayoutHandler;
@@ -49,7 +59,7 @@ public final class UiFactory {
 
     private static Logger LOGGER = LoggerFactory.getLogger(UiFactory.class);
 
-    private final Map<Class<?>, IUiFactory> mUiFactoryMap = new HashMap<Class<?>, IUiFactory>();
+    private final Map<Class<?>, IComponentFactory> mUiFactoryMap = new HashMap<Class<?>, IComponentFactory>();
     private final Map<Class<?>, ILayoutHandler> mLayoutHandlerMap = new HashMap<Class<?>, ILayoutHandler>();
 
     private String mFieldPrefix = "m";
@@ -58,7 +68,7 @@ public final class UiFactory {
 
         // Initialize default UI Factory.
         setUiFactory(JLabel.class, new JLabelFactory());
-        setUiFactory(AbstractButton.class, new JButtonFactory());
+        setUiFactory(JButton.class, new JButtonFactory());
         setUiFactory(JPanel.class, new JPanelFactory());
         setUiFactory(JTextField.class, new JTextFieldFactory());
         setUiFactory(JTextArea.class, new JTextAreaFactory());
@@ -88,7 +98,7 @@ public final class UiFactory {
      * @param clazz
      * @param uiFactory
      */
-    public void setUiFactory(Class<?> clazz, IUiFactory uiFactory) {
+    public void setUiFactory(Class<?> clazz, IComponentFactory uiFactory) {
 
         if (uiFactory == null) {
 
@@ -116,13 +126,13 @@ public final class UiFactory {
         mUiFactoryMap.put(clazz, uiFactory);
     }
 
-    private IUiFactory findFactory(Class<?> type) {
+    private IComponentFactory findFactory(Class<?> type) {
 
         if (type == Object.class || type.isPrimitive() || type.isEnum()) {
             return null;
         }
 
-        IUiFactory factory = this.mUiFactoryMap.get(type);
+        IComponentFactory factory = this.mUiFactoryMap.get(type);
 
         if (factory != null) {
             return factory;
@@ -145,7 +155,7 @@ public final class UiFactory {
         return findLayoutHandler(type.getSuperclass());
     }
 
-    private void createFields(FactoryInfo factoryInfo, Object object,
+    private void createFields(FactoryContext factoryInfo, Object object,
                               Class<? extends Component> clazz, Container container) {
 
         UiLayout layout = clazz.getAnnotation(UiLayout.class);
@@ -239,14 +249,14 @@ public final class UiFactory {
 
         LOGGER.debug("creating frame from: {}", frameClazz.getSimpleName());
 
-        IUiFactory frameFactory = findFactory(frameClazz);
+        IComponentFactory frameFactory = findFactory(frameClazz);
 
         Class[] innerClasses = frameClazz.getDeclaredClasses();
 
         T frame = frameClazz.cast(frameFactory.createComponent(frameClazz, frameClazz
                 .getAnnotations()));
 
-        FactoryInfo factoryInfo = new FactoryInfo(frame);
+        FactoryContext factoryInfo = new FactoryContext(frame);
 
         factoryInfo.onPreInit();
 
@@ -263,14 +273,14 @@ public final class UiFactory {
         return createContainer(null, containerClass, null);
     }
 
-    private <T extends Container> T createContainer(FactoryInfo factoryInfo,
+    private <T extends Container> T createContainer(FactoryContext factoryInfo,
                                                     Class<T> containerClass, Object outer) {
 
         LOGGER.debug("creating container from: {}", containerClass.getSimpleName());
 
         // It's impossible that JPanel.class factory is not found, so no null checking is
         // required.
-        IUiFactory panelFactory = findFactory(containerClass);
+        IComponentFactory panelFactory = findFactory(containerClass);
 
         T container = containerClass.cast(panelFactory.createComponent(containerClass,
                                                                        containerClass
@@ -283,7 +293,7 @@ public final class UiFactory {
         }
 
         if (factoryInfo == null) {
-            factoryInfo = new FactoryInfo(container);
+            factoryInfo = new FactoryContext(container);
         }
 
         LOGGER.debug("created {} from type {}", container.getClass().getSimpleName(),
@@ -298,7 +308,7 @@ public final class UiFactory {
         return container;
     }
 
-    private <T extends Component> T createComponent(FactoryInfo factoryInfo, Object outer,
+    private <T extends Component> T createComponent(FactoryContext factoryInfo, Object outer,
                                                     Class<T> componentClass,
                                                     AnnotatedElement annotate) {
 
@@ -316,7 +326,7 @@ public final class UiFactory {
                                                        outer));
         }
 
-        IUiFactory factory = findFactory(componentClass);
+        IComponentFactory factory = findFactory(componentClass);
 
         if (factory == null) {
             LOGGER.info("Unable to find factory for type: {}", componentClass.getSimpleName());

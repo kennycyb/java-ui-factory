@@ -13,27 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.samples;
+package com.wpl.ui.factory.components;
 
-import java.awt.BorderLayout;
+import javax.swing.AbstractButton;
 
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-
-import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiText;
-import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
+import com.wpl.ui.annotations.actions.UiActionCommand;
+import com.wpl.ui.factory.UiAnnotationHandler;
 
-@UiLayout(BorderLayout.class)
-public class SamplePanel extends JPanel {
+public abstract class AbstractButtonFactory extends JComponentFactory {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
 
-    @UiBorderLayoutConstraint(BorderLayout.CENTER)
-    @UiText("HELLO WORLD")
-    private JTextArea mTextArea;
+
+    @UiAnnotationHandler(UiText.class)
+    protected void handleUiText(AbstractButton component, UiText text) {
+        component.setText(text.value());
+    }
+
+    @UiAnnotationHandler(UiActionCommand.class)
+    protected void handlerUiActionCommand(AbstractButton component, UiActionCommand annotate) {
+        component.setActionCommand(annotate.value());
+    }
+    
 
 }

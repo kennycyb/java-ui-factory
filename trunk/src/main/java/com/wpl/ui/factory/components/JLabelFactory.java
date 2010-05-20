@@ -13,21 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.annotations;
+package com.wpl.ui.factory.components;
 
-import java.awt.Font;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.awt.Component;
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target( {ElementType.FIELD})
-public @interface UiFont {
+import javax.swing.JLabel;
 
-    String name() default "Arial";
+import com.wpl.ui.annotations.UiText;
+import com.wpl.ui.factory.UiAnnotationHandler;
 
-    int style() default Font.PLAIN;
+public class JLabelFactory extends JComponentFactory {
 
-    int size() default 12;
+    @Override
+    protected Component createDefaultComponent() {
+        return new JLabel();
+    }
+
+    @UiAnnotationHandler(UiText.class)
+    protected void handleUiText(JLabel component, UiText annotate) {
+        component.setText(annotate.value());
+    }
 }

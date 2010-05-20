@@ -13,21 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.annotations;
+package com.wpl.ui.factory.components;
 
-import java.awt.Font;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.awt.Component;
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target( {ElementType.FIELD})
-public @interface UiFont {
+import javax.swing.JButton;
 
-    String name() default "Arial";
+import com.wpl.ui.annotations.button.UiDefaultButton;
+import com.wpl.ui.factory.UiAnnotationHandler;
 
-    int style() default Font.PLAIN;
+public class JButtonFactory extends AbstractButtonFactory {
 
-    int size() default 12;
+	@Override
+	protected Component createDefaultComponent() {
+		return new JButton();
+	}
+
+	@UiAnnotationHandler(UiDefaultButton.class)
+	public void handleUiDefaultButton(JButton component,
+			UiDefaultButton annotate) {
+		component.setDefaultCapable(true);
+	}
 }
