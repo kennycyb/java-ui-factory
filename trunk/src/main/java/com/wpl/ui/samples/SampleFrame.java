@@ -19,6 +19,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import com.wpl.ui.UiFactory;
 import com.wpl.ui.annotations.UiLayout;
@@ -28,12 +29,13 @@ import com.wpl.ui.annotations.UiType;
 import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
 import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
 import com.wpl.ui.annotations.frame.UiFrameResizable;
+import com.wpl.ui.annotations.textarea.UiLineWrap;
 import com.wpl.ui.enums.FrameCloseOperation;
 
 /**
  * 
  */
-//Title of this frame
+// Title of this frame
 @UiText("Sample Frame")
 // Size of this frame
 @UiSize(height = 800, width = 800)
@@ -45,25 +47,19 @@ import com.wpl.ui.enums.FrameCloseOperation;
 @UiFrameResizable
 public class SampleFrame extends JFrame {
 
-    /**
+	/**
      * 
      */
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Add a panel into the center of this Frame.
-     * 
-     * - Create the panel from SamplePanel (which is inherit from JPanel)
-     * - add this panel into center of this Frame.
-     */
-    @UiType(SamplePanel.class)
-    @UiBorderLayoutConstraint(BorderLayout.CENTER)
-    private JPanel mCenter;
+	@UiBorderLayoutConstraint(BorderLayout.CENTER)
+	@UiLineWrap
+	private JTextArea content;
 
-    public static void main(String[] args) {
-        UiFactory factory = new UiFactory();
-        JFrame sample = factory.createFrame(SampleFrame.class);
+	public static void main(String[] args) {
+		UiFactory factory = new UiFactory();
+		JFrame sample = factory.createFrame(SampleFrame.class);
 
-        sample.setVisible(true);
-    }
+		sample.setVisible(true);
+	}
 }

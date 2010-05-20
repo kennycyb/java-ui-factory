@@ -21,28 +21,34 @@ import javax.swing.JTextArea;
 
 import com.wpl.ui.annotations.UiColumns;
 import com.wpl.ui.annotations.UiRows;
-import com.wpl.ui.annotations.UiTabSize;
+import com.wpl.ui.annotations.textarea.UiLineWrap;
+import com.wpl.ui.annotations.textarea.UiTabSize;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
 public class JTextAreaFactory extends JTextComponentFactory {
 
-    @UiAnnotationHandler(UiRows.class)
-    protected void handleUiText(JTextArea component, UiRows annotate) {
-        component.setRows(annotate.value());
-    }
+	@UiAnnotationHandler(UiRows.class)
+	protected void handleUiText(JTextArea component, UiRows annotate) {
+		component.setRows(annotate.value());
+	}
 
-    @UiAnnotationHandler(UiColumns.class)
-    protected void handleUiText(JTextArea component, UiColumns annotate) {
-        component.setColumns(annotate.value());
-    }
+	@UiAnnotationHandler(UiColumns.class)
+	protected void handleUiText(JTextArea component, UiColumns annotate) {
+		component.setColumns(annotate.value());
+	}
 
-    @UiAnnotationHandler(UiTabSize.class)
-    protected void handleUiText(JTextArea component, UiTabSize annotate) {
-        component.setTabSize(annotate.value());
-    }
+	@UiAnnotationHandler(UiTabSize.class)
+	protected void handleUiText(JTextArea component, UiTabSize annotate) {
+		component.setTabSize(annotate.value());
+	}
 
-    @Override
-    protected Component createDefaultComponent() {
-        return new JTextArea();
-    }
+	@UiAnnotationHandler(UiLineWrap.class)
+	protected void handlerUiLineWrap(JTextArea component, UiLineWrap annotate) {
+		component.setLineWrap(annotate.value());
+	}
+
+	@Override
+	protected Component createDefaultComponent() {
+		return new JTextArea();
+	}
 }
