@@ -19,27 +19,32 @@ import javax.swing.JComponent;
 
 import com.wpl.ui.NullLayout;
 import com.wpl.ui.annotations.UiLayout;
+import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
+/**
+ * @since 1.0
+ * @author kenny
+ * 
+ */
 public abstract class JComponentFactory extends ComponentFactory {
 
-    @UiAnnotationHandler(UiLayout.class)
-    protected void handleUiLayout(JComponent component, UiLayout layout) {
-        if (layout.value() == NullLayout.class) {
-            component.setLayout(null);
-            return;
-        }
+	@UiAnnotationHandler(UiLayout.class)
+	protected void handleUiLayout(ComponentContext context,
+			JComponent component, UiLayout layout) {
+		if (layout.value() == NullLayout.class) {
+			component.setLayout(null);
+			return;
+		}
 
-        try {
-            component.setLayout(layout.value().newInstance());
-        }
-        catch (InstantiationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        catch (IllegalAccessException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
+		try {
+			component.setLayout(layout.value().newInstance());
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

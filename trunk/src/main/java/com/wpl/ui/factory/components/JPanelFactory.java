@@ -15,15 +15,12 @@
  */
 package com.wpl.ui.factory.components;
 
-import java.awt.Component;
-
 import javax.swing.JPanel;
-
 
 public class JPanelFactory extends JComponentFactory {
 
-    @Override
-    protected Component createDefaultComponent() {
-        return new JPanel();
-    }
+	@Override
+	protected Class<?> defaultType() {
+		return JPanel.class;
+	}
 }

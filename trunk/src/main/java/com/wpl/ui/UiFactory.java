@@ -19,9 +19,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
-import java.awt.Panel;
-import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,7 +37,7 @@ import org.slf4j.LoggerFactory;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiName;
 import com.wpl.ui.annotations.UiType;
-import com.wpl.ui.factory.ComponentInfo;
+import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.IComponentFactory;
 import com.wpl.ui.factory.components.JButtonFactory;
@@ -57,283 +56,299 @@ import com.wpl.ui.layout.NullLayoutHandler;
  */
 public final class UiFactory {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(UiFactory.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(UiFactory.class);
 
-    private final Map<Class<?>, IComponentFactory> mUiFactoryMap = new HashMap<Class<?>, IComponentFactory>();
-    private final Map<Class<?>, ILayoutHandler> mLayoutHandlerMap = new HashMap<Class<?>, ILayoutHandler>();
+	private final Map<Class<?>, IComponentFactory> mUiFactoryMap = new HashMap<Class<?>, IComponentFactory>();
+	private final Map<Class<?>, ILayoutHandler> mLayoutHandlerMap = new HashMap<Class<?>, ILayoutHandler>();
 
-    private String mFieldPrefix = "m";
+	private String mFieldPrefix = "m";
 
-    public UiFactory() {
+	public UiFactory() {
 
-        // Initialize default UI Factory.
-        setUiFactory(JLabel.class, new JLabelFactory());
-        setUiFactory(JButton.class, new JButtonFactory());
-        setUiFactory(JPanel.class, new JPanelFactory());
-        setUiFactory(JTextField.class, new JTextFieldFactory());
-        setUiFactory(JTextArea.class, new JTextAreaFactory());
-        setUiFactory(JFrame.class, new JFrameFactory());
+		// Initialize default UI Factory.
+		setUiFactory(JLabel.class, new JLabelFactory());
+		setUiFactory(JButton.class, new JButtonFactory());
+		setUiFactory(JPanel.class, new JPanelFactory());
+		setUiFactory(JTextField.class, new JTextFieldFactory());
+		setUiFactory(JTextArea.class, new JTextAreaFactory());
+		setUiFactory(JFrame.class, new JFrameFactory());
 
-        // Initialize default Layout handler.
-        setLayoutHandler(BorderLayout.class, new BorderLayoutHandler());
-        setLayoutHandler(NullLayout.class, new NullLayoutHandler());
-        setLayoutHandler(FlowLayout.class, new FlowLayoutHandler());
-    }
+		// Initialize default Layout handler.
+		setLayoutHandler(BorderLayout.class, new BorderLayoutHandler());
+		setLayoutHandler(NullLayout.class, new NullLayoutHandler());
+		setLayoutHandler(FlowLayout.class, new FlowLayoutHandler());
+	}
 
-    public void setFieldPrefix(String fieldPrefix) {
-        mFieldPrefix = fieldPrefix;
-    }
+	public void setFieldPrefix(String fieldPrefix) {
+		mFieldPrefix = fieldPrefix;
+	}
 
-    public String getFieldPrefix() {
-        return mFieldPrefix;
-    }
+	public String getFieldPrefix() {
+		return mFieldPrefix;
+	}
 
-    public void setLayoutHandler(Class<?> clazz, ILayoutHandler handler) {
-        mLayoutHandlerMap.put(clazz, handler);
-    }
+	public void setLayoutHandler(Class<?> clazz, ILayoutHandler handler) {
+		mLayoutHandlerMap.put(clazz, handler);
+	}
 
-    /**
-     * Install UiFactory.
-     * 
-     * @param clazz
-     * @param uiFactory
-     */
-    public void setUiFactory(Class<?> clazz, IComponentFactory uiFactory) {
+	/**
+	 * Install UiFactory.
+	 * 
+	 * @param clazz
+	 * @param uiFactory
+	 */
+	public void setUiFactory(Class<?> clazz, IComponentFactory uiFactory) {
 
-        if (uiFactory == null) {
+		if (uiFactory == null) {
 
-            if (clazz == JPanel.class) {
-                mUiFactoryMap.put(clazz, new JPanelFactory());
-                return;
-            }
+			if (clazz == JPanel.class) {
+				mUiFactoryMap.put(clazz, new JPanelFactory());
+				return;
+			}
 
-            if (clazz == JButton.class) {
-                mUiFactoryMap.put(clazz, new JButtonFactory());
-                return;
-            }
+			if (clazz == JButton.class) {
+				mUiFactoryMap.put(clazz, new JButtonFactory());
+				return;
+			}
 
-            if (clazz == JLabel.class) {
-                setUiFactory(JLabel.class, new JLabelFactory());
-                return;
-            }
+			if (clazz == JLabel.class) {
+				setUiFactory(JLabel.class, new JLabelFactory());
+				return;
+			}
 
-            if (clazz == JTextField.class) {
-                setUiFactory(JTextField.class, new JTextFieldFactory());
-                return;
-            }
-        }
+			if (clazz == JTextField.class) {
+				setUiFactory(JTextField.class, new JTextFieldFactory());
+				return;
+			}
+		}
 
-        mUiFactoryMap.put(clazz, uiFactory);
-    }
+		mUiFactoryMap.put(clazz, uiFactory);
+	}
 
-    private IComponentFactory findFactory(Class<?> type) {
+	private IComponentFactory findFactory(Class<?> type) {
 
-        if (type == Object.class || type.isPrimitive() || type.isEnum()) {
-            return null;
-        }
+		if (type == Object.class || type.isPrimitive() || type.isEnum()) {
+			return null;
+		}
 
-        IComponentFactory factory = this.mUiFactoryMap.get(type);
+		IComponentFactory factory = this.mUiFactoryMap.get(type);
 
-        if (factory != null) {
-            return factory;
-        }
+		if (factory != null) {
+			return factory;
+		}
 
-        return findFactory(type.getSuperclass());
-    }
-
-    private ILayoutHandler findLayoutHandler(Class<?> type) {
-        if (type == Object.class || type.isPrimitive() || type.isEnum()) {
-            return findLayoutHandler(NullLayout.class);
-        }
+		return findFactory(type.getSuperclass());
+	}
 
-        ILayoutHandler handler = this.mLayoutHandlerMap.get(type);
+	private ILayoutHandler findLayoutHandler(Class<?> type) {
+		if (type == Object.class || type.isPrimitive() || type.isEnum()) {
+			return findLayoutHandler(NullLayout.class);
+		}
 
-        if (handler != null) {
-            return handler;
-        }
+		ILayoutHandler handler = this.mLayoutHandlerMap.get(type);
 
-        return findLayoutHandler(type.getSuperclass());
-    }
+		if (handler != null) {
+			return handler;
+		}
 
-    private void createFields(FactoryContext factoryInfo, Object object,
-                              Class<? extends Component> clazz, Container container) {
+		return findLayoutHandler(type.getSuperclass());
+	}
 
-        UiLayout layout = clazz.getAnnotation(UiLayout.class);
+	private void createComponent(ComponentContext componentContext) {
 
-        ILayoutHandler layoutHandler;
-        if (layout == null) {
-            layoutHandler = findLayoutHandler(NullLayout.class);
-        }
-        else {
-            layoutHandler = findLayoutHandler(layout.value());
-        }
+		IComponentFactory factory = findFactory(componentContext.getType());
 
-        LOGGER.debug("layoutHandler={}", layoutHandler.getClass().getSimpleName());
+		if (factory == null) {
+			return;
+		}
 
-        Field[] fields = clazz.getDeclaredFields();
+		factory.createComponent(componentContext);
 
-        for (Field f : fields) {
+		if (componentContext.getComponent() == null) {
+			return;
+		}
+	}
+
+	private ComponentContext createComponentFromDeclaredField(
+			FactoryContext factoryContext, Container container, Object object,
+			Field f) {
+
+		if (!Component.class.isAssignableFrom(f.getType())) {
+			LOGGER.debug("ignore non-component field: {}", f.getName());
+			return null;
+		}
+
+		if (Modifier.isStatic(f.getModifiers())) {
+			LOGGER.debug("ignore static field: {}", f.getName());
+			return null;
+		}
 
-            if (!Component.class.isAssignableFrom(f.getType())) {
-                LOGGER.debug("ignore non-component field: {}", f.getName());
-                continue;
-            }
+		LOGGER.debug("building: {} of type {}", f.getName(), f.getType());
 
-            LOGGER.debug("building: {} of type {}", f.getName(), f.getType());
+		f.setAccessible(true);
 
-            try {
+		// Initialize Component Context
+		UiName uiName = f.getAnnotation(UiName.class);
+		UiType uiType = f.getAnnotation(UiType.class);
 
-                f.setAccessible(true);
+		String id = uiName == null ? f.getName() : uiName.value();
 
-                if (f.get(object) != null) {
-                    // Do not create if it's already created
-                    continue;
-                }
+		ComponentContext componentContext = factoryContext.mComponents.get(id);
 
-                UiType uiType = f.getAnnotation(UiType.class);
+		if (componentContext == null) {
+			componentContext = new ComponentContext(id);
+			factoryContext.mComponents.put(id, componentContext);
+		}
 
-                Class<? extends Component> type = (uiType == null ? (Class<? extends Component>)f
-                        .getType() : uiType.value());
+		componentContext.setAnnotatedElement(f);
+		componentContext.setContainer(container);
+		componentContext.setType(uiType == null ? f.getType() : uiType.value());
 
-                Component component = createComponent(factoryInfo, object, type, f);
+		Object fieldValue = null;
+		try {
+			fieldValue = f.get(object);
+			if (fieldValue != null) {
+				componentContext.setComponent(Component.class.cast(fieldValue));
+			}
 
-                if (component == null) {
-                    continue;
-                }
+			createComponent(componentContext);
 
-                f.set(object, component);
+			if (fieldValue == null) {
+				f.set(object, componentContext.getComponent());
+			}
 
-                UiName uiName = f.getAnnotation(UiName.class);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-                String id = uiName == null ? f.getName() : uiName.value();
+		return componentContext;
+	}
 
-                ComponentInfo cInfo = factoryInfo.mComponents.get(id);
-                if (cInfo == null) {
-                    cInfo = new ComponentInfo(id);
-                    factoryInfo.mComponents.put(id, cInfo);
-                }
+	private void createFields(FactoryContext factoryContext, Object object,
+			Class<? extends Component> clazz, Container container) {
 
-                cInfo.setComponent(component);
-                cInfo.setField(f);
-                cInfo.setContainer(container);
+		UiLayout layout = clazz.getAnnotation(UiLayout.class);
 
-                if (layoutHandler.handleComponent(container, component, f)) {
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("Added {} ({}) into {}",
-                                     new Object[] {f.getName(),
-                                                   component.getClass().getSimpleName(),
-                                                   object.getClass().getSimpleName()});
-                    }
-                }
-                else {
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("{} ({}) is not added", f.getName(), component.getClass()
-                                .getSimpleName());
-                    }
-                }
-            }
-            catch (IllegalArgumentException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            catch (IllegalAccessException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+		ILayoutHandler layoutHandler;
+		if (layout == null) {
+			layoutHandler = findLayoutHandler(NullLayout.class);
+		} else {
+			layoutHandler = findLayoutHandler(layout.value());
+		}
 
-        }
-    }
+		LOGGER.debug("layoutHandler={}", layoutHandler.getClass()
+				.getSimpleName());
 
+		Field[] fields = clazz.getDeclaredFields();
 
-    public <T extends JFrame> T createFrame(Class<T> frameClazz) {
+		for (Field f : fields) {
 
-        LOGGER.debug("creating frame from: {}", frameClazz.getSimpleName());
+			ComponentContext componentContext = createComponentFromDeclaredField(
+					factoryContext, container, object, f);
 
-        IComponentFactory frameFactory = findFactory(frameClazz);
+			if (componentContext == null
+					|| componentContext.getComponent() == null) {
+				continue;
+			}
 
-        Class[] innerClasses = frameClazz.getDeclaredClasses();
+			if (layoutHandler.handleComponent(container, componentContext
+					.getEnclosedComponent(), f)) {
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("Added {} ({}) into {}", new Object[] {
+							f.getName(),
+							componentContext.getComponent().getClass()
+									.getSimpleName(),
+							object.getClass().getSimpleName() });
+				}
+			} else {
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("{} ({}) is not added", f.getName(),
+							componentContext.getComponent().getClass()
+									.getSimpleName());
+				}
+			}
 
-        T frame = frameClazz.cast(frameFactory.createComponent(frameClazz, frameClazz
-                .getAnnotations()));
+		}
+	}
 
-        FactoryContext factoryInfo = new FactoryContext(frame);
+	public <T extends JFrame> T createFrame(Class<T> frameClazz) {
 
-        factoryInfo.onPreInit();
+		LOGGER.debug("creating frame from: {}", frameClazz.getSimpleName());
 
-        createFields(factoryInfo, frame, frameClazz, frame.getContentPane());
+		IComponentFactory frameFactory = findFactory(frameClazz);
 
-        factoryInfo.onInit();
+		UiName name = frameClazz.getAnnotation(UiName.class);
 
-        factoryInfo.wireComponents();
+		ComponentContext context = new ComponentContext(name == null ? "JFrame"
+				: name.value());
 
-        return frame;
-    }
+		context.setType(frameClazz);
+		context.setAnnotatedElement(frameClazz);
 
-    public <T extends Container> T createContainer(Class<T> containerClass) {
-        return createContainer(null, containerClass, null);
-    }
+		frameFactory.createComponent(context);
 
-    private <T extends Container> T createContainer(FactoryContext factoryInfo,
-                                                    Class<T> containerClass, Object outer) {
+		T frame = frameClazz.cast(context.getComponent());
 
-        LOGGER.debug("creating container from: {}", containerClass.getSimpleName());
+		FactoryContext factoryInfo = new FactoryContext(frame);
 
-        // It's impossible that JPanel.class factory is not found, so no null checking is
-        // required.
-        IComponentFactory panelFactory = findFactory(containerClass);
+		factoryInfo.onPreInit();
 
-        T container = containerClass.cast(panelFactory.createComponent(containerClass,
-                                                                       containerClass
-                                                                               .getAnnotations(),
-                                                                       outer));
+		createFields(factoryInfo, frame, frameClazz, frame.getContentPane());
 
-        if (container == null) {
-            LOGGER.warn("Failed to create container from {}", containerClass.getSimpleName());
-            return null;
-        }
+		factoryInfo.onInit();
 
-        if (factoryInfo == null) {
-            factoryInfo = new FactoryContext(container);
-        }
+		factoryInfo.wireComponents();
 
-        LOGGER.debug("created {} from type {}", container.getClass().getSimpleName(),
-                     containerClass.getSimpleName());
+		return frame;
+	}
 
-        factoryInfo.onPreInit();
+	public <T extends Container> T createContainer(Class<T> containerClass) {
+		return createContainer(null, containerClass, null);
+	}
 
-        createFields(factoryInfo, container, containerClass, container);
+	private <T extends Container> T createContainer(FactoryContext factoryInfo,
+			Class<T> containerClass, Object outer) {
 
-        factoryInfo.onInit();
+		LOGGER.debug("creating container from: {}", containerClass
+				.getSimpleName());
 
-        return container;
-    }
+		// It's impossible that JPanel.class factory is not found, so no null
+		// checking is
+		// required.
+		IComponentFactory panelFactory = findFactory(containerClass);
 
-    private <T extends Component> T createComponent(FactoryContext factoryInfo, Object outer,
-                                                    Class<T> componentClass,
-                                                    AnnotatedElement annotate) {
+		ComponentContext context = new ComponentContext(containerClass
+				.getName());
+		context.setType(containerClass);
 
-        if (componentClass == Component.class) {
-            LOGGER.debug("Unable to create component");
-            return null;
-        }
+		panelFactory.createComponent(context);
+		T container = containerClass.cast(context.getComponent());
 
-        LOGGER.debug("creating component from: {}", componentClass.getSimpleName());
+		// TODO: outer
 
-        if (JPanel.class.isAssignableFrom(componentClass)
-            || Panel.class.isAssignableFrom(componentClass)) {
-            return componentClass.cast(createContainer(factoryInfo,
-                                                       (Class<? extends Container>)componentClass,
-                                                       outer));
-        }
+		if (container == null) {
+			LOGGER.warn("Failed to create container from {}", containerClass
+					.getSimpleName());
+			return null;
+		}
 
-        IComponentFactory factory = findFactory(componentClass);
+		if (factoryInfo == null) {
+			factoryInfo = new FactoryContext(container);
+		}
 
-        if (factory == null) {
-            LOGGER.info("Unable to find factory for type: {}", componentClass.getSimpleName());
-            return null;
-        }
+		LOGGER.debug("created {} from type {}", container.getClass()
+				.getSimpleName(), containerClass.getSimpleName());
 
-        return componentClass.cast(factory.createComponent(componentClass, annotate
-                .getAnnotations()));
-    }
+		factoryInfo.onPreInit();
+
+		createFields(factoryInfo, container, containerClass, container);
+
+		factoryInfo.onInit();
+
+		return container;
+	}
 }

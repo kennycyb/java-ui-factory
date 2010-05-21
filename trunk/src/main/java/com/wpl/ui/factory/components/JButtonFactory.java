@@ -15,23 +15,22 @@
  */
 package com.wpl.ui.factory.components;
 
-import java.awt.Component;
-
 import javax.swing.JButton;
 
 import com.wpl.ui.annotations.button.UiDefaultButton;
+import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
 public class JButtonFactory extends AbstractButtonFactory {
 
 	@Override
-	protected Component createDefaultComponent() {
-		return new JButton();
+	protected Class<?> defaultType() {
+		return JButton.class;
 	}
 
 	@UiAnnotationHandler(UiDefaultButton.class)
-	public void handleUiDefaultButton(JButton component,
-			UiDefaultButton annotate) {
+	public void handleUiDefaultButton(ComponentContext context,
+			JButton component, UiDefaultButton annotate) {
 		component.setDefaultCapable(true);
 	}
 }

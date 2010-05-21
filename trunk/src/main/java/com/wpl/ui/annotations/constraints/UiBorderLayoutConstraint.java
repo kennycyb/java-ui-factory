@@ -20,6 +20,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.wpl.ui.enums.BorderLayoutConstraint;
+
 /**
  * BorderLayout constraint.
  */
@@ -28,10 +30,7 @@ import java.lang.annotation.Target;
 public @interface UiBorderLayoutConstraint {
 
 	/**
-	 * One of BorderLayout.CENTER, BorderLayout.NORTH, BorderLayout.EAST,
-	 * BorderLayout.SOUTH, BorderLayout.WEST
-	 * 
 	 * @return
 	 */
-	String value();
+	BorderLayoutConstraint value();
 }

@@ -23,17 +23,18 @@ import javax.swing.JTextArea;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
+import com.wpl.ui.enums.BorderLayoutConstraint;
 
 @UiLayout(BorderLayout.class)
 public class SamplePanel extends JPanel {
 
-    /**
+	/**
      * 
      */
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @UiBorderLayoutConstraint(BorderLayout.CENTER)
-    @UiText("HELLO WORLD")
-    private JTextArea mTextArea;
+	@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
+	@UiText("HELLO WORLD")
+	private JTextArea mTextArea;
 
 }

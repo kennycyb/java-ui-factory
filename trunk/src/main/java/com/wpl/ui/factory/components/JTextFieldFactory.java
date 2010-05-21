@@ -16,15 +16,18 @@
  */
 package com.wpl.ui.factory.components;
 
-import java.awt.Component;
-
 import javax.swing.JTextField;
 
-
+/**
+ * Factory that create JTextField
+ * 
+ * @author kenny
+ * @since 1.0
+ */
 public class JTextFieldFactory extends JTextComponentFactory {
 
-    @Override
-    protected Component createDefaultComponent() {
-        return new JTextField();
-    }
+	@Override
+	protected Class<?> defaultType() {
+		return JTextField.class;
+	}
 }

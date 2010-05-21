@@ -13,24 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.factory.components;
+package com.wpl.ui.enums;
 
-import javax.swing.JLabel;
+public enum BorderLayoutConstraint {
 
-import com.wpl.ui.annotations.UiText;
-import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.UiAnnotationHandler;
+	CENTER,
 
-public class JLabelFactory extends JComponentFactory {
+	NORTH,
 
-	@Override
-	protected Class<?> defaultType() {
-		return JLabel.class;
-	}
+	EAST,
 
-	@UiAnnotationHandler(UiText.class)
-	protected void handleUiText(ComponentContext context, JLabel component,
-			UiText annotate) {
-		component.setText(annotate.value());
-	}
+	WEST,
+
+	SOUTH,
 }

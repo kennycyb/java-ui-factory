@@ -19,21 +19,21 @@ import javax.swing.AbstractButton;
 
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.annotations.actions.UiActionCommand;
+import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
 public abstract class AbstractButtonFactory extends JComponentFactory {
 
+	@UiAnnotationHandler(UiText.class)
+	protected void handleUiText(ComponentContext context,
+			AbstractButton component, UiText text) {
+		component.setText(text.value());
+	}
 
-
-    @UiAnnotationHandler(UiText.class)
-    protected void handleUiText(AbstractButton component, UiText text) {
-        component.setText(text.value());
-    }
-
-    @UiAnnotationHandler(UiActionCommand.class)
-    protected void handlerUiActionCommand(AbstractButton component, UiActionCommand annotate) {
-        component.setActionCommand(annotate.value());
-    }
-    
+	@UiAnnotationHandler(UiActionCommand.class)
+	protected void handlerUiActionCommand(ComponentContext context,
+			AbstractButton component, UiActionCommand annotate) {
+		component.setActionCommand(annotate.value());
+	}
 
 }

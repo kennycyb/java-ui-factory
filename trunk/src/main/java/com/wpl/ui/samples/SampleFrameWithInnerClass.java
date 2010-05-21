@@ -34,6 +34,7 @@ import com.wpl.ui.annotations.button.UiDefaultButton;
 import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
 import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
 import com.wpl.ui.annotations.frame.UiFrameResizable;
+import com.wpl.ui.enums.BorderLayoutConstraint;
 import com.wpl.ui.enums.FrameCloseOperation;
 
 //Title of this frame
@@ -48,69 +49,68 @@ import com.wpl.ui.enums.FrameCloseOperation;
 @UiAutoWired
 public class SampleFrameWithInnerClass extends JFrame {
 
-    @UiLayout(BorderLayout.class)
-    public class InnerPanel extends JPanel {
+	@UiLayout(BorderLayout.class)
+	public class InnerPanel extends JPanel {
 
-        @UiBorderLayoutConstraint(BorderLayout.CENTER)
-        @UiText("HELLO WORLD\n")
-        public JTextArea content;
-    }
+		@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
+		@UiText("HELLO WORLD\n")
+		public JTextArea content;
+	}
 
-    @UiLayout(FlowLayout.class)
-    public class CommandPanel extends JPanel {
+	@UiLayout(FlowLayout.class)
+	public class CommandPanel extends JPanel {
 
-    	/**
+		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
 
 		/**
-    	 * - Default button.
-    	 * - Display text is "Start"
-    	 * - ID of this component is "start"
-    	 */
-    	@SuppressWarnings("unused")
+		 * - Default button. - Display text is "Start" - ID of this component is
+		 * "start"
+		 */
+		@SuppressWarnings("unused")
 		@UiDefaultButton
-        @UiName("start")
-        @UiText("Start")
-        private JButton mStart;
+		@UiName("start")
+		@UiText("Start")
+		private JButton mStart;
 
-        @SuppressWarnings("unused")
+		@SuppressWarnings("unused")
 		@UiText("Stop")
-        private JButton stop;
-    }
+		private JButton stop;
+	}
 
-    /**
+	/**
      * 
      */
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @UiType(InnerPanel.class)
-    @UiBorderLayoutConstraint(BorderLayout.CENTER)
-    private InnerPanel mCenter;
+	@UiType(InnerPanel.class)
+	@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
+	private InnerPanel mCenter;
 
-    @UiType(CommandPanel.class)
-    @UiBorderLayoutConstraint(BorderLayout.SOUTH)
-    private JPanel mSouth;
+	@UiType(CommandPanel.class)
+	@UiBorderLayoutConstraint(BorderLayoutConstraint.SOUTH)
+	private JPanel mSouth;
 
-    /**
-     * As @AutoWired - this method will be called when "start" button is called.
-     */
-    private void onStart_clicked() {
-        mCenter.content.append("start button clicked\n");
-    }
+	/**
+	 * As @AutoWired - this method will be called when "start" button is called.
+	 */
+	private void onStart_clicked() {
+		mCenter.content.append("start button clicked\n");
+	}
 
 	/**
 	 * As @AutoWired - this method will be called when "stop" button is called.
 	 */
 	private void onStop_clicked() {
-        mCenter.content.append("stop button clicked\n");
-    }
-    
-    public static void main(String[] args) {
-        UiFactory factory = new UiFactory();
-        JFrame sample = factory.createFrame(SampleFrameWithInnerClass.class);
+		mCenter.content.append("stop button clicked\n");
+	}
 
-        sample.setVisible(true);
-    }
+	public static void main(String[] args) {
+		UiFactory factory = new UiFactory();
+		JFrame sample = factory.createFrame(SampleFrameWithInnerClass.class);
+
+		sample.setVisible(true);
+	}
 }

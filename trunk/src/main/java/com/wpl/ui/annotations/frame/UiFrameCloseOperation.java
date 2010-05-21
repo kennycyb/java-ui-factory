@@ -15,9 +15,16 @@
  */
 package com.wpl.ui.annotations.frame;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 import com.wpl.ui.enums.FrameCloseOperation;
 
+@Retention(RetentionPolicy.RUNTIME)
+@Target( { ElementType.TYPE })
 public @interface UiFrameCloseOperation {
 
-    FrameCloseOperation value();
+	FrameCloseOperation value();
 }

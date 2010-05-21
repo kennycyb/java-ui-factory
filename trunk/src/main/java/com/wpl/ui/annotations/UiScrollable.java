@@ -13,24 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.factory.components;
+package com.wpl.ui.annotations;
 
-import javax.swing.JLabel;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import com.wpl.ui.annotations.UiText;
-import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.UiAnnotationHandler;
+import com.wpl.ui.enums.ScrollBarPolicy;
 
-public class JLabelFactory extends JComponentFactory {
+/**
+ * Add a scroll pane automatically to a component.
+ * 
+ * @author kenny
+ * 
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target( { ElementType.FIELD })
+public @interface UiScrollable {
+	ScrollBarPolicy horizontal() default ScrollBarPolicy.AS_NEEDED;
 
-	@Override
-	protected Class<?> defaultType() {
-		return JLabel.class;
-	}
-
-	@UiAnnotationHandler(UiText.class)
-	protected void handleUiText(ComponentContext context, JLabel component,
-			UiText annotate) {
-		component.setText(annotate.value());
-	}
+	ScrollBarPolicy vertical() default ScrollBarPolicy.AS_NEEDED;
 }

@@ -15,75 +15,100 @@
  */
 package com.wpl.ui.factory.components;
 
-import java.awt.Component;
-
 import javax.swing.JFrame;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.NullLayout;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
 import com.wpl.ui.annotations.frame.UiFrameResizable;
+import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
 public class JFrameFactory extends ComponentFactory {
 
-    @Override
-    protected Component createDefaultComponent() {
-        return new JFrame();
-    }
+	private static Logger LOGGER = LoggerFactory.getLogger(JFrameFactory.class);
 
-    @UiAnnotationHandler(UiFrameResizable.class)
-    protected void handleUiResizable(JFrame frame, UiFrameResizable resizable) {
-        frame.setResizable(resizable.value());
-    }
+	@Override
+	protected Class<?> defaultType() {
+		return JFrame.class;
+	}
 
-    @UiAnnotationHandler(UiText.class)
-    protected void handleUiText(JFrame frame, UiText text) {
-        frame.setTitle(text.value());
-    }
+	@UiAnnotationHandler(UiFrameResizable.class)
+	protected void handleUiResizable(ComponentContext context, JFrame frame,
+			UiFrameResizable resizable) {
+		frame.setResizable(resizable.value());
+		LOGGER.debug("(JFrame){}.setResizable({})", context.getId(), resizable
+				.value());
+	}
 
-    @UiAnnotationHandler(UiLayout.class)
-    protected void handleUiLayout(JFrame component, UiLayout layout) {
-        if (layout.value() == NullLayout.class) {
-            component.setLayout(null);
-            return;
-        }
+	@UiAnnotationHandler(UiText.class)
+	protected void handleUiText(ComponentContext context, JFrame frame,
+			UiText text) {
+		frame.setTitle(text.value());
+		LOGGER.debug("(JFrame){}.setTitle({})", context.getId(), text.value());
+	}
 
-        try {
-            component.setLayout(layout.value().newInstance());
-        }
-        catch (InstantiationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        catch (IllegalAccessException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
+	@UiAnnotationHandler(UiLayout.class)
+	protected void handleUiLayout(ComponentContext context, JFrame component,
+			UiLayout layout) {
+		if (layout.value() == NullLayout.class) {
+			component.setLayout(null);
+			return;
+		}
 
-    @UiAnnotationHandler(UiFrameCloseOperation.class)
-    protected void handleUiFrameCloseOperation(JFrame frame, UiFrameCloseOperation fco) {
-        switch (fco.value()) {
+		try {
+			component.setLayout(layout.value().newInstance());
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
-            case EXIT:
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                break;
+	@UiAnnotationHandler(UiFrameCloseOperation.class)
+	protected void handleUiFrameCloseOperation(ComponentContext context,
+			JFrame frame, UiFrameCloseOperation fco) {
+		switch (fco.value()) {
 
-            case DISPOSE:
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                break;
+		case EXIT:
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			LOGGER
+					.debug(
+							"(JFrame){}.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)",
+							context.getId());
+			break;
 
-            case HIDE:
-                frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-                break;
+		case DISPOSE:
+			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			LOGGER
+					.debug(
+							"(JFrame){}.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE)",
+							context.getId());
+			break;
 
-            default:
-                frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-                break;
+		case HIDE:
+			frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+			LOGGER
+					.debug(
+							"(JFrame){}.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE)",
+							context.getId());
+			break;
 
-        }
-    }
+		default:
+			frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			LOGGER
+					.debug(
+							"(JFrame){}.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE)",
+							context.getId());
+			break;
+
+		}
+	}
 
 }

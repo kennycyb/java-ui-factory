@@ -15,40 +15,64 @@
  */
 package com.wpl.ui.factory.components;
 
-import java.awt.Component;
-
 import javax.swing.JTextArea;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.annotations.UiColumns;
 import com.wpl.ui.annotations.UiRows;
 import com.wpl.ui.annotations.textarea.UiLineWrap;
 import com.wpl.ui.annotations.textarea.UiTabSize;
+import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
+/**
+ * 
+ * @since 1.0
+ * @author kenny
+ * 
+ */
 public class JTextAreaFactory extends JTextComponentFactory {
 
+	private static Logger LOGGER = LoggerFactory
+			.getLogger(JTextAreaFactory.class);
+
+	@Override
+	protected Class<?> defaultType() {
+		return JTextArea.class;
+	}
+
 	@UiAnnotationHandler(UiRows.class)
-	protected void handleUiText(JTextArea component, UiRows annotate) {
+	protected void handleUiText(ComponentContext context, JTextArea component,
+			UiRows annotate) {
 		component.setRows(annotate.value());
+		LOGGER.debug("component={} JTextArea.setRows({})", context.getId(),
+				annotate.value());
 	}
 
 	@UiAnnotationHandler(UiColumns.class)
-	protected void handleUiText(JTextArea component, UiColumns annotate) {
+	protected void handleUiText(ComponentContext context, JTextArea component,
+			UiColumns annotate) {
 		component.setColumns(annotate.value());
+		LOGGER.debug("component={} JTextArea.setColumns({})", context.getId(),
+				annotate.value());
 	}
 
 	@UiAnnotationHandler(UiTabSize.class)
-	protected void handleUiText(JTextArea component, UiTabSize annotate) {
+	protected void handleUiText(ComponentContext context, JTextArea component,
+			UiTabSize annotate) {
 		component.setTabSize(annotate.value());
+		LOGGER.debug("component={} JTextArea.setTabSize({})", context.getId(),
+				annotate.value());
 	}
 
 	@UiAnnotationHandler(UiLineWrap.class)
-	protected void handlerUiLineWrap(JTextArea component, UiLineWrap annotate) {
+	protected void handlerUiLineWrap(ComponentContext context,
+			JTextArea component, UiLineWrap annotate) {
 		component.setLineWrap(annotate.value());
+		LOGGER.debug("component={}, JTextArea.setLineWrap({})",
+				context.getId(), annotate.value());
 	}
 
-	@Override
-	protected Component createDefaultComponent() {
-		return new JTextArea();
-	}
 }

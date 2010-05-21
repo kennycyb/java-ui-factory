@@ -78,9 +78,9 @@ public class FactoryContext {
 							+ methodName.substring(3, action);
 					String actionName = methodName.substring(action + 1);
 
-					ComponentInfo cInfo = this.mComponents.get(componentName);
+					ComponentContext cInfo = this.mComponents.get(componentName);
 					if (cInfo == null) {
-						cInfo = new ComponentInfo(componentName);
+						cInfo = new ComponentContext(componentName);
 						this.mComponents.put(componentName, cInfo);
 					}
 
@@ -94,7 +94,7 @@ public class FactoryContext {
 	/**
 	 * List of component that has been manufactured.
 	 */
-	public Map<String, ComponentInfo> mComponents = new HashMap<String, ComponentInfo>();
+	public Map<String, ComponentContext> mComponents = new HashMap<String, ComponentContext>();
 
 	public void onPreInit() {
 		invoke(this.mPreInitMethod);
@@ -105,7 +105,7 @@ public class FactoryContext {
 	}
 
 	public void wireComponents() {
-		for (final ComponentInfo info : mComponents.values()) {
+		for (final ComponentContext info : mComponents.values()) {
 			for (final Map.Entry<String, Method> entry : info
 					.getActionListeners().entrySet()) {
 				if (entry.getKey().equals("clicked")) {

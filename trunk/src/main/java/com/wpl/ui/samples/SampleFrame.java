@@ -18,19 +18,20 @@ package com.wpl.ui.samples;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import com.wpl.ui.UiFactory;
 import com.wpl.ui.annotations.UiLayout;
+import com.wpl.ui.annotations.UiScrollable;
 import com.wpl.ui.annotations.UiSize;
 import com.wpl.ui.annotations.UiText;
-import com.wpl.ui.annotations.UiType;
 import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
 import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
 import com.wpl.ui.annotations.frame.UiFrameResizable;
 import com.wpl.ui.annotations.textarea.UiLineWrap;
+import com.wpl.ui.enums.BorderLayoutConstraint;
 import com.wpl.ui.enums.FrameCloseOperation;
+import com.wpl.ui.enums.ScrollBarPolicy;
 
 /**
  * 
@@ -52,8 +53,9 @@ public class SampleFrame extends JFrame {
      */
 	private static final long serialVersionUID = 1L;
 
-	@UiBorderLayoutConstraint(BorderLayout.CENTER)
+	@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
 	@UiLineWrap
+	@UiScrollable(horizontal = ScrollBarPolicy.ALWAYS, vertical = ScrollBarPolicy.ALWAYS)
 	private JTextArea content;
 
 	public static void main(String[] args) {
