@@ -12,7 +12,7 @@
 		<menuItem id="file.exit" text="Exit"/>
     </menu>
     <menu text="Edit">
-    	<menuItem text="Undo"/>
+    	<menuItem id="edit.undo" text="Undo" bindable="true"/>
     	<menuItem type="SEPARATOR"/>
     	<menuItem text="Cut"/>
     	<menuItem text="Copy"/>

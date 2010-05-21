@@ -88,15 +88,15 @@ public class JMenuBarFactory extends JComponentFactory {
 
 		final Method onClicked = context.getActionListeners().get("clicked");
 
-		for (MenuInfo m : menuInfo.getMenu()) {
-			JMenu menu = new JMenu(m.getText());
+		for (MenuInfo menuItemInfo : menuInfo.getMenu()) {
+			JMenu menu = new JMenu(menuItemInfo.getText());
 			component.add(menu);
 
 			if (font != null) {
 				menu.setFont(font);
 			}
 
-			for (MenuItemInfo item : m.getMenuItem()) {
+			for (MenuItemInfo item : menuItemInfo.getMenuItem()) {
 				if (item.getType() == MenuItemType.SEPARATOR) {
 					menu.addSeparator();
 					continue;

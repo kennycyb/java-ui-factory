@@ -22,12 +22,22 @@ public class MenuItemInfo {
 	private String mId;
 	private String mText;
 	private MenuItemType mType;
+	private boolean mBindable;
 
 	public MenuItemInfo() {
 	}
 
 	public MenuItemInfo(String text) {
 		this.mText = text;
+	}
+
+	@XmlAttribute
+	public boolean isBindable() {
+		return mBindable;
+	}
+
+	public void setBindable(boolean bindable) {
+		mBindable = bindable;
 	}
 
 	@XmlAttribute

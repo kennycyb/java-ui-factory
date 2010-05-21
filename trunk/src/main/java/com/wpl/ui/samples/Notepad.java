@@ -19,6 +19,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JTextArea;
 
 import org.slf4j.Logger;
@@ -45,7 +46,7 @@ import com.wpl.ui.enums.ScrollBarPolicy;
  * Sample of Notepad Application.
  */
 @UiText("Notepad")
-@UiSize(height = 800, width = 800)
+@UiSize(height = 600, width = 800)
 @UiLayout(BorderLayout.class)
 @UiFrameCloseOperation(FrameCloseOperation.EXIT)
 @UiFrameResizable
@@ -70,13 +71,21 @@ public class Notepad extends JFrame {
 	@UiFont(name = "Arial", style = FontStyle.BOLD, size = 12)
 	private JMenuBar menuBar;
 
+	// @UiItemOf("menuBar")
+	private JMenuItem undo;
+
 	@UiInit
 	private void init() {
+
+		if (undo != null) {
+			undo.setEnabled(false);
+		}
 	}
 
 	private void onMenuBar_clicked(Object sender, String menuId) {
 
 		if (menuId == null) {
+			LOGGER.debug("menu-clicked=null");
 			return;
 		}
 
