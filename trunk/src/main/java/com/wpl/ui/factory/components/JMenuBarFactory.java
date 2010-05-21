@@ -15,6 +15,7 @@
  */
 package com.wpl.ui.factory.components;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.InputStream;
@@ -29,11 +30,12 @@ import javax.xml.bind.JAXB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wpl.ui.annotations.UiFont;
 import com.wpl.ui.annotations.UiResource;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
-import com.wpl.ui.factory.components.menu.MenuInfo;
 import com.wpl.ui.factory.components.menu.MenuBarInfo;
+import com.wpl.ui.factory.components.menu.MenuInfo;
 import com.wpl.ui.factory.components.menu.MenuItemInfo;
 import com.wpl.ui.factory.components.menu.MenuItemType;
 
@@ -59,13 +61,40 @@ public class JMenuBarFactory extends JComponentFactory {
 		}
 
 		final Object listener = context.getActionListener();
-		MenuBarInfo menuInfo = JAXB.unmarshal(in, MenuBarInfo.class);
+		final MenuBarInfo menuInfo = JAXB.unmarshal(in, MenuBarInfo.class);
+		final UiFont uiFont = context.getAnnotatedElement().getAnnotation(
+				UiFont.class);
+
+		Font font = null;
+		if (uiFont != null) {
+
+			int style;
+			switch (uiFont.style()) {
+			case BOLD:
+				style = Font.BOLD;
+				break;
+
+			case ITALIC:
+				style = Font.ITALIC;
+				break;
+
+			default:
+				style = Font.PLAIN;
+				break;
+			}
+
+			font = new Font(uiFont.name(), style, uiFont.size());
+		}
 
 		final Method onClicked = context.getActionListeners().get("clicked");
 
 		for (MenuInfo m : menuInfo.getMenu()) {
 			JMenu menu = new JMenu(m.getText());
 			component.add(menu);
+
+			if (font != null) {
+				menu.setFont(font);
+			}
 
 			for (MenuItemInfo item : m.getMenuItem()) {
 				if (item.getType() == MenuItemType.SEPARATOR) {
@@ -75,6 +104,9 @@ public class JMenuBarFactory extends JComponentFactory {
 
 				final String id = item.getId();
 				final JMenuItem mi = new JMenuItem(item.getText());
+				if (font != null) {
+					mi.setFont(font);
+				}
 				mi.setActionCommand(item.getId());
 				mi.addActionListener(new ActionListener() {
 					@Override

@@ -50,6 +50,7 @@ public class ComponentContext {
 	private final Map<String, Method> mActionListeners = new HashMap<String, Method>();
 
 	public ComponentContext(String id) {
+
 		this.mId = id;
 	}
 

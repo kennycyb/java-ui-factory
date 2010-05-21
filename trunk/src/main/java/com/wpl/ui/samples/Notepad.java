@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.UiFactory;
 import com.wpl.ui.annotations.UiAutoWired;
+import com.wpl.ui.annotations.UiFont;
 import com.wpl.ui.annotations.UiInit;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiResource;
@@ -36,11 +37,12 @@ import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
 import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
 import com.wpl.ui.annotations.frame.UiFrameResizable;
 import com.wpl.ui.enums.BorderLayoutConstraint;
+import com.wpl.ui.enums.FontStyle;
 import com.wpl.ui.enums.FrameCloseOperation;
 import com.wpl.ui.enums.ScrollBarPolicy;
 
 /**
- * 
+ * Sample of Notepad Application.
  */
 @UiText("Notepad")
 @UiSize(height = 800, width = 800)
@@ -48,6 +50,7 @@ import com.wpl.ui.enums.ScrollBarPolicy;
 @UiFrameCloseOperation(FrameCloseOperation.EXIT)
 @UiFrameResizable
 @UiAutoWired
+@UiFont(name = "Arial", style = FontStyle.BOLD, size = 12)
 public class Notepad extends JFrame {
 
 	private static Logger LOGGER = LoggerFactory.getLogger(Notepad.class);
@@ -59,10 +62,12 @@ public class Notepad extends JFrame {
 
 	@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
 	@UiScrollable(horizontal = ScrollBarPolicy.ALWAYS, vertical = ScrollBarPolicy.ALWAYS)
+	@UiFont(name = "Arial", style = FontStyle.BOLD, size = 12)
 	private JTextArea content;
 
 	@UiBorderLayoutConstraint(BorderLayoutConstraint.NORTH)
 	@UiResource("Notepad-Menu.xml")
+	@UiFont(name = "Arial", style = FontStyle.BOLD, size = 12)
 	private JMenuBar menuBar;
 
 	@UiInit
