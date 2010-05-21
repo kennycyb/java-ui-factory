@@ -13,29 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.annotations;
+package com.wpl.ui.factory.components.menu;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Annotate a method to be called when UI component has been created.
- * 
- * The method must have 0 argument, e.g.
- * 
- * <pre>
- * public void init() {
- * 
- * }
- * </pre>
- * 
- * @author kenny
- * 
- */
-@Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.METHOD })
-public @interface UiInit {
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 
+public class MenuInfo {
+
+	private String mText;
+
+	@XmlAttribute
+	public String getText() {
+		return mText;
+	}
+
+	public void setText(String text) {
+		mText = text;
+	}
+
+	private final List<MenuItemInfo> items = new ArrayList<MenuItemInfo>();
+
+	@XmlElement
+	public List<MenuItemInfo> getMenuItem() {
+		return items;
+	}
 }

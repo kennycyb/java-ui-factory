@@ -13,29 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.annotations;
+package com.wpl.ui.samples;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import javax.swing.JFrame;
 
-/**
- * Annotate a method to be called when UI component has been created.
- * 
- * The method must have 0 argument, e.g.
- * 
- * <pre>
- * public void init() {
- * 
- * }
- * </pre>
- * 
- * @author kenny
- * 
- */
-@Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.METHOD })
-public @interface UiInit {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.wpl.ui.annotations.UiInit;
+
+public class Calculator extends JFrame {
+	private static Logger LOGGER = LoggerFactory.getLogger(Calculator.class);
+
+	@UiInit
+	private void init() {
+
+	}
 }

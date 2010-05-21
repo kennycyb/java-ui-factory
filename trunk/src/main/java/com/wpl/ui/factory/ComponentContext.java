@@ -46,10 +46,19 @@ public class ComponentContext {
 	private AnnotatedElement mAnnotatedElement;
 	private Component mEnclosedComponent;
 
+	private Object mActionListener;
 	private final Map<String, Method> mActionListeners = new HashMap<String, Method>();
 
 	public ComponentContext(String id) {
 		this.mId = id;
+	}
+
+	public void setActionListener(Object actionListener) {
+		mActionListener = actionListener;
+	}
+
+	public Object getActionListener() {
+		return mActionListener;
 	}
 
 	public Component getEnclosedComponent() {

@@ -20,28 +20,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.wpl.ui.enums.ScrollBarPolicy;
-
-/**
- * Add a scroll pane automatically to a component.
- * 
- * @author kenny
- */
-@Retention(RetentionPolicy.RUNTIME)
 @Target( { ElementType.FIELD })
-public @interface UiScrollable {
-
-	/**
-	 * Horizontal scroll bar policy.
-	 * 
-	 * @return
-	 */
-	ScrollBarPolicy horizontal() default ScrollBarPolicy.AS_NEEDED;
-
-	/**
-	 * Vertial scroll bar policy.
-	 * 
-	 * @return
-	 */
-	ScrollBarPolicy vertical() default ScrollBarPolicy.AS_NEEDED;
+@Retention(RetentionPolicy.RUNTIME)
+public @interface UiResource {
+	String value();
 }
