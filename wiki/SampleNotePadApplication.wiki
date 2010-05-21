@@ -1,0 +1,115 @@
+#summary Creating a simple notepad application
+
+= Introduction =
+
+This sample show how to create a notepad application.
+
+
+= Details =
+
+{{{
+/**
+ * Sample of Notepad Application.
+ */
+@UiText("Notepad")
+@UiSize(height = 800, width = 800)
+@UiLayout(BorderLayout.class)
+@UiFrameCloseOperation(FrameCloseOperation.EXIT)
+@UiFrameResizable
+@UiAutoWired
+public class Notepad extends JFrame {
+
+	private static Logger LOGGER = LoggerFactory.getLogger(Notepad.class);
+
+	/**
+     * 
+     */
+	private static final long serialVersionUID = 1L;
+
+	@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
+	@UiScrollable(horizontal = ScrollBarPolicy.ALWAYS, vertical = ScrollBarPolicy.ALWAYS)
+	private JTextArea content;
+
+	@UiBorderLayoutConstraint(BorderLayoutConstraint.NORTH)
+	@UiResource("Notepad-Menu.xml")
+	private JMenuBar menuBar;
+
+	@UiInit
+	private void init() {
+	}
+
+	private void onMenuBar_clicked(Object sender, String menuId) {
+
+		if (menuId == null) {
+			return;
+		}
+
+		if (menuId.equals("file.new")) {
+			LOGGER.debug("menu-clicked=file.new, source={}", sender);
+			content.setText("");
+		}
+
+		if (menuId.equals("file.exit")) {
+			LOGGER.debug("menu-clicked=file.exit, source={}", sender);
+			System.exit(0);
+		}
+	}
+
+	public static void main(String[] args) {
+		UiFactory factory = new UiFactory();
+		JFrame notepad = factory.createFrame(Notepad.class);
+
+		notepad.setVisible(true);
+	}
+}
+
+
+
+}}}
+
+== NotePad-Menu.xml ==
+
+{{{
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<menuBar id="mainMenu">
+    <menu text="File">
+        <menuItem id="file.new" text="New"/>
+        <menuItem text="Open..."/>
+        <menuItem text="Save"/>
+        <menuItem text="Save As..."/>
+		<menuItem type="SEPARATOR"/>
+		<menuItem text="Page Setup..."/>
+		<menuItem text="Print..."/>
+		<menuItem type="SEPARATOR"/>
+		<menuItem id="file.exit" text="Exit"/>
+    </menu>
+    <menu text="Edit">
+    	<menuItem text="Undo"/>
+    	<menuItem type="SEPARATOR"/>
+    	<menuItem text="Cut"/>
+    	<menuItem text="Copy"/>
+    	<menuItem text="Paste"/>
+    	<menuItem text="Delete"/>
+    	<menuItem type="SEPARATOR"/>
+    	<menuItem text="Find..."/>
+    	<menuItem text="Find Next"/>
+    	<menuItem text="Replace..."/>
+    	<menuItem text="Go To..."/>
+    	<menuItem type="SEPARATOR"/>
+    	<menuItem text="Select All"/>
+    	<menuItem text="Time/Date"/>
+    </menu>
+    <menu text="Format">
+    	<menuItem text="Word Wrap"/>
+    	<menuItem text="Font..."/>
+    </menu>
+    <menu text="View">
+    	<menuItem text="Status Bar"/>
+   	</menu>
+   	<menu text="Help">
+   		<menuItem text="Help Topics"/>
+   		<menuItem type="SEPARATOR"/>
+   		<menuItem text="About Notepad"/>
+   	</menu>
+</menuBar>
+}}}
