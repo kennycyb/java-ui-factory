@@ -13,14 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.annotations.textarea;
+package com.wpl.ui.events;
 
-/**
- * TabSize of a TextArea.
- * 
- * @author kenny
- * @since 1.0
- */
-public @interface UiTabSize {
-	int value() default 4;
+import java.io.Serializable;
+
+public class MenuBarEvent implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private String mSourceId;
+
+	public String getSourceId() {
+		return mSourceId;
+	}
+
+	public void setSourceId(String sourceId) {
+		mSourceId = sourceId;
+	}
 }

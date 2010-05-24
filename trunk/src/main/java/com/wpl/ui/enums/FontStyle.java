@@ -15,11 +15,23 @@
  */
 package com.wpl.ui.enums;
 
+import java.awt.Font;
+
 public enum FontStyle {
 
-	PLAIN,
+	PLAIN(Font.PLAIN),
 
-	ITALIC,
+	ITALIC(Font.ITALIC),
 
-	BOLD,
+	BOLD(Font.BOLD);
+
+	private int mSwingConstant;
+
+	private FontStyle(int swingConstant) {
+		this.mSwingConstant = swingConstant;
+	}
+
+	public int getSwingConstant() {
+		return mSwingConstant;
+	}
 }

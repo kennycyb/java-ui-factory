@@ -20,8 +20,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Enable line wrap for a TextArea.
+ * 
+ * @author kenny
+ * @since 1.0
+ */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD})
+@Target( { ElementType.FIELD })
 public @interface UiLineWrap {
 	boolean value() default true;
 }
