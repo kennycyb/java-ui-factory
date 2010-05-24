@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -43,6 +45,8 @@ import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.IComponentFactory;
 import com.wpl.ui.factory.components.JButtonFactory;
+import com.wpl.ui.factory.components.JCheckBoxFactory;
+import com.wpl.ui.factory.components.JComboBoxFactory;
 import com.wpl.ui.factory.components.JFrameFactory;
 import com.wpl.ui.factory.components.JLabelFactory;
 import com.wpl.ui.factory.components.JMenuBarFactory;
@@ -62,6 +66,29 @@ public final class UiFactory {
 
 	private static Logger LOGGER = LoggerFactory.getLogger(UiFactory.class);
 
+	private static Map<Class<?>, IComponentFactory> sDefaultFactory = new HashMap<Class<?>, IComponentFactory>();
+
+	static {
+		sDefaultFactory.put(JLabel.class, new JLabelFactory());
+		sDefaultFactory.put(JButton.class, new JButtonFactory());
+		sDefaultFactory.put(JPanel.class, new JPanelFactory());
+		sDefaultFactory.put(JTextField.class, new JTextFieldFactory());
+		sDefaultFactory.put(JTextArea.class, new JTextAreaFactory());
+		sDefaultFactory.put(JFrame.class, new JFrameFactory());
+		sDefaultFactory.put(JMenuBar.class, new JMenuBarFactory());
+		sDefaultFactory.put(JMenu.class, new JMenuFactory());
+		sDefaultFactory.put(JCheckBox.class, new JCheckBoxFactory());
+		sDefaultFactory.put(JComboBox.class, new JComboBoxFactory());
+	}
+
+	private static Map<Class<?>, ILayoutHandler> sDefaultLayout = new HashMap<Class<?>, ILayoutHandler>();
+
+	static {
+		sDefaultLayout.put(BorderLayout.class, new BorderLayoutHandler());
+		sDefaultLayout.put(NullLayout.class, new NullLayoutHandler());
+		sDefaultLayout.put(FlowLayout.class, new FlowLayoutHandler());
+	}
+
 	private final Map<Class<?>, IComponentFactory> mUiFactoryMap = new HashMap<Class<?>, IComponentFactory>();
 	private final Map<Class<?>, ILayoutHandler> mLayoutHandlerMap = new HashMap<Class<?>, ILayoutHandler>();
 
@@ -70,19 +97,10 @@ public final class UiFactory {
 	public UiFactory() {
 
 		// Initialize default UI Factory.
-		setUiFactory(JLabel.class, new JLabelFactory());
-		setUiFactory(JButton.class, new JButtonFactory());
-		setUiFactory(JPanel.class, new JPanelFactory());
-		setUiFactory(JTextField.class, new JTextFieldFactory());
-		setUiFactory(JTextArea.class, new JTextAreaFactory());
-		setUiFactory(JFrame.class, new JFrameFactory());
-		setUiFactory(JMenuBar.class, new JMenuBarFactory());
-		setUiFactory(JMenu.class, new JMenuFactory());
+		mUiFactoryMap.putAll(sDefaultFactory);
 
 		// Initialize default Layout handler.
-		setLayoutHandler(BorderLayout.class, new BorderLayoutHandler());
-		setLayoutHandler(NullLayout.class, new NullLayoutHandler());
-		setLayoutHandler(FlowLayout.class, new FlowLayoutHandler());
+		mLayoutHandlerMap.putAll(sDefaultLayout);
 	}
 
 	public void setFieldPrefix(String fieldPrefix) {
