@@ -97,7 +97,7 @@ public class SamplePanel extends JPanel {
 
 	public static void main(String[] args) {
 		UiFactory factory = new UiFactory();
-		SamplePanel panel = factory.createContainer(SamplePanel.class);
+		SamplePanel panel = factory.createComponent(SamplePanel.class);
 		JFrame frame = new JFrame();
 		frame.setTitle("Sample Panel");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

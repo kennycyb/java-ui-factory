@@ -34,6 +34,7 @@ import com.wpl.ui.annotations.UiLocation;
 import com.wpl.ui.annotations.UiName;
 import com.wpl.ui.annotations.UiScrollable;
 import com.wpl.ui.annotations.UiSize;
+import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
 import com.wpl.ui.enums.ScrollBarPolicy;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.IComponentFactory;
@@ -179,21 +180,33 @@ public abstract class ComponentFactory implements IComponentFactory {
 				e1.printStackTrace();
 			}
 		}
+
+		this.wireComponent(context);
+	}
+
+	@Override
+	public void wireComponent(ComponentContext context) {
 	}
 
 	// ~ UiAnnotationHandlers --------------------------------------------------
 
+	@UiAnnotationHandler(UiBorderLayoutConstraint.class)
+	protected void handleUiBorderLayoutConstraint(ComponentContext context,
+			Component component, UiBorderLayoutConstraint annotate) {
+
+	}
+
 	@UiAnnotationHandler(UiSize.class)
 	protected void handleUiSize(ComponentContext context, Component component,
-			UiSize size) {
-		component.setSize(size.width(), size.height());
-		component.setPreferredSize(new Dimension(size.width(), size.height()));
+			UiSize annotate) {
+		component.setSize(annotate.width(), annotate.height());
+		component.setPreferredSize(new Dimension(annotate.width(), annotate
+				.height()));
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER
-					.debug("(Component){}.setSize(width={}, height={})",
-							new Object[] { context.getId(), size.width(),
-									size.height() });
+			LOGGER.debug("(Component){}.setSize(width={}, height={})",
+					new Object[] { context.getId(), annotate.width(),
+							annotate.height() });
 		}
 	}
 

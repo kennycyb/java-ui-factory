@@ -15,15 +15,27 @@
  */
 package com.wpl.ui.enums;
 
+import java.awt.BorderLayout;
+
 public enum BorderLayoutConstraint {
 
-	CENTER,
+	CENTER(BorderLayout.CENTER),
 
-	NORTH,
+	NORTH(BorderLayout.NORTH),
 
-	EAST,
+	EAST(BorderLayout.EAST),
 
-	WEST,
+	WEST(BorderLayout.WEST),
 
-	SOUTH,
+	SOUTH(BorderLayout.SOUTH);
+
+	private final String mSwingConstant;
+
+	private BorderLayoutConstraint(String swingConstant) {
+		mSwingConstant = swingConstant;
+	}
+
+	public String getSwingConstant() {
+		return mSwingConstant;
+	}
 }

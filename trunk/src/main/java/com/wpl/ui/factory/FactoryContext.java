@@ -19,82 +19,73 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.AbstractButton;
-
-import com.wpl.ui.annotations.UiAutoWired;
-import com.wpl.ui.annotations.UiInit;
-import com.wpl.ui.annotations.UiPreInit;
 
 public class FactoryContext {
 
 	/**
 	 * The object that was being manufactured.
 	 */
-	private final Object mObject;
+	private Object mObject;
 
 	/**
 	 * Method to invoke before starting any manufacturing process.
 	 */
-	public Method mPreInitMethod;
+	private Method mPreInitMethod;
 
 	/**
 	 * Method to invoke once manufacturing is done by the factory.
 	 */
-	public Method mInitMethod;
+	private Method mInitMethod;
 
 	private boolean mAutoWired = true;
 
-	public FactoryContext(Object object) {
+	public FactoryContext() {
+	}
 
-		this.mObject = object;
+	public Object getObject() {
+		return mObject;
+	}
 
-		UiAutoWired autoWired = object.getClass().getAnnotation(
-				UiAutoWired.class);
-		mAutoWired = autoWired == null || autoWired.value();
+	public void setObject(Object object) {
+		mObject = object;
+	}
 
-		Method[] methods = object.getClass().getDeclaredMethods();
+	public void setAutoWired(boolean autoWired) {
+		mAutoWired = autoWired;
+	}
 
-		for (Method m : methods) {
-			if (m.getAnnotation(UiInit.class) != null) {
-				this.mInitMethod = m;
-				continue;
-			}
+	public void setInitMethod(Method initMethod) {
+		mInitMethod = initMethod;
+	}
 
-			if (m.getAnnotation(UiPreInit.class) != null) {
-				this.mPreInitMethod = m;
-				continue;
-			}
-
-			String methodName = m.getName();
-
-			if (methodName.startsWith("on")) {
-				int action = methodName.indexOf('_');
-				if (action > 0) {
-					String componentName = methodName.substring(2, 3)
-							.toLowerCase()
-							+ methodName.substring(3, action);
-					String actionName = methodName.substring(action + 1);
-
-					ComponentContext cInfo = this.mComponents.get(componentName);
-					if (cInfo == null) {
-						cInfo = new ComponentContext(componentName);
-						this.mComponents.put(componentName, cInfo);
-					}
-
-					cInfo.addActionListener(actionName, m);
-				}
-			}
-		}
-
+	public void setPreInitMethod(Method preInitMethod) {
+		mPreInitMethod = preInitMethod;
 	}
 
 	/**
 	 * List of component that has been manufactured.
 	 */
-	public Map<String, ComponentContext> mComponents = new HashMap<String, ComponentContext>();
+	private final Map<String, ComponentContext> mComponents = new HashMap<String, ComponentContext>();
+
+	public ComponentContext findComponentContext(String id) {
+		ComponentContext context = mComponents.get(id);
+		if (context == null) {
+			context = new ComponentContext();
+			context.setId(id);
+			mComponents.put(id, context);
+		}
+
+		return context;
+	}
+
+	public Collection<ComponentContext> getComponents() {
+		return mComponents.values();
+	}
 
 	public void onPreInit() {
 		invoke(this.mPreInitMethod);

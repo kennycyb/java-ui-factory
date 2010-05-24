@@ -32,7 +32,6 @@ import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.annotations.UiFont;
 import com.wpl.ui.annotations.UiResource;
-import com.wpl.ui.events.MenuBarEvent;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 import com.wpl.ui.factory.components.menu.MenuBarInfo;
@@ -66,6 +65,8 @@ public class JMenuBarFactory extends JComponentFactory {
 		final UiFont uiFont = context.getAnnotatedElement().getAnnotation(
 				UiFont.class);
 
+		LOGGER.debug("(JMenuBar){}.id={}", context.getId(), menuInfo.getId());
+
 		Font font = null;
 		if (uiFont != null) {
 
@@ -75,13 +76,36 @@ public class JMenuBarFactory extends JComponentFactory {
 
 		final Method onClicked = context.getActionListeners().get("clicked");
 
+		int menuIndex = -1;
+
 		for (MenuInfo menuItemInfo : menuInfo.getMenu()) {
+
+			menuIndex++;
+
 			JMenu menu = new JMenu(menuItemInfo.getText());
 			component.add(menu);
+
+			if (menuItemInfo.getId() == null) {
+				menuItemInfo.setId(menuItemInfo.getId());
+			}
+
+			ComponentContext child = new ComponentContext();
+			child.setId(menuItemInfo.getId());
+			child.setComponent(menu);
+			child.setDeclared(false);
+			context.addChild(child);
+
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("(JMenuBar){}.addMenu(id=\"{}\", menu=\"{}\")",
+						new Object[] { context.getId(), menuItemInfo.getId(),
+								menuItemInfo.getText() });
+			}
 
 			if (font != null) {
 				menu.setFont(font);
 			}
+
+			int menuChildIndex = -1;
 
 			for (MenuItemInfo item : menuItemInfo.getMenuItem()) {
 				if (item.getType() == MenuItemType.SEPARATOR) {
@@ -89,37 +113,63 @@ public class JMenuBarFactory extends JComponentFactory {
 					continue;
 				}
 
+				menuChildIndex++;
+
 				final JMenuItem mi = new JMenuItem(item.getText());
 				if (font != null) {
 					mi.setFont(font);
 				}
+
+				if (item.getId() == null) {
+					item.setId(item.getText());
+				}
+
+				ComponentContext menuChild = new ComponentContext();
+				menuChild.setId(item.getId());
+				menuChild.setComponent(mi);
+				child.addChild(menuChild);
+				child.setDeclared(false);
+
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug(
+							"(JMenuBar){}.{}.addItem(id=\"{}\", menu=\"{}\")",
+							new Object[] { context.getId(),
+									menuItemInfo.getId(), item.getId(),
+									item.getText() });
+				}
+
 				mi.setActionCommand(item.getId());
-				mi.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						if (onClicked == null) {
-							return;
+
+				if (onClicked != null && listener != null) {
+					mi.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+
+							onClicked.setAccessible(true);
+
+							try {
+								onClicked.invoke(listener, e);
+							} catch (IllegalArgumentException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (IllegalAccessException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (InvocationTargetException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 						}
+					});
 
-						final MenuBarEvent event = new MenuBarEvent();
-						event.setSourceId(e.getActionCommand());
-
-						onClicked.setAccessible(true);
-
-						try {
-							onClicked.invoke(listener, event);
-						} catch (IllegalArgumentException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						} catch (IllegalAccessException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						} catch (InvocationTargetException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+					if (LOGGER.isDebugEnabled()) {
+						LOGGER
+								.debug(
+										"wireComponent (JMenuItem){}.actionPerformed to {}",
+										new Object[] { menuChild.getId(),
+												onClicked.getName() });
 					}
-				});
+				}
 				menu.add(mi);
 			}
 		}

@@ -13,39 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.factory.components;
+package com.wpl.ui.listeners;
 
-import javax.swing.JComponent;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
-import com.wpl.ui.NullLayout;
-import com.wpl.ui.annotations.UiLayout;
-import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.UiAnnotationHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-/**
- * @since 1.0
- * @author kenny
- * 
- */
-public abstract class JComponentFactory extends ComponentFactory {
+public class MethodListener<E> {
+	private static Logger LOGGER = LoggerFactory
+			.getLogger(MethodListener.class);
 
-	@UiAnnotationHandler(UiLayout.class)
-	protected void handleUiLayout(ComponentContext context,
-			JComponent component, UiLayout layout) {
-		if (layout.value() == NullLayout.class) {
-			component.setLayout(null);
-			return;
-		}
+	private final Method mMethod;
+	private final Object mListenObject;
 
+	public MethodListener(Object object, Method method) {
+		mListenObject = object;
+		mMethod = method;
+	}
+
+	public void invoke(E args) {
 		try {
-			component.setLayout(layout.value().newInstance());
-		} catch (InstantiationException e) {
+			this.mMethod.setAccessible(true);
+			this.mMethod.invoke(mListenObject, args);
+		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
-
 }

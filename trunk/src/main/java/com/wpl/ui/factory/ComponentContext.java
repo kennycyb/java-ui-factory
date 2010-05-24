@@ -19,10 +19,18 @@ import java.awt.Component;
 import java.awt.Container;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ComponentContext {
+
+	private static Logger LOGGER = LoggerFactory
+			.getLogger(ComponentContext.class);
 
 	/**
 	 * The type of the component.
@@ -32,7 +40,7 @@ public class ComponentContext {
 	/**
 	 * The ID of the component. Should be unique within a Form.
 	 */
-	private final String mId;
+	private String mId;
 
 	/**
 	 * The component.
@@ -40,7 +48,7 @@ public class ComponentContext {
 	private Component mComponent;
 
 	/**
-	 * 
+	 * The container that contain this component.
 	 */
 	private Container mContainer;
 	private AnnotatedElement mAnnotatedElement;
@@ -49,9 +57,35 @@ public class ComponentContext {
 	private Object mActionListener;
 	private final Map<String, Method> mActionListeners = new HashMap<String, Method>();
 
-	public ComponentContext(String id) {
+	private final List<ComponentContext> mChildren = new ArrayList<ComponentContext>();
 
-		this.mId = id;
+	private boolean mDeclared = true;
+
+	public ComponentContext() {
+	}
+
+	public boolean isDeclared() {
+		return mDeclared;
+	}
+
+	public void setDeclared(boolean declared) {
+		mDeclared = declared;
+	}
+
+	public void setId(String id) {
+		mId = id;
+	}
+
+	public void addChild(ComponentContext context) {
+		mChildren.add(context);
+		// if (LOGGER.isDebugEnabled()) {
+		// LOGGER.debug("{} - child added {} ({})", new Object[] {
+		// this.getId(), context.getId(), context.getType() });
+		// }
+	}
+
+	public List<ComponentContext> getChildren() {
+		return mChildren;
 	}
 
 	public void setActionListener(Object actionListener) {

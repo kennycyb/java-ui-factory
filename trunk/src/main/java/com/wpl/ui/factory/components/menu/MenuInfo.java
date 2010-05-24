@@ -23,7 +23,17 @@ import javax.xml.bind.annotation.XmlElement;
 
 public class MenuInfo {
 
+	private String mId;
 	private String mText;
+
+	@XmlAttribute
+	public String getId() {
+		return mId;
+	}
+
+	public void setId(String id) {
+		mId = id;
+	}
 
 	@XmlAttribute
 	public String getText() {

@@ -49,7 +49,8 @@ public class JFrameFactory extends ComponentFactory {
 	protected void handleUiText(ComponentContext context, JFrame frame,
 			UiText text) {
 		frame.setTitle(text.value());
-		LOGGER.debug("(JFrame){}.setTitle({})", context.getId(), text.value());
+		LOGGER.debug("(JFrame){}.setTitle(\"{}\")", context.getId(), text
+				.value());
 	}
 
 	@UiAnnotationHandler(UiLayout.class)

@@ -15,15 +15,16 @@
  */
 package com.wpl.ui.factory;
 
-
 public interface IComponentFactory {
 
-    /**
-     * Create a custom component with given type.
-     * 
-     * @param clazz
-     * @param annotations
-     * @return
-     */
-    public void createComponent(ComponentContext context);
+	/**
+	 * Create a custom component with given type.
+	 * 
+	 * @param clazz
+	 * @param annotations
+	 * @return
+	 */
+	public void createComponent(ComponentContext context);
+
+	public void wireComponent(ComponentContext context);
 }

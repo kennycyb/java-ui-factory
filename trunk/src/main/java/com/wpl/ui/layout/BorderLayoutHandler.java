@@ -15,7 +15,6 @@
  */
 package com.wpl.ui.layout;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.lang.reflect.AnnotatedElement;
@@ -33,31 +32,7 @@ public class BorderLayoutHandler implements ILayoutHandler {
 			return false;
 		}
 
-		switch (constraint.value()) {
-		case CENTER:
-			container.add(component, BorderLayout.CENTER);
-			break;
-
-		case EAST:
-			container.add(component, BorderLayout.EAST);
-			break;
-
-		case NORTH:
-			container.add(component, BorderLayout.NORTH);
-			break;
-
-		case SOUTH:
-			container.add(component, BorderLayout.SOUTH);
-			break;
-
-		case WEST:
-			container.add(component, BorderLayout.WEST);
-			break;
-
-		default:
-			return false;
-		}
-
+		container.add(component, constraint.value().getSwingConstant());
 		return true;
 	}
 }

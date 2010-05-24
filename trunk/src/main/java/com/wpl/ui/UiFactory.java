@@ -21,6 +21,7 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,12 +37,16 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.RootPaneContainer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wpl.ui.annotations.UiAutoWired;
+import com.wpl.ui.annotations.UiInit;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiName;
+import com.wpl.ui.annotations.UiPreInit;
 import com.wpl.ui.annotations.UiType;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.FactoryContext;
@@ -173,7 +178,8 @@ public final class UiFactory {
 	}
 
 	private ILayoutHandler findLayoutHandler(Class<?> type) {
-		if (type == Object.class || type.isPrimitive() || type.isEnum()) {
+		if (type == null || type == Object.class || type.isPrimitive()
+				|| type.isEnum()) {
 			return findLayoutHandler(NullLayout.class);
 		}
 
@@ -201,193 +207,237 @@ public final class UiFactory {
 		}
 	}
 
-	private ComponentContext createComponentFromDeclaredField(
-			FactoryContext factoryContext, Container container, Object object,
-			Field f) {
+	private ComponentContext resolveAllComponents(
+			FactoryContext factoryContext, ComponentContext componentContext) {
 
-		if (!Component.class.isAssignableFrom(f.getType())) {
-			LOGGER.debug("ignore non-component field: {}", f.getName());
-			return null;
-		}
+		Field[] fields = componentContext.getType().getDeclaredFields();
 
-		if (Modifier.isStatic(f.getModifiers())) {
-			LOGGER.debug("ignore static field: {}", f.getName());
-			return null;
-		}
+		for (Field f : fields) {
 
-		LOGGER.debug("building: {} of type {}", f.getName(), f.getType());
-
-		f.setAccessible(true);
-
-		// Initialize Component Context
-		UiName uiName = f.getAnnotation(UiName.class);
-		UiType uiType = f.getAnnotation(UiType.class);
-
-		String id = uiName == null ? f.getName() : uiName.value();
-
-		ComponentContext componentContext = factoryContext.mComponents.get(id);
-
-		if (componentContext == null) {
-			componentContext = new ComponentContext(id);
-			factoryContext.mComponents.put(id, componentContext);
-		}
-
-		componentContext.setActionListener(object);
-		componentContext.setAnnotatedElement(f);
-		componentContext.setContainer(container);
-		componentContext.setType(uiType == null ? f.getType() : uiType.value());
-
-		Object fieldValue = null;
-		try {
-			fieldValue = f.get(object);
-			if (fieldValue != null) {
-				componentContext.setComponent(Component.class.cast(fieldValue));
+			if (Modifier.isStatic(f.getModifiers())) {
+				LOGGER.debug("ignore static field: {}", f.getName());
+				continue;
 			}
 
-			createComponent(componentContext);
+			UiType uiType = f.getAnnotation(UiType.class);
 
-			if (fieldValue == null) {
-				f.set(object, componentContext.getComponent());
+			Class<?> type = uiType == null ? f.getType() : uiType.value();
+
+			if (type == null || !Component.class.isAssignableFrom(type)) {
+				LOGGER.debug("ignore non-component field: {}", f.getName());
+				continue;
 			}
 
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			UiName childName = f.getAnnotation(UiName.class);
+
+			String childId = childName == null ? f.getName() : childName
+					.value();
+
+			ComponentContext childContext = factoryContext
+					.findComponentContext(childId);
+			childContext.setAnnotatedElement(f);
+			childContext.setDeclared(true);
+			childContext.setType(type);
+			resolveAllComponents(factoryContext, childContext);
+
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("resolving {} ({})- found {} ({})", new Object[] {
+						componentContext.getId(),
+						componentContext.getType().getSimpleName(),
+						childContext.getId(), childContext.getType() });
+			}
+
+			componentContext.addChild(childContext);
 		}
 
 		return componentContext;
 	}
 
-	private void createFields(FactoryContext factoryContext, Object object,
-			Class<? extends Component> clazz, Container container) {
+	private void create(FactoryContext factoryContext,
+			ComponentContext componentContext, boolean isRoot) {
 
-		UiLayout layout = clazz.getAnnotation(UiLayout.class);
-
-		ILayoutHandler layoutHandler;
-		if (layout == null) {
-			layoutHandler = findLayoutHandler(NullLayout.class);
-		} else {
-			layoutHandler = findLayoutHandler(layout.value());
+		if (componentContext == null || componentContext.getType() == null) {
+			LOGGER
+					.warn("context or type is null: {}", componentContext
+							.getId());
+			return;
 		}
 
-		LOGGER.debug("layoutHandler={}", layoutHandler.getClass()
-				.getSimpleName());
+		IComponentFactory factory = findFactory(componentContext.getType());
+		if (factory == null) {
+			return;
+		}
 
-		Field[] fields = clazz.getDeclaredFields();
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("> Creating {} ({})", new Object[] {
+					componentContext.getId(), componentContext.getType() });
+		}
 
-		for (Field f : fields) {
+		factory.createComponent(componentContext);
 
-			ComponentContext componentContext = createComponentFromDeclaredField(
-					factoryContext, container, object, f);
+		if (isRoot) {
+			factoryContext.setObject(componentContext.getComponent());
+			factoryContext.onPreInit();
+		}
 
-			if (componentContext == null
-					|| componentContext.getComponent() == null) {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("< {} created", componentContext.getId());
+		}
+
+		Container container = null;
+
+		if (componentContext.getComponent() instanceof JPanel) {
+			container = (JPanel) componentContext.getComponent();
+		} else if (componentContext.getComponent() instanceof RootPaneContainer) {
+			container = ((RootPaneContainer) componentContext.getComponent())
+					.getContentPane();
+		} else {
+			container = componentContext.getContainer();
+		}
+
+		UiLayout layout = componentContext.getAnnotatedElement().getAnnotation(
+				UiLayout.class);
+
+		ILayoutHandler layoutHandler = findLayoutHandler(layout == null ? NullLayout.class
+				: layout.value());
+
+		for (ComponentContext child : componentContext.getChildren()) {
+
+			if (!child.isDeclared()) {
 				continue;
 			}
 
-			if (layoutHandler.handleComponent(container, componentContext
-					.getEnclosedComponent(), f)) {
-				if (LOGGER.isDebugEnabled()) {
-					LOGGER.debug("Added {} ({}) into {}", new Object[] {
-							f.getName(),
-							componentContext.getComponent().getClass()
-									.getSimpleName(),
-							object.getClass().getSimpleName() });
-				}
-			} else {
-				if (LOGGER.isDebugEnabled()) {
-					LOGGER.debug("{} ({}) is not added", f.getName(),
-							componentContext.getComponent().getClass()
-									.getSimpleName());
+			child.setActionListener(factoryContext.getObject());
+			child.setContainer(container);
+
+			create(factoryContext, child, false);
+
+			if (child.getAnnotatedElement() instanceof Field) {
+				Field f = (Field) child.getAnnotatedElement();
+				try {
+					f.setAccessible(true);
+					f
+							.set(componentContext.getComponent(), child
+									.getComponent());
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 
+			if (layoutHandler.handleComponent(container, child
+					.getEnclosedComponent(), child.getAnnotatedElement())) {
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("Added {} ({}) into {}", new Object[] {
+							child.getId(),
+							child.getComponent().getClass().getSimpleName(),
+							container.getClass().getSimpleName() });
+				}
+			} else {
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("{} ({}) is not added", child.getId(), child
+							.getType().getSimpleName());
+				}
+			}
 		}
+
+		if (isRoot) {
+			factoryContext.onInit();
+		}
+		factoryContext.wireComponents();
 	}
 
-	public <T extends JFrame> T createFrame(Class<T> frameClazz) {
+	private FactoryContext getFactoryContext(Class<?> mainClass) {
 
-		LOGGER.debug("creating frame from: {}", frameClazz.getSimpleName());
+		FactoryContext factoryContext = new FactoryContext();
 
-		IComponentFactory frameFactory = findFactory(frameClazz);
+		UiAutoWired autoWired = mainClass.getAnnotation(UiAutoWired.class);
 
-		UiName name = frameClazz.getAnnotation(UiName.class);
+		factoryContext.setAutoWired(autoWired == null ? true : autoWired
+				.value());
 
-		ComponentContext context = new ComponentContext(name == null ? "JFrame"
-				: name.value());
+		Method[] methods = mainClass.getDeclaredMethods();
 
-		context.setType(frameClazz);
-		context.setAnnotatedElement(frameClazz);
+		for (Method m : methods) {
+			if (m.getAnnotation(UiInit.class) != null) {
+				factoryContext.setInitMethod(m);
+				continue;
+			}
 
-		frameFactory.createComponent(context);
+			if (m.getAnnotation(UiPreInit.class) != null) {
+				factoryContext.setPreInitMethod(m);
+				continue;
+			}
 
-		T frame = frameClazz.cast(context.getComponent());
+			String methodName = m.getName();
 
-		context.setActionListener(frame);
+			if (methodName.startsWith("on")) {
+				int action = methodName.indexOf('_');
+				if (action > 0) {
+					String componentName = methodName.substring(2, 3)
+							.toLowerCase()
+							+ methodName.substring(3, action);
+					String actionName = methodName.substring(action + 1);
 
-		FactoryContext factoryInfo = new FactoryContext(frame);
+					ComponentContext componentContext = factoryContext
+							.findComponentContext(componentName);
+					componentContext.addActionListener(actionName, m);
+				}
+			}
+		}
 
-		factoryInfo.onPreInit();
+		return factoryContext;
+	}
 
-		createFields(factoryInfo, frame, frameClazz, frame.getContentPane());
+	public <T extends JFrame> T createFrame(Class<T> frameClass) {
 
-		factoryInfo.onInit();
+		LOGGER.debug("Creating {}", frameClass.getSimpleName());
 
-		factoryInfo.wireComponents();
+		FactoryContext factoryContext = getFactoryContext(frameClass);
+		ComponentContext componentContext = new ComponentContext();
+
+		UiName name = frameClass.getAnnotation(UiName.class);
+		UiType cType = frameClass.getAnnotation(UiType.class);
+
+		componentContext.setId(name == null ? frameClass.getSimpleName() : name
+				.value());
+		componentContext.setAnnotatedElement(frameClass);
+		componentContext.setType(cType == null ? frameClass : cType.value());
+
+		resolveAllComponents(factoryContext, componentContext);
+
+		create(factoryContext, componentContext, true);
+
+		T frame = frameClass.cast(componentContext.getComponent());
 
 		return frame;
 	}
 
-	public <T extends Container> T createContainer(Class<T> containerClass) {
-		return createContainer(null, containerClass, null);
-	}
+	public <T extends Component> T createComponent(Class<T> componentClass) {
+		LOGGER.debug("Creating {}", componentClass.getSimpleName());
 
-	private <T extends Container> T createContainer(FactoryContext factoryInfo,
-			Class<T> containerClass, Object outer) {
+		FactoryContext factoryContext = getFactoryContext(componentClass);
+		ComponentContext componentContext = new ComponentContext();
 
-		LOGGER.debug("creating container from: {}", containerClass
-				.getSimpleName());
+		UiName name = componentClass.getAnnotation(UiName.class);
+		UiType cType = componentClass.getAnnotation(UiType.class);
 
-		// It's impossible that JPanel.class factory is not found, so no null
-		// checking is
-		// required.
-		IComponentFactory panelFactory = findFactory(containerClass);
+		componentContext.setId(name == null ? componentClass.getSimpleName()
+				: name.value());
+		componentContext.setAnnotatedElement(componentClass);
+		componentContext
+				.setType(cType == null ? componentClass : cType.value());
 
-		LOGGER.debug("Using factory: {}", panelFactory.getClass()
-				.getSimpleName());
+		resolveAllComponents(factoryContext, componentContext);
 
-		ComponentContext context = new ComponentContext(containerClass
-				.getName());
-		context.setType(containerClass);
-		context.setAnnotatedElement(containerClass);
+		create(factoryContext, componentContext, true);
 
-		panelFactory.createComponent(context);
-		T container = containerClass.cast(context.getComponent());
+		T component = componentClass.cast(componentContext.getComponent());
 
-		// TODO: outer
+		return component;
 
-		if (container == null) {
-			LOGGER.warn("Failed to create container from {}", containerClass
-					.getSimpleName());
-			return null;
-		}
-
-		if (factoryInfo == null) {
-			factoryInfo = new FactoryContext(container);
-		}
-
-		LOGGER.debug("created {} from type {}", container.getClass()
-				.getSimpleName(), containerClass.getSimpleName());
-
-		factoryInfo.onPreInit();
-
-		createFields(factoryInfo, container, containerClass, container);
-
-		factoryInfo.onInit();
-
-		return container;
 	}
 }

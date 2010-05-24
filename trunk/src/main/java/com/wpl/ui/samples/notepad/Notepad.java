@@ -16,6 +16,7 @@
 package com.wpl.ui.samples.notepad;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -41,7 +42,6 @@ import com.wpl.ui.enums.BorderLayoutConstraint;
 import com.wpl.ui.enums.FontStyle;
 import com.wpl.ui.enums.FrameCloseOperation;
 import com.wpl.ui.enums.ScrollBarPolicy;
-import com.wpl.ui.events.MenuBarEvent;
 
 /**
  * Sample of Notepad Application.
@@ -84,21 +84,21 @@ public class Notepad extends JFrame {
 	}
 
 	@SuppressWarnings("unused")
-	private void onMenuBar_clicked(MenuBarEvent menubarEvent) {
+	private void onMenuBar_clicked(ActionEvent e) {
 
-		String sourceId = menubarEvent.getSourceId();
+		String actionCommand = e.getActionCommand();
 
-		if (sourceId == null) {
+		if (actionCommand == null) {
 			LOGGER.debug("menu-clicked=null");
 			return;
 		}
 
-		if (sourceId.equals("file.new")) {
+		if (actionCommand.equals("file.new")) {
 			LOGGER.debug("menu-clicked=file.new");
 			content.setText("");
 		}
 
-		if (sourceId.equals("file.exit")) {
+		if (actionCommand.equals("file.exit")) {
 			LOGGER.debug("menu-clicked=file.exit");
 			System.exit(0);
 		}

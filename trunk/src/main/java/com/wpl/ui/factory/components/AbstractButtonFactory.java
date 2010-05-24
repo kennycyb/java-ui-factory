@@ -15,6 +15,9 @@
  */
 package com.wpl.ui.factory.components;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.lang.reflect.Method;
 import java.net.URL;
 
 import javax.swing.AbstractButton;
@@ -29,11 +32,39 @@ import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.annotations.actions.UiActionCommand;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
+import com.wpl.ui.listeners.MethodListener;
 
 public abstract class AbstractButtonFactory extends JComponentFactory {
 
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(AbstractButtonFactory.class);
+
+	@Override
+	public void wireComponent(ComponentContext context) {
+
+		AbstractButton component = (AbstractButton) context.getComponent();
+
+		Method onClicked = context.getActionListeners().get("clicked");
+
+		if (onClicked != null) {
+
+			final MethodListener<ActionEvent> listener = new MethodListener<ActionEvent>(
+					context.getActionListener(), onClicked);
+
+			component.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					listener.invoke(e);
+				}
+			});
+
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("wireComponent ({}){}.actionPerformed to {} ",
+						new Object[] { context.getType().getSimpleName(),
+								context.getId(), onClicked.getName() });
+			}
+		}
+	}
 
 	@UiAnnotationHandler(UiText.class)
 	protected void handleUiText(ComponentContext context,

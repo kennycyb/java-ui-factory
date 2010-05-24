@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <menuBar id="mainMenu">
-    <menu text="File">
+    <menu id="file" text="File">
         <menuItem id="file.new" text="New"/>
         <menuItem text="Open..."/>
         <menuItem text="Save"/>
@@ -11,7 +11,7 @@
 		<menuItem type="SEPARATOR"/>
 		<menuItem id="file.exit" text="Exit"/>
     </menu>
-    <menu text="Edit">
+    <menu id="edit" text="Edit">
     	<menuItem id="edit.undo" text="Undo" bindable="true"/>
     	<menuItem type="SEPARATOR"/>
     	<menuItem text="Cut"/>

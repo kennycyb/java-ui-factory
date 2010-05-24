@@ -33,4 +33,5 @@ public class JButtonFactory extends AbstractButtonFactory {
 			JButton component, UiDefaultButton annotate) {
 		component.setDefaultCapable(true);
 	}
+
 }
