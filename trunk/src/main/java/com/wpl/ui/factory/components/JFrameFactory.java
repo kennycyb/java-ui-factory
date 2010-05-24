@@ -26,6 +26,7 @@ import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
 import com.wpl.ui.annotations.frame.UiFrameResizable;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
 public class JFrameFactory extends ComponentFactory {
@@ -38,24 +39,24 @@ public class JFrameFactory extends ComponentFactory {
 	}
 
 	@UiAnnotationHandler(UiFrameResizable.class)
-	protected void handleUiResizable(ComponentContext context, JFrame frame,
-			UiFrameResizable resizable) {
+	protected void handleUiResizable(FactoryContext factory,
+			ComponentContext context, JFrame frame, UiFrameResizable resizable) {
 		frame.setResizable(resizable.value());
 		LOGGER.debug("(JFrame){}.setResizable({})", context.getId(), resizable
 				.value());
 	}
 
 	@UiAnnotationHandler(UiText.class)
-	protected void handleUiText(ComponentContext context, JFrame frame,
-			UiText text) {
+	protected void handleUiText(FactoryContext factory,
+			ComponentContext context, JFrame frame, UiText text) {
 		frame.setTitle(text.value());
 		LOGGER.debug("(JFrame){}.setTitle(\"{}\")", context.getId(), text
 				.value());
 	}
 
 	@UiAnnotationHandler(UiLayout.class)
-	protected void handleUiLayout(ComponentContext context, JFrame component,
-			UiLayout layout) {
+	protected void handleUiLayout(FactoryContext factory,
+			ComponentContext context, JFrame component, UiLayout layout) {
 		if (layout.value() == NullLayout.class) {
 			component.setLayout(null);
 			return;
@@ -73,43 +74,12 @@ public class JFrameFactory extends ComponentFactory {
 	}
 
 	@UiAnnotationHandler(UiFrameCloseOperation.class)
-	protected void handleUiFrameCloseOperation(ComponentContext context,
-			JFrame frame, UiFrameCloseOperation fco) {
-		switch (fco.value()) {
+	protected void handleUiFrameCloseOperation(FactoryContext factory,
+			ComponentContext context, JFrame frame, UiFrameCloseOperation fco) {
 
-		case EXIT:
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			LOGGER
-					.debug(
-							"(JFrame){}.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)",
-							context.getId());
-			break;
+		frame.setDefaultCloseOperation(fco.value().getSwingConstant());
 
-		case DISPOSE:
-			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			LOGGER
-					.debug(
-							"(JFrame){}.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE)",
-							context.getId());
-			break;
-
-		case HIDE:
-			frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-			LOGGER
-					.debug(
-							"(JFrame){}.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE)",
-							context.getId());
-			break;
-
-		default:
-			frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-			LOGGER
-					.debug(
-							"(JFrame){}.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE)",
-							context.getId());
-			break;
-
-		}
+		LOGGER.debug("(JFrame){}.setDefaultCloseOperation({})",
+				context.getId(), fco.value());
 	}
-
 }

@@ -19,19 +19,20 @@ import javax.swing.text.JTextComponent;
 
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
 /**
  * 
  * @author kenny
  * @since 1.0
- *
+ * 
  */
 public abstract class JTextComponentFactory extends JComponentFactory {
 
 	@UiAnnotationHandler(UiText.class)
-	protected void handleUiText(ComponentContext context,
-			JTextComponent component, UiText annotate) {
+	protected void handleUiText(FactoryContext factory,
+			ComponentContext context, JTextComponent component, UiText annotate) {
 		component.setText(annotate.value());
 	}
 }

@@ -15,15 +15,12 @@
  */
 package com.wpl.ui.factory;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.swing.AbstractButton;
 
 public class FactoryContext {
 
@@ -41,6 +38,8 @@ public class FactoryContext {
 	 * Method to invoke once manufacturing is done by the factory.
 	 */
 	private Method mInitMethod;
+
+	private Field mFactoryContextHolder;
 
 	private boolean mAutoWired = true;
 
@@ -72,6 +71,8 @@ public class FactoryContext {
 	 */
 	private final Map<String, ComponentContext> mComponents = new HashMap<String, ComponentContext>();
 
+	private final Map<String, ComponentContext> mBindableComponents = new HashMap<String, ComponentContext>();
+
 	public ComponentContext findComponentContext(String id) {
 		ComponentContext context = mComponents.get(id);
 		if (context == null) {
@@ -81,6 +82,14 @@ public class FactoryContext {
 		}
 
 		return context;
+	}
+
+	public void addBindableComponent(ComponentContext context) {
+		mBindableComponents.put(context.getId(), context);
+	}
+
+	public Collection<ComponentContext> getbindableComponent() {
+		return mBindableComponents.values();
 	}
 
 	public Collection<ComponentContext> getComponents() {
@@ -95,38 +104,12 @@ public class FactoryContext {
 		invoke(this.mInitMethod);
 	}
 
-	public void wireComponents() {
-		for (final ComponentContext info : mComponents.values()) {
-			for (final Map.Entry<String, Method> entry : info
-					.getActionListeners().entrySet()) {
-				if (entry.getKey().equals("clicked")) {
-					if (info.getComponent() instanceof AbstractButton) {
-						AbstractButton button = (AbstractButton) info
-								.getComponent();
-						button.addActionListener(new ActionListener() {
+	public void setFactoryContextHolder(Field factoryContextHolder) {
+		mFactoryContextHolder = factoryContextHolder;
+	}
 
-							@Override
-							public void actionPerformed(ActionEvent e) {
-								try {
-									entry.getValue().setAccessible(true);
-									entry.getValue().invoke(
-											FactoryContext.this.mObject);
-								} catch (IllegalArgumentException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								} catch (IllegalAccessException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								} catch (InvocationTargetException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								}
-							}
-						});
-					}
-				}
-			}
-		}
+	public Field getFactoryContextHolder() {
+		return mFactoryContextHolder;
 	}
 
 	private void invoke(Method method) {

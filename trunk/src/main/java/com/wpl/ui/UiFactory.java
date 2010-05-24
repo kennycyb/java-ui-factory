@@ -43,6 +43,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.annotations.UiAutoWired;
+import com.wpl.ui.annotations.UiComponentOf;
 import com.wpl.ui.annotations.UiInit;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiName;
@@ -192,23 +193,15 @@ public final class UiFactory {
 		return findLayoutHandler(type.getSuperclass());
 	}
 
-	private void createComponent(ComponentContext componentContext) {
-
-		IComponentFactory factory = findFactory(componentContext.getType());
-
-		if (factory == null) {
-			return;
-		}
-
-		factory.createComponent(componentContext);
-
-		if (componentContext.getComponent() == null) {
-			return;
-		}
-	}
-
 	private ComponentContext resolveComponentContext(
 			FactoryContext factoryContext, ComponentContext componentContext) {
+
+		UiComponentOf componentOf = componentContext.getAnnotatedElement()
+				.getAnnotation(UiComponentOf.class);
+		if (componentOf != null) {
+			componentContext.setParentId(componentOf.value());
+			factoryContext.addBindableComponent(componentContext);
+		}
 
 		// Do not resolve inner components if this is java's package.
 		if (componentContext.getType().getPackage().getName()
@@ -223,6 +216,10 @@ public final class UiFactory {
 			if (Modifier.isStatic(f.getModifiers())) {
 				LOGGER.debug("ignore static field: {}", f.getName());
 				continue;
+			}
+
+			if (f.getType() == FactoryContext.class) {
+				factoryContext.setFactoryContextHolder(f);
 			}
 
 			UiType uiType = f.getAnnotation(UiType.class);
@@ -279,10 +276,23 @@ public final class UiFactory {
 					componentContext.getId(), componentContext.getType() });
 		}
 
-		factory.createComponent(componentContext);
+		factory.createComponent(factoryContext, componentContext);
 
 		if (isRoot) {
 			factoryContext.setObject(componentContext.getComponent());
+			if (factoryContext.getFactoryContextHolder() != null) {
+				factoryContext.getFactoryContextHolder().setAccessible(true);
+				try {
+					factoryContext.getFactoryContextHolder().set(
+							factoryContext.getObject(), factoryContext);
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			factoryContext.onPreInit();
 		}
 
@@ -353,7 +363,6 @@ public final class UiFactory {
 		if (isRoot) {
 			factoryContext.onInit();
 		}
-		factoryContext.wireComponents();
 	}
 
 	private FactoryContext getFactoryContext(Class<?> mainClass) {

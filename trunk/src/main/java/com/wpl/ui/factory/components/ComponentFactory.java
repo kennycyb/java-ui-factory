@@ -37,6 +37,7 @@ import com.wpl.ui.annotations.UiSize;
 import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
 import com.wpl.ui.enums.ScrollBarPolicy;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.IComponentFactory;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
@@ -113,7 +114,7 @@ public abstract class ComponentFactory implements IComponentFactory {
 	abstract protected Class<?> defaultType();
 
 	@Override
-	public void createComponent(ComponentContext context) {
+	public void createComponent(FactoryContext factory, ComponentContext context) {
 
 		if (context == null) {
 			return;
@@ -126,20 +127,20 @@ public abstract class ComponentFactory implements IComponentFactory {
 		// TODO: handle inner class
 
 		try {
-			this.create(context);
-			this.init(context);
+			this.createInstance(context);
+			this.init(factory, context);
 		} catch (Throwable t) {
 			LOGGER.error("Failed to create component", t);
 		}
 	}
 
-	private void create(ComponentContext context)
+	private void createInstance(ComponentContext context)
 			throws InstantiationException, IllegalAccessException {
 		context.setComponent(Component.class.cast(context.getType()
 				.newInstance()));
 	}
 
-	protected void init(ComponentContext context) {
+	protected void init(FactoryContext factory, ComponentContext context) {
 
 		if (context.getComponent() == null) {
 			LOGGER.debug("init failed - component is null");
@@ -164,7 +165,8 @@ public abstract class ComponentFactory implements IComponentFactory {
 			}
 
 			try {
-				handler.invoke(this, context, context.getComponent(), annotate);
+				handler.invoke(this, factory, context, context.getComponent(),
+						annotate);
 			} catch (IllegalArgumentException e1) {
 
 				LOGGER.warn("IllegalArgument: {}({}, {})", new Object[] {
@@ -191,14 +193,15 @@ public abstract class ComponentFactory implements IComponentFactory {
 	// ~ UiAnnotationHandlers --------------------------------------------------
 
 	@UiAnnotationHandler(UiBorderLayoutConstraint.class)
-	protected void handleUiBorderLayoutConstraint(ComponentContext context,
-			Component component, UiBorderLayoutConstraint annotate) {
+	protected void handleUiBorderLayoutConstraint(FactoryContext factory,
+			ComponentContext context, Component component,
+			UiBorderLayoutConstraint annotate) {
 
 	}
 
 	@UiAnnotationHandler(UiSize.class)
-	protected void handleUiSize(ComponentContext context, Component component,
-			UiSize annotate) {
+	protected void handleUiSize(FactoryContext factory,
+			ComponentContext context, Component component, UiSize annotate) {
 		component.setSize(annotate.width(), annotate.height());
 		component.setPreferredSize(new Dimension(annotate.width(), annotate
 				.height()));
@@ -211,8 +214,8 @@ public abstract class ComponentFactory implements IComponentFactory {
 	}
 
 	@UiAnnotationHandler(UiLocation.class)
-	protected void handleUiLocation(ComponentContext context,
-			Component component, UiLocation location) {
+	protected void handleUiLocation(FactoryContext factory,
+			ComponentContext context, Component component, UiLocation location) {
 		component.setLocation(location.x(), location.y());
 
 		if (LOGGER.isDebugEnabled()) {
@@ -222,8 +225,8 @@ public abstract class ComponentFactory implements IComponentFactory {
 	}
 
 	@UiAnnotationHandler(UiFont.class)
-	protected void handleUiFont(ComponentContext context, Component component,
-			UiFont font) {
+	protected void handleUiFont(FactoryContext factory,
+			ComponentContext context, Component component, UiFont font) {
 
 		component.setFont(new Font(font.name(),
 				font.style().getSwingConstant(), font.size()));
@@ -235,8 +238,8 @@ public abstract class ComponentFactory implements IComponentFactory {
 	}
 
 	@UiAnnotationHandler(UiName.class)
-	protected void handleUiName(ComponentContext context, Component component,
-			UiName name) {
+	protected void handleUiName(FactoryContext factory,
+			ComponentContext context, Component component, UiName name) {
 		component.setName(name.value());
 	}
 
@@ -276,8 +279,8 @@ public abstract class ComponentFactory implements IComponentFactory {
 	}
 
 	@UiAnnotationHandler(UiScrollable.class)
-	protected void handlerUiScrollable(ComponentContext context,
-			Component component, UiScrollable annotate) {
+	protected void handleUiScrollable(FactoryContext factory,
+			ComponentContext context, Component component, UiScrollable annotate) {
 		JScrollPane scroll = new JScrollPane(component);
 		scroll.setHorizontalScrollBarPolicy(getScrollBarPolicyValue(true,
 				annotate.horizontal()));

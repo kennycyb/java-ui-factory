@@ -31,6 +31,7 @@ import com.wpl.ui.annotations.UiIcon;
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.annotations.actions.UiActionCommand;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 import com.wpl.ui.listeners.MethodListener;
 
@@ -67,26 +68,28 @@ public abstract class AbstractButtonFactory extends JComponentFactory {
 	}
 
 	@UiAnnotationHandler(UiText.class)
-	protected void handleUiText(ComponentContext context,
-			AbstractButton component, UiText text) {
+	protected void handleUiText(FactoryContext factory,
+			ComponentContext context, AbstractButton component, UiText text) {
 		component.setText(text.value());
 	}
 
 	@UiAnnotationHandler(UiActionCommand.class)
-	protected void handlerUiActionCommand(ComponentContext context,
-			AbstractButton component, UiActionCommand annotate) {
+	protected void handleUiActionCommand(FactoryContext factory,
+			ComponentContext context, AbstractButton component,
+			UiActionCommand annotate) {
 		component.setActionCommand(annotate.value());
 	}
 
 	@UiAnnotationHandler(UiEnabled.class)
-	protected void handlerUiEnabled(ComponentContext context,
-			AbstractButton component, UiEnabled annotate) {
+	protected void handleUiEnabled(FactoryContext factory,
+			ComponentContext context, AbstractButton component,
+			UiEnabled annotate) {
 		component.setEnabled(annotate.value());
 	}
 
 	@UiAnnotationHandler(UiIcon.class)
-	protected void handlerUiIcon(ComponentContext context,
-			AbstractButton component, UiIcon annotate) {
+	protected void handleUiIcon(FactoryContext factory,
+			ComponentContext context, AbstractButton component, UiIcon annotate) {
 		URL url = getClass().getClassLoader().getResource(annotate.value());
 		if (url == null) {
 			LOGGER.warn("(AbstractButtonFactory){} - icon not found - {}",

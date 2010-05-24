@@ -61,7 +61,17 @@ public class ComponentContext {
 
 	private boolean mDeclared = true;
 
+	private String mParentId;
+
 	public ComponentContext() {
+	}
+
+	public String getParentId() {
+		return mParentId;
+	}
+
+	public void setParentId(String parentId) {
+		mParentId = parentId;
 	}
 
 	public boolean isDeclared() {

@@ -13,18 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.factory;
+package com.wpl.ui.annotations;
 
-public interface IComponentFactory {
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-	/**
-	 * Create a custom component with given type.
-	 * 
-	 * @param clazz
-	 * @param annotations
-	 * @return
-	 */
-	public void createComponent(FactoryContext factory, ComponentContext context);
-
-	public void wireComponent(ComponentContext context);
+@Retention(RetentionPolicy.RUNTIME)
+@Target( { ElementType.FIELD })
+public @interface UiComponentOf {
+	String value();
 }

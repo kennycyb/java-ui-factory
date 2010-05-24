@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.UiFactory;
 import com.wpl.ui.annotations.UiAutoWired;
+import com.wpl.ui.annotations.UiComponentOf;
 import com.wpl.ui.annotations.UiFont;
 import com.wpl.ui.annotations.UiInit;
 import com.wpl.ui.annotations.UiLayout;
@@ -72,15 +73,16 @@ public class Notepad extends JFrame {
 	@UiFont(name = "Arial", style = FontStyle.BOLD, size = 12)
 	private JMenuBar menuBar;
 
-	// @UiItemOf("menuBar")
+	@UiComponentOf("menuBar")
 	private JMenuItem undo;
+
+	@UiComponentOf("menuBar")
+	private JMenuItem cut;
 
 	@UiInit
 	private void init() {
-
-		if (undo != null) {
-			undo.setEnabled(false);
-		}
+		undo.setEnabled(false);
+		cut.setEnabled(false);
 	}
 
 	@SuppressWarnings("unused")
@@ -93,13 +95,14 @@ public class Notepad extends JFrame {
 			return;
 		}
 
+		LOGGER.debug("menu-clicked={}", actionCommand);
+
 		if (actionCommand.equals("file.new")) {
-			LOGGER.debug("menu-clicked=file.new");
 			content.setText("");
+			return;
 		}
 
 		if (actionCommand.equals("file.exit")) {
-			LOGGER.debug("menu-clicked=file.exit");
 			System.exit(0);
 		}
 	}

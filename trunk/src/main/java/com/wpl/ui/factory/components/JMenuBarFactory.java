@@ -19,7 +19,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.swing.JMenu;
@@ -33,11 +32,13 @@ import org.slf4j.LoggerFactory;
 import com.wpl.ui.annotations.UiFont;
 import com.wpl.ui.annotations.UiResource;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 import com.wpl.ui.factory.components.menu.MenuBarInfo;
 import com.wpl.ui.factory.components.menu.MenuInfo;
 import com.wpl.ui.factory.components.menu.MenuItemInfo;
 import com.wpl.ui.factory.components.menu.MenuItemType;
+import com.wpl.ui.listeners.MethodListener;
 
 public class JMenuBarFactory extends JComponentFactory {
 	private static Logger LOGGER = LoggerFactory
@@ -49,8 +50,9 @@ public class JMenuBarFactory extends JComponentFactory {
 	}
 
 	@UiAnnotationHandler(UiResource.class)
-	protected void handlerUiResource(final ComponentContext context,
-			final JMenuBar component, UiResource annotate) {
+	protected void handleUiResource(FactoryContext factory,
+			final ComponentContext context, final JMenuBar component,
+			UiResource annotate) {
 
 		InputStream in = this.getClass().getClassLoader().getResourceAsStream(
 				annotate.value());
@@ -76,6 +78,23 @@ public class JMenuBarFactory extends JComponentFactory {
 
 		final Method onClicked = context.getActionListeners().get("clicked");
 
+		ActionListener onClickedListener = null;
+
+		if (listener != null && onClicked != null) {
+
+			final MethodListener<ActionEvent> methodListener = new MethodListener<ActionEvent>(
+					listener, onClicked);
+
+			onClickedListener = new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					methodListener.invoke(e);
+				}
+			};
+
+		}
+
 		int menuIndex = -1;
 
 		for (MenuInfo menuItemInfo : menuInfo.getMenu()) {
@@ -89,7 +108,8 @@ public class JMenuBarFactory extends JComponentFactory {
 				menuItemInfo.setId(menuItemInfo.getId());
 			}
 
-			ComponentContext child = new ComponentContext();
+			ComponentContext child = factory.findComponentContext(menuItemInfo
+					.getId());
 			child.setId(menuItemInfo.getId());
 			child.setComponent(menu);
 			child.setDeclared(false);
@@ -124,8 +144,8 @@ public class JMenuBarFactory extends JComponentFactory {
 					item.setId(item.getText());
 				}
 
-				ComponentContext menuChild = new ComponentContext();
-				menuChild.setId(item.getId());
+				ComponentContext menuChild = factory.findComponentContext(item
+						.getId());
 				menuChild.setComponent(mi);
 				child.addChild(menuChild);
 				child.setDeclared(false);
@@ -140,27 +160,8 @@ public class JMenuBarFactory extends JComponentFactory {
 
 				mi.setActionCommand(item.getId());
 
-				if (onClicked != null && listener != null) {
-					mi.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-
-							onClicked.setAccessible(true);
-
-							try {
-								onClicked.invoke(listener, e);
-							} catch (IllegalArgumentException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							} catch (IllegalAccessException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							} catch (InvocationTargetException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}
-					});
+				if (onClickedListener != null) {
+					mi.addActionListener(onClickedListener);
 
 					if (LOGGER.isDebugEnabled()) {
 						LOGGER

@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.annotations.constraints.UiGridLayoutConstraint;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
 public class JPanelFactory extends JComponentFactory {
@@ -37,8 +38,9 @@ public class JPanelFactory extends JComponentFactory {
 	}
 
 	@UiAnnotationHandler(UiGridLayoutConstraint.class)
-	protected void handleUiGridLayoutConstraint(ComponentContext context,
-			JPanel component, UiGridLayoutConstraint annotate) {
+	protected void handleUiGridLayoutConstraint(FactoryContext factory,
+			ComponentContext context, JPanel component,
+			UiGridLayoutConstraint annotate) {
 		LayoutManager lm = component.getLayout();
 
 		if (lm instanceof GridLayout) {

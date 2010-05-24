@@ -15,25 +15,37 @@
  */
 package com.wpl.ui.enums;
 
+import javax.swing.JFrame;
+
 public enum FrameCloseOperation {
 
-    /**
-     * Do nothing when frame is closed.
-     */
-    NOTHING,
+	/**
+	 * Do nothing when frame is closed.
+	 */
+	NOTHING(JFrame.DO_NOTHING_ON_CLOSE),
 
-    /**
-     * Hide when frame is closed.
-     */
-    HIDE,
+	/**
+	 * Hide when frame is closed.
+	 */
+	HIDE(JFrame.HIDE_ON_CLOSE),
 
-    /**
-     * Frame will be disposed when is closed.
-     */
-    DISPOSE,
+	/**
+	 * Frame will be disposed when is closed.
+	 */
+	DISPOSE(JFrame.DISPOSE_ON_CLOSE),
 
-    /**
-     * Application will exit when a frame is closed.
-     */
-    EXIT
+	/**
+	 * Application will exit when a frame is closed.
+	 */
+	EXIT(JFrame.EXIT_ON_CLOSE);
+
+	private final int mSwingConstant;
+
+	private FrameCloseOperation(int swingConstant) {
+		mSwingConstant = swingConstant;
+	}
+
+	public int getSwingConstant() {
+		return mSwingConstant;
+	}
 }

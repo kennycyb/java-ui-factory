@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.annotations.UiTextFormat;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
 public class JFormattedTextFieldFactory extends JTextFieldFactory {
@@ -39,8 +40,9 @@ public class JFormattedTextFieldFactory extends JTextFieldFactory {
 	}
 
 	@UiAnnotationHandler(UiTextFormat.class)
-	protected void handleUiTextFormat(ComponentContext context,
-			JFormattedTextField component, UiTextFormat annotate) {
+	protected void handleUiTextFormat(FactoryContext factory,
+			ComponentContext context, JFormattedTextField component,
+			UiTextFormat annotate) {
 
 		JFormattedTextField.AbstractFormatter formatter = null;
 

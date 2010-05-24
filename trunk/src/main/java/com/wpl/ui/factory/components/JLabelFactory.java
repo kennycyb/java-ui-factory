@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import com.wpl.ui.annotations.UiIcon;
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
 public class JLabelFactory extends JComponentFactory {
@@ -38,8 +39,8 @@ public class JLabelFactory extends JComponentFactory {
 	}
 
 	@UiAnnotationHandler(UiText.class)
-	protected void handleUiText(ComponentContext context, JLabel component,
-			UiText annotate) {
+	protected void handleUiText(FactoryContext factory,
+			ComponentContext context, JLabel component, UiText annotate) {
 		component.setText(annotate.value());
 
 		if (LOGGER.isDebugEnabled()) {
@@ -49,8 +50,8 @@ public class JLabelFactory extends JComponentFactory {
 	}
 
 	@UiAnnotationHandler(UiIcon.class)
-	protected void handlerUiIcon(ComponentContext context, JLabel component,
-			UiIcon annotate) {
+	protected void handleUiIcon(FactoryContext factory,
+			ComponentContext context, JLabel component, UiIcon annotate) {
 		URL url = getClass().getClassLoader().getResource(annotate.value());
 		if (url == null) {
 			LOGGER.warn("(AbstractButtonFactory){} - icon not found - {}",

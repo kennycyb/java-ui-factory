@@ -20,6 +20,7 @@ import javax.swing.JComponent;
 import com.wpl.ui.NullLayout;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
 /**
@@ -30,8 +31,8 @@ import com.wpl.ui.factory.UiAnnotationHandler;
 public abstract class JComponentFactory extends ComponentFactory {
 
 	@UiAnnotationHandler(UiLayout.class)
-	protected void handleUiLayout(ComponentContext context,
-			JComponent component, UiLayout layout) {
+	protected void handleUiLayout(FactoryContext factory,
+			ComponentContext context, JComponent component, UiLayout layout) {
 		if (layout.value() == NullLayout.class) {
 			component.setLayout(null);
 			return;
