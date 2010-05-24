@@ -207,8 +207,14 @@ public final class UiFactory {
 		}
 	}
 
-	private ComponentContext resolveAllComponents(
+	private ComponentContext resolveComponentContext(
 			FactoryContext factoryContext, ComponentContext componentContext) {
+
+		// Do not resolve inner components if this is java's package.
+		if (componentContext.getType().getPackage().getName()
+				.startsWith("java")) {
+			return componentContext;
+		}
 
 		Field[] fields = componentContext.getType().getDeclaredFields();
 
@@ -238,7 +244,7 @@ public final class UiFactory {
 			childContext.setAnnotatedElement(f);
 			childContext.setDeclared(true);
 			childContext.setType(type);
-			resolveAllComponents(factoryContext, childContext);
+			resolveComponentContext(factoryContext, childContext);
 
 			if (LOGGER.isDebugEnabled()) {
 				LOGGER.debug("resolving {} ({})- found {} ({})", new Object[] {
@@ -407,7 +413,7 @@ public final class UiFactory {
 		componentContext.setAnnotatedElement(frameClass);
 		componentContext.setType(cType == null ? frameClass : cType.value());
 
-		resolveAllComponents(factoryContext, componentContext);
+		resolveComponentContext(factoryContext, componentContext);
 
 		create(factoryContext, componentContext, true);
 
@@ -431,7 +437,7 @@ public final class UiFactory {
 		componentContext
 				.setType(cType == null ? componentClass : cType.value());
 
-		resolveAllComponents(factoryContext, componentContext);
+		resolveComponentContext(factoryContext, componentContext);
 
 		create(factoryContext, componentContext, true);
 
