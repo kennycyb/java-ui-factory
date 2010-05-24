@@ -15,14 +15,25 @@
  */
 package com.wpl.ui.factory.components;
 
-import javax.swing.AbstractButton;
+import java.net.URL;
 
+import javax.swing.AbstractButton;
+import javax.swing.ImageIcon;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.wpl.ui.annotations.UiEnabled;
+import com.wpl.ui.annotations.UiIcon;
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.annotations.actions.UiActionCommand;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
 public abstract class AbstractButtonFactory extends JComponentFactory {
+
+	private static Logger LOGGER = LoggerFactory
+			.getLogger(AbstractButtonFactory.class);
 
 	@UiAnnotationHandler(UiText.class)
 	protected void handleUiText(ComponentContext context,
@@ -36,4 +47,25 @@ public abstract class AbstractButtonFactory extends JComponentFactory {
 		component.setActionCommand(annotate.value());
 	}
 
+	@UiAnnotationHandler(UiEnabled.class)
+	protected void handlerUiEnabled(ComponentContext context,
+			AbstractButton component, UiEnabled annotate) {
+		component.setEnabled(annotate.value());
+	}
+
+	@UiAnnotationHandler(UiIcon.class)
+	protected void handlerUiIcon(ComponentContext context,
+			AbstractButton component, UiIcon annotate) {
+		URL url = getClass().getClassLoader().getResource(annotate.value());
+		if (url == null) {
+			LOGGER.warn("(AbstractButtonFactory){} - icon not found - {}",
+					context.getId(), annotate.value());
+			return;
+		}
+
+		component.setIcon(new ImageIcon(url));
+		LOGGER.debug(
+				"(AbstractButtonFactory){}.setIcon(new ImageIcon(\"{}\"))",
+				context.getId(), annotate.value());
+	}
 }

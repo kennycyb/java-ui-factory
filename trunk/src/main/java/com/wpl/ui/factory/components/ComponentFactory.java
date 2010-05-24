@@ -212,21 +212,8 @@ public abstract class ComponentFactory implements IComponentFactory {
 	protected void handleUiFont(ComponentContext context, Component component,
 			UiFont font) {
 
-		int style;
-
-		switch (font.style()) {
-		case BOLD:
-			style = Font.BOLD;
-			break;
-		case ITALIC:
-			style = Font.ITALIC;
-			break;
-		default:
-			style = Font.PLAIN;
-			break;
-		}
-
-		component.setFont(new Font(font.name(), style, font.size()));
+		component.setFont(new Font(font.name(),
+				font.style().getSwingConstant(), font.size()));
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("(Component){}.setFont(name={}, style={}, size={})",
 					new Object[] { context.getId(), font.name(), font.style(),

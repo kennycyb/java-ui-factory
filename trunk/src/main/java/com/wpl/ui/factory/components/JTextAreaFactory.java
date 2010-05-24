@@ -47,32 +47,32 @@ public class JTextAreaFactory extends JTextComponentFactory {
 	protected void handleUiText(ComponentContext context, JTextArea component,
 			UiRows annotate) {
 		component.setRows(annotate.value());
-		LOGGER.debug("component={} JTextArea.setRows({})", context.getId(),
-				annotate.value());
+		LOGGER.debug("(JTextArea){}.setRows({})", context.getId(), annotate
+				.value());
 	}
 
 	@UiAnnotationHandler(UiColumns.class)
 	protected void handleUiText(ComponentContext context, JTextArea component,
 			UiColumns annotate) {
 		component.setColumns(annotate.value());
-		LOGGER.debug("component={} JTextArea.setColumns({})", context.getId(),
-				annotate.value());
+		LOGGER.debug("(JTextArea){}.setColumns({})", context.getId(), annotate
+				.value());
 	}
 
 	@UiAnnotationHandler(UiTabSize.class)
 	protected void handleUiText(ComponentContext context, JTextArea component,
 			UiTabSize annotate) {
 		component.setTabSize(annotate.value());
-		LOGGER.debug("component={} JTextArea.setTabSize({})", context.getId(),
-				annotate.value());
+		LOGGER.debug("(JTextArea){}.setTabSize({})", context.getId(), annotate
+				.value());
 	}
 
 	@UiAnnotationHandler(UiLineWrap.class)
 	protected void handlerUiLineWrap(ComponentContext context,
 			JTextArea component, UiLineWrap annotate) {
 		component.setLineWrap(annotate.value());
-		LOGGER.debug("component={}, JTextArea.setLineWrap({})",
-				context.getId(), annotate.value());
+		LOGGER.debug("(JTextArea){}.setLineWrap({})", context.getId(), annotate
+				.value());
 	}
 
 }

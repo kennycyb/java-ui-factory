@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.annotations.UiFont;
 import com.wpl.ui.annotations.UiResource;
+import com.wpl.ui.events.MenuBarEvent;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 import com.wpl.ui.factory.components.menu.MenuBarInfo;
@@ -68,22 +69,8 @@ public class JMenuBarFactory extends JComponentFactory {
 		Font font = null;
 		if (uiFont != null) {
 
-			int style;
-			switch (uiFont.style()) {
-			case BOLD:
-				style = Font.BOLD;
-				break;
-
-			case ITALIC:
-				style = Font.ITALIC;
-				break;
-
-			default:
-				style = Font.PLAIN;
-				break;
-			}
-
-			font = new Font(uiFont.name(), style, uiFont.size());
+			font = new Font(uiFont.name(), uiFont.style().getSwingConstant(),
+					uiFont.size());
 		}
 
 		final Method onClicked = context.getActionListeners().get("clicked");
@@ -102,7 +89,6 @@ public class JMenuBarFactory extends JComponentFactory {
 					continue;
 				}
 
-				final String id = item.getId();
 				final JMenuItem mi = new JMenuItem(item.getText());
 				if (font != null) {
 					mi.setFont(font);
@@ -115,10 +101,13 @@ public class JMenuBarFactory extends JComponentFactory {
 							return;
 						}
 
+						final MenuBarEvent event = new MenuBarEvent();
+						event.setSourceId(e.getActionCommand());
+
 						onClicked.setAccessible(true);
 
 						try {
-							onClicked.invoke(listener, mi, id);
+							onClicked.invoke(listener, event);
 						} catch (IllegalArgumentException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();

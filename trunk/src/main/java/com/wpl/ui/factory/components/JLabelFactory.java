@@ -15,13 +15,22 @@
  */
 package com.wpl.ui.factory.components;
 
+import java.net.URL;
+
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.wpl.ui.annotations.UiIcon;
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
 public class JLabelFactory extends JComponentFactory {
+
+	private static Logger LOGGER = LoggerFactory.getLogger(JLabelFactory.class);
 
 	@Override
 	protected Class<?> defaultType() {
@@ -32,5 +41,28 @@ public class JLabelFactory extends JComponentFactory {
 	protected void handleUiText(ComponentContext context, JLabel component,
 			UiText annotate) {
 		component.setText(annotate.value());
+
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("(JLabel){}.setText(\"{}\")", context.getId(),
+					annotate.value());
+		}
+	}
+
+	@UiAnnotationHandler(UiIcon.class)
+	protected void handlerUiIcon(ComponentContext context, JLabel component,
+			UiIcon annotate) {
+		URL url = getClass().getClassLoader().getResource(annotate.value());
+		if (url == null) {
+			LOGGER.warn("(AbstractButtonFactory){} - icon not found - {}",
+					context.getId(), annotate.value());
+			return;
+		}
+
+		component.setIcon(new ImageIcon(url));
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug(
+					"(AbstractButtonFactory){}.setIcon(new ImageIcon(\"{}\"))",
+					context.getId(), annotate.value());
+		}
 	}
 }
