@@ -19,6 +19,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
@@ -27,6 +28,7 @@ import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -47,6 +49,7 @@ import com.wpl.ui.factory.IComponentFactory;
 import com.wpl.ui.factory.components.JButtonFactory;
 import com.wpl.ui.factory.components.JCheckBoxFactory;
 import com.wpl.ui.factory.components.JComboBoxFactory;
+import com.wpl.ui.factory.components.JFormattedTextFieldFactory;
 import com.wpl.ui.factory.components.JFrameFactory;
 import com.wpl.ui.factory.components.JLabelFactory;
 import com.wpl.ui.factory.components.JMenuBarFactory;
@@ -56,6 +59,7 @@ import com.wpl.ui.factory.components.JTextAreaFactory;
 import com.wpl.ui.factory.components.JTextFieldFactory;
 import com.wpl.ui.layout.BorderLayoutHandler;
 import com.wpl.ui.layout.FlowLayoutHandler;
+import com.wpl.ui.layout.GridLayoutHandler;
 import com.wpl.ui.layout.ILayoutHandler;
 import com.wpl.ui.layout.NullLayoutHandler;
 
@@ -72,13 +76,16 @@ public final class UiFactory {
 		sDefaultFactory.put(JLabel.class, new JLabelFactory());
 		sDefaultFactory.put(JButton.class, new JButtonFactory());
 		sDefaultFactory.put(JPanel.class, new JPanelFactory());
-		sDefaultFactory.put(JTextField.class, new JTextFieldFactory());
 		sDefaultFactory.put(JTextArea.class, new JTextAreaFactory());
 		sDefaultFactory.put(JFrame.class, new JFrameFactory());
 		sDefaultFactory.put(JMenuBar.class, new JMenuBarFactory());
 		sDefaultFactory.put(JMenu.class, new JMenuFactory());
 		sDefaultFactory.put(JCheckBox.class, new JCheckBoxFactory());
 		sDefaultFactory.put(JComboBox.class, new JComboBoxFactory());
+
+		sDefaultFactory.put(JTextField.class, new JTextFieldFactory());
+		sDefaultFactory.put(JFormattedTextField.class,
+				new JFormattedTextFieldFactory());
 	}
 
 	private static Map<Class<?>, ILayoutHandler> sDefaultLayout = new HashMap<Class<?>, ILayoutHandler>();
@@ -87,6 +94,7 @@ public final class UiFactory {
 		sDefaultLayout.put(BorderLayout.class, new BorderLayoutHandler());
 		sDefaultLayout.put(NullLayout.class, new NullLayoutHandler());
 		sDefaultLayout.put(FlowLayout.class, new FlowLayoutHandler());
+		sDefaultLayout.put(GridLayout.class, new GridLayoutHandler());
 	}
 
 	private final Map<Class<?>, IComponentFactory> mUiFactoryMap = new HashMap<Class<?>, IComponentFactory>();
@@ -348,9 +356,13 @@ public final class UiFactory {
 		// required.
 		IComponentFactory panelFactory = findFactory(containerClass);
 
+		LOGGER.debug("Using factory: {}", panelFactory.getClass()
+				.getSimpleName());
+
 		ComponentContext context = new ComponentContext(containerClass
 				.getName());
 		context.setType(containerClass);
+		context.setAnnotatedElement(containerClass);
 
 		panelFactory.createComponent(context);
 		T container = containerClass.cast(context.getComponent());

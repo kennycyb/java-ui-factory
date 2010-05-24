@@ -16,10 +16,12 @@
 package com.wpl.ui.samples;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.text.DateFormat;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,8 +35,12 @@ import com.wpl.ui.annotations.UiIcon;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiRows;
 import com.wpl.ui.annotations.UiText;
+import com.wpl.ui.annotations.UiTextFormat;
+import com.wpl.ui.annotations.UiType;
+import com.wpl.ui.annotations.constraints.UiGridLayoutConstraint;
 
-@UiLayout(FlowLayout.class)
+@UiLayout(GridLayout.class)
+@UiGridLayoutConstraint(rows = 8, cols = 2)
 public class SamplePanel extends JPanel {
 
 	/**
@@ -43,28 +49,50 @@ public class SamplePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	@UiText("JTextArea")
+	private JLabel mLabel1;
+
+	@UiText("JTextArea")
 	@UiColumns(20)
 	@UiRows(5)
 	private JTextArea mTextArea;
+
+	@UiText("JCheckBox")
+	private JLabel mLable2;
 
 	@UiText("JCheckBox")
 	@UiEnabled(false)
 	private JCheckBox mCheckBox;
 
 	@UiText("JCheckBox with Icon")
+	private JLabel mLable3;
+
+	@UiText("JCheckBox with Icon")
 	@UiIcon("iMac.icon")
 	private JCheckBox mCheckBoxWithIcon;
 
 	@UiText("JTextField")
+	private JLabel mLable4;
+
+	@UiText("JTextField")
 	private JTextField mTextField;
 
-	@UiText("JLabel")
-	private JLabel mLabel;
+	@UiText("JFormattedTextField")
+	private JLabel mLable5;
+
+	@UiType(JFormattedTextField.class)
+	@UiTextFormat(formatter = DateFormat.class, pattern = "dd MMM yyyy")
+	@UiText("10 MAY 2010")
+	private JTextField mFormattedDateField;
+
+	@UiText("JLable with Icon")
+	private JLabel mLable6;
 
 	@UiIcon("iMac.icon")
 	@UiText("JLabel with Icon")
 	private JLabel mLabelWithIcon;
 
+	@UiText("JComboBox")
+	private JLabel mLable7;
 	private JComboBox mComboBox;
 
 	public static void main(String[] args) {

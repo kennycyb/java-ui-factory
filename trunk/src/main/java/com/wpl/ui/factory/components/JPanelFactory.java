@@ -15,12 +15,46 @@
  */
 package com.wpl.ui.factory.components;
 
+import java.awt.GridLayout;
+import java.awt.LayoutManager;
+
 import javax.swing.JPanel;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.wpl.ui.annotations.constraints.UiGridLayoutConstraint;
+import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.UiAnnotationHandler;
+
 public class JPanelFactory extends JComponentFactory {
+
+	private static Logger LOGGER = LoggerFactory.getLogger(JPanelFactory.class);
 
 	@Override
 	protected Class<?> defaultType() {
 		return JPanel.class;
+	}
+
+	@UiAnnotationHandler(UiGridLayoutConstraint.class)
+	protected void handleUiGridLayoutConstraint(ComponentContext context,
+			JPanel component, UiGridLayoutConstraint annotate) {
+		LayoutManager lm = component.getLayout();
+
+		if (lm instanceof GridLayout) {
+			GridLayout glm = (GridLayout) lm;
+
+			glm.setRows(annotate.rows());
+			glm.setColumns(annotate.cols());
+			glm.setHgap(annotate.horizontalGap());
+			glm.setVgap(annotate.verticalGrap());
+			component.setLayout(glm);
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("(JPanel){}.gridLayout={},{},{},{}", new Object[] {
+						context.getId(), annotate.rows(), annotate.cols(),
+						annotate.horizontalGap(), annotate.verticalGrap() });
+			}
+			return;
+		}
 	}
 }
