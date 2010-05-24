@@ -8,15 +8,17 @@ This sample show how to create a notepad application.
 = Details =
 
 {{{
+
 /**
  * Sample of Notepad Application.
  */
 @UiText("Notepad")
-@UiSize(height = 800, width = 800)
+@UiSize(height = 600, width = 800)
 @UiLayout(BorderLayout.class)
 @UiFrameCloseOperation(FrameCloseOperation.EXIT)
 @UiFrameResizable
 @UiAutoWired
+@UiFont(name = "Arial", style = FontStyle.BOLD, size = 12)
 public class Notepad extends JFrame {
 
 	private static Logger LOGGER = LoggerFactory.getLogger(Notepad.class);
@@ -28,29 +30,44 @@ public class Notepad extends JFrame {
 
 	@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
 	@UiScrollable(horizontal = ScrollBarPolicy.ALWAYS, vertical = ScrollBarPolicy.ALWAYS)
+	@UiFont(name = "Arial", style = FontStyle.BOLD, size = 12)
 	private JTextArea content;
 
 	@UiBorderLayoutConstraint(BorderLayoutConstraint.NORTH)
 	@UiResource("Notepad-Menu.xml")
+	@UiFont(name = "Arial", style = FontStyle.BOLD, size = 12)
 	private JMenuBar menuBar;
+
+	@UiComponentOf("menuBar")
+	private JMenuItem undo;
+
+	@UiComponentOf("menuBar")
+	private JMenuItem cut;
 
 	@UiInit
 	private void init() {
+		undo.setEnabled(false);
+		cut.setEnabled(false);
 	}
 
-	private void onMenuBar_clicked(Object sender, String menuId) {
+	@SuppressWarnings("unused")
+	private void onMenuBar_clicked(ActionEvent e) {
 
-		if (menuId == null) {
+		String actionCommand = e.getActionCommand();
+
+		if (actionCommand == null) {
+			LOGGER.debug("menu-clicked=null");
 			return;
 		}
 
-		if (menuId.equals("file.new")) {
-			LOGGER.debug("menu-clicked=file.new, source={}", sender);
+		LOGGER.debug("menu-clicked={}", actionCommand);
+
+		if (actionCommand.equals("file.new")) {
 			content.setText("");
+			return;
 		}
 
-		if (menuId.equals("file.exit")) {
-			LOGGER.debug("menu-clicked=file.exit, source={}", sender);
+		if (actionCommand.equals("file.exit")) {
 			System.exit(0);
 		}
 	}
@@ -62,9 +79,6 @@ public class Notepad extends JFrame {
 		notepad.setVisible(true);
 	}
 }
-
-
-
 }}}
 
 == NotePad-Menu.xml ==
@@ -72,7 +86,7 @@ public class Notepad extends JFrame {
 {{{
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <menuBar id="mainMenu">
-    <menu text="File">
+    <menu id="file" text="File">
         <menuItem id="file.new" text="New"/>
         <menuItem text="Open..."/>
         <menuItem text="Save"/>
@@ -83,10 +97,10 @@ public class Notepad extends JFrame {
 		<menuItem type="SEPARATOR"/>
 		<menuItem id="file.exit" text="Exit"/>
     </menu>
-    <menu text="Edit">
-    	<menuItem text="Undo"/>
+    <menu id="edit" text="Edit">
+    	<menuItem id="undo" text="Undo" bindable="true"/>
     	<menuItem type="SEPARATOR"/>
-    	<menuItem text="Cut"/>
+    	<menuItem id="cut" text="Cut"/>
     	<menuItem text="Copy"/>
     	<menuItem text="Paste"/>
     	<menuItem text="Delete"/>
@@ -113,3 +127,6 @@ public class Notepad extends JFrame {
    	</menu>
 </menuBar>
 }}}
+
+== Output ==
+[notepad.png]
