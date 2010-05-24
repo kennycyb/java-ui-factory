@@ -127,6 +127,3 @@ public class Notepad extends JFrame {
    	</menu>
 </menuBar>
 }}}
-
-== Output ==
-[[notepad.png]]
