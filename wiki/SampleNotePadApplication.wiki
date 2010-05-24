@@ -129,4 +129,4 @@ public class Notepad extends JFrame {
 }}}
 
 == Output ==
-[notepad.png]
+[[notepad.png]]
