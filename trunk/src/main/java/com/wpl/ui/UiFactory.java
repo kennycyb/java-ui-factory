@@ -35,6 +35,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.RootPaneContainer;
@@ -61,6 +62,7 @@ import com.wpl.ui.factory.components.JLabelFactory;
 import com.wpl.ui.factory.components.JMenuBarFactory;
 import com.wpl.ui.factory.components.JMenuFactory;
 import com.wpl.ui.factory.components.JPanelFactory;
+import com.wpl.ui.factory.components.JRadioButtonFactory;
 import com.wpl.ui.factory.components.JTextAreaFactory;
 import com.wpl.ui.factory.components.JTextFieldFactory;
 import com.wpl.ui.layout.BorderLayoutHandler;
@@ -87,6 +89,8 @@ public final class UiFactory {
 		sDefaultFactory.put(JMenuBar.class, new JMenuBarFactory());
 		sDefaultFactory.put(JMenu.class, new JMenuFactory());
 		sDefaultFactory.put(JCheckBox.class, new JCheckBoxFactory());
+		sDefaultFactory.put(JRadioButton.class, new JRadioButtonFactory());
+
 		sDefaultFactory.put(JComboBox.class, new JComboBoxFactory());
 
 		sDefaultFactory.put(JTextField.class, new JTextFieldFactory());

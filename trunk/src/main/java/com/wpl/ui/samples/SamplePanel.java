@@ -25,6 +25,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -40,7 +41,7 @@ import com.wpl.ui.annotations.UiType;
 import com.wpl.ui.annotations.constraints.UiGridLayoutConstraint;
 
 @UiLayout(GridLayout.class)
-@UiGridLayoutConstraint(rows = 8, cols = 2)
+@UiGridLayoutConstraint(rows = 10, cols = 2)
 public class SamplePanel extends JPanel {
 
 	/**
@@ -94,6 +95,10 @@ public class SamplePanel extends JPanel {
 	@UiText("JComboBox")
 	private JLabel mLable7;
 	private JComboBox mComboBox;
+
+	@UiText("JRadioButton")
+	private JLabel mLabel8;
+	private JRadioButton mRadioButton;
 
 	public static void main(String[] args) {
 		UiFactory factory = new UiFactory();
