@@ -287,10 +287,12 @@ public abstract class ComponentFactory implements IComponentFactory {
 	protected void handleUiScrollable(FactoryContext factory,
 			ComponentContext context, Component component, UiScrollable annotate) {
 		JScrollPane scroll = new JScrollPane(component);
+
 		scroll.setHorizontalScrollBarPolicy(getScrollBarPolicyValue(true,
 				annotate.horizontal()));
 		scroll.setVerticalScrollBarPolicy(getScrollBarPolicyValue(false,
 				annotate.vertical()));
+		scroll.setAutoscrolls(annotate.autoScroll());
 
 		context.setEnclosedComponent(scroll);
 

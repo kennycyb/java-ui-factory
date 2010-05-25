@@ -15,6 +15,8 @@
  */
 package com.wpl.ui.factory.components;
 
+import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.Window;
 import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowListener;
@@ -22,9 +24,11 @@ import java.awt.event.WindowListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wpl.ui.annotations.frame.UiWindowPosition;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.MethodListenerProxy;
+import com.wpl.ui.factory.UiAnnotationHandler;
 
 public class WindowFactory extends ContainerFactory {
 	private static Logger LOGGER = LoggerFactory.getLogger(WindowFactory.class);
@@ -32,6 +36,16 @@ public class WindowFactory extends ContainerFactory {
 	@Override
 	protected Class<?> defaultType() {
 		return Window.class;
+	}
+
+	@UiAnnotationHandler(UiWindowPosition.class)
+	void handleUiWindowPosition(FactoryContext factory,
+			ComponentContext context, Window component,
+			UiWindowPosition annotate) {
+		Dimension dim = component.getToolkit().getScreenSize();
+		Rectangle abounds = component.getBounds();
+		component.setLocation((dim.width - abounds.width) / 2,
+				(dim.height - abounds.height) / 2);
 	}
 
 	@Override

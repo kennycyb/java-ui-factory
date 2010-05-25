@@ -29,7 +29,10 @@ import com.wpl.ui.UiFactory;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiResource;
 import com.wpl.ui.annotations.UiSimpleItems;
+import com.wpl.ui.annotations.frame.UiWindowPosition;
+import com.wpl.ui.enums.WindowPosition;
 
+@UiWindowPosition(WindowPosition.CENTER)
 @UiLayout(FlowLayout.class)
 public class SampleComboBox extends Frame {
 	/**

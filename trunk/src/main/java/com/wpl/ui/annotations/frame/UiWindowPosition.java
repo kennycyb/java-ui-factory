@@ -13,42 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.annotations;
+package com.wpl.ui.annotations.frame;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.wpl.ui.enums.ScrollBarPolicy;
+import com.wpl.ui.enums.WindowPosition;
 
-/**
- * Add a scroll pane automatically to a component.
- * 
- * @author kenny
- */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.FIELD })
-public @interface UiScrollable {
-
-	/**
-	 * Horizontal scroll bar policy.
-	 * 
-	 * @return
-	 */
-	ScrollBarPolicy horizontal() default ScrollBarPolicy.AS_NEEDED;
-
-	/**
-	 * Vertial scroll bar policy.
-	 * 
-	 * @return
-	 */
-	ScrollBarPolicy vertical() default ScrollBarPolicy.AS_NEEDED;
-
-	/**
-	 * Enable autoscroll
-	 * 
-	 * @return
-	 */
-	boolean autoScroll() default false;
+@Target( { ElementType.TYPE })
+public @interface UiWindowPosition {
+	WindowPosition value();
 }
