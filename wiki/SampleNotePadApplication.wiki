@@ -51,6 +51,16 @@ public class Notepad extends JFrame {
 	}
 
 	@SuppressWarnings("unused")
+	private void onNotepad_windowClosing(WindowEvent e) {
+		LOGGER.debug("onNotepad_windowClosing: new state={}", e.getNewState());
+	}
+
+	@SuppressWarnings("unused")
+	private void onNotepad_windowActivated(WindowEvent e) {
+		LOGGER.debug("onNotepad_windowActivated");
+	}
+
+	@SuppressWarnings("unused")
 	private void onMenuBar_clicked(ActionEvent e) {
 
 		String actionCommand = e.getActionCommand();
@@ -79,6 +89,8 @@ public class Notepad extends JFrame {
 		notepad.setVisible(true);
 	}
 }
+
+
 }}}
 
 == NotePad-Menu.xml ==
