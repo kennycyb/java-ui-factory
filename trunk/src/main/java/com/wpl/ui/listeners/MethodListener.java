@@ -37,6 +37,7 @@ public class MethodListener<E> {
 		try {
 			this.mMethod.setAccessible(true);
 			this.mMethod.invoke(mListenObject, args);
+
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -46,6 +47,9 @@ public class MethodListener<E> {
 		} catch (InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			LOGGER.debug("invoke: {}.{}", mListenObject.getClass()
+					.getSimpleName(), mMethod.getName());
 		}
 	}
 }

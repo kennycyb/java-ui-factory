@@ -62,7 +62,7 @@ public class JMenuBarFactory extends JComponentFactory {
 			return;
 		}
 
-		final Object listener = context.getActionListener();
+		final Object listener = factory.getObject();
 		final MenuBarInfo menuInfo = JAXB.unmarshal(in, MenuBarInfo.class);
 		final UiFont uiFont = context.getAnnotatedElement().getAnnotation(
 				UiFont.class);

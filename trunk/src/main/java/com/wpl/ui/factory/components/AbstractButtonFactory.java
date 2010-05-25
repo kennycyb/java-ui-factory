@@ -41,7 +41,7 @@ public abstract class AbstractButtonFactory extends JComponentFactory {
 			.getLogger(AbstractButtonFactory.class);
 
 	@Override
-	public void wireComponent(ComponentContext context) {
+	public void wireComponent(FactoryContext factory, ComponentContext context) {
 
 		AbstractButton component = (AbstractButton) context.getComponent();
 
@@ -50,7 +50,7 @@ public abstract class AbstractButtonFactory extends JComponentFactory {
 		if (onClicked != null) {
 
 			final MethodListener<ActionEvent> listener = new MethodListener<ActionEvent>(
-					context.getActionListener(), onClicked);
+					factory.getObject(), onClicked);
 
 			component.addActionListener(new ActionListener() {
 				@Override

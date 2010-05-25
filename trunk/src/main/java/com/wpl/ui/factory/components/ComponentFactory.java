@@ -128,6 +128,11 @@ public abstract class ComponentFactory implements IComponentFactory {
 
 		try {
 			this.createInstance(context);
+
+			if (context.isRoot() && factory.getObject() == null) {
+				factory.setObject(context.getComponent());
+			}
+
 			this.init(factory, context);
 		} catch (Throwable t) {
 			LOGGER.error("Failed to create component", t);
@@ -183,11 +188,11 @@ public abstract class ComponentFactory implements IComponentFactory {
 			}
 		}
 
-		this.wireComponent(context);
+		this.wireComponent(factory, context);
 	}
 
 	@Override
-	public void wireComponent(ComponentContext context) {
+	public void wireComponent(FactoryContext factory, ComponentContext context) {
 	}
 
 	// ~ UiAnnotationHandlers --------------------------------------------------

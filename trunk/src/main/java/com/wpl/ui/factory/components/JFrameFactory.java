@@ -22,14 +22,13 @@ import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.NullLayout;
 import com.wpl.ui.annotations.UiLayout;
-import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
 import com.wpl.ui.annotations.frame.UiFrameResizable;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
-public class JFrameFactory extends ComponentFactory {
+public class JFrameFactory extends FrameFactory {
 
 	private static Logger LOGGER = LoggerFactory.getLogger(JFrameFactory.class);
 
@@ -43,14 +42,6 @@ public class JFrameFactory extends ComponentFactory {
 			ComponentContext context, JFrame frame, UiFrameResizable resizable) {
 		frame.setResizable(resizable.value());
 		LOGGER.debug("(JFrame){}.setResizable({})", context.getId(), resizable
-				.value());
-	}
-
-	@UiAnnotationHandler(UiText.class)
-	protected void handleUiText(FactoryContext factory,
-			ComponentContext context, JFrame frame, UiText text) {
-		frame.setTitle(text.value());
-		LOGGER.debug("(JFrame){}.setTitle(\"{}\")", context.getId(), text
 				.value());
 	}
 

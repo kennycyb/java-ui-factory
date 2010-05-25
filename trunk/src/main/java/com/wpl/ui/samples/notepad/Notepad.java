@@ -17,6 +17,7 @@ package com.wpl.ui.samples.notepad;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -83,6 +84,16 @@ public class Notepad extends JFrame {
 	private void init() {
 		undo.setEnabled(false);
 		cut.setEnabled(false);
+	}
+
+	@SuppressWarnings("unused")
+	private void onNotepad_windowClosing(WindowEvent e) {
+		LOGGER.debug("onNotepad_windowClosing: new state={}", e.getNewState());
+	}
+
+	@SuppressWarnings("unused")
+	private void onNotepad_windowActivated(WindowEvent e) {
+		LOGGER.debug("onNotepad_windowActivated");
 	}
 
 	@SuppressWarnings("unused")
