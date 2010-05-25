@@ -1,0 +1,76 @@
+#summary Sample on using JComboBox
+
+= Introduction =
+
+Sample on using [JComboBox].
+
+_See [JComboBox], [UiWindowPosition], [UiLayout], [UiSimpleItems], [UiResource]_
+
+= Details =
+
+{{{
+@UiWindowPosition(WindowPosition.CENTER)
+@UiLayout(FlowLayout.class)
+public class SampleComboBox extends Frame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private static Logger LOGGER = LoggerFactory
+			.getLogger(SampleComboBox.class);
+
+	@UiSimpleItems( { "Male", "Female" })
+	JComboBox simpleComboBox;
+
+	@UiResource("SampleComboBox-ComplexComboBox.xml")
+	JComboBox complexComboBox;
+
+	void onSampleComboBox_windowClosing(WindowEvent e) {
+		LOGGER.debug("onWithUiSimpleItems_windowClosing");
+		System.exit(0);
+	}
+
+	void onSimpleComboBox_itemStateChanged(ItemEvent e) {
+		LOGGER
+				.debug(
+						"onSimpleComboBox_itemStateChanged: {} ({})",
+						e.getItem(),
+						e.getStateChange() == ItemEvent.DESELECTED ? "DESELECTED"
+								: e.getStateChange() == ItemEvent.ITEM_FIRST ? "ITEM_FIRST"
+										: e.getStateChange() == ItemEvent.ITEM_LAST ? "ITEM_LAST"
+												: e.getStateChange() == ItemEvent.ITEM_STATE_CHANGED ? "ITEM_STATE_CHANGED"
+														: e.getStateChange() == ItemEvent.SELECTED ? "SELECTED"
+																: "UNKNOWN");
+	}
+
+	void oncomplexComboBox_itemStateChanged(ItemEvent e) {
+		LOGGER
+				.debug(
+						"onSimpleComboBox_itemStateChanged: {} ({})",
+						e.getItem(),
+						e.getStateChange() == ItemEvent.DESELECTED ? "DESELECTED"
+								: e.getStateChange() == ItemEvent.ITEM_FIRST ? "ITEM_FIRST"
+										: e.getStateChange() == ItemEvent.ITEM_LAST ? "ITEM_LAST"
+												: e.getStateChange() == ItemEvent.ITEM_STATE_CHANGED ? "ITEM_STATE_CHANGED"
+														: e.getStateChange() == ItemEvent.SELECTED ? "SELECTED"
+																: "UNKNOWN");
+	}
+
+	public static void main(String[] args) {
+		UiFactory factory = new UiFactory();
+		factory.createFrame(SampleComboBox.class).setVisible(true);
+	}
+}
+}}}
+
+== SampleComboBox-ComplexComboBox.xml ==
+
+{{{
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<comboBox id="comboBox">
+	<item text="Male"/>
+	<item text="Female"/>
+	<item text="Unknown"/>
+</comboBox>
+}}}
