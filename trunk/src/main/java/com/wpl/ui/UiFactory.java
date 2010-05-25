@@ -37,6 +37,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -51,6 +52,7 @@ import com.wpl.ui.annotations.UiInit;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiName;
 import com.wpl.ui.annotations.UiPreInit;
+import com.wpl.ui.annotations.UiSize;
 import com.wpl.ui.annotations.UiType;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.FactoryContext;
@@ -65,6 +67,7 @@ import com.wpl.ui.factory.components.JLabelFactory;
 import com.wpl.ui.factory.components.JMenuBarFactory;
 import com.wpl.ui.factory.components.JMenuFactory;
 import com.wpl.ui.factory.components.JPanelFactory;
+import com.wpl.ui.factory.components.JPasswordFieldFactory;
 import com.wpl.ui.factory.components.JRadioButtonFactory;
 import com.wpl.ui.factory.components.JTextAreaFactory;
 import com.wpl.ui.factory.components.JTextFieldFactory;
@@ -100,6 +103,7 @@ public final class UiFactory {
 		sDefaultFactory.put(JComboBox.class, new JComboBoxFactory());
 
 		sDefaultFactory.put(JTextField.class, new JTextFieldFactory());
+		sDefaultFactory.put(JPasswordField.class, new JPasswordFieldFactory());
 		sDefaultFactory.put(JFormattedTextField.class,
 				new JFormattedTextFieldFactory());
 	}
@@ -317,6 +321,8 @@ public final class UiFactory {
 		} else if (componentContext.getComponent() instanceof RootPaneContainer) {
 			container = ((RootPaneContainer) componentContext.getComponent())
 					.getContentPane();
+		} else if (componentContext.getComponent() instanceof Frame) {
+			container = (Frame) componentContext.getComponent();
 		} else {
 			container = componentContext.getContainer();
 		}
@@ -424,7 +430,7 @@ public final class UiFactory {
 		return factoryContext;
 	}
 
-	public <T extends JFrame> T createFrame(Class<T> frameClass) {
+	public <T extends Frame> T createFrame(Class<T> frameClass) {
 
 		LOGGER.debug("Creating {}", frameClass.getSimpleName());
 
@@ -452,6 +458,10 @@ public final class UiFactory {
 		create(factoryContext, componentContext, true);
 
 		T frame = frameClass.cast(componentContext.getComponent());
+
+		if (frameClass.getAnnotation(UiSize.class) == null) {
+			frame.pack();
+		}
 
 		return frame;
 	}

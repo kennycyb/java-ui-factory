@@ -20,12 +20,33 @@ import java.awt.Frame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FrameFactory extends WindowFactory {
+import com.wpl.ui.annotations.UiText;
+import com.wpl.ui.annotations.frame.UiFrameResizable;
+import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.FactoryContext;
+import com.wpl.ui.factory.UiAnnotationHandler;
 
+public class FrameFactory extends WindowFactory {
 	private static Logger LOGGER = LoggerFactory.getLogger(FrameFactory.class);
 
 	@Override
 	protected Class<?> defaultType() {
 		return Frame.class;
+	}
+
+	@UiAnnotationHandler(UiText.class)
+	protected void handleUiText(FactoryContext factory,
+			ComponentContext context, Frame frame, UiText annotate) {
+		frame.setTitle(annotate.value());
+		LOGGER.debug("(Frame){}.setTitle({})", context.getId(), annotate
+				.value());
+	}
+
+	@UiAnnotationHandler(UiFrameResizable.class)
+	protected void handleUiResizable(FactoryContext factory,
+			ComponentContext context, Frame frame, UiFrameResizable annotate) {
+		frame.setResizable(annotate.value());
+		LOGGER.debug("(Frame){}.setResizable({})", context.getId(), annotate
+				.value());
 	}
 }

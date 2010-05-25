@@ -15,17 +15,72 @@
  */
 package com.wpl.ui.factory.components;
 
+import java.awt.event.ItemListener;
+import java.io.InputStream;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.xml.bind.JAXB;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wpl.ui.annotations.UiResource;
+import com.wpl.ui.annotations.UiSimpleItems;
+import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.FactoryContext;
+import com.wpl.ui.factory.MethodListenerProxy;
+import com.wpl.ui.factory.UiAnnotationHandler;
+import com.wpl.ui.factory.components.combobox.ComboBoxInfo;
+import com.wpl.ui.factory.components.combobox.ComboBoxItemInfo;
+
 public class JComboBoxFactory extends JComponentFactory {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(JComboBoxFactory.class);
+	private static Logger LOGGER = LoggerFactory
+			.getLogger(JComboBoxFactory.class);
 
-    @Override
-    protected Class<?> defaultType() {
-        return JComboBox.class;
-    }
+	@Override
+	protected Class<?> defaultType() {
+		return JComboBox.class;
+	}
+
+	@UiAnnotationHandler(UiSimpleItems.class)
+	protected void handleUiSimpleItems(FactoryContext factory,
+			ComponentContext context, JComboBox component,
+			UiSimpleItems annotate) {
+		component.setModel(new DefaultComboBoxModel(annotate.value()));
+	}
+
+	@UiAnnotationHandler(UiResource.class)
+	protected void handleUiResource(FactoryContext factory,
+			ComponentContext context, JComboBox component, UiResource annotate) {
+		InputStream in = getClass().getClassLoader().getResourceAsStream(
+				annotate.value());
+		if (in == null) {
+			LOGGER.error("UiResource {} not found", annotate.value());
+			return;
+		}
+
+		ComboBoxInfo info = JAXB.unmarshal(in, ComboBoxInfo.class);
+		if (info == null) {
+			LOGGER.error("UiResource {} is invalid", annotate.value());
+			return;
+		}
+
+		for (ComboBoxItemInfo itemInfo : info.getItem()) {
+			component.addItem(itemInfo.getText());
+		}
+	}
+
+	@Override
+	public void wireComponent(FactoryContext factory, ComponentContext context) {
+		super.wireComponent(factory, context);
+
+		MethodListenerProxy<ItemListener> itemListenerProxy = new MethodListenerProxy<ItemListener>(
+				factory.getObject(), context.getActionListeners(),
+				ItemListener.class);
+
+		JComboBox cb = (JComboBox) context.getComponent();
+		cb.addItemListener(itemListenerProxy.getProxy());
+	}
 }

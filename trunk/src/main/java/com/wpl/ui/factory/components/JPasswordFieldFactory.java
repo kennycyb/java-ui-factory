@@ -15,37 +15,33 @@
  */
 package com.wpl.ui.factory.components;
 
-import java.awt.Container;
+import javax.swing.JPasswordField;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.NullLayout;
-import com.wpl.ui.annotations.UiLayout;
+import com.wpl.ui.annotations.UiEchoChar;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
-public abstract class ContainerFactory extends ComponentFactory {
+public class JPasswordFieldFactory extends JTextFieldFactory {
 	private static Logger LOGGER = LoggerFactory
-			.getLogger(ContainerFactory.class);
+			.getLogger(JPasswordFieldFactory.class);
 
-	@UiAnnotationHandler(UiLayout.class)
-	protected void handleUiLayout(FactoryContext factory,
-			ComponentContext context, Container component, UiLayout layout) {
-		if (layout.value() == NullLayout.class) {
-			component.setLayout(null);
-			return;
-		}
+	@Override
+	protected Class<?> defaultType() {
+		return JPasswordField.class;
+	}
 
-		try {
-			component.setLayout(layout.value().newInstance());
-		} catch (InstantiationException e) {
-			LOGGER.error("UiLayout - InstantiationException - {} - {} ", layout
-					.value(), e.getMessage());
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	@UiAnnotationHandler(UiEchoChar.class)
+	protected void handleUiEchoChar(FactoryContext factory,
+			ComponentContext componentContext, JPasswordField component,
+			UiEchoChar annotate) {
+		component.setEchoChar(annotate.value());
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("(JPasswordField){}.setEchoChar('{}')", new Object[] {
+					componentContext.getId(), annotate.value() });
 		}
 	}
 }

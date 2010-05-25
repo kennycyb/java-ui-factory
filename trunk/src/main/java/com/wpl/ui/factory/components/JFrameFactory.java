@@ -20,10 +20,7 @@ import javax.swing.JFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.NullLayout;
-import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
-import com.wpl.ui.annotations.frame.UiFrameResizable;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
@@ -35,33 +32,6 @@ public class JFrameFactory extends FrameFactory {
 	@Override
 	protected Class<?> defaultType() {
 		return JFrame.class;
-	}
-
-	@UiAnnotationHandler(UiFrameResizable.class)
-	protected void handleUiResizable(FactoryContext factory,
-			ComponentContext context, JFrame frame, UiFrameResizable resizable) {
-		frame.setResizable(resizable.value());
-		LOGGER.debug("(JFrame){}.setResizable({})", context.getId(), resizable
-				.value());
-	}
-
-	@UiAnnotationHandler(UiLayout.class)
-	protected void handleUiLayout(FactoryContext factory,
-			ComponentContext context, JFrame component, UiLayout layout) {
-		if (layout.value() == NullLayout.class) {
-			component.setLayout(null);
-			return;
-		}
-
-		try {
-			component.setLayout(layout.value().newInstance());
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	@UiAnnotationHandler(UiFrameCloseOperation.class)

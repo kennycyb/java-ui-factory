@@ -25,12 +25,14 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.wpl.ui.UiFactory;
 import com.wpl.ui.annotations.UiColumns;
+import com.wpl.ui.annotations.UiEchoChar;
 import com.wpl.ui.annotations.UiEnabled;
 import com.wpl.ui.annotations.UiIcon;
 import com.wpl.ui.annotations.UiLayout;
@@ -84,6 +86,13 @@ public class SamplePanel extends JPanel {
 	@UiTextFormat(formatter = DateFormat.class, pattern = "dd MMM yyyy")
 	@UiText("10 MAY 2010")
 	private JTextField mFormattedDateField;
+
+	@UiText("JPasswordField")
+	private JLabel mlabel9;
+
+	@UiType(JPasswordField.class)
+	@UiEchoChar('?')
+	private JTextField mPasswordField;
 
 	@UiText("JLable with Icon")
 	private JLabel mLable6;
