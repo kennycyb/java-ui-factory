@@ -27,8 +27,8 @@ import org.slf4j.LoggerFactory;
 import com.wpl.ui.annotations.frame.UiWindowPosition;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.FactoryContext;
-import com.wpl.ui.factory.MethodListenerProxy;
 import com.wpl.ui.factory.UiAnnotationHandler;
+import com.wpl.ui.listeners.MethodListenerProxy;
 
 public class WindowFactory extends ContainerFactory {
 	private static Logger LOGGER = LoggerFactory.getLogger(WindowFactory.class);
@@ -40,17 +40,30 @@ public class WindowFactory extends ContainerFactory {
 
 	@UiAnnotationHandler(UiWindowPosition.class)
 	void handleUiWindowPosition(FactoryContext factory,
-			ComponentContext context, Window component,
+			ComponentContext context, final Window component,
 			UiWindowPosition annotate) {
-		Dimension dim = component.getToolkit().getScreenSize();
-		Rectangle abounds = component.getBounds();
-		component.setLocation((dim.width - abounds.width) / 2,
-				(dim.height - abounds.height) / 2);
+
+		context.addPostInit(new Runnable() {
+			@Override
+			public void run() {
+				final Dimension dim = component.getToolkit().getScreenSize();
+				final Rectangle abounds = component.getBounds();
+
+				final int centerX = (dim.width - abounds.width) / 2;
+				final int centerY = (dim.height - abounds.height) / 2;
+
+				component.setLocation(centerX, centerY);
+				LOGGER.debug("Window to Center location: x={}, y={}", centerX,
+						centerY);
+			}
+		});
 	}
 
 	@Override
 	public void wireComponent(FactoryContext factory, ComponentContext context) {
 		super.wireComponent(factory, context);
+
+		Window window = (Window) context.getComponent();
 
 		MethodListenerProxy<WindowListener> windowListenerProxy = new MethodListenerProxy<WindowListener>(
 				factory.getObject(), context.getActionListeners(),
@@ -60,8 +73,12 @@ public class WindowFactory extends ContainerFactory {
 				factory.getObject(), context.getActionListeners(),
 				WindowFocusListener.class);
 
-		Window window = (Window) context.getComponent();
-		window.addWindowListener(windowListenerProxy.getProxy());
-		window.addWindowFocusListener(windowFocusListenerProxy.getProxy());
+		if (windowListenerProxy.hasListeningMethod()) {
+			window.addWindowListener(windowListenerProxy.getProxy());
+		}
+
+		if (windowFocusListenerProxy.hasListeningMethod()) {
+			window.addWindowFocusListener(windowFocusListenerProxy.getProxy());
+		}
 	}
 }

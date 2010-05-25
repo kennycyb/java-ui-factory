@@ -13,15 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.samples;
+package com.wpl.ui.annotations.frame;
 
-import javax.swing.JTextArea;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public class SampleTextArea extends JTextArea {
-
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
-
+/**
+ * 
+ * @since 1.0
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target( { ElementType.FIELD })
+public @interface UiFrameMenu {
 }

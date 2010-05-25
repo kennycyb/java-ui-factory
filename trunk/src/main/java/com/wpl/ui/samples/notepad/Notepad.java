@@ -39,6 +39,7 @@ import com.wpl.ui.annotations.UiSize;
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
 import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
+import com.wpl.ui.annotations.frame.UiFrameMenu;
 import com.wpl.ui.annotations.frame.UiFrameResizable;
 import com.wpl.ui.enums.BorderLayoutConstraint;
 import com.wpl.ui.enums.FontStyle;
@@ -69,7 +70,7 @@ public class Notepad extends JFrame {
 	@UiFont(name = "Arial", style = FontStyle.BOLD, size = 12)
 	private JTextArea content;
 
-	@UiBorderLayoutConstraint(BorderLayoutConstraint.NORTH)
+	@UiFrameMenu
 	@UiResource("Notepad-Menu.xml")
 	@UiFont(name = "Arial", style = FontStyle.BOLD, size = 12)
 	private JMenuBar menuBar;

@@ -54,6 +54,7 @@ import com.wpl.ui.annotations.UiName;
 import com.wpl.ui.annotations.UiPreInit;
 import com.wpl.ui.annotations.UiSize;
 import com.wpl.ui.annotations.UiType;
+import com.wpl.ui.annotations.frame.UiFrameMenu;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.IComponentFactory;
@@ -359,6 +360,11 @@ public final class UiFactory {
 				}
 			}
 
+			// Don't add to container if this is a menu
+			if (child.getAnnotatedElement().getAnnotation(UiFrameMenu.class) != null) {
+				continue;
+			}
+
 			if (layoutHandler.handleComponent(container, child
 					.getEnclosedComponent(), child.getAnnotatedElement())) {
 				if (LOGGER.isDebugEnabled()) {
@@ -463,7 +469,20 @@ public final class UiFactory {
 			frame.pack();
 		}
 
+		postInit(componentContext);
+
 		return frame;
+	}
+
+	private void postInit(ComponentContext context) {
+
+		for (ComponentContext child : context.getChildren()) {
+			postInit(child);
+		}
+
+		for (Runnable r : context.getPostInit()) {
+			r.run();
+		}
 	}
 
 	public <T extends Component> T createComponent(Class<T> componentClass) {
@@ -489,5 +508,13 @@ public final class UiFactory {
 
 		return component;
 
+	}
+
+	// ~ Static Instance -------------------------------------------------------
+
+	private static final UiFactory sDefaultUiFactory = new UiFactory();
+
+	public static UiFactory instance() {
+		return sDefaultUiFactory;
 	}
 }

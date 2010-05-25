@@ -37,6 +37,8 @@ import com.wpl.ui.annotations.frame.UiFrameResizable;
 import com.wpl.ui.enums.BorderLayoutConstraint;
 import com.wpl.ui.enums.FrameCloseOperation;
 
+// FIXME: inner class
+
 //Title of this frame
 @UiText("Sample Frame")
 // Size of this frame

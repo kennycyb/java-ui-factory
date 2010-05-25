@@ -21,6 +21,7 @@ import java.awt.event.ActionListener;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -31,6 +32,7 @@ import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.annotations.UiFont;
 import com.wpl.ui.annotations.UiResource;
+import com.wpl.ui.annotations.frame.UiFrameMenu;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
@@ -47,6 +49,18 @@ public class JMenuBarFactory extends JComponentFactory {
 	@Override
 	protected Class<?> defaultType() {
 		return JMenuBar.class;
+	}
+
+	@UiAnnotationHandler(UiFrameMenu.class)
+	protected void handleUiFrameMenu(FactoryContext factory,
+			final ComponentContext context, final JMenuBar component,
+			UiFrameMenu annotate) {
+
+		if (factory.getObject() instanceof JFrame) {
+			((JFrame) factory.getObject()).setJMenuBar(component);
+			LOGGER.debug("added {} as JMenuBar in {}", context.getId(), factory
+					.getObject().getClass().getSimpleName());
+		}
 	}
 
 	@UiAnnotationHandler(UiResource.class)

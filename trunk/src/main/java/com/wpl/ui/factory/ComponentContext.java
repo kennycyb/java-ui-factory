@@ -64,7 +64,22 @@ public class ComponentContext {
 
 	private boolean mRoot;
 
+	private final List<Runnable> mPostInit = new ArrayList<Runnable>();
+
 	public ComponentContext() {
+	}
+
+	/**
+	 * Add an action to be execute later when all component has been created.
+	 * 
+	 * @param runnable
+	 */
+	public void addPostInit(Runnable runnable) {
+		mPostInit.add(runnable);
+	}
+
+	public List<Runnable> getPostInit() {
+		return mPostInit;
 	}
 
 	public boolean isRoot() {

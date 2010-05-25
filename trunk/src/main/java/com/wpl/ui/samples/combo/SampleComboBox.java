@@ -50,7 +50,7 @@ public class SampleComboBox extends Frame {
 	JComboBox complexComboBox;
 
 	void onSampleComboBox_windowClosing(WindowEvent e) {
-		LOGGER.debug("onWithUiSimpleItems_windowClosing");
+		LOGGER.debug("onSampleComboBox_windowClosing");
 		System.exit(0);
 	}
 
@@ -67,7 +67,7 @@ public class SampleComboBox extends Frame {
 																: "UNKNOWN");
 	}
 
-	void oncomplexComboBox_itemStateChanged(ItemEvent e) {
+	void onComplexComboBox_itemStateChanged(ItemEvent e) {
 		LOGGER
 				.debug(
 						"onSimpleComboBox_itemStateChanged: {} ({})",

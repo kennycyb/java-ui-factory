@@ -29,10 +29,10 @@ import com.wpl.ui.annotations.UiResource;
 import com.wpl.ui.annotations.UiSimpleItems;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.FactoryContext;
-import com.wpl.ui.factory.MethodListenerProxy;
 import com.wpl.ui.factory.UiAnnotationHandler;
 import com.wpl.ui.factory.components.combobox.ComboBoxInfo;
 import com.wpl.ui.factory.components.combobox.ComboBoxItemInfo;
+import com.wpl.ui.listeners.MethodListenerProxy;
 
 public class JComboBoxFactory extends JComponentFactory {
 
@@ -76,11 +76,14 @@ public class JComboBoxFactory extends JComponentFactory {
 	public void wireComponent(FactoryContext factory, ComponentContext context) {
 		super.wireComponent(factory, context);
 
+		JComboBox cb = (JComboBox) context.getComponent();
+
 		MethodListenerProxy<ItemListener> itemListenerProxy = new MethodListenerProxy<ItemListener>(
 				factory.getObject(), context.getActionListeners(),
 				ItemListener.class);
 
-		JComboBox cb = (JComboBox) context.getComponent();
-		cb.addItemListener(itemListenerProxy.getProxy());
+		if (itemListenerProxy.hasListeningMethod()) {
+			cb.addItemListener(itemListenerProxy.getProxy());
+		}
 	}
 }
