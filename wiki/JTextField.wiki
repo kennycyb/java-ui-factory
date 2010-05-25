@@ -1,0 +1,10 @@
+#summary JTextField
+
+= Introduction =
+
+_See [http://java.sun.com/javase/6/docs/api/javax/swing/JTextField.html]_
+
+= Annotations =
+
+|| *Annotation* || *Description* || *Example* ||
+|| {{{ @UiText }} || Set the initial text of the JTextField || {{{ @UiText("Hello World") }}} ||
