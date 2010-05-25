@@ -15,7 +15,6 @@
  */
 package com.wpl.ui.factory;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collection;
@@ -38,8 +37,6 @@ public class FactoryContext {
 	 * Method to invoke once manufacturing is done by the factory.
 	 */
 	private Method mInitMethod;
-
-	private Field mFactoryContextHolder;
 
 	private boolean mAutoWired = true;
 
@@ -102,14 +99,6 @@ public class FactoryContext {
 
 	public void onInit() {
 		invoke(this.mInitMethod);
-	}
-
-	public void setFactoryContextHolder(Field factoryContextHolder) {
-		mFactoryContextHolder = factoryContextHolder;
-	}
-
-	public Field getFactoryContextHolder() {
-		return mFactoryContextHolder;
 	}
 
 	private void invoke(Method method) {

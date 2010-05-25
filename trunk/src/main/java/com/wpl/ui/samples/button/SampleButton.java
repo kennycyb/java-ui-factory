@@ -75,6 +75,7 @@ public class SampleButton extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		UiFactory.instance().createFrame(SampleButton.class).setVisible(true);
+		UiFactory.instance().createComponent(SampleButton.class).setVisible(
+				true);
 	}
 }

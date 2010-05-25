@@ -20,6 +20,7 @@ import java.awt.Frame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wpl.ui.annotations.UiSize;
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.annotations.frame.UiFrameResizable;
 import com.wpl.ui.factory.ComponentContext;
@@ -32,6 +33,26 @@ public class FrameFactory extends WindowFactory {
 	@Override
 	protected Class<?> defaultType() {
 		return Frame.class;
+	}
+
+	@Override
+	protected void init(FactoryContext factory, final ComponentContext context) {
+
+		context.addPostInit(new Runnable() {
+			@Override
+			public void run() {
+				Frame f = (Frame) context.getComponent();
+				if (f == null) {
+					return;
+				}
+
+				if (context.getAnnotatedElement().getAnnotation(UiSize.class) == null) {
+					f.pack();
+				}
+			}
+		});
+
+		super.init(factory, context);
 	}
 
 	@UiAnnotationHandler(UiText.class)

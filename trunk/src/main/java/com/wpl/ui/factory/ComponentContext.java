@@ -66,7 +66,17 @@ public class ComponentContext {
 
 	private final List<Runnable> mPostInit = new ArrayList<Runnable>();
 
+	private final List<Runnable> mInit = new ArrayList<Runnable>();
+
 	public ComponentContext() {
+	}
+
+	public void addInit(Runnable runnable) {
+		mInit.add(runnable);
+	}
+
+	public List<Runnable> getInit() {
+		return mInit;
 	}
 
 	/**

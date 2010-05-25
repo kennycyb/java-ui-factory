@@ -3,7 +3,7 @@
     <menu id="file" text="File">
         <menuItem id="file.new" text="New"/>
         <menuItem text="Open..."/>
-        <menuItem text="Save"/>
+        <menuItem text="Save" icon="iMac.icon"/>
         <menuItem text="Save As..."/>
 		<menuItem type="SEPARATOR"/>
 		<menuItem text="Page Setup..."/>
@@ -12,7 +12,7 @@
 		<menuItem id="file.exit" text="Exit"/>
     </menu>
     <menu id="edit" text="Edit">
-    	<menuItem id="undo" text="Undo" bindable="true"/>
+    	<menuItem id="undo" text="Undo"/>
     	<menuItem type="SEPARATOR"/>
     	<menuItem id="cut" text="Cut"/>
     	<menuItem text="Copy"/>
@@ -28,11 +28,14 @@
     	<menuItem text="Time/Date"/>
     </menu>
     <menu text="Format">
-    	<menuItem text="Word Wrap"/>
+    	<menuItem text="Word Wrap" type="CHECKBOX"/>
     	<menuItem text="Font..."/>
     </menu>
     <menu text="View">
-    	<menuItem text="Status Bar"/>
+    	<menuItem text="Status Bar" type="CHECKBOX" selected="true"/>
+    	<menuItem type="SEPARATOR"/>
+    	<menuItem type="RADIOBUTTON" text="ANSI" radioGroupId="encoding"/>
+    	<menuItem type="RADIOBUTTON" text="UTF" radioGroupId="encoding" selected="true"/>
    	</menu>
    	<menu text="Help">
    		<menuItem text="Help Topics"/>

@@ -52,7 +52,6 @@ import com.wpl.ui.annotations.UiInit;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiName;
 import com.wpl.ui.annotations.UiPreInit;
-import com.wpl.ui.annotations.UiSize;
 import com.wpl.ui.annotations.UiType;
 import com.wpl.ui.annotations.frame.UiFrameMenu;
 import com.wpl.ui.factory.ComponentContext;
@@ -233,10 +232,6 @@ public final class UiFactory {
 				continue;
 			}
 
-			if (f.getType() == FactoryContext.class) {
-				factoryContext.setFactoryContextHolder(f);
-			}
-
 			UiType uiType = f.getAnnotation(UiType.class);
 
 			Class<?> type = uiType == null ? f.getType() : uiType.value();
@@ -272,7 +267,7 @@ public final class UiFactory {
 	}
 
 	private void create(FactoryContext factoryContext,
-			ComponentContext componentContext, boolean isRoot) {
+			ComponentContext componentContext) {
 
 		if (componentContext == null || componentContext.getType() == null) {
 			LOGGER
@@ -293,22 +288,8 @@ public final class UiFactory {
 
 		factory.createComponent(factoryContext, componentContext);
 
-		if (isRoot) {
-			factoryContext.setObject(componentContext.getComponent());
-			if (factoryContext.getFactoryContextHolder() != null) {
-				factoryContext.getFactoryContextHolder().setAccessible(true);
-				try {
-					factoryContext.getFactoryContextHolder().set(
-							factoryContext.getObject(), factoryContext);
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			factoryContext.onPreInit();
+		for (Runnable r : componentContext.getInit()) {
+			r.run();
 		}
 
 		if (LOGGER.isDebugEnabled()) {
@@ -342,7 +323,7 @@ public final class UiFactory {
 
 			child.setContainer(container);
 
-			create(factoryContext, child, false);
+			create(factoryContext, child);
 
 			if (child.getAnnotatedElement() instanceof Field) {
 				Field f = (Field) child.getAnnotatedElement();
@@ -379,10 +360,6 @@ public final class UiFactory {
 							.getType().getSimpleName());
 				}
 			}
-		}
-
-		if (isRoot) {
-			factoryContext.onInit();
 		}
 	}
 
@@ -436,11 +413,11 @@ public final class UiFactory {
 		return factoryContext;
 	}
 
-	public <T extends Frame> T createFrame(Class<T> frameClass) {
+	public <T extends Component> T createComponent(Class<T> frameClass) {
 
 		LOGGER.debug("Creating {}", frameClass.getSimpleName());
 
-		FactoryContext factoryContext = getFactoryContext(frameClass);
+		final FactoryContext factoryContext = getFactoryContext(frameClass);
 
 		UiName name = frameClass.getAnnotation(UiName.class);
 		UiType cType = frameClass.getAnnotation(UiType.class);
@@ -453,21 +430,30 @@ public final class UiFactory {
 			id = name.value();
 		}
 
-		ComponentContext componentContext = factoryContext
+		final ComponentContext componentContext = factoryContext
 				.findComponentContext(id);
 		componentContext.setRoot(true);
 		componentContext.setAnnotatedElement(frameClass);
 		componentContext.setType(cType == null ? frameClass : cType.value());
+		componentContext.addInit(new Runnable() {
+			@Override
+			public void run() {
+				factoryContext.setObject(componentContext.getComponent());
+				factoryContext.onPreInit();
+			}
+		});
+		componentContext.addPostInit(new Runnable() {
+			@Override
+			public void run() {
+				factoryContext.onInit();
+			}
+		});
 
 		resolveComponentContext(factoryContext, componentContext);
 
-		create(factoryContext, componentContext, true);
+		create(factoryContext, componentContext);
 
 		T frame = frameClass.cast(componentContext.getComponent());
-
-		if (frameClass.getAnnotation(UiSize.class) == null) {
-			frame.pack();
-		}
 
 		postInit(componentContext);
 
@@ -483,31 +469,6 @@ public final class UiFactory {
 		for (Runnable r : context.getPostInit()) {
 			r.run();
 		}
-	}
-
-	public <T extends Component> T createComponent(Class<T> componentClass) {
-		LOGGER.debug("Creating {}", componentClass.getSimpleName());
-
-		FactoryContext factoryContext = getFactoryContext(componentClass);
-		ComponentContext componentContext = new ComponentContext();
-
-		UiName name = componentClass.getAnnotation(UiName.class);
-		UiType cType = componentClass.getAnnotation(UiType.class);
-
-		componentContext.setId(name == null ? componentClass.getSimpleName()
-				: name.value());
-		componentContext.setAnnotatedElement(componentClass);
-		componentContext
-				.setType(cType == null ? componentClass : cType.value());
-
-		resolveComponentContext(factoryContext, componentContext);
-
-		create(factoryContext, componentContext, true);
-
-		T component = componentClass.cast(componentContext.getComponent());
-
-		return component;
-
 	}
 
 	// ~ Static Instance -------------------------------------------------------

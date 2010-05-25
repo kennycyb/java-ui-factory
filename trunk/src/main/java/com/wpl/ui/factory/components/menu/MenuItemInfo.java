@@ -21,8 +21,11 @@ public class MenuItemInfo {
 
 	private String mId;
 	private String mText;
-	private MenuItemType mType;
-	private boolean mBindable;
+	private MenuItemType mType = MenuItemType.MENU;
+	private String mIcon;
+	private String mRadioGroupId;
+
+	private boolean mSelected;
 
 	public MenuItemInfo() {
 	}
@@ -32,12 +35,30 @@ public class MenuItemInfo {
 	}
 
 	@XmlAttribute
-	public boolean isBindable() {
-		return mBindable;
+	public boolean isSelected() {
+		return mSelected;
 	}
 
-	public void setBindable(boolean bindable) {
-		mBindable = bindable;
+	public void setSelected(boolean selected) {
+		mSelected = selected;
+	}
+
+	@XmlAttribute
+	public String getRadioGroupId() {
+		return mRadioGroupId;
+	}
+
+	public void setRadioGroupId(String radioGroupId) {
+		mRadioGroupId = radioGroupId;
+	}
+
+	@XmlAttribute
+	public String getIcon() {
+		return mIcon;
+	}
+
+	public void setIcon(String icon) {
+		mIcon = icon;
 	}
 
 	@XmlAttribute

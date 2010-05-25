@@ -19,6 +19,18 @@ public enum MenuItemType {
 
 	SEPARATOR,
 
+	/**
+	 * Create a JMenuItem
+	 */
 	MENU,
 
+	/**
+	 * Create a JCheckBoxMenuItem
+	 */
+	CHECKBOX,
+
+	/**
+	 * Create a JRadioButtonMenuItem
+	 */
+	RADIOBUTTON,
 }

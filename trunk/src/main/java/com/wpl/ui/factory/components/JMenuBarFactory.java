@@ -16,15 +16,21 @@
 package com.wpl.ui.factory.components;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 import java.io.InputStream;
-import java.lang.reflect.Method;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
 import javax.xml.bind.JAXB;
 
 import org.slf4j.Logger;
@@ -40,7 +46,7 @@ import com.wpl.ui.factory.components.menu.MenuBarInfo;
 import com.wpl.ui.factory.components.menu.MenuInfo;
 import com.wpl.ui.factory.components.menu.MenuItemInfo;
 import com.wpl.ui.factory.components.menu.MenuItemType;
-import com.wpl.ui.listeners.MethodListener;
+import com.wpl.ui.listeners.MethodListenerProxy;
 
 public class JMenuBarFactory extends JComponentFactory {
 	private static Logger LOGGER = LoggerFactory
@@ -76,7 +82,6 @@ public class JMenuBarFactory extends JComponentFactory {
 			return;
 		}
 
-		final Object listener = factory.getObject();
 		final MenuBarInfo menuInfo = JAXB.unmarshal(in, MenuBarInfo.class);
 		final UiFont uiFont = context.getAnnotatedElement().getAnnotation(
 				UiFont.class);
@@ -90,28 +95,19 @@ public class JMenuBarFactory extends JComponentFactory {
 					uiFont.size());
 		}
 
-		final Method onClicked = context.getActionListeners().get("clicked");
+		MethodListenerProxy<ActionListener> actionListenerProxy = new MethodListenerProxy<ActionListener>(
+				factory.getObject(), context.getActionListeners(),
+				ActionListener.class);
 
-		ActionListener onClickedListener = null;
-
-		if (listener != null && onClicked != null) {
-
-			final MethodListener<ActionEvent> methodListener = new MethodListener<ActionEvent>(
-					listener, onClicked);
-
-			onClickedListener = new ActionListener() {
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					methodListener.invoke(e);
-				}
-			};
-
-		}
+		MethodListenerProxy<ItemListener> itemListenerProxy = new MethodListenerProxy<ItemListener>(
+				factory.getObject(), context.getActionListeners(),
+				ItemListener.class);
 
 		int menuIndex = -1;
 
 		for (MenuInfo menuItemInfo : menuInfo.getMenu()) {
+
+			Map<String, ButtonGroup> radioGroup = new HashMap<String, ButtonGroup>();
 
 			menuIndex++;
 
@@ -149,9 +145,46 @@ public class JMenuBarFactory extends JComponentFactory {
 
 				menuChildIndex++;
 
-				final JMenuItem mi = new JMenuItem(item.getText());
+				final JMenuItem mi;
+
+				switch (item.getType()) {
+
+				case CHECKBOX:
+					mi = new JCheckBoxMenuItem(item.getText());
+					if (item.isSelected()) {
+						mi.setSelected(true);
+					}
+					break;
+
+				case RADIOBUTTON:
+					mi = new JRadioButtonMenuItem(item.getText());
+
+					ButtonGroup group = radioGroup.get(item.getRadioGroupId());
+					if (group == null) {
+						group = new ButtonGroup();
+						radioGroup.put(item.getRadioGroupId(), group);
+					}
+					if (item.isSelected()) {
+						mi.setSelected(true);
+					}
+					group.add(mi);
+					break;
+
+				default:
+					mi = new JMenuItem(item.getText());
+					break;
+				}
+
 				if (font != null) {
 					mi.setFont(font);
+				}
+
+				if (item.getIcon() != null) {
+					URL url = getClass().getClassLoader().getResource(
+							item.getIcon());
+					if (url != null) {
+						mi.setIcon(new ImageIcon(url));
+					}
 				}
 
 				if (item.getId() == null) {
@@ -174,17 +207,14 @@ public class JMenuBarFactory extends JComponentFactory {
 
 				mi.setActionCommand(item.getId());
 
-				if (onClickedListener != null) {
-					mi.addActionListener(onClickedListener);
-
-					if (LOGGER.isDebugEnabled()) {
-						LOGGER
-								.debug(
-										"wireComponent (JMenuItem){}.actionPerformed to {}",
-										new Object[] { menuChild.getId(),
-												onClicked.getName() });
-					}
+				if (actionListenerProxy.hasListeningMethod()) {
+					mi.addActionListener(actionListenerProxy.getProxy());
 				}
+
+				if (itemListenerProxy.hasListeningMethod()) {
+					mi.addItemListener(itemListenerProxy.getProxy());
+				}
+
 				menu.add(mi);
 			}
 		}

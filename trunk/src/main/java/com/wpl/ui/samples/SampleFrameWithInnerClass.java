@@ -110,9 +110,7 @@ public class SampleFrameWithInnerClass extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		UiFactory factory = new UiFactory();
-		JFrame sample = factory.createFrame(SampleFrameWithInnerClass.class);
-
-		sample.setVisible(true);
+		UiFactory.instance().createComponent(SampleFrameWithInnerClass.class)
+				.setVisible(true);
 	}
 }

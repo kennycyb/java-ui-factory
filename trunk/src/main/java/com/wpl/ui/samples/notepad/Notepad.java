@@ -17,6 +17,7 @@ package com.wpl.ui.samples.notepad;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
@@ -41,14 +42,17 @@ import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
 import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
 import com.wpl.ui.annotations.frame.UiFrameMenu;
 import com.wpl.ui.annotations.frame.UiFrameResizable;
+import com.wpl.ui.annotations.frame.UiWindowPosition;
 import com.wpl.ui.enums.BorderLayoutConstraint;
 import com.wpl.ui.enums.FontStyle;
 import com.wpl.ui.enums.FrameCloseOperation;
 import com.wpl.ui.enums.ScrollBarPolicy;
+import com.wpl.ui.enums.WindowPosition;
 
 /**
  * Sample of Notepad Application.
  */
+@UiWindowPosition(WindowPosition.CENTER)
 @UiText("Notepad")
 @UiSize(height = 600, width = 800)
 @UiLayout(BorderLayout.class)
@@ -109,8 +113,12 @@ public class Notepad extends JFrame {
 		LOGGER.debug("onNotepad_windowLostFocus");
 	}
 
+	void onMenuBar_itemStateChanged(ItemEvent e) {
+		LOGGER.debug("itemStateChanged: {} ", e.getItem());
+	}
+
 	@SuppressWarnings("unused")
-	private void onMenuBar_clicked(ActionEvent e) {
+	private void onMenuBar_actionPerformed(ActionEvent e) {
 
 		String actionCommand = e.getActionCommand();
 
@@ -132,9 +140,6 @@ public class Notepad extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		UiFactory factory = new UiFactory();
-		JFrame notepad = factory.createFrame(Notepad.class);
-
-		notepad.setVisible(true);
+		UiFactory.instance().createComponent(Notepad.class).setVisible(true);
 	}
 }
