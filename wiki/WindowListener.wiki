@@ -1,0 +1,43 @@
+#summary Autowired of WindowListener
+#labels Phase-Implementation
+
+= Introduction =
+
+_See [http://java.sun.com/javase/6/docs/api/java/awt/event/WindowListener.html]_
+
+= Details =
+
+* WindowListener.windowActivated
+{{{
+public void on[ComponentName]_windowActivated(WindowEvent e) {}
+}}}
+
+* WindowListener.windowClosed
+{{{
+public void on[ComponentName]_windowClosed(WindowEvent e) {}
+}}}
+
+* WindowListener.windowClosing
+{{{
+public void on[ComponentName]_windowClosing(WindowEvent e) {}
+}}}
+
+* WindowListener.windowDeactivated
+{{{
+public void on[ComponentName]_windowDeactivated(WindowEvent e) {}
+}}}
+
+* WindowListener.windowDeiconified
+{{{
+public void on[ComponentName]_windowDeiconified(WindowEvent e) {}
+}}}
+
+* WindowListener.windowIconified
+{{{
+public void on[ComponentName]_windowIconified(WindowEvent e) {}
+}}}
+
+* WindowListener.windowOpened
+{{{
+public void on[ComponentName]_windowOpened(WindowEvent e) {}
+}}}
