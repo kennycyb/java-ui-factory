@@ -15,13 +15,17 @@
  */
 package com.wpl.ui.factory.components;
 
+import java.awt.Frame;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+public class FrameFactory extends WindowFactory {
 
-public class FrameFactory {
+	private static Logger LOGGER = LoggerFactory.getLogger(FrameFactory.class);
 
-    private static Logger LOGGER = LoggerFactory.getLogger(FrameFactory.class);
+	@Override
+	protected Class<?> defaultType() {
+		return Frame.class;
+	}
 }
-
-
