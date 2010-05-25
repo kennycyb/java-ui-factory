@@ -18,5 +18,5 @@ void on[ComponentName]_windowGainedFocus(WindowEvent e) {}
   Invoked when the Window is no longer the focused Window, which means that keyboard events will no longer be delivered to the Window or any of its subcomponents
  
 {{{             
-void on[ComponentName]_windowLostFocus(WindowEvent e) 
+void on[ComponentName]_windowLostFocus(WindowEvent e) {}
 }}}
