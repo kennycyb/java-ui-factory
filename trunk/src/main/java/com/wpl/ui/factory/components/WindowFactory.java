@@ -16,6 +16,7 @@
 package com.wpl.ui.factory.components;
 
 import java.awt.Window;
+import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowListener;
 
 import org.slf4j.Logger;
@@ -37,11 +38,16 @@ public class WindowFactory extends ContainerFactory {
 	public void wireComponent(FactoryContext factory, ComponentContext context) {
 		super.wireComponent(factory, context);
 
-		MethodListenerProxy<WindowListener> proxy = new MethodListenerProxy<WindowListener>(
+		MethodListenerProxy<WindowListener> windowListenerProxy = new MethodListenerProxy<WindowListener>(
 				factory.getObject(), context.getActionListeners(),
 				WindowListener.class);
 
+		MethodListenerProxy<WindowFocusListener> windowFocusListenerProxy = new MethodListenerProxy<WindowFocusListener>(
+				factory.getObject(), context.getActionListeners(),
+				WindowFocusListener.class);
+
 		Window window = (Window) context.getComponent();
-		window.addWindowListener(proxy.getProxy());
+		window.addWindowListener(windowListenerProxy.getProxy());
+		window.addWindowFocusListener(windowFocusListenerProxy.getProxy());
 	}
 }

@@ -80,10 +80,12 @@ public class Notepad extends JFrame {
 	@UiComponentOf("menuBar")
 	private JMenuItem cut;
 
+	@SuppressWarnings("unused")
 	@UiInit
 	private void init() {
 		undo.setEnabled(false);
 		cut.setEnabled(false);
+		LOGGER.debug("init");
 	}
 
 	@SuppressWarnings("unused")
@@ -94,6 +96,16 @@ public class Notepad extends JFrame {
 	@SuppressWarnings("unused")
 	private void onNotepad_windowActivated(WindowEvent e) {
 		LOGGER.debug("onNotepad_windowActivated");
+	}
+
+	@SuppressWarnings("unused")
+	private void onNotepad_windowGainedFocus(WindowEvent e) {
+		LOGGER.debug("onNotepad_windowGainedFocus");
+	}
+
+	@SuppressWarnings("unused")
+	private void onNotepad_windowLostFocus(WindowEvent e) {
+		LOGGER.debug("onNotepad_windowLostFocus");
 	}
 
 	@SuppressWarnings("unused")
