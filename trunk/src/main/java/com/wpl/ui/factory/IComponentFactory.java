@@ -26,5 +26,5 @@ public interface IComponentFactory {
 	 */
 	public void createComponent(FactoryContext factory, ComponentContext context);
 
-	public void wireComponent(ComponentContext context);
+	public void wireComponent(FactoryContext factory, ComponentContext context);
 }

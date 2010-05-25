@@ -54,7 +54,6 @@ public class ComponentContext {
 	private AnnotatedElement mAnnotatedElement;
 	private Component mEnclosedComponent;
 
-	private Object mActionListener;
 	private final Map<String, Method> mActionListeners = new HashMap<String, Method>();
 
 	private final List<ComponentContext> mChildren = new ArrayList<ComponentContext>();
@@ -63,7 +62,17 @@ public class ComponentContext {
 
 	private String mParentId;
 
+	private boolean mRoot;
+
 	public ComponentContext() {
+	}
+
+	public boolean isRoot() {
+		return mRoot;
+	}
+
+	public void setRoot(boolean root) {
+		mRoot = root;
 	}
 
 	public String getParentId() {
@@ -96,14 +105,6 @@ public class ComponentContext {
 
 	public List<ComponentContext> getChildren() {
 		return mChildren;
-	}
-
-	public void setActionListener(Object actionListener) {
-		mActionListener = actionListener;
-	}
-
-	public Object getActionListener() {
-		return mActionListener;
 	}
 
 	public Component getEnclosedComponent() {

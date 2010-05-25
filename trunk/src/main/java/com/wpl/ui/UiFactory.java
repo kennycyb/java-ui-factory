@@ -327,7 +327,6 @@ public final class UiFactory {
 				continue;
 			}
 
-			child.setActionListener(factoryContext.getObject());
 			child.setContainer(container);
 
 			create(factoryContext, child, false);
@@ -404,6 +403,14 @@ public final class UiFactory {
 					ComponentContext componentContext = factoryContext
 							.findComponentContext(componentName);
 					componentContext.addActionListener(actionName, m);
+
+					if (LOGGER.isDebugEnabled()) {
+						LOGGER
+								.debug(
+										"Found autowired listener: {}, registered for {} on {}",
+										new Object[] { methodName,
+												componentName, actionName });
+					}
 				}
 			}
 		}
@@ -416,13 +423,21 @@ public final class UiFactory {
 		LOGGER.debug("Creating {}", frameClass.getSimpleName());
 
 		FactoryContext factoryContext = getFactoryContext(frameClass);
-		ComponentContext componentContext = new ComponentContext();
 
 		UiName name = frameClass.getAnnotation(UiName.class);
 		UiType cType = frameClass.getAnnotation(UiType.class);
 
-		componentContext.setId(name == null ? frameClass.getSimpleName() : name
-				.value());
+		String id;
+		if (name == null) {
+			id = frameClass.getSimpleName().substring(0, 1).toLowerCase()
+					+ frameClass.getSimpleName().substring(1);
+		} else {
+			id = name.value();
+		}
+
+		ComponentContext componentContext = factoryContext
+				.findComponentContext(id);
+		componentContext.setRoot(true);
 		componentContext.setAnnotatedElement(frameClass);
 		componentContext.setType(cType == null ? frameClass : cType.value());
 
