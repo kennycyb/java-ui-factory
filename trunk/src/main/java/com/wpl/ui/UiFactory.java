@@ -21,6 +21,9 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridLayout;
+import java.awt.TextArea;
+import java.awt.TextComponent;
+import java.awt.TextField;
 import java.awt.Window;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -71,6 +74,9 @@ import com.wpl.ui.factory.components.JPasswordFieldFactory;
 import com.wpl.ui.factory.components.JRadioButtonFactory;
 import com.wpl.ui.factory.components.JTextAreaFactory;
 import com.wpl.ui.factory.components.JTextFieldFactory;
+import com.wpl.ui.factory.components.TextAreaFactory;
+import com.wpl.ui.factory.components.TextComponentFactory;
+import com.wpl.ui.factory.components.TextFieldFactory;
 import com.wpl.ui.factory.components.WindowFactory;
 import com.wpl.ui.layout.BorderLayoutHandler;
 import com.wpl.ui.layout.FlowLayoutHandler;
@@ -106,6 +112,11 @@ public final class UiFactory {
 		sDefaultFactory.put(JPasswordField.class, new JPasswordFieldFactory());
 		sDefaultFactory.put(JFormattedTextField.class,
 				new JFormattedTextFieldFactory());
+
+		// AWT
+		sDefaultFactory.put(TextComponent.class, new TextComponentFactory());
+		sDefaultFactory.put(TextField.class, new TextFieldFactory());
+		sDefaultFactory.put(TextArea.class, new TextAreaFactory());
 	}
 
 	private static Map<Class<?>, ILayoutHandler> sDefaultLayout = new HashMap<Class<?>, ILayoutHandler>();
@@ -208,7 +219,8 @@ public final class UiFactory {
 	}
 
 	private ComponentContext resolveComponentContext(
-			FactoryContext factoryContext, ComponentContext componentContext) {
+			FactoryContext factoryContext,
+			final ComponentContext componentContext) {
 
 		UiComponentOf componentOf = componentContext.getAnnotatedElement()
 				.getAnnotation(UiComponentOf.class);
@@ -225,7 +237,7 @@ public final class UiFactory {
 
 		Field[] fields = componentContext.getType().getDeclaredFields();
 
-		for (Field f : fields) {
+		for (final Field f : fields) {
 
 			if (Modifier.isStatic(f.getModifiers())) {
 				LOGGER.debug("ignore static field: {}", f.getName());
@@ -246,11 +258,35 @@ public final class UiFactory {
 			String childId = childName == null ? f.getName() : childName
 					.value();
 
-			ComponentContext childContext = factoryContext
+			final ComponentContext childContext = factoryContext
 					.findComponentContext(childId);
 			childContext.setAnnotatedElement(f);
 			childContext.setDeclared(true);
 			childContext.setType(type);
+			childContext.addInit(new Runnable() {
+				@Override
+				public void run() {
+					f.setAccessible(true);
+					try {
+						f.set(componentContext.getComponent(), childContext
+								.getComponent());
+
+						if (LOGGER.isDebugEnabled()) {
+							LOGGER.debug("setting field value: {}.{} with {}",
+									new Object[] { componentContext.getId(),
+											f.getName(),
+											childContext.getComponent() });
+						}
+
+					} catch (IllegalArgumentException e) {
+						LOGGER.error("Failed to set field value");
+					} catch (IllegalAccessException e) {
+						LOGGER.error("Failed to set field value");
+					}
+
+				}
+			});
+
 			resolveComponentContext(factoryContext, childContext);
 
 			if (LOGGER.isDebugEnabled()) {
@@ -292,6 +328,8 @@ public final class UiFactory {
 			r.run();
 		}
 
+		componentContext.getInit().clear();
+
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("< {} created", componentContext.getId());
 		}
@@ -324,22 +362,6 @@ public final class UiFactory {
 			child.setContainer(container);
 
 			create(factoryContext, child);
-
-			if (child.getAnnotatedElement() instanceof Field) {
-				Field f = (Field) child.getAnnotatedElement();
-				try {
-					f.setAccessible(true);
-					f
-							.set(componentContext.getComponent(), child
-									.getComponent());
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
 
 			// Don't add to container if this is a menu
 			if (child.getAnnotatedElement().getAnnotation(UiFrameMenu.class) != null) {
@@ -454,10 +476,21 @@ public final class UiFactory {
 		create(factoryContext, componentContext);
 
 		T frame = frameClass.cast(componentContext.getComponent());
-
+		init(componentContext);
 		postInit(componentContext);
 
 		return frame;
+	}
+
+	private void init(ComponentContext context) {
+		for (ComponentContext child : context.getChildren()) {
+			init(child);
+		}
+
+		for (Runnable r : context.getInit()) {
+			r.run();
+		}
+		context.getInit().clear();
 	}
 
 	private void postInit(ComponentContext context) {
@@ -468,7 +501,9 @@ public final class UiFactory {
 
 		for (Runnable r : context.getPostInit()) {
 			r.run();
+			LOGGER.debug("postInit: {}", context.getId());
 		}
+		context.getPostInit().clear();
 	}
 
 	// ~ Static Instance -------------------------------------------------------

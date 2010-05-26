@@ -195,7 +195,6 @@ public class JMenuBarFactory extends JComponentFactory {
 						.getId());
 				menuChild.setComponent(mi);
 				child.addChild(menuChild);
-				child.setDeclared(false);
 
 				if (LOGGER.isDebugEnabled()) {
 					LOGGER.debug(
