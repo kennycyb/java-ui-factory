@@ -15,12 +15,15 @@
  */
 package com.wpl.ui.factory.components;
 
+import java.awt.event.InputMethodListener;
+
 import javax.swing.text.JTextComponent;
 
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
+import com.wpl.ui.listeners.MethodListenerProxy;
 
 /**
  * 
@@ -34,5 +37,21 @@ public abstract class JTextComponentFactory extends JComponentFactory {
 	protected void handleUiText(FactoryContext factory,
 			ComponentContext context, JTextComponent component, UiText annotate) {
 		component.setText(annotate.value());
+	}
+
+	@Override
+	public void wireComponent(FactoryContext factory, ComponentContext context) {
+		super.wireComponent(factory, context);
+
+		JTextComponent component = (JTextComponent) context.getComponent();
+
+		MethodListenerProxy<InputMethodListener> inputMethodListenerProxy = new MethodListenerProxy<InputMethodListener>(
+				factory.getObject(), context.getActionListeners(),
+				InputMethodListener.class);
+
+		if (inputMethodListenerProxy.hasListeningMethod()) {
+			component.addInputMethodListener(inputMethodListenerProxy
+					.getProxy());
+		}
 	}
 }

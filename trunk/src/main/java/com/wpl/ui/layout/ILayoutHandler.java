@@ -15,12 +15,19 @@
  */
 package com.wpl.ui.layout;
 
-import java.awt.Component;
-import java.awt.Container;
-import java.lang.reflect.AnnotatedElement;
+import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.FactoryContext;
 
+/**
+ * 
+ * @author kenny
+ * @since 1.0
+ */
 public interface ILayoutHandler {
 
-    public boolean handleComponent(Container container, Component component,
-                                   AnnotatedElement annotate);
+	public void layoutComponent(FactoryContext factoryContext,
+			ComponentContext componentContext);
+
+	public void finalLayout(FactoryContext factoryContext,
+			ComponentContext containerContext);
 }

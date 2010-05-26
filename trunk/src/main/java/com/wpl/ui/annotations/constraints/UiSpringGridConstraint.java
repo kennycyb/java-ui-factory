@@ -13,24 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.factory.components;
+package com.wpl.ui.annotations.constraints;
 
-import java.awt.TextField;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.wpl.ui.enums.SpringGridType;
 
 /**
  * 
  * @since 1.0
  */
-public class TextFieldFactory extends TextComponentFactory {
-	private static Logger LOGGER = LoggerFactory
-			.getLogger(TextFieldFactory.class);
+@Retention(RetentionPolicy.RUNTIME)
+@Target( { ElementType.TYPE })
+public @interface UiSpringGridConstraint {
 
-	@Override
-	protected Class<?> defaultType() {
-		return TextField.class;
-	}
+	int rows() default -1;
 
+	int cols() default 2;
+
+	int initialX() default 0;
+
+	int initialY() default 0;
+
+	int xPad() default 5;
+
+	int yPad() default 5;
+
+	SpringGridType gridType() default SpringGridType.COMPACT;
 }

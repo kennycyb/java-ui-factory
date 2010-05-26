@@ -90,6 +90,7 @@ public class MethodListenerProxy<E> implements MethodInterceptor {
 
 	// ~ Implementation of MethodInterceptor -----------------------------------
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Object intercept(Object proxy, Method method, Object[] args,
 			MethodProxy methodProxy) throws Throwable {

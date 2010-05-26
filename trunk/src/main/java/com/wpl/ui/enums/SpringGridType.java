@@ -13,24 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.factory.components;
+package com.wpl.ui.enums;
 
-import java.awt.TextField;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 
  * @since 1.0
  */
-public class TextFieldFactory extends TextComponentFactory {
-	private static Logger LOGGER = LoggerFactory
-			.getLogger(TextFieldFactory.class);
+public enum SpringGridType {
 
-	@Override
-	protected Class<?> defaultType() {
-		return TextField.class;
-	}
+	GRID,
 
+	COMPACT;
 }

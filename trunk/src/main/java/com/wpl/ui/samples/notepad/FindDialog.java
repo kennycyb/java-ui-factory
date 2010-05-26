@@ -16,13 +16,17 @@
 package com.wpl.ui.samples.notepad;
 
 import javax.swing.JPanel;
+import javax.swing.SpringLayout;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiSize;
+import com.wpl.ui.annotations.UiLayout;
+import com.wpl.ui.annotations.frame.UiWindowPosition;
+import com.wpl.ui.enums.WindowPosition;
 
-@UiSize(height = 200, width = 400)
+@UiWindowPosition(WindowPosition.CENTER)
+@UiLayout(SpringLayout.class)
 public class FindDialog extends JPanel {
 	private static Logger LOGGER = LoggerFactory.getLogger(FindDialog.class);
 

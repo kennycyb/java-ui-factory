@@ -15,24 +15,37 @@
  */
 package com.wpl.ui.layout;
 
-import java.awt.Component;
-import java.awt.Container;
-import java.lang.reflect.AnnotatedElement;
-
 import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
+import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.FactoryContext;
 
+/**
+ * 
+ * @author kenny
+ * @since 1.0
+ */
 public class BorderLayoutHandler implements ILayoutHandler {
 
-	public boolean handleComponent(Container container, Component component,
-			AnnotatedElement annotate) {
-		UiBorderLayoutConstraint constraint = annotate
-				.getAnnotation(UiBorderLayoutConstraint.class);
+	@Override
+	public void layoutComponent(FactoryContext factoryContext,
+			ComponentContext componentContext) {
+
+		UiBorderLayoutConstraint constraint = componentContext
+				.getAnnotatedElement().getAnnotation(
+						UiBorderLayoutConstraint.class);
 
 		if (constraint == null) {
-			return false;
+			return;
 		}
 
-		container.add(component, constraint.value().getSwingConstant());
-		return true;
+		componentContext.getContainer().add(componentContext.getComponent(),
+				constraint.value().getSwingConstant());
+	}
+
+	@Override
+	public void finalLayout(FactoryContext factoryContext,
+			ComponentContext containerContext) {
+		// TODO Auto-generated method stub
+
 	}
 }

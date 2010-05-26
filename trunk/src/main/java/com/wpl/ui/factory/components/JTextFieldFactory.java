@@ -18,6 +18,14 @@ package com.wpl.ui.factory.components;
 
 import javax.swing.JTextField;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.wpl.ui.annotations.UiColumns;
+import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.FactoryContext;
+import com.wpl.ui.factory.UiAnnotationHandler;
+
 /**
  * Factory that create JTextField
  * 
@@ -26,8 +34,21 @@ import javax.swing.JTextField;
  */
 public class JTextFieldFactory extends JTextComponentFactory {
 
+	private static Logger LOGGER = LoggerFactory
+			.getLogger(JTextFieldFactory.class);
+
 	@Override
 	protected Class<?> defaultType() {
 		return JTextField.class;
+	}
+
+	@UiAnnotationHandler(UiColumns.class)
+	void handleAnnotation(FactoryContext factory, ComponentContext context,
+			JTextField component, UiColumns annotate) {
+
+		component.setColumns(annotate.value() < 0 ? 0 : annotate.value());
+
+		LOGGER.debug("{}|JTextField.setColumns({})", context.getId(), annotate
+				.value());
 	}
 }

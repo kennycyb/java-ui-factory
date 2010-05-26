@@ -15,7 +15,7 @@
  */
 package com.wpl.ui.factory.components;
 
-import java.awt.TextField;
+import javax.swing.JDialog;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,13 +24,12 @@ import org.slf4j.LoggerFactory;
  * 
  * @since 1.0
  */
-public class TextFieldFactory extends TextComponentFactory {
+public class JDialogFactory extends DialogFactory {
 	private static Logger LOGGER = LoggerFactory
-			.getLogger(TextFieldFactory.class);
+			.getLogger(JDialogFactory.class);
 
 	@Override
 	protected Class<?> defaultType() {
-		return TextField.class;
+		return JDialog.class;
 	}
-
 }

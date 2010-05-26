@@ -17,6 +17,7 @@ package com.wpl.ui.samples.notepad;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.InputMethodEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.WindowEvent;
 
@@ -91,6 +92,19 @@ public class Notepad extends JFrame {
 		undo.setEnabled(false);
 		cut.setEnabled(false);
 		LOGGER.debug("init");
+	}
+
+	/**
+	 * Invoked when the caret within composed text has changed.
+	 * 
+	 * @param event
+	 */
+	void onContext_caretPositionChanged(InputMethodEvent event) {
+		LOGGER.debug("onContext_caretPositionChanged");
+	}
+
+	void onContext_inputMethodTextChanged(InputMethodEvent event) {
+		LOGGER.debug("onContext_caretPositionChanged");
 	}
 
 	@SuppressWarnings("unused")

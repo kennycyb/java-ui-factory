@@ -59,15 +59,21 @@ public class FrameFactory extends WindowFactory {
 	protected void handleUiText(FactoryContext factory,
 			ComponentContext context, Frame frame, UiText annotate) {
 		frame.setTitle(annotate.value());
-		LOGGER.debug("(Frame){}.setTitle({})", context.getId(), annotate
-				.value());
+
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{}|Frame.setTitle({})", context.getId(), annotate
+					.value());
+		}
 	}
 
 	@UiAnnotationHandler(UiFrameResizable.class)
 	protected void handleUiResizable(FactoryContext factory,
 			ComponentContext context, Frame frame, UiFrameResizable annotate) {
 		frame.setResizable(annotate.value());
-		LOGGER.debug("(Frame){}.setResizable({})", context.getId(), annotate
-				.value());
+
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{}|Frame.setResizable({})", context.getId(), annotate
+					.value());
+		}
 	}
 }

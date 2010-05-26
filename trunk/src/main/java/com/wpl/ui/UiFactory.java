@@ -18,6 +18,8 @@ package com.wpl.ui;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dialog;
+import java.awt.FileDialog;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridLayout;
@@ -34,6 +36,7 @@ import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -45,6 +48,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.RootPaneContainer;
+import javax.swing.SpringLayout;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,10 +64,13 @@ import com.wpl.ui.annotations.frame.UiFrameMenu;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.IComponentFactory;
+import com.wpl.ui.factory.components.DialogFactory;
+import com.wpl.ui.factory.components.FileDialogFactory;
 import com.wpl.ui.factory.components.FrameFactory;
 import com.wpl.ui.factory.components.JButtonFactory;
 import com.wpl.ui.factory.components.JCheckBoxFactory;
 import com.wpl.ui.factory.components.JComboBoxFactory;
+import com.wpl.ui.factory.components.JDialogFactory;
 import com.wpl.ui.factory.components.JFormattedTextFieldFactory;
 import com.wpl.ui.factory.components.JFrameFactory;
 import com.wpl.ui.factory.components.JLabelFactory;
@@ -83,6 +90,7 @@ import com.wpl.ui.layout.FlowLayoutHandler;
 import com.wpl.ui.layout.GridLayoutHandler;
 import com.wpl.ui.layout.ILayoutHandler;
 import com.wpl.ui.layout.NullLayoutHandler;
+import com.wpl.ui.layout.SpringLayoutHandler;
 
 /**
  * A Factory that build the UI, set it's properties using annotations.
@@ -98,9 +106,7 @@ public final class UiFactory {
 		sDefaultFactory.put(JButton.class, new JButtonFactory());
 		sDefaultFactory.put(JPanel.class, new JPanelFactory());
 		sDefaultFactory.put(JTextArea.class, new JTextAreaFactory());
-		sDefaultFactory.put(JFrame.class, new JFrameFactory());
-		sDefaultFactory.put(Frame.class, new FrameFactory());
-		sDefaultFactory.put(Window.class, new WindowFactory());
+
 		sDefaultFactory.put(JMenuBar.class, new JMenuBarFactory());
 		sDefaultFactory.put(JMenu.class, new JMenuFactory());
 		sDefaultFactory.put(JCheckBox.class, new JCheckBoxFactory());
@@ -117,6 +123,16 @@ public final class UiFactory {
 		sDefaultFactory.put(TextComponent.class, new TextComponentFactory());
 		sDefaultFactory.put(TextField.class, new TextFieldFactory());
 		sDefaultFactory.put(TextArea.class, new TextAreaFactory());
+
+		// Window
+		sDefaultFactory.put(Window.class, new WindowFactory());
+		sDefaultFactory.put(Frame.class, new FrameFactory());
+		sDefaultFactory.put(JFrame.class, new JFrameFactory());
+
+		sDefaultFactory.put(Dialog.class, new DialogFactory());
+		sDefaultFactory.put(FileDialog.class, new FileDialogFactory());
+		sDefaultFactory.put(JDialog.class, new JDialogFactory());
+
 	}
 
 	private static Map<Class<?>, ILayoutHandler> sDefaultLayout = new HashMap<Class<?>, ILayoutHandler>();
@@ -126,6 +142,7 @@ public final class UiFactory {
 		sDefaultLayout.put(NullLayout.class, new NullLayoutHandler());
 		sDefaultLayout.put(FlowLayout.class, new FlowLayoutHandler());
 		sDefaultLayout.put(GridLayout.class, new GridLayoutHandler());
+		sDefaultLayout.put(SpringLayout.class, new SpringLayoutHandler());
 	}
 
 	private final Map<Class<?>, IComponentFactory> mUiFactoryMap = new HashMap<Class<?>, IComponentFactory>();
@@ -368,21 +385,10 @@ public final class UiFactory {
 				continue;
 			}
 
-			if (layoutHandler.handleComponent(container, child
-					.getEnclosedComponent(), child.getAnnotatedElement())) {
-				if (LOGGER.isDebugEnabled()) {
-					LOGGER.debug("Added {} ({}) into {}", new Object[] {
-							child.getId(),
-							child.getComponent().getClass().getSimpleName(),
-							container.getClass().getSimpleName() });
-				}
-			} else {
-				if (LOGGER.isDebugEnabled()) {
-					LOGGER.debug("{} ({}) is not added", child.getId(), child
-							.getType().getSimpleName());
-				}
-			}
+			layoutHandler.layoutComponent(factoryContext, child);
 		}
+
+		layoutHandler.finalLayout(factoryContext, componentContext);
 	}
 
 	private FactoryContext getFactoryContext(Class<?> mainClass) {

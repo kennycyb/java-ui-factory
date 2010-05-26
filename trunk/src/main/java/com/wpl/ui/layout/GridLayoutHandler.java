@@ -18,15 +18,31 @@ package com.wpl.ui.layout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.FactoryContext;
+
+/**
+ * 
+ * @author kenny
+ * @since 1.0
+ */
 public class GridLayoutHandler implements ILayoutHandler {
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(GridLayoutHandler.class);
 
-	public boolean handleComponent(java.awt.Container container,
-			java.awt.Component component,
-			java.lang.reflect.AnnotatedElement annotate) {
+	@Override
+	public void layoutComponent(FactoryContext factoryContext,
+			ComponentContext componentContext) {
 
-		container.add(component, null);
-		return true;
+		componentContext.getContainer().add(componentContext.getComponent(),
+				null);
+
+	}
+
+	@Override
+	public void finalLayout(FactoryContext factoryContext,
+			ComponentContext containerContext) {
+		// TODO Auto-generated method stub
+
 	}
 }
