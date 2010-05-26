@@ -1,0 +1,49 @@
+#summary Using Spring Layout
+
+= Introduction =
+
+Using Spring Layout
+
+
+= Details =
+
+
+== Sample Code ==
+
+[http://java-ui-factory.googlecode.com/files/SpringLayoutOutput.png]
+
+{{{
+@UiText("Sample - SpringLayout - CompactGrid")
+@UiWindowPosition(WindowPosition.CENTER)
+@UiLayout(SpringLayout.class)
+@UiFrameCloseOperation(FrameCloseOperation.EXIT)
+@UiSpringGridConstraint(gridType = SpringGridType.COMPACT)
+public class SpringLayoutCompactGridSample extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private static Logger LOGGER = LoggerFactory
+			.getLogger(SpringLayoutCompactGridSample.class);
+
+	@UiText("Host:")
+	JLabel label1;
+
+	@UiText("127.0.0.1")
+	@UiColumns(20)
+	JTextField mHost;
+
+	@UiText("Port:")
+	JLabel label2;
+
+	@UiText("21")
+	@UiColumns(5)
+	JTextField mPort;
+
+	public static void main(String[] args) {
+		UiFactory.instance().createComponent(
+				SpringLayoutCompactGridSample.class).setVisible(true);
+	}
+}
+}}}
