@@ -239,6 +239,8 @@ public final class UiFactory {
 			FactoryContext factoryContext,
 			final ComponentContext componentContext) {
 
+		LOGGER.debug("{}|start resolving fields", componentContext.getId());
+
 		UiComponentOf componentOf = componentContext.getAnnotatedElement()
 				.getAnnotation(UiComponentOf.class);
 		if (componentOf != null) {
@@ -261,6 +263,14 @@ public final class UiFactory {
 				continue;
 			}
 
+			if (Modifier.isFinal(f.getModifiers())) {
+				LOGGER.debug("ignore final field: {}", f.getName());
+				continue;
+			}
+
+			LOGGER.debug("{}|found field {}", componentContext.getId(), f
+					.getName());
+
 			UiType uiType = f.getAnnotation(UiType.class);
 
 			Class<?> type = uiType == null ? f.getType() : uiType.value();
@@ -274,6 +284,10 @@ public final class UiFactory {
 
 			String childId = childName == null ? f.getName() : childName
 					.value();
+
+			LOGGER
+					.debug("{}|found child {}", componentContext.getId(),
+							childId);
 
 			final ComponentContext childContext = factoryContext
 					.findComponentContext(childId);
@@ -306,6 +320,18 @@ public final class UiFactory {
 
 			resolveComponentContext(factoryContext, childContext);
 
+			if (childContext.getChildren().size() > 0) {
+				componentContext.addInit(new Runnable() {
+					@Override
+					public void run() {
+						childContext.setEnclosingObject(componentContext
+								.getComponent());
+						LOGGER.debug("{}|set enclosed object {}", childContext
+								.getId(), componentContext.getId());
+					}
+				});
+			}
+
 			if (LOGGER.isDebugEnabled()) {
 				LOGGER.debug("resolving {} ({})- found {} ({})", new Object[] {
 						componentContext.getId(),
@@ -335,7 +361,7 @@ public final class UiFactory {
 		}
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("> Creating {} ({})", new Object[] {
+			LOGGER.debug("{}|creating {})", new Object[] {
 					componentContext.getId(), componentContext.getType() });
 		}
 
@@ -348,7 +374,7 @@ public final class UiFactory {
 		componentContext.getInit().clear();
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("< {} created", componentContext.getId());
+			LOGGER.debug("{}|created", componentContext.getId());
 		}
 
 		Container container = null;
@@ -364,11 +390,26 @@ public final class UiFactory {
 			container = componentContext.getContainer();
 		}
 
-		UiLayout layout = componentContext.getAnnotatedElement().getAnnotation(
-				UiLayout.class);
+		UiLayout layout = null;
+
+		if (componentContext.getEnclosingObject() != null) {
+			layout = componentContext.getEnclosingObject().getClass()
+					.getAnnotation(UiLayout.class);
+			LOGGER.debug("{}|looing @UiLayout from enclosing object {}",
+					componentContext.getId(), componentContext.getType());
+		} else {
+			layout = componentContext.getAnnotatedElement().getAnnotation(
+					UiLayout.class);
+			LOGGER.debug("{}|looking @UiLayout from annotate element {}",
+					componentContext.getId(), componentContext
+							.getAnnotatedElement());
+		}
 
 		ILayoutHandler layoutHandler = findLayoutHandler(layout == null ? NullLayout.class
 				: layout.value());
+
+		LOGGER.debug("{}|using layoutHandler {}", componentContext.getId(),
+				layoutHandler.getClass().getSimpleName());
 
 		for (ComponentContext child : componentContext.getChildren()) {
 

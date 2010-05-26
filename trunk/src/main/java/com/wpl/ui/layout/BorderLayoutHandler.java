@@ -15,6 +15,9 @@
  */
 package com.wpl.ui.layout;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.FactoryContext;
@@ -25,6 +28,9 @@ import com.wpl.ui.factory.FactoryContext;
  * @since 1.0
  */
 public class BorderLayoutHandler implements ILayoutHandler {
+
+	private static Logger LOGGER = LoggerFactory
+			.getLogger(BorderLayoutHandler.class);
 
 	@Override
 	public void layoutComponent(FactoryContext factoryContext,
@@ -40,6 +46,13 @@ public class BorderLayoutHandler implements ILayoutHandler {
 
 		componentContext.getContainer().add(componentContext.getComponent(),
 				constraint.value().getSwingConstant());
+
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{} added to {} (BorderLayout={})", new Object[] {
+					componentContext.getId(),
+					componentContext.getContainer().getClass().getSimpleName(),
+					constraint.value() });
+		}
 	}
 
 	@Override

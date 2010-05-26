@@ -17,6 +17,7 @@ package com.wpl.ui.samples;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -52,15 +53,15 @@ import com.wpl.ui.enums.FrameCloseOperation;
 public class SampleFrameWithInnerClass extends JFrame {
 
 	@UiLayout(BorderLayout.class)
-	public class InnerPanel extends JPanel {
+	public static class ContentPanel extends JPanel {
 
 		@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
 		@UiText("HELLO WORLD\n")
-		public JTextArea content;
+		JTextArea content;
 	}
 
 	@UiLayout(FlowLayout.class)
-	public class CommandPanel extends JPanel {
+	class CommandPanel extends JPanel {
 
 		/**
 		 * 
@@ -87,25 +88,25 @@ public class SampleFrameWithInnerClass extends JFrame {
      */
 	private static final long serialVersionUID = 1L;
 
-	@UiType(InnerPanel.class)
+	@UiType(ContentPanel.class)
 	@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
-	private InnerPanel mCenter;
+	ContentPanel mCenter;
 
 	@UiType(CommandPanel.class)
 	@UiBorderLayoutConstraint(BorderLayoutConstraint.SOUTH)
-	private JPanel mSouth;
+	JPanel mSouth;
 
 	/**
 	 * As @AutoWired - this method will be called when "start" button is called.
 	 */
-	private void onStart_clicked() {
+	private void onStart_actionPerformed(ActionEvent e) {
 		mCenter.content.append("start button clicked\n");
 	}
 
 	/**
 	 * As @AutoWired - this method will be called when "stop" button is called.
 	 */
-	private void onStop_clicked() {
+	private void onStop_actionPerformed(ActionEvent e) {
 		mCenter.content.append("stop button clicked\n");
 	}
 

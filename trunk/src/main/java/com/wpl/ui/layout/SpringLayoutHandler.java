@@ -33,6 +33,7 @@ import com.wpl.ui.utils.SpringUtilities;
  * @since 1.0
  */
 public class SpringLayoutHandler implements ILayoutHandler {
+
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(SpringLayoutHandler.class);
 
@@ -41,8 +42,11 @@ public class SpringLayoutHandler implements ILayoutHandler {
 			ComponentContext componentContext) {
 
 		componentContext.getContainer().add(componentContext.getComponent());
-		LOGGER.debug("{} added by SpringLayoutHandler", componentContext
-				.getId());
+
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{} added to {}", componentContext.getId(),
+					componentContext.getContainer().getClass().getSimpleName());
+		}
 	}
 
 	@Override

@@ -15,6 +15,9 @@
  */
 package com.wpl.ui.layout;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.FactoryContext;
 
@@ -24,6 +27,9 @@ import com.wpl.ui.factory.FactoryContext;
  * @since 1.0
  */
 public class NullLayoutHandler implements ILayoutHandler {
+
+	private static Logger LOGGER = LoggerFactory
+			.getLogger(NullLayoutHandler.class);
 
 	@Override
 	public void layoutComponent(FactoryContext factoryContext,
@@ -37,6 +43,11 @@ public class NullLayoutHandler implements ILayoutHandler {
 
 		componentContext.getContainer().add(componentContext.getComponent(),
 				null);
+
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{} added to {}", componentContext.getId(),
+					componentContext.getContainer().getClass());
+		}
 	}
 
 	@Override

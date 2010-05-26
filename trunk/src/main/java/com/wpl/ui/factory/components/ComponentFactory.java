@@ -19,8 +19,10 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +36,7 @@ import com.wpl.ui.annotations.UiLocation;
 import com.wpl.ui.annotations.UiName;
 import com.wpl.ui.annotations.UiScrollable;
 import com.wpl.ui.annotations.UiSize;
+import com.wpl.ui.annotations.UiType;
 import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
 import com.wpl.ui.enums.ScrollBarPolicy;
 import com.wpl.ui.factory.ComponentContext;
@@ -73,44 +76,6 @@ public abstract class ComponentFactory implements IComponentFactory {
 		}
 	}
 
-	// @Override
-	// public Component createComponent(ComponentContext context,
-	// Class<? extends Component> clazz, Annotation[] annotations,
-	// Object outer) {
-	//
-	// if (outer == null) {
-	// return createComponent(clazz, annotations);
-	// }
-	//
-	// try {
-	// Constructor<? extends Component> innerConstructor = clazz
-	// .getConstructor(outer.getClass());
-	// Component innerObject = innerConstructor.newInstance(outer);
-	//
-	// return init(innerObject, annotations);
-	// } catch (SecurityException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// } catch (NoSuchMethodException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// } catch (IllegalArgumentException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// } catch (InstantiationException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// } catch (IllegalAccessException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// } catch (InvocationTargetException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	//
-	// return null;
-	// }
-
 	abstract protected Class<?> defaultType();
 
 	@Override
@@ -123,8 +88,6 @@ public abstract class ComponentFactory implements IComponentFactory {
 		if (context.getType() == null) {
 			context.setType(defaultType());
 		}
-
-		// TODO: handle inner class
 
 		try {
 			this.createInstance(context);
@@ -140,9 +103,30 @@ public abstract class ComponentFactory implements IComponentFactory {
 	}
 
 	private void createInstance(ComponentContext context)
-			throws InstantiationException, IllegalAccessException {
-		context.setComponent(Component.class.cast(context.getType()
-				.newInstance()));
+			throws InstantiationException, IllegalAccessException,
+			SecurityException, NoSuchMethodException, IllegalArgumentException,
+			InvocationTargetException {
+
+		Object instance = null;
+
+		if (context.getEnclosingObject() != null
+				&& !Modifier.isStatic(context.getType().getModifiers())) {
+
+			Class<?> innerClass = context.getType();
+			Class<?> outerClass = context.getEnclosingObject().getClass();
+
+			Constructor<?> innerClassConstructor = innerClass
+					.getDeclaredConstructor(outerClass);
+
+			innerClassConstructor.setAccessible(true);
+
+			instance = innerClassConstructor.newInstance(context
+					.getEnclosingObject());
+		} else {
+			instance = context.getType().newInstance();
+		}
+
+		context.setComponent(Component.class.cast(instance));
 	}
 
 	protected void init(FactoryContext factory, ComponentContext context) {
@@ -196,6 +180,12 @@ public abstract class ComponentFactory implements IComponentFactory {
 	}
 
 	// ~ UiAnnotationHandlers --------------------------------------------------
+
+	@UiAnnotationHandler(UiType.class)
+	protected void handleUiAnnotation(FactoryContext factory,
+			ComponentContext context, Component component, UiType annotate) {
+		LOGGER.debug("{}|type is {}", context.getId(), context.getType());
+	}
 
 	@UiAnnotationHandler(UiBorderLayoutConstraint.class)
 	protected void handleUiBorderLayoutConstraint(FactoryContext factory,

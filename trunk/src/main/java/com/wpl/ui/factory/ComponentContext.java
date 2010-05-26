@@ -58,6 +58,8 @@ public class ComponentContext {
 
 	private final List<ComponentContext> mChildren = new ArrayList<ComponentContext>();
 
+	private Object mEnclosingObject;
+
 	private boolean mDeclared = true;
 
 	private String mParentId;
@@ -77,6 +79,14 @@ public class ComponentContext {
 
 	public List<Runnable> getInit() {
 		return mInit;
+	}
+
+	public Object getEnclosingObject() {
+		return mEnclosingObject;
+	}
+
+	public void setEnclosingObject(Object enclosingObject) {
+		mEnclosingObject = enclosingObject;
 	}
 
 	/**
