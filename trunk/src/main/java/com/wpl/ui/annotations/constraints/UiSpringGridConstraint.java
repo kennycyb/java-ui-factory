@@ -34,9 +34,9 @@ public @interface UiSpringGridConstraint {
 
 	int cols() default 2;
 
-	int initialX() default 0;
+	int initialX() default 5;
 
-	int initialY() default 0;
+	int initialY() default 5;
 
 	int xPad() default 5;
 
