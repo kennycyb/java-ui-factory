@@ -8,6 +8,8 @@ _See [JComboBox], [UiWindowPosition], [UiLayout], [UiSimpleItems], [UiResource]_
 
 = Details =
 
+[http://java-ui-factory.googlecode.com/svn/trunk/docs/samples/SampleComboBoxOutput.png]
+
 {{{
 @UiWindowPosition(WindowPosition.CENTER)
 @UiLayout(FlowLayout.class)
