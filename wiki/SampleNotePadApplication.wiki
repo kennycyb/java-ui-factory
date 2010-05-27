@@ -1,4 +1,5 @@
 #summary Creating a simple notepad application
+#labels Featured
 
 = Introduction =
 
