@@ -17,6 +17,9 @@ package com.wpl.ui.factory.components;
 
 import javax.swing.JComponent;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.wpl.ui.NullLayout;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.factory.ComponentContext;
@@ -30,22 +33,28 @@ import com.wpl.ui.factory.UiAnnotationHandler;
  */
 public abstract class JComponentFactory extends ComponentFactory {
 
+	private static Logger LOGGER = LoggerFactory
+			.getLogger(JComponentFactory.class);
+
 	@UiAnnotationHandler(UiLayout.class)
 	protected void handleUiLayout(FactoryContext factory,
 			ComponentContext context, JComponent component, UiLayout layout) {
 		if (layout.value() == NullLayout.class) {
 			component.setLayout(null);
+			LOGGER.debug("{}|JComponent.setLayout(null)", context.getId());
 			return;
 		}
 
 		try {
 			component.setLayout(layout.value().newInstance());
+			LOGGER.debug("{}|JComponent.setLayout({})", context.getId(), layout
+					.value());
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error("{}|Unable to create layout manager {}", context
+					.getId(), layout.value());
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error("{}|Unable to create layout manager {}", context
+					.getId(), layout.value());
 		}
 	}
 

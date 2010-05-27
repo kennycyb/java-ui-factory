@@ -15,9 +15,9 @@
  */
 package com.wpl.ui.annotations.constraints;
 
-import java.awt.FlowLayout;
+import com.wpl.ui.enums.FlowLayoutConstraint;
 
 public @interface UiFlowLayoutConstraint {
 
-	int value() default FlowLayout.LEFT;
+	FlowLayoutConstraint value();
 }

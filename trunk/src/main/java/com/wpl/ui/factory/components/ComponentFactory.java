@@ -19,6 +19,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -141,10 +142,30 @@ public abstract class ComponentFactory implements IComponentFactory {
 			return;
 		}
 
+		LOGGER.debug("{}|init begin", context.getId());
+
 		// Build the current component.
 
-		for (Annotation annotate : context.getAnnotatedElement()
-				.getAnnotations()) {
+		if (context.getEnclosingObject() != null) {
+			handleAnnotations(factory, context, context.getType());
+		}
+
+		handleAnnotations(factory, context, context.getAnnotatedElement());
+
+		if (factory.isAutoWired()) {
+			LOGGER.debug("{}|init auto-wiring", context.getId());
+			this.wireComponent(factory, context);
+		} else {
+			LOGGER.debug("{}|init auto-wiring disabled");
+		}
+
+		LOGGER.debug("{}|init done", context.getId());
+	}
+
+	private void handleAnnotations(FactoryContext factory,
+			ComponentContext context, AnnotatedElement annotatedElement) {
+
+		for (Annotation annotate : annotatedElement.getAnnotations()) {
 
 			Method handler = mAnnotationHandlerMap.get(annotate
 					.annotationType());
@@ -172,7 +193,6 @@ public abstract class ComponentFactory implements IComponentFactory {
 			}
 		}
 
-		this.wireComponent(factory, context);
 	}
 
 	@Override
@@ -184,7 +204,7 @@ public abstract class ComponentFactory implements IComponentFactory {
 	@UiAnnotationHandler(UiType.class)
 	protected void handleUiAnnotation(FactoryContext factory,
 			ComponentContext context, Component component, UiType annotate) {
-		LOGGER.debug("{}|type is {}", context.getId(), context.getType());
+		LOGGER.debug("{}|is {}", context.getId(), context.getType());
 	}
 
 	@UiAnnotationHandler(UiBorderLayoutConstraint.class)
@@ -192,6 +212,8 @@ public abstract class ComponentFactory implements IComponentFactory {
 			ComponentContext context, Component component,
 			UiBorderLayoutConstraint annotate) {
 
+		LOGGER.debug("{}|BorderLayoutConstraint.{}", context.getId(), annotate
+				.value());
 	}
 
 	@UiAnnotationHandler(UiSize.class)
@@ -202,7 +224,7 @@ public abstract class ComponentFactory implements IComponentFactory {
 				.height()));
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("(Component){}.setSize(width={}, height={})",
+			LOGGER.debug("{}|Component.setSize(width={}, height={})",
 					new Object[] { context.getId(), annotate.width(),
 							annotate.height() });
 		}
@@ -214,7 +236,7 @@ public abstract class ComponentFactory implements IComponentFactory {
 		component.setLocation(location.x(), location.y());
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("(Component){}.setLocation(x={}, y={})", new Object[] {
+			LOGGER.debug("{}|Component.setLocation(x={}, y={})", new Object[] {
 					context.getId(), location.x(), location.y() });
 		}
 	}
@@ -226,7 +248,7 @@ public abstract class ComponentFactory implements IComponentFactory {
 		component.setFont(new Font(font.name(),
 				font.style().getSwingConstant(), font.size()));
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("(Component){}.setFont(name={}, style={}, size={})",
+			LOGGER.debug("{}|Component.setFont(name={}, style={}, size={})",
 					new Object[] { context.getId(), font.name(), font.style(),
 							font.size() });
 		}
@@ -236,6 +258,11 @@ public abstract class ComponentFactory implements IComponentFactory {
 	protected void handleUiName(FactoryContext factory,
 			ComponentContext context, Component component, UiName name) {
 		component.setName(name.value());
+
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{}|Component.setName(\"{}\")", context.getId(), name
+					.value());
+		}
 	}
 
 	private int getScrollBarPolicyValue(boolean isHorizontal,
@@ -286,7 +313,7 @@ public abstract class ComponentFactory implements IComponentFactory {
 
 		context.setEnclosedComponent(scroll);
 
-		LOGGER.debug("component={}, enclosing {} with JScrollPane", context
-				.getId(), component.getClass().getSimpleName());
+		LOGGER.debug("{}|enclosing with JScrollPane", context.getId(),
+				component.getClass().getSimpleName());
 	}
 }

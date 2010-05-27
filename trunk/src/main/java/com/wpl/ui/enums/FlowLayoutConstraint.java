@@ -13,21 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.annotations;
+package com.wpl.ui.enums;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.awt.FlowLayout;
 
 /**
- * Allow auto wire of event
  * 
- * @author kenny
+ * @since 1.0
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.TYPE })
-public @interface UiAutoWired {
+public enum FlowLayoutConstraint {
 
-	boolean value() default true;
+	LEFT(FlowLayout.LEFT),
+
+	CENTER(FlowLayout.CENTER),
+
+	RIGHT(FlowLayout.RIGHT);
+
+	private int mSwingConstant;
+
+	private FlowLayoutConstraint(int swingConstant) {
+		this.mSwingConstant = swingConstant;
+	}
+
+	public int getSwingConstant() {
+		return mSwingConstant;
+	}
 }

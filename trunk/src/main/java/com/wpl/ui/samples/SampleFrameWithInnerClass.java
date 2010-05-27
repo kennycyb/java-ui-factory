@@ -21,11 +21,11 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import com.wpl.ui.UiFactory;
-import com.wpl.ui.annotations.UiAutoWired;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiName;
 import com.wpl.ui.annotations.UiSize;
@@ -49,15 +49,51 @@ import com.wpl.ui.enums.FrameCloseOperation;
 // Close when frame is closed.
 @UiFrameCloseOperation(FrameCloseOperation.EXIT)
 @UiFrameResizable
-@UiAutoWired
 public class SampleFrameWithInnerClass extends JFrame {
 
 	@UiLayout(BorderLayout.class)
-	public static class ContentPanel extends JPanel {
+	class ContentPanel extends JPanel {
+
+		@UiLayout(FlowLayout.class)
+		class NorthContent extends JPanel {
+
+			@UiLayout(BorderLayout.class)
+			class NorthInnerContent extends JPanel {
+
+				@UiText("north")
+				@UiBorderLayoutConstraint(BorderLayoutConstraint.NORTH)
+				JButton northButton;
+
+				@UiText("south")
+				@UiBorderLayoutConstraint(BorderLayoutConstraint.SOUTH)
+				JButton southButton;
+			}
+
+			@UiText("LabelX")
+			JLabel labelX;
+
+			NorthInnerContent c;
+		}
+
+		@UiLayout(FlowLayout.class)
+		class SouthContent extends JPanel {
+
+			@UiText("southLabel")
+			JLabel southLabel;
+
+			@UiText("southButton1")
+			JButton southButton1;
+		}
+
+		@UiBorderLayoutConstraint(BorderLayoutConstraint.NORTH)
+		NorthContent n;
 
 		@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
 		@UiText("HELLO WORLD\n")
 		JTextArea content;
+
+		@UiBorderLayoutConstraint(BorderLayoutConstraint.SOUTH)
+		SouthContent south;
 	}
 
 	@UiLayout(FlowLayout.class)
@@ -99,15 +135,19 @@ public class SampleFrameWithInnerClass extends JFrame {
 	/**
 	 * As @AutoWired - this method will be called when "start" button is called.
 	 */
-	private void onStart_actionPerformed(ActionEvent e) {
+	void onStart_actionPerformed(ActionEvent e) {
 		mCenter.content.append("start button clicked\n");
 	}
 
 	/**
 	 * As @AutoWired - this method will be called when "stop" button is called.
 	 */
-	private void onStop_actionPerformed(ActionEvent e) {
+	void onStop_actionPerformed(ActionEvent e) {
 		mCenter.content.append("stop button clicked\n");
+	}
+
+	void onSouthButton1_actionPerformed(ActionEvent e) {
+		mCenter.content.append("south button clicked\n");
 	}
 
 	public static void main(String[] args) {

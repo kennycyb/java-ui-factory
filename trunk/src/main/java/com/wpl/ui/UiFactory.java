@@ -392,17 +392,17 @@ public final class UiFactory {
 
 		UiLayout layout = null;
 
-		if (componentContext.getEnclosingObject() != null) {
-			layout = componentContext.getEnclosingObject().getClass()
+		layout = componentContext.getType().getAnnotation(UiLayout.class);
+
+		if (layout == null) {
+			componentContext.getAnnotatedElement()
 					.getAnnotation(UiLayout.class);
-			LOGGER.debug("{}|looing @UiLayout from enclosing object {}",
-					componentContext.getId(), componentContext.getType());
-		} else {
-			layout = componentContext.getAnnotatedElement().getAnnotation(
-					UiLayout.class);
 			LOGGER.debug("{}|looking @UiLayout from annotate element {}",
 					componentContext.getId(), componentContext
 							.getAnnotatedElement());
+		} else {
+			LOGGER.debug("{}|looing @UiLayout from enclosed type {}",
+					componentContext.getId(), componentContext.getType());
 		}
 
 		ILayoutHandler layoutHandler = findLayoutHandler(layout == null ? NullLayout.class
@@ -432,7 +432,7 @@ public final class UiFactory {
 		layoutHandler.finalLayout(factoryContext, componentContext);
 	}
 
-	private FactoryContext getFactoryContext(Class<?> mainClass) {
+	private FactoryContext getFactoryContext(String id, Class<?> mainClass) {
 
 		FactoryContext factoryContext = new FactoryContext();
 
@@ -471,8 +471,8 @@ public final class UiFactory {
 					if (LOGGER.isDebugEnabled()) {
 						LOGGER
 								.debug(
-										"Found autowired listener: {}, registered for {} on {}",
-										new Object[] { methodName,
+										"{}|Found autowired listener: {}, registered for {} on {}",
+										new Object[] { id, methodName,
 												componentName, actionName });
 					}
 				}
@@ -482,28 +482,33 @@ public final class UiFactory {
 		return factoryContext;
 	}
 
-	public <T extends Component> T createComponent(Class<T> frameClass) {
+	public <T extends Component> T createComponent(Class<T> componentClass) {
 
-		LOGGER.debug("Creating {}", frameClass.getSimpleName());
+		long startTime = System.currentTimeMillis();
 
-		final FactoryContext factoryContext = getFactoryContext(frameClass);
-
-		UiName name = frameClass.getAnnotation(UiName.class);
-		UiType cType = frameClass.getAnnotation(UiType.class);
+		UiName name = componentClass.getAnnotation(UiName.class);
+		UiType cType = componentClass.getAnnotation(UiType.class);
 
 		String id;
 		if (name == null) {
-			id = frameClass.getSimpleName().substring(0, 1).toLowerCase()
-					+ frameClass.getSimpleName().substring(1);
+			id = componentClass.getSimpleName().substring(0, 1).toLowerCase()
+					+ componentClass.getSimpleName().substring(1);
 		} else {
 			id = name.value();
 		}
 
+		LOGGER.debug("{}|start creating, is a {}", id, componentClass
+				.getSimpleName());
+
+		final FactoryContext factoryContext = getFactoryContext(id,
+				componentClass);
+
 		final ComponentContext componentContext = factoryContext
 				.findComponentContext(id);
 		componentContext.setRoot(true);
-		componentContext.setAnnotatedElement(frameClass);
-		componentContext.setType(cType == null ? frameClass : cType.value());
+		componentContext.setAnnotatedElement(componentClass);
+		componentContext
+				.setType(cType == null ? componentClass : cType.value());
 		componentContext.addInit(new Runnable() {
 			@Override
 			public void run() {
@@ -522,11 +527,13 @@ public final class UiFactory {
 
 		create(factoryContext, componentContext);
 
-		T frame = frameClass.cast(componentContext.getComponent());
 		init(componentContext);
 		postInit(componentContext);
 
-		return frame;
+		LOGGER.debug("{}|completed in {} milliseconds", componentContext
+				.getId(), System.currentTimeMillis() - startTime);
+
+		return componentClass.cast(componentContext.getComponent());
 	}
 
 	private void init(ComponentContext context) {
@@ -537,6 +544,7 @@ public final class UiFactory {
 		for (Runnable r : context.getInit()) {
 			r.run();
 		}
+
 		context.getInit().clear();
 	}
 
@@ -548,7 +556,7 @@ public final class UiFactory {
 
 		for (Runnable r : context.getPostInit()) {
 			r.run();
-			LOGGER.debug("postInit: {}", context.getId());
+			LOGGER.debug("{}|postInit", context.getId());
 		}
 		context.getPostInit().clear();
 	}
