@@ -56,7 +56,7 @@ public class TabbedPaneSample extends JFrame {
 
 	}
 
-	public static class Tab2 extends JPanel {
+	private class Tab2 extends JPanel {
 
 		@UiText("HELLO")
 		JLabel field2;

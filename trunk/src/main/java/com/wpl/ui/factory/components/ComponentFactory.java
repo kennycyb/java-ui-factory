@@ -112,6 +112,7 @@ public abstract class ComponentFactory implements IComponentFactory {
 		Object instance = null;
 
 		if (context.getEnclosingObject() != null
+				&& context.getType().getDeclaringClass() != null
 				&& !Modifier.isStatic(context.getType().getModifiers())) {
 
 			Class<?> innerClass = context.getType();
@@ -125,6 +126,10 @@ public abstract class ComponentFactory implements IComponentFactory {
 			instance = innerClassConstructor.newInstance(context
 					.getEnclosingObject());
 		} else {
+
+			LOGGER.debug("{}|creating from {}", context.getId(), context
+					.getType());
+
 			instance = context.getType().newInstance();
 		}
 

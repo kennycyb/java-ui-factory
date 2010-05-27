@@ -420,7 +420,7 @@ public final class UiFactory {
 					componentContext.getId(), componentContext
 							.getAnnotatedElement());
 		} else {
-			LOGGER.debug("{}|looing @UiLayout from enclosed type {}",
+			LOGGER.debug("{}|looking @UiLayout from enclosed type {}",
 					componentContext.getId(), componentContext.getType());
 		}
 
