@@ -11,7 +11,7 @@ Using Spring Layout
 
 == Sample Code ==
 
-[http://java-ui-factory.googlecode.com/files/SpringLayoutOutput.png]
+[http://java-ui-factory.googlecode.com/wiki/samples/SpringLayoutOutput.png]
 
 {{{
 @UiText("Sample - SpringLayout - CompactGrid")
