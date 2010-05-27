@@ -34,7 +34,8 @@ public class FlowLayoutHandler implements ILayoutHandler {
 				.getAnnotatedElement().getAnnotation(
 						UiFlowLayoutConstraint.class);
 
-		componentContext.getContainer().add(componentContext.getComponent(),
+		componentContext.getContainer().add(
+				componentContext.getEnclosedComponent(),
 				constraint == null ? null : constraint.value());
 	}
 

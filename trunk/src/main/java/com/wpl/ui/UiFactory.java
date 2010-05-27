@@ -309,10 +309,9 @@ public final class UiFactory {
 								.getComponent());
 
 						if (LOGGER.isDebugEnabled()) {
-							LOGGER.debug("setting field value: {}.{} with {}",
-									new Object[] { componentContext.getId(),
-											f.getName(),
-											childContext.getComponent() });
+							LOGGER.debug("{}|bind {} to object", new Object[] {
+									componentContext.getId(), f.getName(),
+									childContext.getComponent().getName() });
 						}
 
 					} catch (IllegalArgumentException e) {
@@ -383,6 +382,10 @@ public final class UiFactory {
 			LOGGER.debug("{}|created", componentContext.getId());
 		}
 
+		if (componentContext.getChildren().isEmpty()) {
+			return;
+		}
+
 		Container container = null;
 
 		if (componentContext.getComponent() instanceof JPanel) {
@@ -435,9 +438,9 @@ public final class UiFactory {
 			layoutHandler.layoutComponent(factoryContext, child);
 		}
 
-		postInit(componentContext);
-
 		layoutHandler.finalLayout(factoryContext, componentContext);
+
+		postInit(componentContext);
 	}
 
 	private FactoryContext getFactoryContext(String id, Class<?> mainClass) {

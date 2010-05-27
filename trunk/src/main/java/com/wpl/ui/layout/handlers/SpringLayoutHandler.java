@@ -41,11 +41,13 @@ public class SpringLayoutHandler implements ILayoutHandler {
 	public void layoutComponent(FactoryContext factoryContext,
 			ComponentContext componentContext) {
 
-		componentContext.getContainer().add(componentContext.getComponent());
+		componentContext.getContainer().add(
+				componentContext.getEnclosedComponent());
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("{} added to {}", componentContext.getId(),
-					componentContext.getContainer().getClass().getSimpleName());
+			LOGGER.debug("{}|added to container - {}",
+					componentContext.getId(), componentContext.getContainer()
+							.getClass().getSimpleName());
 		}
 	}
 
@@ -84,10 +86,13 @@ public class SpringLayoutHandler implements ILayoutHandler {
 			SpringUtilities.makeCompactGrid(container, rows, cols, constraint
 					.initialX(), constraint.initialY(), constraint.xPad(),
 					constraint.yPad());
+			LOGGER.debug("SpringUtilities.makeCompactGrid - rows={}, cols={}",
+					rows, cols);
 			return;
 		}
 
 		SpringUtilities.makeGrid(container, rows, cols, constraint.initialX(),
 				constraint.initialY(), constraint.xPad(), constraint.yPad());
+		LOGGER.debug("SpringUtilities.makeGrid - rows={}, cols={}", rows, cols);
 	}
 }

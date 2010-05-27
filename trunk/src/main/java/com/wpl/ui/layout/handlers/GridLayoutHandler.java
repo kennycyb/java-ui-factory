@@ -34,8 +34,8 @@ public class GridLayoutHandler implements ILayoutHandler {
 	public void layoutComponent(FactoryContext factoryContext,
 			ComponentContext componentContext) {
 
-		componentContext.getContainer().add(componentContext.getComponent(),
-				null);
+		componentContext.getContainer().add(
+				componentContext.getEnclosedComponent(), null);
 
 	}
 

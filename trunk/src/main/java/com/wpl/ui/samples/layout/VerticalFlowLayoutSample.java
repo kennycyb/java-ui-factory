@@ -15,69 +15,63 @@
  */
 package com.wpl.ui.samples.layout;
 
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SpringLayout;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.UiFactory;
-import com.wpl.ui.annotations.UiColumns;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiRows;
 import com.wpl.ui.annotations.UiScrollable;
 import com.wpl.ui.annotations.UiText;
-import com.wpl.ui.annotations.constraints.UiSpringGridConstraint;
 import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
 import com.wpl.ui.annotations.frame.UiWindowPosition;
 import com.wpl.ui.enums.FrameCloseOperation;
-import com.wpl.ui.enums.SpringGridType;
+import com.wpl.ui.enums.ScrollBarPolicy;
 import com.wpl.ui.enums.WindowPosition;
+import com.wpl.ui.layout.managers.VerticalFlowLayout;
 
 /**
  * 
  * @since 1.0
  */
-@UiText("Sample - SpringLayout - GRID")
+@UiText("Vertical Flow Layout Sample")
 @UiWindowPosition(WindowPosition.CENTER)
-@UiLayout(SpringLayout.class)
 @UiFrameCloseOperation(FrameCloseOperation.EXIT)
-@UiSpringGridConstraint(gridType = SpringGridType.GRID)
-public class SpringLayoutGridSample extends JFrame {
+@UiLayout(VerticalFlowLayout.class)
+public class VerticalFlowLayoutSample extends JFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@SuppressWarnings("unused")
 	private static Logger LOGGER = LoggerFactory
-			.getLogger(SpringLayoutGridSample.class);
+			.getLogger(VerticalFlowLayoutSample.class);
 
-	@UiText("Host:")
-	JLabel label1;
+	@UiText("line 1")
+	JLabel line1;
 
-	@UiText("127.0.0.1")
-	@UiColumns(20)
-	JTextField mHost;
+	@UiText("line 2")
+	JLabel line2;
 
-	@UiText("Port:")
-	JLabel label2;
+	@UiText("text 3")
+	JTextField text3;
 
-	@UiText("21")
-	@UiColumns(5)
-	JTextField mPort;
+	@UiText("check 4")
+	JCheckBox check4;
 
-	@UiText("Message:")
-	JLabel label4;
-
-	@UiScrollable
+	@UiScrollable(autoScroll = true, horizontal = ScrollBarPolicy.ALWAYS, vertical = ScrollBarPolicy.ALWAYS)
+	@UiText("=============== text area 5 ===============")
 	@UiRows(5)
-	@UiText("ABC\nDEF\nHIJ\n")
-	JTextArea textarea;
+	JTextArea textarea5;
 
 	public static void main(String[] args) {
-		UiFactory.create(SpringLayoutGridSample.class).setVisible(true);
+		UiFactory.create(VerticalFlowLayoutSample.class).setVisible(true);
 	}
 }

@@ -44,7 +44,8 @@ public class BorderLayoutHandler implements ILayoutHandler {
 			return;
 		}
 
-		componentContext.getContainer().add(componentContext.getComponent(),
+		componentContext.getContainer().add(
+				componentContext.getEnclosedComponent(),
 				constraint.value().getSwingConstant());
 
 		if (LOGGER.isDebugEnabled()) {

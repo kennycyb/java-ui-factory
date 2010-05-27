@@ -41,8 +41,8 @@ public class NullLayoutHandler implements ILayoutHandler {
 			return;
 		}
 
-		componentContext.getContainer().add(componentContext.getComponent(),
-				null);
+		componentContext.getContainer().add(
+				componentContext.getEnclosedComponent(), null);
 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("{} added to {}", componentContext.getId(),

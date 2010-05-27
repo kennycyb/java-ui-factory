@@ -17,6 +17,7 @@ package com.wpl.ui.samples.layout;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
@@ -26,6 +27,8 @@ import org.slf4j.LoggerFactory;
 import com.wpl.ui.UiFactory;
 import com.wpl.ui.annotations.UiColumns;
 import com.wpl.ui.annotations.UiLayout;
+import com.wpl.ui.annotations.UiRows;
+import com.wpl.ui.annotations.UiScrollable;
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.annotations.constraints.UiSpringGridConstraint;
 import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
@@ -65,6 +68,14 @@ public class SpringLayoutCompactGridSample extends JFrame {
 	@UiText("21")
 	@UiColumns(5)
 	JTextField mPort;
+
+	@UiText("Message:")
+	JLabel label4;
+
+	@UiScrollable
+	@UiRows(5)
+	@UiText("ABC\nDEF\nHIJ\n")
+	JTextArea textarea;
 
 	public static void main(String[] args) {
 		UiFactory.create(SpringLayoutCompactGridSample.class).setVisible(true);

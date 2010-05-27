@@ -29,5 +29,6 @@ public class VerticalFlowLayout extends GridLayout {
 	private static final long serialVersionUID = 1L;
 
 	public VerticalFlowLayout() {
+		super(0, 1);
 	}
 }

@@ -15,11 +15,6 @@
  */
 package com.wpl.ui.layout.handlers;
 
-import java.awt.Container;
-import java.awt.GridLayout;
-
-import javax.swing.RootPaneContainer;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,26 +32,27 @@ public class VerticalFlowLayoutHandler implements ILayoutHandler {
 	@Override
 	public void finalLayout(FactoryContext factoryContext,
 			ComponentContext containerContext) {
-
-		Container container = null;
-
-		if (containerContext.getComponent() instanceof RootPaneContainer) {
-			container = ((RootPaneContainer) containerContext.getComponent())
-					.getContentPane();
-		} else {
-			container = (Container) containerContext.getComponent();
-		}
-
-		final GridLayout lm = (GridLayout) container.getLayout();
-		lm.setColumns(1);
-		lm.setRows(container.getComponentCount());
-		LOGGER.debug("{}|vertical flow layout", containerContext.getId());
+		/*
+		 * 
+		 * Container container = null;
+		 * 
+		 * if (containerContext.getComponent() instanceof RootPaneContainer) {
+		 * container = ((RootPaneContainer) containerContext.getComponent())
+		 * .getContentPane(); } else { container = (Container)
+		 * containerContext.getComponent(); }
+		 * 
+		 * 
+		 * final GridLayout lm = (GridLayout) container.getLayout();
+		 * lm.setColumns(1); lm.setRows(container.getComponentCount());
+		 * LOGGER.debug("{}|vertical flow layout", containerContext.getId());
+		 */
 	}
 
 	@Override
 	public void layoutComponent(FactoryContext factoryContext,
 			ComponentContext componentContext) {
 
-		componentContext.getContainer().add(componentContext.getComponent());
+		componentContext.getContainer().add(
+				componentContext.getEnclosedComponent());
 	}
 }
