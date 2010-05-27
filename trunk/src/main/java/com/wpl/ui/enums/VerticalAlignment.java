@@ -13,17 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.annotations;
+package com.wpl.ui.enums;
 
-import java.awt.LayoutManager;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import javax.swing.SwingConstants;
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.TYPE })
-public @interface UiLayout {
+/**
+ * 
+ * @since 1.0
+ */
+public enum VerticalAlignment {
 
-	Class<? extends LayoutManager> value();
+	TOP(SwingConstants.TOP),
+
+	CENTER(SwingConstants.CENTER),
+
+	BOTTOM(SwingConstants.BOTTOM),
+
+	DEFAULT(-1);
+
+	private int mSwingConstant;
+
+	private VerticalAlignment(int swingConstant) {
+		mSwingConstant = swingConstant;
+	}
+
+	public int getSwingConstant() {
+		return mSwingConstant;
+	}
 }

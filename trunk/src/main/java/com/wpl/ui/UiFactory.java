@@ -59,6 +59,7 @@ import com.wpl.ui.annotations.UiInit;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiName;
 import com.wpl.ui.annotations.UiPreInit;
+import com.wpl.ui.annotations.UiSize;
 import com.wpl.ui.annotations.UiType;
 import com.wpl.ui.annotations.frame.UiFrameMenu;
 import com.wpl.ui.factory.ComponentContext;
@@ -85,12 +86,15 @@ import com.wpl.ui.factory.components.TextAreaFactory;
 import com.wpl.ui.factory.components.TextComponentFactory;
 import com.wpl.ui.factory.components.TextFieldFactory;
 import com.wpl.ui.factory.components.WindowFactory;
-import com.wpl.ui.layout.BorderLayoutHandler;
-import com.wpl.ui.layout.FlowLayoutHandler;
-import com.wpl.ui.layout.GridLayoutHandler;
-import com.wpl.ui.layout.ILayoutHandler;
-import com.wpl.ui.layout.NullLayoutHandler;
-import com.wpl.ui.layout.SpringLayoutHandler;
+import com.wpl.ui.layout.handlers.BorderLayoutHandler;
+import com.wpl.ui.layout.handlers.FlowLayoutHandler;
+import com.wpl.ui.layout.handlers.GridLayoutHandler;
+import com.wpl.ui.layout.handlers.ILayoutHandler;
+import com.wpl.ui.layout.handlers.NullLayoutHandler;
+import com.wpl.ui.layout.handlers.SpringLayoutHandler;
+import com.wpl.ui.layout.handlers.VerticalFlowLayoutHandler;
+import com.wpl.ui.layout.managers.NullLayout;
+import com.wpl.ui.layout.managers.VerticalFlowLayout;
 
 /**
  * A Factory that build the UI, set it's properties using annotations.
@@ -143,6 +147,8 @@ public final class UiFactory {
 		sDefaultLayout.put(FlowLayout.class, new FlowLayoutHandler());
 		sDefaultLayout.put(GridLayout.class, new GridLayoutHandler());
 		sDefaultLayout.put(SpringLayout.class, new SpringLayoutHandler());
+		sDefaultLayout.put(VerticalFlowLayout.class,
+				new VerticalFlowLayoutHandler());
 	}
 
 	private final Map<Class<?>, IComponentFactory> mUiFactoryMap = new HashMap<Class<?>, IComponentFactory>();
@@ -429,6 +435,8 @@ public final class UiFactory {
 			layoutHandler.layoutComponent(factoryContext, child);
 		}
 
+		postInit(componentContext);
+
 		layoutHandler.finalLayout(factoryContext, componentContext);
 	}
 
@@ -528,6 +536,12 @@ public final class UiFactory {
 		create(factoryContext, componentContext);
 
 		init(componentContext);
+
+		if (componentClass.getAnnotation(UiSize.class) == null
+				&& componentContext.getComponent() instanceof Window) {
+			((Window) componentContext.getComponent()).pack();
+		}
+
 		postInit(componentContext);
 
 		LOGGER.debug("{}|completed in {} milliseconds", componentContext
@@ -565,7 +579,8 @@ public final class UiFactory {
 
 	private static final UiFactory sDefaultUiFactory = new UiFactory();
 
-	public static UiFactory instance() {
-		return sDefaultUiFactory;
+	public static <T extends Component> T create(Class<T> componentClass) {
+		return sDefaultUiFactory.createComponent(componentClass);
+
 	}
 }

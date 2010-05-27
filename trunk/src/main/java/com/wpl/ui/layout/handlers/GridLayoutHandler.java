@@ -13,34 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.factory.components;
-
-import java.awt.Container;
+package com.wpl.ui.layout.handlers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.FactoryContext;
-import com.wpl.ui.factory.UiAnnotationHandler;
 
-public abstract class ContainerFactory extends ComponentFactory {
+/**
+ * 
+ * @author kenny
+ * @since 1.0
+ */
+public class GridLayoutHandler implements ILayoutHandler {
 	private static Logger LOGGER = LoggerFactory
-			.getLogger(ContainerFactory.class);
+			.getLogger(GridLayoutHandler.class);
 
-	@UiAnnotationHandler(UiLayout.class)
-	protected void handleUiLayout(FactoryContext factory,
-			ComponentContext context, Container component, UiLayout layout) {
+	@Override
+	public void layoutComponent(FactoryContext factoryContext,
+			ComponentContext componentContext) {
 
-		try {
-			component.setLayout(layout.value().newInstance());
-		} catch (InstantiationException e) {
-			LOGGER.error("UiLayout - InstantiationException - {} - {} ", layout
-					.value(), e.getMessage());
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		componentContext.getContainer().add(componentContext.getComponent(),
+				null);
+
+	}
+
+	@Override
+	public void finalLayout(FactoryContext factoryContext,
+			ComponentContext containerContext) {
+		// TODO Auto-generated method stub
+
 	}
 }

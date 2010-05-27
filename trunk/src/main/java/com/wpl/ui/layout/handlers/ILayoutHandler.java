@@ -13,17 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.annotations;
+package com.wpl.ui.layout.handlers;
 
-import java.awt.LayoutManager;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.FactoryContext;
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.TYPE })
-public @interface UiLayout {
+/**
+ * 
+ * @author kenny
+ * @since 1.0
+ */
+public interface ILayoutHandler {
 
-	Class<? extends LayoutManager> value();
+	public void layoutComponent(FactoryContext factoryContext,
+			ComponentContext componentContext);
+
+	public void finalLayout(FactoryContext factoryContext,
+			ComponentContext containerContext);
 }

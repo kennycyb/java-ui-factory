@@ -15,15 +15,23 @@
  */
 package com.wpl.ui.annotations;
 
-import java.awt.LayoutManager;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.TYPE })
-public @interface UiLayout {
+import com.wpl.ui.enums.HorizontalAlignment;
+import com.wpl.ui.enums.VerticalAlignment;
 
-	Class<? extends LayoutManager> value();
+/**
+ * 
+ * @since 1.0
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target( { ElementType.FIELD })
+public @interface UiAlignment {
+
+	HorizontalAlignment horizontal() default HorizontalAlignment.DEFAULT;
+
+	VerticalAlignment vertical() default VerticalAlignment.DEFAULT;
 }

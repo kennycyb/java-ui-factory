@@ -23,6 +23,7 @@ import javax.swing.JLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wpl.ui.annotations.UiAlignment;
 import com.wpl.ui.annotations.UiIcon;
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.factory.ComponentContext;
@@ -46,6 +47,19 @@ public class JLabelFactory extends JComponentFactory {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("(JLabel){}.setText(\"{}\")", context.getId(),
 					annotate.value());
+		}
+	}
+
+	@UiAnnotationHandler(UiAlignment.class)
+	protected void handleUiAlignment(FactoryContext factory,
+			ComponentContext context, JLabel component, UiAlignment annotate) {
+
+		component.setHorizontalAlignment(annotate.horizontal()
+				.getSwingConstant());
+
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{}|JLabel.setHorizontalAlignment({})", context
+					.getId(), annotate.horizontal());
 		}
 	}
 

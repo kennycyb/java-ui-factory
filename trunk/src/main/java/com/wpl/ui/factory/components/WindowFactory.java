@@ -46,6 +46,10 @@ public class WindowFactory extends ContainerFactory {
 		context.addPostInit(new Runnable() {
 			@Override
 			public void run() {
+
+				component.invalidate();
+				component.pack();
+
 				final Dimension dim = component.getToolkit().getScreenSize();
 				final Rectangle abounds = component.getBounds();
 

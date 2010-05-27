@@ -20,7 +20,6 @@ import javax.swing.JComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.NullLayout;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.FactoryContext;
@@ -39,11 +38,6 @@ public abstract class JComponentFactory extends ComponentFactory {
 	@UiAnnotationHandler(UiLayout.class)
 	protected void handleUiLayout(FactoryContext factory,
 			ComponentContext context, JComponent component, UiLayout layout) {
-		if (layout.value() == NullLayout.class) {
-			component.setLayout(null);
-			LOGGER.debug("{}|JComponent.setLayout(null)", context.getId());
-			return;
-		}
 
 		try {
 			component.setLayout(layout.value().newInstance());
