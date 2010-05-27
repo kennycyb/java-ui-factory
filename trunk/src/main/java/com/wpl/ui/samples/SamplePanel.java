@@ -16,7 +16,6 @@
 package com.wpl.ui.samples;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.text.DateFormat;
 
 import javax.swing.JCheckBox;
@@ -29,6 +28,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SpringLayout;
 
 import com.wpl.ui.UiFactory;
 import com.wpl.ui.annotations.UiColumns;
@@ -40,10 +40,13 @@ import com.wpl.ui.annotations.UiRows;
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.annotations.UiTextFormat;
 import com.wpl.ui.annotations.UiType;
-import com.wpl.ui.annotations.constraints.UiGridLayoutConstraint;
+import com.wpl.ui.annotations.constraints.UiSpringGridConstraint;
+import com.wpl.ui.annotations.frame.UiWindowPosition;
+import com.wpl.ui.enums.WindowPosition;
 
-@UiLayout(GridLayout.class)
-@UiGridLayoutConstraint(rows = 10, cols = 2)
+@UiWindowPosition(WindowPosition.CENTER)
+@UiLayout(SpringLayout.class)
+@UiSpringGridConstraint(cols = 2)
 public class SamplePanel extends JPanel {
 
 	/**

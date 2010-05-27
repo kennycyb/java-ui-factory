@@ -67,7 +67,6 @@ public class SpringLayoutGridSample extends JFrame {
 	JTextField mPort;
 
 	public static void main(String[] args) {
-		UiFactory.instance().createComponent(SpringLayoutGridSample.class)
-				.setVisible(true);
+		UiFactory.create(SpringLayoutGridSample.class).setVisible(true);
 	}
 }

@@ -154,6 +154,6 @@ public class Notepad extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		UiFactory.instance().createComponent(Notepad.class).setVisible(true);
+		UiFactory.create(Notepad.class).setVisible(true);
 	}
 }

@@ -81,7 +81,6 @@ public class SampleComboBox extends Frame {
 	}
 
 	public static void main(String[] args) {
-		UiFactory.instance().createComponent(SampleComboBox.class).setVisible(
-				true);
+		UiFactory.create(SampleComboBox.class).setVisible(true);
 	}
 }

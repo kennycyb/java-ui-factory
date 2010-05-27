@@ -38,15 +38,9 @@ import com.wpl.ui.annotations.frame.UiFrameResizable;
 import com.wpl.ui.enums.BorderLayoutConstraint;
 import com.wpl.ui.enums.FrameCloseOperation;
 
-// FIXME: inner class
-
-//Title of this frame
-@UiText("Sample Frame")
-// Size of this frame
+@UiText("Sample Frame with Inner Classes")
 @UiSize(height = 600, width = 800)
-// Using BorderLayout
 @UiLayout(BorderLayout.class)
-// Close when frame is closed.
 @UiFrameCloseOperation(FrameCloseOperation.EXIT)
 @UiFrameResizable
 public class SampleFrameWithInnerClass extends JFrame {
@@ -151,7 +145,6 @@ public class SampleFrameWithInnerClass extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		UiFactory.instance().createComponent(SampleFrameWithInnerClass.class)
-				.setVisible(true);
+		UiFactory.create(SampleFrameWithInnerClass.class).setVisible(true);
 	}
 }
