@@ -1,0 +1,124 @@
+#summary Declare component with inner classes
+
+= Introduction =
+
+Using inner class to group components into panels.
+
+= Details =
+
+{{{
+@UiText("Sample Frame")
+@UiSize(height = 600, width = 800)
+@UiLayout(BorderLayout.class)
+@UiFrameCloseOperation(FrameCloseOperation.EXIT)
+@UiFrameResizable
+public class SampleFrameWithInnerClass extends JFrame {
+
+	@UiLayout(BorderLayout.class)
+	class ContentPanel extends JPanel {
+
+		@UiLayout(FlowLayout.class)
+		class NorthContent extends JPanel {
+
+			@UiLayout(BorderLayout.class)
+			class NorthInnerContent extends JPanel {
+
+				@UiText("north")
+				@UiBorderLayoutConstraint(BorderLayoutConstraint.NORTH)
+				JButton northButton;
+
+				@UiText("south")
+				@UiBorderLayoutConstraint(BorderLayoutConstraint.SOUTH)
+				JButton southButton;
+			}
+
+			@UiText("LabelX")
+			JLabel labelX;
+
+			NorthInnerContent c;
+		}
+
+		@UiLayout(FlowLayout.class)
+		class SouthContent extends JPanel {
+
+			@UiText("southLabel")
+			JLabel southLabel;
+
+			@UiText("southButton1")
+			JButton southButton1;
+		}
+
+		@UiBorderLayoutConstraint(BorderLayoutConstraint.NORTH)
+		NorthContent n;
+
+		@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
+		@UiText("HELLO WORLD\n")
+		JTextArea content;
+
+		@UiBorderLayoutConstraint(BorderLayoutConstraint.SOUTH)
+		SouthContent south;
+	}
+
+	@UiLayout(FlowLayout.class)
+	class CommandPanel extends JPanel {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		/**
+		 * - Default button. - Display text is "Start" - ID of this component is
+		 * "start"
+		 */
+		@SuppressWarnings("unused")
+		@UiDefaultButton
+		@UiName("start")
+		@UiText("Start")
+		private JButton mStart;
+
+		@SuppressWarnings("unused")
+		@UiText("Stop")
+		private JButton stop;
+	}
+
+	/**
+     * 
+     */
+	private static final long serialVersionUID = 1L;
+
+	@UiType(ContentPanel.class)
+	@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
+	ContentPanel mCenter;
+
+	@UiType(CommandPanel.class)
+	@UiBorderLayoutConstraint(BorderLayoutConstraint.SOUTH)
+	JPanel mSouth;
+
+	/**
+	 * As @AutoWired - this method will be called when "start" button is called.
+	 */
+	void onStart_actionPerformed(ActionEvent e) {
+		mCenter.content.append("start button clicked\n");
+	}
+
+	/**
+	 * As @AutoWired - this method will be called when "stop" button is called.
+	 */
+	void onStop_actionPerformed(ActionEvent e) {
+		mCenter.content.append("stop button clicked\n");
+	}
+
+	void onSouthButton1_actionPerformed(ActionEvent e) {
+		mCenter.content.append("south button clicked\n");
+	}
+
+	public static void main(String[] args) {
+		UiFactory.instance().createComponent(SampleFrameWithInnerClass.class)
+				.setVisible(true);
+	}
+}
+}}}
+
+== Output ==
+[http://java-ui-factory.googlecode.com/files/SampleFrameWithInnerClasses.png]
