@@ -7,11 +7,51 @@ This sample show how to create a notepad application.
 
 = Details =
 
+[http://java-ui-factory.googlecode.com/svn/trunk/docs/samples/NotepadOutput.png]
+
 {{{
+
+package com.wpl.ui.samples.notepad;
+
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.WindowEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JTextArea;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.wpl.ui.UiFactory;
+import com.wpl.ui.annotations.UiAutoWired;
+import com.wpl.ui.annotations.UiComponentOf;
+import com.wpl.ui.annotations.UiFont;
+import com.wpl.ui.annotations.UiInit;
+import com.wpl.ui.annotations.UiLayout;
+import com.wpl.ui.annotations.UiResource;
+import com.wpl.ui.annotations.UiScrollable;
+import com.wpl.ui.annotations.UiSize;
+import com.wpl.ui.annotations.UiText;
+import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
+import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
+import com.wpl.ui.annotations.frame.UiFrameMenu;
+import com.wpl.ui.annotations.frame.UiFrameResizable;
+import com.wpl.ui.annotations.frame.UiWindowPosition;
+import com.wpl.ui.enums.BorderLayoutConstraint;
+import com.wpl.ui.enums.FontStyle;
+import com.wpl.ui.enums.FrameCloseOperation;
+import com.wpl.ui.enums.ScrollBarPolicy;
+import com.wpl.ui.enums.WindowPosition;
 
 /**
  * Sample of Notepad Application.
  */
+@UiWindowPosition(WindowPosition.CENTER)
 @UiText("Notepad")
 @UiSize(height = 600, width = 800)
 @UiLayout(BorderLayout.class)
@@ -33,7 +73,7 @@ public class Notepad extends JFrame {
 	@UiFont(name = "Arial", style = FontStyle.BOLD, size = 12)
 	private JTextArea content;
 
-	@UiBorderLayoutConstraint(BorderLayoutConstraint.NORTH)
+	@UiFrameMenu
 	@UiResource("Notepad-Menu.xml")
 	@UiFont(name = "Arial", style = FontStyle.BOLD, size = 12)
 	private JMenuBar menuBar;
@@ -44,10 +84,25 @@ public class Notepad extends JFrame {
 	@UiComponentOf("menuBar")
 	private JMenuItem cut;
 
+	@SuppressWarnings("unused")
 	@UiInit
 	private void init() {
 		undo.setEnabled(false);
 		cut.setEnabled(false);
+		LOGGER.debug("init");
+	}
+
+	/**
+	 * Invoked when the caret within composed text has changed.
+	 * 
+	 * @param event
+	 */
+	void onContext_caretPositionChanged(InputMethodEvent event) {
+		LOGGER.debug("onContext_caretPositionChanged");
+	}
+
+	void onContext_inputMethodTextChanged(InputMethodEvent event) {
+		LOGGER.debug("onContext_caretPositionChanged");
 	}
 
 	@SuppressWarnings("unused")
@@ -61,7 +116,21 @@ public class Notepad extends JFrame {
 	}
 
 	@SuppressWarnings("unused")
-	private void onMenuBar_clicked(ActionEvent e) {
+	private void onNotepad_windowGainedFocus(WindowEvent e) {
+		LOGGER.debug("onNotepad_windowGainedFocus");
+	}
+
+	@SuppressWarnings("unused")
+	private void onNotepad_windowLostFocus(WindowEvent e) {
+		LOGGER.debug("onNotepad_windowLostFocus");
+	}
+
+	void onMenuBar_itemStateChanged(ItemEvent e) {
+		LOGGER.debug("itemStateChanged: {} ", e.getItem());
+	}
+
+	@SuppressWarnings("unused")
+	private void onMenuBar_actionPerformed(ActionEvent e) {
 
 		String actionCommand = e.getActionCommand();
 
@@ -83,13 +152,9 @@ public class Notepad extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		UiFactory factory = new UiFactory();
-		JFrame notepad = factory.createFrame(Notepad.class);
-
-		notepad.setVisible(true);
+		UiFactory.create(Notepad.class).setVisible(true);
 	}
 }
-
 
 }}}
 
@@ -101,7 +166,7 @@ public class Notepad extends JFrame {
     <menu id="file" text="File">
         <menuItem id="file.new" text="New"/>
         <menuItem text="Open..."/>
-        <menuItem text="Save"/>
+        <menuItem text="Save" icon="iMac.icon"/>
         <menuItem text="Save As..."/>
 		<menuItem type="SEPARATOR"/>
 		<menuItem text="Page Setup..."/>
@@ -110,7 +175,7 @@ public class Notepad extends JFrame {
 		<menuItem id="file.exit" text="Exit"/>
     </menu>
     <menu id="edit" text="Edit">
-    	<menuItem id="undo" text="Undo" bindable="true"/>
+    	<menuItem id="undo" text="Undo"/>
     	<menuItem type="SEPARATOR"/>
     	<menuItem id="cut" text="Cut"/>
     	<menuItem text="Copy"/>
@@ -126,11 +191,14 @@ public class Notepad extends JFrame {
     	<menuItem text="Time/Date"/>
     </menu>
     <menu text="Format">
-    	<menuItem text="Word Wrap"/>
+    	<menuItem text="Word Wrap" type="CHECKBOX"/>
     	<menuItem text="Font..."/>
     </menu>
     <menu text="View">
-    	<menuItem text="Status Bar"/>
+    	<menuItem text="Status Bar" type="CHECKBOX" selected="true"/>
+    	<menuItem type="SEPARATOR"/>
+    	<menuItem type="RADIOBUTTON" text="ANSI" radioGroupId="encoding"/>
+    	<menuItem type="RADIOBUTTON" text="UTF" radioGroupId="encoding" selected="true"/>
    	</menu>
    	<menu text="Help">
    		<menuItem text="Help Topics"/>
