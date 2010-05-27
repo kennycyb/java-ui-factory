@@ -1,4 +1,5 @@
 #summary Declare component with inner classes
+#labels Featured
 
 = Introduction =
 
