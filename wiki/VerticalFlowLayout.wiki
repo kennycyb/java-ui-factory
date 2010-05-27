@@ -1,0 +1,53 @@
+#summary Vertical Flow Layout
+#labels Phase-Implementation
+
+= Introduction =
+
+Using Vertical Flow Layout
+
+= Details =
+
+[http://java-ui-factory.googlecode.com/files/SampleVerticalFlowLayout.png]
+
+{{{
+**
+ * 
+ * @since 1.0
+ */
+@UiText("Vertical Flow Layout Sample")
+@UiWindowPosition(WindowPosition.CENTER)
+@UiFrameCloseOperation(FrameCloseOperation.EXIT)
+@UiLayout(VerticalFlowLayout.class)
+public class VerticalFlowLayoutSample extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@SuppressWarnings("unused")
+	private static Logger LOGGER = LoggerFactory
+			.getLogger(VerticalFlowLayoutSample.class);
+
+	@UiText("line 1")
+	JLabel line1;
+
+	@UiText("line 2")
+	JLabel line2;
+
+	@UiText("text 3")
+	JTextField text3;
+
+	@UiText("check 4")
+	JCheckBox check4;
+
+	@UiScrollable(autoScroll = true, horizontal = ScrollBarPolicy.ALWAYS, vertical = ScrollBarPolicy.ALWAYS)
+	@UiText("=============== text area 5 ===============")
+	@UiRows(5)
+	JTextArea textarea5;
+
+	public static void main(String[] args) {
+		UiFactory.create(VerticalFlowLayoutSample.class).setVisible(true);
+	}
+}
+
+}}}
