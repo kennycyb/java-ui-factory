@@ -1,4 +1,5 @@
 #summary JTabbedPane
+#labels Featured
 
 = Introduction =
 
