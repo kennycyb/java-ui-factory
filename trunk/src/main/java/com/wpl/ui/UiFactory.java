@@ -45,6 +45,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.RootPaneContainer;
@@ -80,6 +81,7 @@ import com.wpl.ui.factory.components.JMenuFactory;
 import com.wpl.ui.factory.components.JPanelFactory;
 import com.wpl.ui.factory.components.JPasswordFieldFactory;
 import com.wpl.ui.factory.components.JRadioButtonFactory;
+import com.wpl.ui.factory.components.JTabbedPaneFactory;
 import com.wpl.ui.factory.components.JTextAreaFactory;
 import com.wpl.ui.factory.components.JTextFieldFactory;
 import com.wpl.ui.factory.components.TextAreaFactory;
@@ -122,6 +124,8 @@ public final class UiFactory {
 		sDefaultFactory.put(JPasswordField.class, new JPasswordFieldFactory());
 		sDefaultFactory.put(JFormattedTextField.class,
 				new JFormattedTextFieldFactory());
+
+		sDefaultFactory.put(JTabbedPane.class, new JTabbedPaneFactory());
 
 		// AWT
 		sDefaultFactory.put(TextComponent.class, new TextComponentFactory());
@@ -308,6 +312,12 @@ public final class UiFactory {
 						f.set(componentContext.getComponent(), childContext
 								.getComponent());
 
+						if (childContext.getComponent() == null) {
+							LOGGER.debug("{}|{} is null", componentContext
+									.getId(), childContext.getId());
+							return;
+						}
+
 						if (LOGGER.isDebugEnabled()) {
 							LOGGER.debug("{}|bind {} to object", new Object[] {
 									componentContext.getId(), f.getName(),
@@ -432,6 +442,10 @@ public final class UiFactory {
 
 			// Don't add to container if this is a menu
 			if (child.getAnnotatedElement().getAnnotation(UiFrameMenu.class) != null) {
+				continue;
+			}
+
+			if (child.getAnnotatedElement().getAnnotation(UiComponentOf.class) != null) {
 				continue;
 			}
 

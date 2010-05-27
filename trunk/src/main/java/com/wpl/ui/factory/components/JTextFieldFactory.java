@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wpl.ui.annotations.JTextFieldProperties;
 import com.wpl.ui.annotations.UiColumns;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.FactoryContext;
@@ -51,4 +52,15 @@ public class JTextFieldFactory extends JTextComponentFactory {
 		LOGGER.debug("{}|JTextField.setColumns({})", context.getId(), annotate
 				.value());
 	}
+
+	@UiAnnotationHandler(JTextFieldProperties.class)
+	void handleAnnotation(FactoryContext factory, ComponentContext context,
+			JTextField component, JTextFieldProperties annotate) {
+
+		component.setText(annotate.text());
+
+		LOGGER.debug("{}|JTextField.setText(\"{}\")", context.getId(), annotate
+				.text());
+	}
+
 }

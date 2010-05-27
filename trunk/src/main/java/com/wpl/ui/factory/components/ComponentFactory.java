@@ -32,6 +32,7 @@ import javax.swing.JScrollPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wpl.ui.annotations.UiComponentOf;
 import com.wpl.ui.annotations.UiFont;
 import com.wpl.ui.annotations.UiLocation;
 import com.wpl.ui.annotations.UiName;
@@ -205,6 +206,20 @@ public abstract class ComponentFactory implements IComponentFactory {
 	protected void handleUiAnnotation(FactoryContext factory,
 			ComponentContext context, Component component, UiType annotate) {
 		LOGGER.debug("{}|is {}", context.getId(), context.getType());
+	}
+
+	@UiAnnotationHandler(UiComponentOf.class)
+	protected void handleUiAnnotation(FactoryContext factory,
+			ComponentContext context, Component component,
+			UiComponentOf annotate) {
+
+		final ComponentContext target = factory.findComponentContext(annotate
+				.value());
+
+		target.addChild(context);
+
+		LOGGER.debug("{}|is a component of {}", context.getId(), annotate
+				.value());
 	}
 
 	@UiAnnotationHandler(UiBorderLayoutConstraint.class)
