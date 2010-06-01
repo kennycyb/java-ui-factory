@@ -31,6 +31,7 @@ import com.wpl.ui.annotations.UiScrollable;
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
 import com.wpl.ui.enums.BorderLayoutConstraint;
+import com.wpl.ui.events.EventHandler;
 
 /**
  * 
@@ -53,8 +54,12 @@ public class ExternalPanel extends JPanel {
 	@UiText("click me!")
 	JButton button;
 
+	final EventHandler<CustomEventArgs> customEvent = new EventHandler<CustomEventArgs>();
+
 	void onButton_actionPerformed(ActionEvent e) {
 		JOptionPane.showMessageDialog(this, "click me! Clicked");
 		content.append("click me! Clicked\n");
+
+		customEvent.invoke(new CustomEventArgs(this, "Click Me"));
 	}
 }

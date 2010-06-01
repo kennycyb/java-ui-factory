@@ -26,6 +26,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wpl.ui.events.EventHandler;
 import com.wpl.ui.listeners.MethodListener;
 
 public class ComponentContext {
@@ -75,7 +76,13 @@ public class ComponentContext {
 
 	private final List<Runnable> mInit = new ArrayList<Runnable>();
 
+	private final List<EventHandler<?>> mCustomEventHandler = new ArrayList<EventHandler<?>>();
+
 	public ComponentContext() {
+	}
+
+	public void addCustomEventHandler(EventHandler<?> customEventHandler) {
+		mCustomEventHandler.add(customEventHandler);
 	}
 
 	public boolean isComponentOf() {

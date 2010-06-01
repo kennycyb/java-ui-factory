@@ -62,6 +62,7 @@ import com.wpl.ui.annotations.UiName;
 import com.wpl.ui.annotations.UiPreInit;
 import com.wpl.ui.annotations.UiType;
 import com.wpl.ui.annotations.frame.UiFrameMenu;
+import com.wpl.ui.events.EventHandler;
 import com.wpl.ui.factory.components.DialogFactory;
 import com.wpl.ui.factory.components.FileDialogFactory;
 import com.wpl.ui.factory.components.FrameFactory;
@@ -295,6 +296,41 @@ public class SwingFactory {
 				LOGGER.debug("{}|ignore static field: {}", componentContext
 						.getId(), f.getName());
 				continue;
+			}
+
+			if (f.getType() == EventHandler.class) {
+
+				componentContext.addPostInit(new Runnable() {
+
+					@Override
+					public void run() {
+						try {
+
+							f.setAccessible(true);
+							EventHandler<?> handler = (EventHandler<?>) f
+									.get(componentContext.getComponent());
+
+							final MethodListener ml = componentContext
+									.getActionListeners().get(f.getName());
+
+							if (ml != null) {
+								handler.addListener(ml);
+							}
+
+							LOGGER.debug("{}|CustomEventHandler added from {}",
+									new Object[] { componentContext.getId(),
+											f.getName() });
+
+						} catch (IllegalArgumentException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IllegalAccessException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				});
+
 			}
 
 			if (Modifier.isFinal(f.getModifiers())) {

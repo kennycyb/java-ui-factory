@@ -18,10 +18,12 @@ package com.wpl.ui.samples.panel;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wpl.ui.annotations.UiInit;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.components.JFrameProperties;
 import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
@@ -51,5 +53,15 @@ public class SampleWithExternalPanel extends JFrame {
 
 	public static void main(String[] args) {
 		SwingFactory.create(SampleWithExternalPanel.class).setVisible(true);
+	}
+
+	@UiInit
+	void init() {
+	}
+
+	void onExternal_customEvent(CustomEventArgs customEventObject) {
+		LOGGER.debug("customEvent {}", customEventObject.getMessage());
+		JOptionPane.showMessageDialog(this, "onExternal_customEvent: "
+				+ customEventObject.getMessage());
 	}
 }

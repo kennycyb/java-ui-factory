@@ -174,6 +174,7 @@ public abstract class ComponentFactory implements IComponentFactory {
 	protected void wireComponent(ComponentContext context) {
 		LOGGER.debug("{}|listeners={}", context.getId(), context
 				.getActionListeners().size());
+
 	}
 
 	// ~ UiAnnotationHandlers --------------------------------------------------
