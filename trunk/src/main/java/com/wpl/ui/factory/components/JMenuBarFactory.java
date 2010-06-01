@@ -40,7 +40,6 @@ import com.wpl.ui.annotations.UiFont;
 import com.wpl.ui.annotations.UiResource;
 import com.wpl.ui.annotations.frame.UiFrameMenu;
 import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 import com.wpl.ui.factory.components.menu.MenuBarInfo;
 import com.wpl.ui.factory.components.menu.MenuInfo;
@@ -58,21 +57,23 @@ public class JMenuBarFactory extends JComponentFactory {
 	}
 
 	@UiAnnotationHandler(UiFrameMenu.class)
-	protected void handleUiFrameMenu(FactoryContext factory,
-			final ComponentContext context, final JMenuBar component,
-			UiFrameMenu annotate) {
+	protected void handleUiFrameMenu(final ComponentContext context,
+			final JMenuBar component, UiFrameMenu annotate) {
 
-		if (factory.getObject() instanceof JFrame) {
-			((JFrame) factory.getObject()).setJMenuBar(component);
-			LOGGER.debug("added {} as JMenuBar in {}", context.getId(), factory
-					.getObject().getClass().getSimpleName());
+		if (context.getParentContext() == null
+				|| context.getParentContext().getComponent() == null) {
+			return;
+		}
+
+		if (context.getParentContext().getComponent() instanceof JFrame) {
+			((JFrame) context.getParentContext().getComponent())
+					.setJMenuBar(component);
 		}
 	}
 
 	@UiAnnotationHandler(UiResource.class)
-	protected void handleUiResource(FactoryContext factory,
-			final ComponentContext context, final JMenuBar component,
-			UiResource annotate) {
+	protected void handleUiResource(final ComponentContext context,
+			final JMenuBar component, UiResource annotate) {
 
 		InputStream in = this.getClass().getClassLoader().getResourceAsStream(
 				annotate.value());
@@ -96,12 +97,10 @@ public class JMenuBarFactory extends JComponentFactory {
 		}
 
 		MethodListenerProxy<ActionListener> actionListenerProxy = new MethodListenerProxy<ActionListener>(
-				factory.getObject(), context.getActionListeners(),
-				ActionListener.class);
+				ActionListener.class, context.getActionListeners());
 
 		MethodListenerProxy<ItemListener> itemListenerProxy = new MethodListenerProxy<ItemListener>(
-				factory.getObject(), context.getActionListeners(),
-				ItemListener.class);
+				ItemListener.class, context.getActionListeners());
 
 		int menuIndex = -1;
 
@@ -118,8 +117,7 @@ public class JMenuBarFactory extends JComponentFactory {
 				menuItemInfo.setId(menuItemInfo.getId());
 			}
 
-			ComponentContext child = factory.findComponentContext(menuItemInfo
-					.getId());
+			ComponentContext child = new ComponentContext();
 			child.setId(menuItemInfo.getId());
 			child.setComponent(menu);
 			child.setDeclared(false);
@@ -191,8 +189,8 @@ public class JMenuBarFactory extends JComponentFactory {
 					item.setId(item.getText());
 				}
 
-				ComponentContext menuChild = factory.findComponentContext(item
-						.getId());
+				ComponentContext menuChild = new ComponentContext();
+				menuChild.setId(item.getId());
 				menuChild.setComponent(mi);
 				child.addChild(menuChild);
 

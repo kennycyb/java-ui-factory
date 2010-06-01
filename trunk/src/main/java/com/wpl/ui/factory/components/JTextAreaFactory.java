@@ -25,7 +25,6 @@ import com.wpl.ui.annotations.UiRows;
 import com.wpl.ui.annotations.textarea.UiLineWrap;
 import com.wpl.ui.annotations.textarea.UiTabSize;
 import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
 /**
@@ -45,32 +44,32 @@ public class JTextAreaFactory extends JTextComponentFactory {
 	}
 
 	@UiAnnotationHandler(UiRows.class)
-	protected void handleUiRows(FactoryContext factory,
-			ComponentContext context, JTextArea component, UiRows annotate) {
+	protected void handleUiRows(ComponentContext context, JTextArea component,
+			UiRows annotate) {
 		component.setRows(annotate.value());
 		LOGGER.debug("(JTextArea){}.setRows({})", context.getId(), annotate
 				.value());
 	}
 
 	@UiAnnotationHandler(UiColumns.class)
-	protected void handleUiColumns(FactoryContext factory,
-			ComponentContext context, JTextArea component, UiColumns annotate) {
+	protected void handleUiColumns(ComponentContext context,
+			JTextArea component, UiColumns annotate) {
 		component.setColumns(annotate.value());
 		LOGGER.debug("(JTextArea){}.setColumns({})", context.getId(), annotate
 				.value());
 	}
 
 	@UiAnnotationHandler(UiTabSize.class)
-	protected void handleUiTabSize(FactoryContext factory,
-			ComponentContext context, JTextArea component, UiTabSize annotate) {
+	protected void handleUiTabSize(ComponentContext context,
+			JTextArea component, UiTabSize annotate) {
 		component.setTabSize(annotate.value());
 		LOGGER.debug("(JTextArea){}.setTabSize({})", context.getId(), annotate
 				.value());
 	}
 
 	@UiAnnotationHandler(UiLineWrap.class)
-	protected void handleUiLineWrap(FactoryContext factory,
-			ComponentContext context, JTextArea component, UiLineWrap annotate) {
+	protected void handleUiLineWrap(ComponentContext context,
+			JTextArea component, UiLineWrap annotate) {
 		component.setLineWrap(annotate.value());
 		LOGGER.debug("(JTextArea){}.setLineWrap({})", context.getId(), annotate
 				.value());

@@ -25,7 +25,6 @@ import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.UiFactory;
 import com.wpl.ui.annotations.UiEnabled;
 import com.wpl.ui.annotations.UiIcon;
 import com.wpl.ui.annotations.UiLayout;
@@ -34,6 +33,7 @@ import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
 import com.wpl.ui.annotations.frame.UiWindowPosition;
 import com.wpl.ui.enums.FrameCloseOperation;
 import com.wpl.ui.enums.WindowPosition;
+import com.wpl.ui.factory.SwingFactory;
 
 /**
  * 
@@ -75,6 +75,6 @@ public class SampleButton extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		UiFactory.create(SampleButton.class).setVisible(true);
+		SwingFactory.create(SampleButton.class).setVisible(true);
 	}
 }

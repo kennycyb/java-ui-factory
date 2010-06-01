@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
 /**
@@ -39,8 +38,8 @@ public class TextComponentFactory extends ComponentFactory {
 	}
 
 	@UiAnnotationHandler(UiText.class)
-	void handleUiText(FactoryContext factory, ComponentContext context,
-			TextComponent component, UiText annotate) {
+	void handleUiText(ComponentContext context, TextComponent component,
+			UiText annotate) {
 		component.setText(annotate.value());
 	}
 

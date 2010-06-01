@@ -19,7 +19,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.FactoryContext;
 
 /**
  * 
@@ -31,8 +30,7 @@ public class GridLayoutHandler implements ILayoutHandler {
 			.getLogger(GridLayoutHandler.class);
 
 	@Override
-	public void layoutComponent(FactoryContext factoryContext,
-			ComponentContext componentContext) {
+	public void layoutComponent(ComponentContext componentContext) {
 
 		componentContext.getContainer().add(
 				componentContext.getEnclosedComponent(), null);
@@ -40,8 +38,7 @@ public class GridLayoutHandler implements ILayoutHandler {
 	}
 
 	@Override
-	public void finalLayout(FactoryContext factoryContext,
-			ComponentContext containerContext) {
+	public void finalLayout(ComponentContext containerContext) {
 		// TODO Auto-generated method stub
 
 	}

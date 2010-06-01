@@ -13,28 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.samples;
+package com.wpl.ui.samples.panel;
 
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiAddComponentTo;
 import com.wpl.ui.annotations.UiLayout;
-import com.wpl.ui.annotations.UiName;
-import com.wpl.ui.annotations.UiSize;
-import com.wpl.ui.annotations.UiText;
-import com.wpl.ui.annotations.components.JTextFieldProperties;
+import com.wpl.ui.annotations.components.JFrameProperties;
 import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
-import com.wpl.ui.annotations.frame.UiWindowPosition;
 import com.wpl.ui.enums.BorderLayoutConstraint;
+import com.wpl.ui.enums.FrameCloseOperation;
 import com.wpl.ui.enums.WindowPosition;
 import com.wpl.ui.factory.SwingFactory;
 
@@ -42,38 +34,22 @@ import com.wpl.ui.factory.SwingFactory;
  * 
  * @since 1.0
  */
-@UiWindowPosition(WindowPosition.CENTER)
-@UiSize(height = 600, width = 800)
+
 @UiLayout(BorderLayout.class)
-public class TabbedPaneSample extends JFrame {
+@JFrameProperties(title = "Sample With External Panel", windowPosition = WindowPosition.CENTER, width = 800, height = 600, frameCloseOperation = FrameCloseOperation.EXIT)
+public class SampleWithExternalPanel extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4487401985785301759L;
+
 	private static Logger LOGGER = LoggerFactory
-			.getLogger(TabbedPaneSample.class);
-
-	public static class Tab1 extends JPanel {
-
-		@JTextFieldProperties(text = "Tab1")
-		JTextField field1;
-
-	}
-
-	private class Tab2 extends JPanel {
-
-		@UiText("HELLO")
-		JLabel field2;
-	}
+			.getLogger(SampleWithExternalPanel.class);
 
 	@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
-	JTabbedPane tabbedPane;
-
-	@UiName("Tab 1")
-	@UiAddComponentTo("tabbedPane")
-	Tab1 tab1;
-
-	@UiName("Tab 2")
-	@UiAddComponentTo("tabbedPane")
-	Tab2 tab2;
+	ExternalPanel external;
 
 	public static void main(String[] args) {
-		SwingFactory.create(TabbedPaneSample.class).setVisible(true);
+		SwingFactory.create(SampleWithExternalPanel.class).setVisible(true);
 	}
 }

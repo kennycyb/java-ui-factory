@@ -16,25 +16,26 @@
 package com.wpl.ui.samples.combo;
 
 import java.awt.FlowLayout;
-import java.awt.Frame;
 import java.awt.event.ItemEvent;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.UiFactory;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiResource;
 import com.wpl.ui.annotations.UiSimpleItems;
-import com.wpl.ui.annotations.frame.UiWindowPosition;
+import com.wpl.ui.annotations.components.JFrameProperties;
+import com.wpl.ui.enums.FrameCloseOperation;
 import com.wpl.ui.enums.WindowPosition;
+import com.wpl.ui.factory.SwingFactory;
 
-@UiWindowPosition(WindowPosition.CENTER)
+@JFrameProperties(frameCloseOperation = FrameCloseOperation.EXIT, title = "SampleComboBox", windowPosition = WindowPosition.CENTER)
 @UiLayout(FlowLayout.class)
-public class SampleComboBox extends Frame {
+public class SampleComboBox extends JFrame {
 	/**
 	 * 
 	 */
@@ -81,6 +82,6 @@ public class SampleComboBox extends Frame {
 	}
 
 	public static void main(String[] args) {
-		UiFactory.create(SampleComboBox.class).setVisible(true);
+		SwingFactory.create(SampleComboBox.class).setVisible(true);
 	}
 }

@@ -24,7 +24,6 @@ import javax.swing.SpringLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.UiFactory;
 import com.wpl.ui.annotations.UiColumns;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiRows;
@@ -36,6 +35,7 @@ import com.wpl.ui.annotations.frame.UiWindowPosition;
 import com.wpl.ui.enums.FrameCloseOperation;
 import com.wpl.ui.enums.SpringGridType;
 import com.wpl.ui.enums.WindowPosition;
+import com.wpl.ui.factory.SwingFactory;
 
 /**
  * 
@@ -78,6 +78,6 @@ public class SpringLayoutGridSample extends JFrame {
 	JTextArea textarea;
 
 	public static void main(String[] args) {
-		UiFactory.create(SpringLayoutGridSample.class).setVisible(true);
+		SwingFactory.create(SpringLayoutGridSample.class).setVisible(true);
 	}
 }

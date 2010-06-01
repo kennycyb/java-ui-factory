@@ -20,11 +20,9 @@ import java.awt.Frame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiSize;
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.annotations.frame.UiFrameResizable;
 import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
 public class FrameFactory extends WindowFactory {
@@ -35,40 +33,44 @@ public class FrameFactory extends WindowFactory {
 		return Frame.class;
 	}
 
-	@Override
-	protected void init(FactoryContext factory, final ComponentContext context) {
+	// @Override
+	// protected void init(FactoryContext factory, final ComponentContext
+	// context) {
+	//
+	// context.addPostInit(new Runnable() {
+	// @Override
+	// public void run() {
+	// Frame f = (Frame) context.getComponent();
+	// if (f == null) {
+	// return;
+	// }
+	//
+	// if (context.getAnnotatedElement().getAnnotation(UiSize.class) == null) {
+	// f.pack();
+	// }
+	// }
+	// });
+	//
+	// super.init(factory, context);
+	// }
 
-		context.addPostInit(new Runnable() {
-			@Override
-			public void run() {
-				Frame f = (Frame) context.getComponent();
-				if (f == null) {
-					return;
-				}
-
-				if (context.getAnnotatedElement().getAnnotation(UiSize.class) == null) {
-					f.pack();
-				}
-			}
-		});
-
-		super.init(factory, context);
-	}
-
-	@UiAnnotationHandler(UiText.class)
-	protected void handleUiText(FactoryContext factory,
-			ComponentContext context, Frame frame, UiText annotate) {
-		frame.setTitle(annotate.value());
+	protected void title(ComponentContext context, Frame frame, String title) {
+		frame.setTitle(title);
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("{}|Frame.setTitle({})", context.getId(), annotate
-					.value());
+			LOGGER.debug("{}|Frame.setTitle({})", context.getId(), title);
 		}
 	}
 
+	@UiAnnotationHandler(UiText.class)
+	protected void handleUiText(ComponentContext context, Frame frame,
+			UiText annotate) {
+		title(context, frame, annotate.value());
+	}
+
 	@UiAnnotationHandler(UiFrameResizable.class)
-	protected void handleUiResizable(FactoryContext factory,
-			ComponentContext context, Frame frame, UiFrameResizable annotate) {
+	protected void handleUiResizable(ComponentContext context, Frame frame,
+			UiFrameResizable annotate) {
 		frame.setResizable(annotate.value());
 
 		if (LOGGER.isDebugEnabled()) {

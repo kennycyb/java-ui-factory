@@ -24,7 +24,6 @@ import javax.swing.JTextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.UiFactory;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiRows;
 import com.wpl.ui.annotations.UiScrollable;
@@ -34,6 +33,7 @@ import com.wpl.ui.annotations.frame.UiWindowPosition;
 import com.wpl.ui.enums.FrameCloseOperation;
 import com.wpl.ui.enums.ScrollBarPolicy;
 import com.wpl.ui.enums.WindowPosition;
+import com.wpl.ui.factory.SwingFactory;
 import com.wpl.ui.layout.managers.VerticalFlowLayout;
 
 /**
@@ -72,6 +72,6 @@ public class VerticalFlowLayoutSample extends JFrame {
 	JTextArea textarea5;
 
 	public static void main(String[] args) {
-		UiFactory.create(VerticalFlowLayoutSample.class).setVisible(true);
+		SwingFactory.create(VerticalFlowLayoutSample.class).setVisible(true);
 	}
 }

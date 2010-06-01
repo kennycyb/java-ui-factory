@@ -30,7 +30,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import com.wpl.ui.UiFactory;
 import com.wpl.ui.annotations.UiColumns;
 import com.wpl.ui.annotations.UiEchoChar;
 import com.wpl.ui.annotations.UiEnabled;
@@ -43,6 +42,7 @@ import com.wpl.ui.annotations.UiType;
 import com.wpl.ui.annotations.constraints.UiSpringGridConstraint;
 import com.wpl.ui.annotations.frame.UiWindowPosition;
 import com.wpl.ui.enums.WindowPosition;
+import com.wpl.ui.factory.SwingFactory;
 
 @UiWindowPosition(WindowPosition.CENTER)
 @UiLayout(SpringLayout.class)
@@ -113,8 +113,7 @@ public class SamplePanel extends JPanel {
 	private JRadioButton mRadioButton;
 
 	public static void main(String[] args) {
-		UiFactory factory = new UiFactory();
-		SamplePanel panel = factory.createComponent(SamplePanel.class);
+		SamplePanel panel = SwingFactory.create(SamplePanel.class);
 		JFrame frame = new JFrame();
 		frame.setTitle("Sample Panel");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

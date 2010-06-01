@@ -16,7 +16,6 @@
 package com.wpl.ui.layout.handlers;
 
 import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.FactoryContext;
 
 /**
  * 
@@ -25,9 +24,7 @@ import com.wpl.ui.factory.FactoryContext;
  */
 public interface ILayoutHandler {
 
-	public void layoutComponent(FactoryContext factoryContext,
-			ComponentContext componentContext);
+	public void layoutComponent(ComponentContext componentContext);
 
-	public void finalLayout(FactoryContext factoryContext,
-			ComponentContext containerContext);
+	public void finalLayout(ComponentContext containerContext);
 }

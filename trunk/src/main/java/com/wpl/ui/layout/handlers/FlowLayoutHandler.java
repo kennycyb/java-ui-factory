@@ -17,7 +17,6 @@ package com.wpl.ui.layout.handlers;
 
 import com.wpl.ui.annotations.constraints.UiFlowLayoutConstraint;
 import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.FactoryContext;
 
 /**
  * 
@@ -27,8 +26,7 @@ import com.wpl.ui.factory.FactoryContext;
 public class FlowLayoutHandler implements ILayoutHandler {
 
 	@Override
-	public void layoutComponent(FactoryContext factoryContext,
-			ComponentContext componentContext) {
+	public void layoutComponent(ComponentContext componentContext) {
 
 		UiFlowLayoutConstraint constraint = componentContext
 				.getAnnotatedElement().getAnnotation(
@@ -40,8 +38,7 @@ public class FlowLayoutHandler implements ILayoutHandler {
 	}
 
 	@Override
-	public void finalLayout(FactoryContext factoryContext,
-			ComponentContext containerContext) {
+	public void finalLayout(ComponentContext containerContext) {
 		// TODO Auto-generated method stub
 
 	}

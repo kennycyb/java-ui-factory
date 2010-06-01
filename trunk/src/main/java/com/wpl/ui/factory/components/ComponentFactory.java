@@ -32,7 +32,6 @@ import javax.swing.JScrollPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiComponentOf;
 import com.wpl.ui.annotations.UiFont;
 import com.wpl.ui.annotations.UiLocation;
 import com.wpl.ui.annotations.UiName;
@@ -42,7 +41,6 @@ import com.wpl.ui.annotations.UiType;
 import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
 import com.wpl.ui.enums.ScrollBarPolicy;
 import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.IComponentFactory;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
@@ -80,43 +78,16 @@ public abstract class ComponentFactory implements IComponentFactory {
 
 	abstract protected Class<?> defaultType();
 
-	@Override
-	public void createComponent(FactoryContext factory, ComponentContext context) {
-
-		if (context == null) {
-			return;
-		}
-
-		if (context.getType() == null) {
-			context.setType(defaultType());
-		}
-
-		try {
-			this.createInstance(context);
-
-			if (context.isRoot() && factory.getObject() == null) {
-				factory.setObject(context.getComponent());
-			}
-
-			this.init(factory, context);
-		} catch (Throwable t) {
-			LOGGER.error("Failed to create component", t);
-		}
-	}
-
-	private void createInstance(ComponentContext context)
-			throws InstantiationException, IllegalAccessException,
-			SecurityException, NoSuchMethodException, IllegalArgumentException,
-			InvocationTargetException {
+	public void createInstance(ComponentContext context) throws Exception {
 
 		Object instance = null;
 
-		if (context.getEnclosingObject() != null
+		if (context.getParentContext() != null
 				&& context.getType().getDeclaringClass() != null
 				&& !Modifier.isStatic(context.getType().getModifiers())) {
 
 			Class<?> innerClass = context.getType();
-			Class<?> outerClass = context.getEnclosingObject().getClass();
+			Class<?> outerClass = context.getParentContext().getType();
 
 			Constructor<?> innerClassConstructor = innerClass
 					.getDeclaredConstructor(outerClass);
@@ -124,7 +95,7 @@ public abstract class ComponentFactory implements IComponentFactory {
 			innerClassConstructor.setAccessible(true);
 
 			instance = innerClassConstructor.newInstance(context
-					.getEnclosingObject());
+					.getParentContext().getComponent());
 		} else {
 
 			LOGGER.debug("{}|creating from {}", context.getId(), context
@@ -136,7 +107,7 @@ public abstract class ComponentFactory implements IComponentFactory {
 		context.setComponent(Component.class.cast(instance));
 	}
 
-	protected void init(FactoryContext factory, ComponentContext context) {
+	public void initialize(ComponentContext context) {
 
 		if (context.getComponent() == null) {
 			LOGGER.debug("init failed - component is null");
@@ -152,15 +123,15 @@ public abstract class ComponentFactory implements IComponentFactory {
 
 		// Build the current component.
 
-		if (context.getEnclosingObject() != null) {
-			handleAnnotations(factory, context, context.getType());
+		if (context.getParentContext() != null) {
+			handleAnnotations(context, context.getType());
 		}
 
-		handleAnnotations(factory, context, context.getAnnotatedElement());
+		handleAnnotations(context, context.getAnnotatedElement());
 
-		if (factory.isAutoWired()) {
+		if (context.isAutoWired()) {
 			LOGGER.debug("{}|init auto-wiring", context.getId());
-			this.wireComponent(factory, context);
+			this.wireComponent(context);
 		} else {
 			LOGGER.debug("{}|init auto-wiring disabled");
 		}
@@ -168,8 +139,8 @@ public abstract class ComponentFactory implements IComponentFactory {
 		LOGGER.debug("{}|init done", context.getId());
 	}
 
-	private void handleAnnotations(FactoryContext factory,
-			ComponentContext context, AnnotatedElement annotatedElement) {
+	private void handleAnnotations(ComponentContext context,
+			AnnotatedElement annotatedElement) {
 
 		for (Annotation annotate : annotatedElement.getAnnotations()) {
 
@@ -181,8 +152,7 @@ public abstract class ComponentFactory implements IComponentFactory {
 			}
 
 			try {
-				handler.invoke(this, factory, context, context.getComponent(),
-						annotate);
+				handler.invoke(this, context, context.getComponent(), annotate);
 			} catch (IllegalArgumentException e1) {
 
 				LOGGER.warn("IllegalArgument: {}({}, {})", new Object[] {
@@ -201,44 +171,43 @@ public abstract class ComponentFactory implements IComponentFactory {
 
 	}
 
-	@Override
-	public void wireComponent(FactoryContext factory, ComponentContext context) {
+	protected void wireComponent(ComponentContext context) {
+		LOGGER.debug("{}|listeners={}", context.getId(), context
+				.getActionListeners().size());
 	}
 
 	// ~ UiAnnotationHandlers --------------------------------------------------
 
 	@UiAnnotationHandler(UiType.class)
-	protected void handleUiAnnotation(FactoryContext factory,
-			ComponentContext context, Component component, UiType annotate) {
+	protected void handleUiAnnotation(ComponentContext context,
+			Component component, UiType annotate) {
 		LOGGER.debug("{}|is {}", context.getId(), context.getType());
 	}
 
-	@UiAnnotationHandler(UiComponentOf.class)
-	protected void handleUiAnnotation(FactoryContext factory,
-			ComponentContext context, Component component,
-			UiComponentOf annotate) {
-
-		final ComponentContext target = factory.findComponentContext(annotate
-				.value());
-
-		target.addChild(context);
-
-		LOGGER.debug("{}|is a component of {}", context.getId(), annotate
-				.value());
-	}
+	// @UiAnnotationHandler(UiComponentOf.class)
+	// protected void handleUiAnnotation(ComponentContext context,
+	// Component component, UiComponentOf annotate) {
+	//
+	// final ComponentContext target = factory.findComponentContext(annotate
+	// .value());
+	//
+	// target.addChild(context);
+	//
+	// LOGGER.debug("{}|is a component of {}", context.getId(), annotate
+	// .value());
+	// }
 
 	@UiAnnotationHandler(UiBorderLayoutConstraint.class)
-	protected void handleUiBorderLayoutConstraint(FactoryContext factory,
-			ComponentContext context, Component component,
-			UiBorderLayoutConstraint annotate) {
+	protected void handleUiBorderLayoutConstraint(ComponentContext context,
+			Component component, UiBorderLayoutConstraint annotate) {
 
 		LOGGER.debug("{}|BorderLayoutConstraint.{}", context.getId(), annotate
 				.value());
 	}
 
 	@UiAnnotationHandler(UiSize.class)
-	protected void handleUiSize(FactoryContext factory,
-			ComponentContext context, Component component, UiSize annotate) {
+	protected void handleUiSize(ComponentContext context, Component component,
+			UiSize annotate) {
 		component.setSize(annotate.width(), annotate.height());
 		component.setPreferredSize(new Dimension(annotate.width(), annotate
 				.height()));
@@ -248,11 +217,13 @@ public abstract class ComponentFactory implements IComponentFactory {
 					new Object[] { context.getId(), annotate.width(),
 							annotate.height() });
 		}
+
+		context.setPack(false);
 	}
 
 	@UiAnnotationHandler(UiLocation.class)
-	protected void handleUiLocation(FactoryContext factory,
-			ComponentContext context, Component component, UiLocation location) {
+	protected void handleUiLocation(ComponentContext context,
+			Component component, UiLocation location) {
 		component.setLocation(location.x(), location.y());
 
 		if (LOGGER.isDebugEnabled()) {
@@ -262,8 +233,8 @@ public abstract class ComponentFactory implements IComponentFactory {
 	}
 
 	@UiAnnotationHandler(UiFont.class)
-	protected void handleUiFont(FactoryContext factory,
-			ComponentContext context, Component component, UiFont font) {
+	protected void handleUiFont(ComponentContext context, Component component,
+			UiFont font) {
 
 		component.setFont(new Font(font.name(),
 				font.style().getSwingConstant(), font.size()));
@@ -275,8 +246,8 @@ public abstract class ComponentFactory implements IComponentFactory {
 	}
 
 	@UiAnnotationHandler(UiName.class)
-	protected void handleUiName(FactoryContext factory,
-			ComponentContext context, Component component, UiName name) {
+	protected void handleUiName(ComponentContext context, Component component,
+			UiName name) {
 		component.setName(name.value());
 
 		if (LOGGER.isDebugEnabled()) {
@@ -321,8 +292,8 @@ public abstract class ComponentFactory implements IComponentFactory {
 	}
 
 	@UiAnnotationHandler(UiScrollable.class)
-	protected void handleUiScrollable(FactoryContext factory,
-			ComponentContext context, Component component, UiScrollable annotate) {
+	protected void handleUiScrollable(ComponentContext context,
+			Component component, UiScrollable annotate) {
 		JScrollPane scroll = new JScrollPane(component);
 
 		scroll.setHorizontalScrollBarPolicy(getScrollBarPolicyValue(true,

@@ -25,8 +25,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.annotations.frame.UiWindowPosition;
+import com.wpl.ui.enums.WindowPosition;
 import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 import com.wpl.ui.listeners.MethodListenerProxy;
 
@@ -38,17 +38,35 @@ public class WindowFactory extends ContainerFactory {
 		return Window.class;
 	}
 
-	@UiAnnotationHandler(UiWindowPosition.class)
-	void handleUiWindowPosition(FactoryContext factory,
-			ComponentContext context, final Window component,
-			UiWindowPosition annotate) {
+	@Override
+	public void initialize(ComponentContext context) {
+		super.initialize(context);
+
+		if (context.isPack()) {
+			((Window) context.getComponent()).pack();
+		}
+	}
+
+	protected void windowPosition(final ComponentContext context,
+			final Window component, final WindowPosition value) {
+
+		if (value == WindowPosition.DEFAULT) {
+			LOGGER.debug("{}|default window position", context.getId());
+			return;
+		}
+
+		// WindowPosition.CENTER
 
 		context.addPostInit(new Runnable() {
 			@Override
 			public void run() {
 
 				component.invalidate();
-				component.pack();
+
+				if (context.isPack()) {
+					component.pack();
+					LOGGER.debug("{}|packed", context.getId());
+				}
 
 				final Dimension dim = component.getToolkit().getScreenSize();
 				final Rectangle abounds = component.getBounds();
@@ -57,32 +75,41 @@ public class WindowFactory extends ContainerFactory {
 				final int centerY = (dim.height - abounds.height) / 2;
 
 				component.setLocation(centerX, centerY);
-				LOGGER.debug("Window to Center location: x={}, y={}", centerX,
-						centerY);
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("{}|Position window to center: x={}, y={}",
+							new Object[] { context.getId(), centerX, centerY });
+				}
 			}
 		});
 	}
 
+	@UiAnnotationHandler(UiWindowPosition.class)
+	void handleUiWindowPosition(ComponentContext context,
+			final Window component, UiWindowPosition annotate) {
+		windowPosition(context, component, annotate.value());
+	}
+
 	@Override
-	public void wireComponent(FactoryContext factory, ComponentContext context) {
-		super.wireComponent(factory, context);
+	protected void wireComponent(ComponentContext context) {
+
+		super.wireComponent(context);
 
 		Window window = (Window) context.getComponent();
 
 		MethodListenerProxy<WindowListener> windowListenerProxy = new MethodListenerProxy<WindowListener>(
-				factory.getObject(), context.getActionListeners(),
-				WindowListener.class);
+				WindowListener.class, context.getActionListeners());
 
 		MethodListenerProxy<WindowFocusListener> windowFocusListenerProxy = new MethodListenerProxy<WindowFocusListener>(
-				factory.getObject(), context.getActionListeners(),
-				WindowFocusListener.class);
+				WindowFocusListener.class, context.getActionListeners());
 
 		if (windowListenerProxy.hasListeningMethod()) {
 			window.addWindowListener(windowListenerProxy.getProxy());
+			LOGGER.debug("{}|Window.addWindowListener", context.getId());
 		}
 
 		if (windowFocusListenerProxy.hasListeningMethod()) {
 			window.addWindowFocusListener(windowFocusListenerProxy.getProxy());
+			LOGGER.debug("{}|Window.addWindowFocusListener", context.getId());
 		}
 	}
 }

@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.annotations.menu.UiMenuBarItems;
 import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
 public class JMenuFactory extends JComponentFactory {
@@ -36,16 +35,16 @@ public class JMenuFactory extends JComponentFactory {
 	}
 
 	@UiAnnotationHandler(UiText.class)
-	protected void handleUiText(FactoryContext factory,
-			ComponentContext context, JMenu component, UiText annotate) {
+	protected void handleUiText(ComponentContext context, JMenu component,
+			UiText annotate) {
 		component.setText(annotate.value());
 		LOGGER.debug("(JMenu){}.setText(\"{}\")", context.getId(), annotate
 				.value());
 	}
 
 	@UiAnnotationHandler(UiMenuBarItems.class)
-	protected void handleUiMenuBarItems(FactoryContext factory,
-			ComponentContext context, JMenu component, UiMenuBarItems annotate) {
+	protected void handleUiMenuBarItems(ComponentContext context,
+			JMenu component, UiMenuBarItems annotate) {
 
 		for (String item : annotate.value()) {
 

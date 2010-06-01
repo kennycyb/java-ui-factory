@@ -25,9 +25,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import com.wpl.ui.UiFactory;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiName;
+import com.wpl.ui.annotations.UiScrollable;
 import com.wpl.ui.annotations.UiSize;
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.annotations.UiType;
@@ -37,6 +37,7 @@ import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
 import com.wpl.ui.annotations.frame.UiFrameResizable;
 import com.wpl.ui.enums.BorderLayoutConstraint;
 import com.wpl.ui.enums.FrameCloseOperation;
+import com.wpl.ui.factory.SwingFactory;
 
 @UiText("Sample Frame with Inner Classes")
 @UiSize(height = 600, width = 800)
@@ -83,6 +84,7 @@ public class SampleFrameWithInnerClass extends JFrame {
 		NorthContent n;
 
 		@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
+		@UiScrollable
 		@UiText("HELLO WORLD\n")
 		JTextArea content;
 
@@ -130,21 +132,29 @@ public class SampleFrameWithInnerClass extends JFrame {
 	 * As @AutoWired - this method will be called when "start" button is called.
 	 */
 	void onStart_actionPerformed(ActionEvent e) {
-		mCenter.content.append("start button clicked\n");
+		mCenter.content.append("onStart_actionPerformed\n");
 	}
 
 	/**
 	 * As @AutoWired - this method will be called when "stop" button is called.
 	 */
 	void onStop_actionPerformed(ActionEvent e) {
-		mCenter.content.append("stop button clicked\n");
+		mCenter.content.append("onStop_actionPerformed\n");
 	}
 
 	void onSouthButton1_actionPerformed(ActionEvent e) {
-		mCenter.content.append("south button clicked\n");
+		mCenter.content.append("onSouthButton1_actionPerformed\n");
+	}
+
+	void onNorthButton_actionPerformed(ActionEvent e) {
+		mCenter.content.append("onNorthButton_actionPerformed\n");
+	}
+
+	void onSouthButton_actionPerformed(ActionEvent e) {
+		mCenter.content.append("onSouthButton_actionPerformed\n");
 	}
 
 	public static void main(String[] args) {
-		UiFactory.create(SampleFrameWithInnerClass.class).setVisible(true);
+		SwingFactory.create(SampleFrameWithInnerClass.class).setVisible(true);
 	}
 }

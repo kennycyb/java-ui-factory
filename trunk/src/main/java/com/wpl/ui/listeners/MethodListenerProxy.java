@@ -34,28 +34,25 @@ public class MethodListenerProxy<E> implements MethodInterceptor {
 	Map<String, MethodListener<?>> mMethodListeners = new HashMap<String, MethodListener<?>>();
 	private final E mProxy;
 
-	public MethodListenerProxy(Object listener, Map<String, Method> methods,
-			Class<E> listenerClass) {
+	public MethodListenerProxy(Class<E> listenerClass,
+			Map<String, MethodListener<?>> methods) {
+
 		mProxy = listenerClass.cast(Enhancer.create(listenerClass, this));
 
-		Field[] fields = listenerClass.getDeclaredFields();
-
-		for (Field f : fields) {
+		for (Field f : listenerClass.getDeclaredFields()) {
 			if (f.getType() != MethodListener.class) {
 				continue;
 			}
 
-			Method m = methods.get(f.getName());
+			MethodListener<?> m = methods.get(f.getName());
 			if (m == null) {
 				continue;
 			}
 
 			f.setAccessible(true);
 
-			MethodListener<?> methodListener = new MethodListener(listener, m);
-
 			try {
-				f.set(mProxy, methodListener);
+				f.set(mProxy, m);
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -63,20 +60,26 @@ public class MethodListenerProxy<E> implements MethodInterceptor {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			mMethodListeners.put(f.getName(), methodListener);
+			mMethodListeners.put(f.getName(), m);
 		}
 
 		for (Method m : listenerClass.getMethods()) {
-			Method ml = methods.get(m.getName());
+
+			MethodListener<?> ml = methods.get(m.getName());
+
 			if (ml == null) {
-				LOGGER.debug("{} not listened", m.getName());
 				continue;
 			}
 
-			MethodListener<?> methodListener = new MethodListener(listener, ml);
-			mMethodListeners.put(m.getName(), methodListener);
+			mMethodListeners.put(m.getName(), ml);
+		}
 
-			LOGGER.debug("Listening {} by {}", m.getName(), ml.getName());
+		if (LOGGER.isDebugEnabled()) {
+			for (Map.Entry<String, MethodListener<?>> entry : mMethodListeners
+					.entrySet()) {
+				LOGGER.debug("{}|Listening on {}", entry.getValue()
+						.getListenerName(), entry.getValue().getMethodName());
+			}
 		}
 	}
 
@@ -99,6 +102,7 @@ public class MethodListenerProxy<E> implements MethodInterceptor {
 			return null;
 		}
 
+		LOGGER.debug("invoke: {}", methodListener.getMethodName());
 		// FIXME:
 		methodListener.invoke(args[0]);
 		return null;

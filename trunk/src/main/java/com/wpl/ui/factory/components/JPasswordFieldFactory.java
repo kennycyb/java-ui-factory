@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.annotations.UiEchoChar;
 import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
 public class JPasswordFieldFactory extends JTextFieldFactory {
@@ -35,9 +34,8 @@ public class JPasswordFieldFactory extends JTextFieldFactory {
 	}
 
 	@UiAnnotationHandler(UiEchoChar.class)
-	protected void handleUiEchoChar(FactoryContext factory,
-			ComponentContext componentContext, JPasswordField component,
-			UiEchoChar annotate) {
+	protected void handleUiEchoChar(ComponentContext componentContext,
+			JPasswordField component, UiEchoChar annotate) {
 		component.setEchoChar(annotate.value());
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("(JPasswordField){}.setEchoChar('{}')", new Object[] {

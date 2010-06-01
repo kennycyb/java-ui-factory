@@ -25,7 +25,7 @@
     	<menuItem text="Go To..."/>
     	<menuItem type="SEPARATOR"/>
     	<menuItem text="Select All"/>
-    	<menuItem text="Time/Date"/>
+    	<menuItem id="edit.datetime" text="Time/Date"/>
     </menu>
     <menu text="Format">
     	<menuItem text="Word Wrap" type="CHECKBOX"/>

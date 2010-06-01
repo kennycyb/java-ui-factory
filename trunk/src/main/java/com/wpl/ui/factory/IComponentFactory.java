@@ -17,14 +17,7 @@ package com.wpl.ui.factory;
 
 public interface IComponentFactory {
 
-	/**
-	 * Create a custom component with given type.
-	 * 
-	 * @param clazz
-	 * @param annotations
-	 * @return
-	 */
-	public void createComponent(FactoryContext factory, ComponentContext context);
+	public void createInstance(ComponentContext context) throws Exception;
 
-	public void wireComponent(FactoryContext factory, ComponentContext context);
+	public void initialize(ComponentContext context);
 }

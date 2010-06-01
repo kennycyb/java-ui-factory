@@ -19,7 +19,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.FactoryContext;
 
 /**
  * 
@@ -30,8 +29,7 @@ public class VerticalFlowLayoutHandler implements ILayoutHandler {
 			.getLogger(VerticalFlowLayoutHandler.class);
 
 	@Override
-	public void finalLayout(FactoryContext factoryContext,
-			ComponentContext containerContext) {
+	public void finalLayout(ComponentContext containerContext) {
 		/*
 		 * 
 		 * Container container = null;
@@ -49,8 +47,7 @@ public class VerticalFlowLayoutHandler implements ILayoutHandler {
 	}
 
 	@Override
-	public void layoutComponent(FactoryContext factoryContext,
-			ComponentContext componentContext) {
+	public void layoutComponent(ComponentContext componentContext) {
 
 		componentContext.getContainer().add(
 				componentContext.getEnclosedComponent());

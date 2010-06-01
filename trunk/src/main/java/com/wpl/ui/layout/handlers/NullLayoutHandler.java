@@ -19,7 +19,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.FactoryContext;
 
 /**
  * 
@@ -32,8 +31,7 @@ public class NullLayoutHandler implements ILayoutHandler {
 			.getLogger(NullLayoutHandler.class);
 
 	@Override
-	public void layoutComponent(FactoryContext factoryContext,
-			ComponentContext componentContext) {
+	public void layoutComponent(ComponentContext componentContext) {
 
 		// Sanity checking
 		if (componentContext == null || componentContext.getContainer() == null
@@ -51,8 +49,7 @@ public class NullLayoutHandler implements ILayoutHandler {
 	}
 
 	@Override
-	public void finalLayout(FactoryContext factoryContext,
-			ComponentContext containerContext) {
+	public void finalLayout(ComponentContext containerContext) {
 		// TODO Auto-generated method stub
 
 	}

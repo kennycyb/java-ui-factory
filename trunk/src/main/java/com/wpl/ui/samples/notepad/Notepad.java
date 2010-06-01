@@ -20,6 +20,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.InputMethodEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.WindowEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -29,7 +31,6 @@ import javax.swing.JTextArea;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.UiFactory;
 import com.wpl.ui.annotations.UiAutoWired;
 import com.wpl.ui.annotations.UiComponentOf;
 import com.wpl.ui.annotations.UiFont;
@@ -49,6 +50,7 @@ import com.wpl.ui.enums.FontStyle;
 import com.wpl.ui.enums.FrameCloseOperation;
 import com.wpl.ui.enums.ScrollBarPolicy;
 import com.wpl.ui.enums.WindowPosition;
+import com.wpl.ui.factory.SwingFactory;
 
 /**
  * Sample of Notepad Application.
@@ -86,12 +88,11 @@ public class Notepad extends JFrame {
 	@UiComponentOf("menuBar")
 	private JMenuItem cut;
 
-	@SuppressWarnings("unused")
 	@UiInit
-	private void init() {
+	void init() {
 		undo.setEnabled(false);
 		cut.setEnabled(false);
-		LOGGER.debug("init");
+		LOGGER.debug("Notepad.init");
 	}
 
 	/**
@@ -151,9 +152,14 @@ public class Notepad extends JFrame {
 		if (actionCommand.equals("file.exit")) {
 			System.exit(0);
 		}
+
+		if (actionCommand.equals("edit.datetime")) {
+			content.append(SimpleDateFormat.getDateTimeInstance().format(
+					new Date()));
+		}
 	}
 
 	public static void main(String[] args) {
-		UiFactory.create(Notepad.class).setVisible(true);
+		SwingFactory.create(Notepad.class).setVisible(true);
 	}
 }

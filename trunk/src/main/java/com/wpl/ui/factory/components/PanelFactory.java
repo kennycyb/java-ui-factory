@@ -15,11 +15,18 @@
  */
 package com.wpl.ui.factory.components;
 
+import java.awt.Panel;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PanelFactory {
+public class PanelFactory extends ContainerFactory {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(PanelFactory.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(PanelFactory.class);
+
+	@Override
+	protected Class<?> defaultType() {
+		return Panel.class;
+	}
 
 }

@@ -21,7 +21,6 @@ import javax.swing.text.JTextComponent;
 
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 import com.wpl.ui.listeners.MethodListenerProxy;
 
@@ -34,20 +33,19 @@ import com.wpl.ui.listeners.MethodListenerProxy;
 public abstract class JTextComponentFactory extends JComponentFactory {
 
 	@UiAnnotationHandler(UiText.class)
-	protected void handleUiText(FactoryContext factory,
-			ComponentContext context, JTextComponent component, UiText annotate) {
+	protected void handleUiText(ComponentContext context,
+			JTextComponent component, UiText annotate) {
 		component.setText(annotate.value());
 	}
 
 	@Override
-	public void wireComponent(FactoryContext factory, ComponentContext context) {
-		super.wireComponent(factory, context);
+	public void wireComponent(ComponentContext context) {
+		super.wireComponent(context);
 
 		JTextComponent component = (JTextComponent) context.getComponent();
 
 		MethodListenerProxy<InputMethodListener> inputMethodListenerProxy = new MethodListenerProxy<InputMethodListener>(
-				factory.getObject(), context.getActionListeners(),
-				InputMethodListener.class);
+				InputMethodListener.class, context.getActionListeners());
 
 		if (inputMethodListenerProxy.hasListeningMethod()) {
 			component.addInputMethodListener(inputMethodListenerProxy

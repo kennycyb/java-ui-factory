@@ -23,9 +23,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.annotations.UiLayout;
+import com.wpl.ui.annotations.components.JFrameProperties;
 import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
+import com.wpl.ui.enums.FrameCloseOperation;
 import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 import com.wpl.ui.layout.managers.NullLayout;
 
@@ -38,20 +39,43 @@ public class JFrameFactory extends FrameFactory {
 		return JFrame.class;
 	}
 
-	@UiAnnotationHandler(UiFrameCloseOperation.class)
-	protected void handleUiFrameCloseOperation(FactoryContext factory,
-			ComponentContext context, JFrame component,
-			UiFrameCloseOperation annotate) {
-
-		component.setDefaultCloseOperation(annotate.value().getSwingConstant());
+	protected void frameCloseOperation(ComponentContext context,
+			JFrame component, FrameCloseOperation value) {
+		component.setDefaultCloseOperation(value.getSwingConstant());
 
 		LOGGER.debug("{}|JFrame.setDefaultCloseOperation({})", context.getId(),
-				annotate.value());
+				value);
+	}
+
+	@UiAnnotationHandler(UiFrameCloseOperation.class)
+	protected void handleUiFrameCloseOperation(ComponentContext context,
+			JFrame component, UiFrameCloseOperation annotate) {
+		frameCloseOperation(context, component, annotate.value());
+	}
+
+	@UiAnnotationHandler(JFrameProperties.class)
+	protected void handleJFrameProperties(ComponentContext context,
+			JFrame component, JFrameProperties annotate) {
+
+		windowPosition(context, component, annotate.windowPosition());
+
+		if (annotate.height() > 0 && annotate.width() > 0) {
+			component.setSize(annotate.width(), annotate.height());
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("{}|JFrame.setSize({},{})", new Object[] {
+						context.getId(), annotate.width(), annotate.height() });
+			}
+			context.setPack(false);
+		}
+
+		frameCloseOperation(context, component, annotate.frameCloseOperation());
+
+		title(context, component, annotate.title());
 	}
 
 	@UiAnnotationHandler(UiLayout.class)
-	protected void handleUiLayout(FactoryContext factory,
-			ComponentContext context, JFrame component, UiLayout annotate) {
+	protected void handleUiLayout(ComponentContext context, JFrame component,
+			UiLayout annotate) {
 		if (annotate.value() == NullLayout.class) {
 			component.setLayout(null);
 			return;

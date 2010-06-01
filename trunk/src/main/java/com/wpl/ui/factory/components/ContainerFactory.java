@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
 public abstract class ContainerFactory extends ComponentFactory {
@@ -30,8 +29,8 @@ public abstract class ContainerFactory extends ComponentFactory {
 			.getLogger(ContainerFactory.class);
 
 	@UiAnnotationHandler(UiLayout.class)
-	protected void handleUiLayout(FactoryContext factory,
-			ComponentContext context, Container component, UiLayout layout) {
+	protected void handleUiLayout(ComponentContext context,
+			Container component, UiLayout layout) {
 
 		try {
 			component.setLayout(layout.value().newInstance());

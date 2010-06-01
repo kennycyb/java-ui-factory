@@ -19,7 +19,6 @@ import javax.swing.JButton;
 
 import com.wpl.ui.annotations.button.UiDefaultButton;
 import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
 public class JButtonFactory extends AbstractButtonFactory {
@@ -30,9 +29,8 @@ public class JButtonFactory extends AbstractButtonFactory {
 	}
 
 	@UiAnnotationHandler(UiDefaultButton.class)
-	public void handleUiDefaultButton(FactoryContext factory,
-			ComponentContext context, JButton component,
-			UiDefaultButton annotate) {
+	public void handleUiDefaultButton(ComponentContext context,
+			JButton component, UiDefaultButton annotate) {
 		component.setDefaultCapable(true);
 	}
 

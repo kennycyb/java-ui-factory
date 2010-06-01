@@ -13,24 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.enums;
+package com.wpl.ui.annotations;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * 
- * @author kenny
  * @since 1.0
  */
-public enum WindowPosition {
-
-	/**
-	 * Do not realign the window position (default behaviour)
-	 */
-	DEFAULT,
-
-	/**
-	 * Show the window in the center of the screen
-	 * 
-	 * @since 1.0
-	 */
-	CENTER,
+@Retention(RetentionPolicy.RUNTIME)
+@Target( { ElementType.FIELD })
+public @interface UiAddComponentTo {
+	String value();
 }

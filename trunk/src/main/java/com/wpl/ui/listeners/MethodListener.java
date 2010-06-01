@@ -33,6 +33,14 @@ public class MethodListener<E> {
 		mMethod = method;
 	}
 
+	public String getListenerName() {
+		return mListenObject.getClass().getSimpleName();
+	}
+
+	public String getMethodName() {
+		return mMethod.getName();
+	}
+
 	public void invoke(E args) {
 		try {
 			this.mMethod.setAccessible(true);

@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
 import com.wpl.ui.annotations.constraints.UiSpringGridConstraint;
 import com.wpl.ui.enums.SpringGridType;
 import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.utils.SpringUtilities;
 
 /**
@@ -38,8 +37,7 @@ public class SpringLayoutHandler implements ILayoutHandler {
 			.getLogger(SpringLayoutHandler.class);
 
 	@Override
-	public void layoutComponent(FactoryContext factoryContext,
-			ComponentContext componentContext) {
+	public void layoutComponent(ComponentContext componentContext) {
 
 		componentContext.getContainer().add(
 				componentContext.getEnclosedComponent());
@@ -52,8 +50,7 @@ public class SpringLayoutHandler implements ILayoutHandler {
 	}
 
 	@Override
-	public void finalLayout(FactoryContext factoryContext,
-			ComponentContext containerContext) {
+	public void finalLayout(ComponentContext containerContext) {
 
 		Container container = null;
 		if (containerContext.getComponent() instanceof RootPaneContainer) {

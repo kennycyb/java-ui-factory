@@ -18,7 +18,6 @@ package com.wpl.ui.factory;
 import java.awt.Component;
 import java.awt.Container;
 import java.lang.reflect.AnnotatedElement;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,10 +26,16 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wpl.ui.listeners.MethodListener;
+
 public class ComponentContext {
 
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(ComponentContext.class);
+
+	private boolean mAutoWired = true;
+	private boolean mPack = true;
+	private boolean mComponentOf = false;
 
 	/**
 	 * The type of the component.
@@ -54,17 +59,17 @@ public class ComponentContext {
 	private AnnotatedElement mAnnotatedElement;
 	private Component mEnclosedComponent;
 
-	private final Map<String, Method> mActionListeners = new HashMap<String, Method>();
+	private final Map<String, MethodListener<?>> mActionListeners = new HashMap<String, MethodListener<?>>();
 
 	private final List<ComponentContext> mChildren = new ArrayList<ComponentContext>();
 
-	private Object mEnclosingObject;
+	private ComponentContext mParentContext;
 
 	private boolean mDeclared = true;
 
 	private String mParentId;
 
-	private boolean mRoot;
+	private final List<Runnable> mPreInit = new ArrayList<Runnable>();
 
 	private final List<Runnable> mPostInit = new ArrayList<Runnable>();
 
@@ -73,20 +78,66 @@ public class ComponentContext {
 	public ComponentContext() {
 	}
 
+	public boolean isComponentOf() {
+		return mComponentOf;
+	}
+
+	public void setComponentOf(boolean componentOf) {
+		mComponentOf = componentOf;
+	}
+
+	public boolean isPack() {
+		return mPack;
+	}
+
+	public void setPack(boolean pack) {
+		mPack = pack;
+	}
+
+	public boolean isAutoWired() {
+		return mAutoWired;
+	}
+
+	public void setAutoWired(boolean autoWired) {
+		mAutoWired = autoWired;
+	}
+
+	public void addPreInit(Runnable runnable) {
+		mPreInit.add(runnable);
+	}
+
+	public void preInit() {
+
+		LOGGER.debug("{}|preInit (count={})", this.getId(), mPreInit.size());
+
+		for (Runnable r : mPreInit) {
+			r.run();
+		}
+
+		mPreInit.clear();
+	}
+
 	public void addInit(Runnable runnable) {
 		mInit.add(runnable);
 	}
 
-	public List<Runnable> getInit() {
-		return mInit;
+	public void init() {
+
+		LOGGER.debug("{}|init (count={})", this.getId(), mInit.size());
+
+		for (Runnable r : mInit) {
+			r.run();
+		}
+
+		mInit.clear();
 	}
 
-	public Object getEnclosingObject() {
-		return mEnclosingObject;
+	public ComponentContext getParentContext() {
+		return mParentContext;
 	}
 
-	public void setEnclosingObject(Object enclosingObject) {
-		mEnclosingObject = enclosingObject;
+	public void setParentContext(ComponentContext parentContext) {
+		mParentContext = parentContext;
 	}
 
 	/**
@@ -98,16 +149,12 @@ public class ComponentContext {
 		mPostInit.add(runnable);
 	}
 
-	public List<Runnable> getPostInit() {
-		return mPostInit;
-	}
+	public void postInit() {
+		for (Runnable r : mPostInit) {
+			r.run();
+		}
 
-	public boolean isRoot() {
-		return mRoot;
-	}
-
-	public void setRoot(boolean root) {
-		mRoot = root;
+		mPostInit.clear();
 	}
 
 	public String getParentId() {
@@ -132,14 +179,30 @@ public class ComponentContext {
 
 	public void addChild(ComponentContext context) {
 		mChildren.add(context);
-		// if (LOGGER.isDebugEnabled()) {
-		// LOGGER.debug("{} - child added {} ({})", new Object[] {
-		// this.getId(), context.getId(), context.getType() });
-		// }
 	}
 
 	public List<ComponentContext> getChildren() {
 		return mChildren;
+	}
+
+	public ComponentContext findChildContext(String id) {
+
+		if (this.getId().equals(id)) {
+			return this;
+		}
+
+		for (ComponentContext child : mChildren) {
+			if (child.getId().equals(id)) {
+				return child;
+			}
+
+			ComponentContext grandChild = child.findChildContext(id);
+			if (grandChild != null) {
+				return grandChild;
+			}
+		}
+
+		return null;
 	}
 
 	public Component getEnclosedComponent() {
@@ -166,11 +229,11 @@ public class ComponentContext {
 		mAnnotatedElement = annotatedElement;
 	}
 
-	public void addActionListener(String actionName, Method method) {
+	public void addActionListener(String actionName, MethodListener<?> method) {
 		mActionListeners.put(actionName, method);
 	}
 
-	public Map<String, Method> getActionListeners() {
+	public Map<String, MethodListener<?>> getActionListeners() {
 		return mActionListeners;
 	}
 

@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
 import com.wpl.ui.annotations.UiResource;
 import com.wpl.ui.annotations.UiSimpleItems;
 import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.FactoryContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 import com.wpl.ui.factory.components.combobox.ComboBoxInfo;
 import com.wpl.ui.factory.components.combobox.ComboBoxItemInfo;
@@ -45,15 +44,14 @@ public class JComboBoxFactory extends JComponentFactory {
 	}
 
 	@UiAnnotationHandler(UiSimpleItems.class)
-	protected void handleUiSimpleItems(FactoryContext factory,
-			ComponentContext context, JComboBox component,
-			UiSimpleItems annotate) {
+	protected void handleUiSimpleItems(ComponentContext context,
+			JComboBox component, UiSimpleItems annotate) {
 		component.setModel(new DefaultComboBoxModel(annotate.value()));
 	}
 
 	@UiAnnotationHandler(UiResource.class)
-	protected void handleUiResource(FactoryContext factory,
-			ComponentContext context, JComboBox component, UiResource annotate) {
+	protected void handleUiResource(ComponentContext context,
+			JComboBox component, UiResource annotate) {
 		InputStream in = getClass().getClassLoader().getResourceAsStream(
 				annotate.value());
 		if (in == null) {
@@ -73,17 +71,17 @@ public class JComboBoxFactory extends JComponentFactory {
 	}
 
 	@Override
-	public void wireComponent(FactoryContext factory, ComponentContext context) {
-		super.wireComponent(factory, context);
+	public void wireComponent(ComponentContext context) {
+		super.wireComponent(context);
 
 		JComboBox cb = (JComboBox) context.getComponent();
 
 		MethodListenerProxy<ItemListener> itemListenerProxy = new MethodListenerProxy<ItemListener>(
-				factory.getObject(), context.getActionListeners(),
-				ItemListener.class);
+				ItemListener.class, context.getActionListeners());
 
 		if (itemListenerProxy.hasListeningMethod()) {
 			cb.addItemListener(itemListenerProxy.getProxy());
+			LOGGER.debug("{}|JComboBox.addItemListener", context.getId());
 		}
 	}
 }
