@@ -11,9 +11,6 @@ Using Vertical Flow Layout
 
 {{{
 **
- * 
- * @since 1.0
- */
 @UiText("Vertical Flow Layout Sample")
 @UiWindowPosition(WindowPosition.CENTER)
 @UiFrameCloseOperation(FrameCloseOperation.EXIT)
@@ -46,8 +43,7 @@ public class VerticalFlowLayoutSample extends JFrame {
 	JTextArea textarea5;
 
 	public static void main(String[] args) {
-		UiFactory.create(VerticalFlowLayoutSample.class).setVisible(true);
+		SwingFactory.create(VerticalFlowLayoutSample.class).setVisible(true);
 	}
 }
-
 }}}
