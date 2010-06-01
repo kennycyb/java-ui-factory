@@ -1,0 +1,88 @@
+#summary EventHandler
+
+= Introduction =
+
+This sample show how to implement custom events.
+
+= Details =
+
+{{{
+public class CustomEventArgs {
+
+	private final ExternalPanel mSource;
+	private final String mMessage;
+
+	public CustomEventArgs(ExternalPanel source, String message) {
+		mSource = source;
+		mMessage = message;
+	}
+
+	public ExternalPanel getSource() {
+		return mSource;
+	}
+
+	public String getMessage() {
+		return mMessage;
+	}
+}
+}}}
+
+{{{
+@UiLayout(BorderLayout.class)
+public class ExternalPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1384552017351526875L;
+
+	private static Logger LOGGER = LoggerFactory.getLogger(ExternalPanel.class);
+
+	@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
+	@UiScrollable
+	JTextArea content;
+
+	@UiBorderLayoutConstraint(BorderLayoutConstraint.SOUTH)
+	@UiText("click me!")
+	JButton button;
+
+	final EventHandler<CustomEventArgs> customEvent = new EventHandler<CustomEventArgs>();
+
+	void onButton_actionPerformed(ActionEvent e) {
+		JOptionPane.showMessageDialog(this, "click me! Clicked");
+		content.append("click me! Clicked\n");
+
+		customEvent.invoke(new CustomEventArgs(this, "Click Me"));
+	}
+}
+}}}
+
+{{{
+@UiLayout(BorderLayout.class)
+@JFrameProperties(title = "Sample With External Panel", windowPosition = WindowPosition.CENTER, width = 800, height = 600, frameCloseOperation = FrameCloseOperation.EXIT)
+public class SampleWithExternalPanel extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4487401985785301759L;
+
+	private static Logger LOGGER = LoggerFactory
+			.getLogger(SampleWithExternalPanel.class);
+
+	@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
+	ExternalPanel external;
+
+	public static void main(String[] args) {
+		SwingFactory.create(SampleWithExternalPanel.class).setVisible(true);
+	}
+
+	@UiInit
+	void init() {
+	}
+
+	void onExternal_customEvent(CustomEventArgs customEventObject) {
+		LOGGER.debug("customEvent {}", customEventObject.getMessage());
+		JOptionPane.showMessageDialog(this, "onExternal_customEvent: "
+				+ customEventObject.getMessage());
+	}
+}
+}}
