@@ -16,8 +16,10 @@
 package com.wpl.ui.factory.components.toolbar;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 
 import com.wpl.ui.factory.components.ComponentInfo;
+import com.wpl.ui.factory.components.combobox.ComboBoxInfo;
 
 /**
  * 
@@ -27,6 +29,7 @@ public class ToolbarItemInfo extends ComponentInfo {
 
 	String mText;
 	ToolbarItemType mType;
+	ComboBoxInfo mComboBox;
 
 	@XmlAttribute
 	public String getText() {
@@ -44,5 +47,14 @@ public class ToolbarItemInfo extends ComponentInfo {
 
 	public void setType(final ToolbarItemType type) {
 		mType = type;
+	}
+
+	@XmlElement
+	public ComboBoxInfo getComboBox() {
+		return mComboBox;
+	}
+
+	public void setComboBox(final ComboBoxInfo comboBox) {
+		mComboBox = comboBox;
 	}
 }

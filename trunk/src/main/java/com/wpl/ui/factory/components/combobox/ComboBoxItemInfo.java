@@ -26,7 +26,7 @@ public class ComboBoxItemInfo {
 		return mId;
 	}
 
-	public void setId(String id) {
+	public void setId(final String id) {
 		mId = id;
 	}
 
@@ -35,8 +35,12 @@ public class ComboBoxItemInfo {
 		return mText;
 	}
 
-	public void setText(String text) {
+	public void setText(final String text) {
 		mText = text;
 	}
 
+	@Override
+	public String toString() {
+		return getText();
+	}
 }

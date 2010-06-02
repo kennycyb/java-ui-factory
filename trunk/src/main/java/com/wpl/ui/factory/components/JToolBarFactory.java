@@ -19,6 +19,7 @@ import java.io.InputStream;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JToolBar;
 import javax.xml.bind.JAXB;
 
@@ -71,6 +72,12 @@ public class JToolBarFactory extends JComponentFactory {
 				final JCheckBox check = new JCheckBox(item.getText());
 				check.setActionCommand(item.getId());
 				component.add(check);
+				break;
+
+			case COMBOBOX:
+				final JComboBox combo = new JComboBox(item.getComboBox()
+						.getItem().toArray());
+				component.add(combo);
 				break;
 			}
 

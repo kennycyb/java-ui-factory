@@ -26,4 +26,6 @@ public enum ToolbarItemType {
 	BUTTON,
 
 	CHECKBOX,
+
+	COMBOBOX,
 }
