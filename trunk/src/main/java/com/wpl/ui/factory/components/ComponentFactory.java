@@ -21,6 +21,7 @@ import java.awt.Font;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelListener;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Constructor;
@@ -194,6 +195,13 @@ public abstract class ComponentFactory implements IComponentFactory {
 
 		if (mouseListenerProxy.hasListeningMethod()) {
 			component.addMouseListener(mouseListenerProxy.getProxy());
+		}
+
+		final MethodListenerProxy<MouseWheelListener> mouseWheelListenerProxy = new MethodListenerProxy<MouseWheelListener>(
+				MouseWheelListener.class, context.getActionListeners());
+
+		if (mouseWheelListenerProxy.hasListeningMethod()) {
+			component.addMouseWheelListener(mouseWheelListenerProxy.getProxy());
 		}
 
 		final MethodListenerProxy<KeyListener> keyListenerProxy = new MethodListenerProxy<KeyListener>(

@@ -16,6 +16,7 @@
 package com.wpl.ui.samples.listeners;
 
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 
 import javax.swing.JFrame;
 
@@ -40,45 +41,47 @@ public class MouseListenerSample extends JFrame {
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(MouseListenerSample.class);
 
-	void onMouseMotionListenerSample_mouseDragged(MouseEvent e) {
-		LOGGER.debug("onMouseMotionListenerSample_mouseDragged: {}", e
-				.getPoint());
+	void onMouseListenerSample_mouseDragged(final MouseEvent e) {
+		LOGGER.debug("onMouseListenerSample_mouseDragged: {}", e.getPoint());
 	}
 
-	void onMouseMotionListenerSample_mouseMoved(MouseEvent e) {
-		LOGGER
-				.debug("onMouseMotionListenerSample_mouseMoved: {}", e
-						.getPoint());
+	void onMouseListenerSample_mouseMoved(final MouseEvent e) {
+		LOGGER.debug("onMouseListenerSample_mouseMoved: {}", e.getPoint());
 
 	}
 
-	void onMouseMotionListenerSample_mouseClicked(MouseEvent e) {
+	void onMouseListenerSample_mouseClicked(final MouseEvent e) {
 		// Invoked when the mouse button has been clicked (pressed and released)
 		// on a component.
-		LOGGER.debug("onMouseMotionListenerSample_mouseClicked");
+		LOGGER.debug("onMouseListenerSample_mouseClicked");
 	}
 
-	void onMouseMotionListenerSample_mouseEntered(MouseEvent e) {
+	void onMouseListenerSample_mouseEntered(final MouseEvent e) {
 		// Invoked when the mouse enters a component.
-		LOGGER.debug("onMouseMotionListenerSample_mouseEntered");
+		LOGGER.debug("onMouseListenerSample_mouseEntered");
 	}
 
-	void onMouseMotionListenerSample_mouseExited(MouseEvent e) {
+	void onMouseListenerSample_mouseExited(final MouseEvent e) {
 		// Invoked when the mouse exits a component.
-		LOGGER.debug("onMouseMotionListenerSample_mouseExited");
+		LOGGER.debug("onMouseListenerSample_mouseExited");
 	}
 
-	void onMouseMotionListenerSample_mousePressed(MouseEvent e) {
+	void onMouseListenerSample_mousePressed(final MouseEvent e) {
 		// Invoked when a mouse button has been pressed on a component.
-		LOGGER.debug("onMouseMotionListenerSample_mousePressed");
+		LOGGER.debug("onMouseListenerSample_mousePressed");
 	}
 
-	void onMouseMotionListenerSample_mouseReleased(MouseEvent e) {
+	void onMouseListenerSample_mouseReleased(final MouseEvent e) {
 		// Invoked when a mouse button has been released on a component.
-		LOGGER.debug("onMouseMotionListenerSample_mouseReleased");
+		LOGGER.debug("onMouseListenerSample_mouseReleased");
 	}
 
-	public static void main(String[] args) {
+	void onMouseListenerSample_mouseWheelMoved(final MouseWheelEvent e) {
+		// Invoked when the mouse wheel is rotated.
+		LOGGER.debug("onMouseListenerSample_mouseWheelMoved");
+	}
+
+	public static void main(final String[] args) {
 		SwingFactory.create(MouseListenerSample.class).setVisible(true);
 	}
 }
