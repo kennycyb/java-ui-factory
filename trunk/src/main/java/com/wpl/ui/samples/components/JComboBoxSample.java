@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.samples.combo;
+package com.wpl.ui.samples.components;
 
 import java.awt.FlowLayout;
 import java.awt.event.ItemEvent;
-import java.awt.event.WindowEvent;
 
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -33,29 +32,24 @@ import com.wpl.ui.enums.FrameCloseOperation;
 import com.wpl.ui.enums.WindowPosition;
 import com.wpl.ui.factory.SwingFactory;
 
-@JFrameProperties(frameCloseOperation = FrameCloseOperation.EXIT, title = "SampleComboBox", windowPosition = WindowPosition.CENTER)
+@JFrameProperties(frameCloseOperation = FrameCloseOperation.EXIT, title = "JComboBoxSample", windowPosition = WindowPosition.CENTER)
 @UiLayout(FlowLayout.class)
-public class SampleComboBox extends JFrame {
+public class JComboBoxSample extends JFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	private static Logger LOGGER = LoggerFactory
-			.getLogger(SampleComboBox.class);
+			.getLogger(JComboBoxSample.class);
 
 	@UiSimpleItems( { "Male", "Female" })
 	JComboBox simpleComboBox;
 
-	@UiResource("SampleComboBox-ComplexComboBox.xml")
+	@UiResource("JComboBoxSample-ComplexComboBox.xml")
 	JComboBox complexComboBox;
 
-	void onSampleComboBox_windowClosing(WindowEvent e) {
-		LOGGER.debug("onSampleComboBox_windowClosing");
-		System.exit(0);
-	}
-
-	void onSimpleComboBox_itemStateChanged(ItemEvent e) {
+	void onSimpleComboBox_itemStateChanged(final ItemEvent e) {
 		LOGGER
 				.debug(
 						"onSimpleComboBox_itemStateChanged: {} ({})",
@@ -68,10 +62,10 @@ public class SampleComboBox extends JFrame {
 																: "UNKNOWN");
 	}
 
-	void onComplexComboBox_itemStateChanged(ItemEvent e) {
+	void onComplexComboBox_itemStateChanged(final ItemEvent e) {
 		LOGGER
 				.debug(
-						"onSimpleComboBox_itemStateChanged: {} ({})",
+						"onComplexComboBox_itemStateChanged: {} ({})",
 						e.getItem(),
 						e.getStateChange() == ItemEvent.DESELECTED ? "DESELECTED"
 								: e.getStateChange() == ItemEvent.ITEM_FIRST ? "ITEM_FIRST"
@@ -81,7 +75,7 @@ public class SampleComboBox extends JFrame {
 																: "UNKNOWN");
 	}
 
-	public static void main(String[] args) {
-		SwingFactory.create(SampleComboBox.class).setVisible(true);
+	public static void main(final String[] args) {
+		SwingFactory.create(JComboBoxSample.class).setVisible(true);
 	}
 }

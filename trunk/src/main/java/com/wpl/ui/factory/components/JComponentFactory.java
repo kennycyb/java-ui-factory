@@ -35,20 +35,25 @@ public abstract class JComponentFactory extends ComponentFactory {
 			.getLogger(JComponentFactory.class);
 
 	@UiAnnotationHandler(UiLayout.class)
-	protected void handleUiLayout(ComponentContext context,
-			JComponent component, UiLayout layout) {
+	protected void handleUiLayout(final ComponentContext context,
+			final JComponent component, final UiLayout layout) {
 
 		try {
 			component.setLayout(layout.value().newInstance());
 			LOGGER.debug("{}|JComponent.setLayout({})", context.getId(), layout
 					.value());
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			LOGGER.error("{}|Unable to create layout manager {}", context
 					.getId(), layout.value());
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			LOGGER.error("{}|Unable to create layout manager {}", context
 					.getId(), layout.value());
 		}
 	}
 
+	@Override
+	protected void wireComponent(final ComponentContext context) {
+		super.wireComponent(context);
+
+	}
 }

@@ -40,6 +40,7 @@ import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -73,6 +74,7 @@ import com.wpl.ui.factory.components.JDialogFactory;
 import com.wpl.ui.factory.components.JFormattedTextFieldFactory;
 import com.wpl.ui.factory.components.JFrameFactory;
 import com.wpl.ui.factory.components.JLabelFactory;
+import com.wpl.ui.factory.components.JListFactory;
 import com.wpl.ui.factory.components.JMenuBarFactory;
 import com.wpl.ui.factory.components.JMenuFactory;
 import com.wpl.ui.factory.components.JPanelFactory;
@@ -103,7 +105,7 @@ import com.wpl.ui.listeners.MethodListener;
 public class SwingFactory {
 	private static Logger LOGGER = LoggerFactory.getLogger(SwingFactory.class);
 
-	public static <T extends Component> T create(Class<T> componentClass) {
+	public static <T extends Component> T create(final Class<T> componentClass) {
 		return sInstance.createComponent(componentClass);
 	}
 
@@ -120,6 +122,7 @@ public class SwingFactory {
 		sDefaultFactory.put(JMenu.class, new JMenuFactory());
 		sDefaultFactory.put(JCheckBox.class, new JCheckBoxFactory());
 		sDefaultFactory.put(JRadioButton.class, new JRadioButtonFactory());
+		sDefaultFactory.put(JList.class, new JListFactory());
 
 		sDefaultFactory.put(JComboBox.class, new JComboBoxFactory());
 
@@ -166,13 +169,13 @@ public class SwingFactory {
 		mLayoutHandlerMap.putAll(sDefaultLayout);
 	}
 
-	private IComponentFactory findFactory(Class<?> type) {
+	private IComponentFactory findFactory(final Class<?> type) {
 
 		if (type == Object.class || type.isPrimitive() || type.isEnum()) {
 			return null;
 		}
 
-		IComponentFactory factory = this.mComponentFactory.get(type);
+		final IComponentFactory factory = mComponentFactory.get(type);
 
 		if (factory != null) {
 			return factory;
@@ -181,13 +184,13 @@ public class SwingFactory {
 		return findFactory(type.getSuperclass());
 	}
 
-	private ILayoutHandler findLayoutHandler(Class<?> type) {
+	private ILayoutHandler findLayoutHandler(final Class<?> type) {
 		if (type == null || type == Object.class || type.isPrimitive()
 				|| type.isEnum()) {
 			return findLayoutHandler(NullLayout.class);
 		}
 
-		ILayoutHandler handler = this.mLayoutHandlerMap.get(type);
+		final ILayoutHandler handler = mLayoutHandlerMap.get(type);
 
 		if (handler != null) {
 			return handler;
@@ -198,11 +201,12 @@ public class SwingFactory {
 
 	private void create(final ComponentContext componentContext) {
 
-		IComponentFactory factory = findFactory(componentContext.getType());
+		final IComponentFactory factory = findFactory(componentContext
+				.getType());
 
 		try {
 			factory.createInstance(componentContext);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return;
@@ -245,7 +249,7 @@ public class SwingFactory {
 					componentContext.getId(), componentContext.getType());
 		}
 
-		ILayoutHandler layoutHandler = findLayoutHandler(layout == null ? NullLayout.class
+		final ILayoutHandler layoutHandler = findLayoutHandler(layout == null ? NullLayout.class
 				: layout.value());
 
 		LOGGER.debug("{}|using layoutHandler {}", componentContext.getId(),
@@ -288,7 +292,7 @@ public class SwingFactory {
 
 		LOGGER.debug("{}|start planning", componentContext.getId());
 
-		Field[] fields = componentContext.getType().getDeclaredFields();
+		final Field[] fields = componentContext.getType().getDeclaredFields();
 
 		for (final Field f : fields) {
 
@@ -307,7 +311,7 @@ public class SwingFactory {
 						try {
 
 							f.setAccessible(true);
-							EventHandler<?> handler = (EventHandler<?>) f
+							final EventHandler<?> handler = (EventHandler<?>) f
 									.get(componentContext.getComponent());
 
 							final MethodListener ml = componentContext
@@ -321,10 +325,10 @@ public class SwingFactory {
 									new Object[] { componentContext.getId(),
 											f.getName() });
 
-						} catch (IllegalArgumentException e) {
+						} catch (final IllegalArgumentException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						} catch (IllegalAccessException e) {
+						} catch (final IllegalAccessException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
@@ -345,13 +349,14 @@ public class SwingFactory {
 				continue;
 			}
 
-			UiType uiType = f.getAnnotation(UiType.class);
+			final UiType uiType = f.getAnnotation(UiType.class);
 
-			Class<?> childType = uiType == null ? f.getType() : uiType.value();
+			final Class<?> childType = uiType == null ? f.getType() : uiType
+					.value();
 
-			UiName childName = f.getAnnotation(UiName.class);
+			final UiName childName = f.getAnnotation(UiName.class);
 
-			String childId = childName == null ? f.getName() : childName
+			final String childId = childName == null ? f.getName() : childName
 					.value();
 
 			if (LOGGER.isDebugEnabled()) {
@@ -371,8 +376,8 @@ public class SwingFactory {
 			childContext.setDeclared(true);
 			childContext.setType(childType);
 
-			UiComponentOf c = childContext.getAnnotatedElement().getAnnotation(
-					UiComponentOf.class);
+			final UiComponentOf c = childContext.getAnnotatedElement()
+					.getAnnotation(UiComponentOf.class);
 
 			if (c != null) {
 
@@ -385,11 +390,11 @@ public class SwingFactory {
 					componentContext.addInit(new Runnable() {
 						@Override
 						public void run() {
-							ComponentContext ownerChild = owner
+							final ComponentContext ownerChild = owner
 									.findChildContext(childContext.getId());
 							if (ownerChild != null) {
 
-								Field f = (Field) childContext
+								final Field f = (Field) childContext
 										.getAnnotatedElement();
 
 								f.setAccessible(true);
@@ -397,10 +402,10 @@ public class SwingFactory {
 								try {
 									f.set(componentContext.getComponent(),
 											ownerChild.getComponent());
-								} catch (IllegalArgumentException e) {
+								} catch (final IllegalArgumentException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
-								} catch (IllegalAccessException e) {
+								} catch (final IllegalAccessException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
@@ -418,7 +423,7 @@ public class SwingFactory {
 						try {
 							f.set(componentContext.getComponent(), childContext
 									.getComponent());
-						} catch (Throwable t) {
+						} catch (final Throwable t) {
 
 						}
 					}
@@ -427,7 +432,7 @@ public class SwingFactory {
 
 			componentContext.addChild(childContext);
 
-			UiAddComponentTo addTo = childContext.getAnnotatedElement()
+			final UiAddComponentTo addTo = childContext.getAnnotatedElement()
 					.getAnnotation(UiAddComponentTo.class);
 
 			if (addTo != null) {
@@ -448,11 +453,13 @@ public class SwingFactory {
 			}
 		}
 
-		for (ComponentContext childContext : componentContext.getChildren()) {
+		for (final ComponentContext childContext : componentContext
+				.getChildren()) {
 			plan(childContext);
 		}
 
-		Method[] methods = componentContext.getType().getDeclaredMethods();
+		final Method[] methods = componentContext.getType()
+				.getDeclaredMethods();
 
 		for (final Method m : methods) {
 			if (m.getAnnotation(UiInit.class) != null) {
@@ -462,7 +469,7 @@ public class SwingFactory {
 						try {
 							m.setAccessible(true);
 							m.invoke(componentContext.getComponent());
-						} catch (Throwable t) {
+						} catch (final Throwable t) {
 							LOGGER.error("{}|user init method failed {}",
 									componentContext.getId(), t);
 						}
@@ -479,7 +486,7 @@ public class SwingFactory {
 					public void run() {
 						try {
 							m.invoke(componentContext.getComponent());
-						} catch (Throwable t) {
+						} catch (final Throwable t) {
 							LOGGER.error("{}|user preinit method failed {}",
 									componentContext.getId(), t);
 						}
@@ -489,10 +496,10 @@ public class SwingFactory {
 				continue;
 			}
 
-			String methodName = m.getName();
+			final String methodName = m.getName();
 
 			if (methodName.startsWith("on")) {
-				int action = methodName.indexOf('_');
+				final int action = methodName.indexOf('_');
 				if (action > 0) {
 					final String componentName = methodName.substring(2, 3)
 							.toLowerCase()
@@ -502,7 +509,7 @@ public class SwingFactory {
 					componentContext.addPreInit(new Runnable() {
 						@Override
 						public void run() {
-							ComponentContext childContext = componentContext
+							final ComponentContext childContext = componentContext
 									.findChildContext(componentName);
 
 							if (childContext == null) {
@@ -544,20 +551,20 @@ public class SwingFactory {
 		LOGGER.debug("{}|planing completed", componentContext.getId());
 	}
 
-	private void postInit(ComponentContext context) {
-		for (ComponentContext child : context.getChildren()) {
+	private void postInit(final ComponentContext context) {
+		for (final ComponentContext child : context.getChildren()) {
 			child.postInit();
 		}
 
 		context.postInit();
 	}
 
-	public <T extends Component> T createComponent(Class<T> componentClass) {
+	public <T extends Component> T createComponent(final Class<T> componentClass) {
 
-		long startTime = System.currentTimeMillis();
+		final long startTime = System.currentTimeMillis();
 
-		ComponentContext mainContext = new ComponentContext();
-		UiName name = componentClass.getAnnotation(UiName.class);
+		final ComponentContext mainContext = new ComponentContext();
+		final UiName name = componentClass.getAnnotation(UiName.class);
 
 		mainContext.setId(name == null ? componentClass.getSimpleName()
 				.substring(0, 1).toLowerCase()
