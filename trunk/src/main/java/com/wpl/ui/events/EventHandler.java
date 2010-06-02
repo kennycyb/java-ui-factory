@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @since 1.0
  */
-public class EventHandler<E> {
+public class EventHandler<E> implements IEventHandler<E> {
 
 	private static Logger LOGGER = LoggerFactory.getLogger(EventHandler.class);
 
@@ -36,6 +36,13 @@ public class EventHandler<E> {
 			return;
 		}
 		mListeners.add(listener);
+	}
+
+	public void removeListener(IEventListener<E> listener) {
+		if (listener == null) {
+			return;
+		}
+		mListeners.remove(listener);
 	}
 
 	public void invoke(E args) {

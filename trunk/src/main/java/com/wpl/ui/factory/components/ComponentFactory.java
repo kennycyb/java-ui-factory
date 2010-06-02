@@ -18,6 +18,8 @@ package com.wpl.ui.factory.components;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Constructor;
@@ -43,6 +45,7 @@ import com.wpl.ui.enums.ScrollBarPolicy;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.IComponentFactory;
 import com.wpl.ui.factory.UiAnnotationHandler;
+import com.wpl.ui.listeners.MethodListenerProxy;
 
 public abstract class ComponentFactory implements IComponentFactory {
 
@@ -175,6 +178,22 @@ public abstract class ComponentFactory implements IComponentFactory {
 		LOGGER.debug("{}|listeners={}", context.getId(), context
 				.getActionListeners().size());
 
+		Component component = context.getComponent();
+
+		MethodListenerProxy<MouseMotionListener> mouseMotionListenerProxy = new MethodListenerProxy<MouseMotionListener>(
+				MouseMotionListener.class, context.getActionListeners());
+
+		if (mouseMotionListenerProxy.hasListeningMethod()) {
+			component.addMouseMotionListener(mouseMotionListenerProxy
+					.getProxy());
+		}
+
+		MethodListenerProxy<MouseListener> mouseListenerProxy = new MethodListenerProxy<MouseListener>(
+				MouseListener.class, context.getActionListeners());
+
+		if (mouseListenerProxy.hasListeningMethod()) {
+			component.addMouseListener(mouseListenerProxy.getProxy());
+		}
 	}
 
 	// ~ UiAnnotationHandlers --------------------------------------------------

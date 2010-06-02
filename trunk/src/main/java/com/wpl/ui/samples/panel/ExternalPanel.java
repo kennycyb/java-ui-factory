@@ -16,6 +16,7 @@
 package com.wpl.ui.samples.panel;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
@@ -50,16 +51,30 @@ public class ExternalPanel extends JPanel {
 	@UiScrollable
 	JTextArea content;
 
+	@UiLayout(FlowLayout.class)
+	class CommandPanel extends JPanel {
+
+		@UiText("click me!")
+		JButton button;
+
+		@UiText("Exit")
+		JButton exit;
+	}
+
 	@UiBorderLayoutConstraint(BorderLayoutConstraint.SOUTH)
-	@UiText("click me!")
-	JButton button;
+	CommandPanel commandPanel;
 
 	final EventHandler<CustomEventArgs> customEvent = new EventHandler<CustomEventArgs>();
+	final EventHandler<CustomEventArgs> exitEvent = new EventHandler<CustomEventArgs>();
 
 	void onButton_actionPerformed(ActionEvent e) {
 		JOptionPane.showMessageDialog(this, "click me! Clicked");
 		content.append("click me! Clicked\n");
 
 		customEvent.invoke(new CustomEventArgs(this, "Click Me"));
+	}
+
+	void onExit_actionPerformed(ActionEvent e) {
+		exitEvent.invoke(new CustomEventArgs(this, "Exit"));
 	}
 }

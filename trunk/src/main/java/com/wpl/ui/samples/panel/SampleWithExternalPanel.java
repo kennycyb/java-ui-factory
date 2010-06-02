@@ -64,4 +64,11 @@ public class SampleWithExternalPanel extends JFrame {
 		JOptionPane.showMessageDialog(this, "onExternal_customEvent: "
 				+ customEventObject.getMessage());
 	}
+
+	void onExternal_exitEvent(CustomEventArgs customEventObject) {
+		JOptionPane.showMessageDialog(this, "onExternal_exitEvent: "
+				+ customEventObject.getMessage());
+		this.setVisible(false);
+		this.dispose();
+	}
 }
