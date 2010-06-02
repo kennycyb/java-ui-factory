@@ -49,6 +49,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JToolBar;
 import javax.swing.RootPaneContainer;
 import javax.swing.SpringLayout;
 
@@ -83,6 +84,7 @@ import com.wpl.ui.factory.components.JRadioButtonFactory;
 import com.wpl.ui.factory.components.JTabbedPaneFactory;
 import com.wpl.ui.factory.components.JTextAreaFactory;
 import com.wpl.ui.factory.components.JTextFieldFactory;
+import com.wpl.ui.factory.components.JToolBarFactory;
 import com.wpl.ui.factory.components.TextAreaFactory;
 import com.wpl.ui.factory.components.TextComponentFactory;
 import com.wpl.ui.factory.components.TextFieldFactory;
@@ -123,6 +125,7 @@ public class SwingFactory {
 		sDefaultFactory.put(JCheckBox.class, new JCheckBoxFactory());
 		sDefaultFactory.put(JRadioButton.class, new JRadioButtonFactory());
 		sDefaultFactory.put(JList.class, new JListFactory());
+		sDefaultFactory.put(JToolBar.class, new JToolBarFactory());
 
 		sDefaultFactory.put(JComboBox.class, new JComboBoxFactory());
 

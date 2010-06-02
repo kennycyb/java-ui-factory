@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<toolbar id="toolbar">
+	<item id="button1" type="BUTTON" text="button1"/>
+	<item id="button2" type="BUTTON" text="button2"/>
+	<item id="button3" type="BUTTON" text="button3"/>
+	<item type="SEPARATOR"/>
+	<item id="button4" type="BUTTON" text="button4"/>
+	<item id="button5" type="BUTTON" text="button5"/>
+	<item type="SEPARATOR"/>
+	<item id="checkbox1" type="CHECKBOX" text="checkbox1"/>
+</toolbar>
