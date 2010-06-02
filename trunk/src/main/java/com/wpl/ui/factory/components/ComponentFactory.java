@@ -18,6 +18,7 @@ package com.wpl.ui.factory.components;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -209,6 +210,13 @@ public abstract class ComponentFactory implements IComponentFactory {
 
 		if (keyListenerProxy.hasListeningMethod()) {
 			component.addKeyListener(keyListenerProxy.getProxy());
+		}
+
+		final MethodListenerProxy<FocusListener> focusListenerProxy = new MethodListenerProxy<FocusListener>(
+				FocusListener.class, context.getActionListeners());
+
+		if (focusListenerProxy.hasListeningMethod()) {
+			component.addFocusListener(focusListenerProxy.getProxy());
 		}
 	}
 
