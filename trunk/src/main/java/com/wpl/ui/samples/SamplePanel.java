@@ -55,66 +55,66 @@ public class SamplePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	@UiText("JTextArea")
-	private JLabel mLabel1;
+	JLabel mLabel1;
 
 	@UiText("JTextArea")
 	@UiColumns(20)
 	@UiRows(5)
-	private JTextArea mTextArea;
+	JTextArea mTextArea;
 
 	@UiText("JCheckBox")
-	private JLabel mLable2;
+	JLabel mLable2;
 
 	@UiText("JCheckBox")
 	@UiEnabled(false)
-	private JCheckBox mCheckBox;
+	JCheckBox mCheckBox;
 
 	@UiText("JCheckBox with Icon")
-	private JLabel mLable3;
+	JLabel mLable3;
 
 	@UiText("JCheckBox with Icon")
 	@UiIcon("iMac.icon")
-	private JCheckBox mCheckBoxWithIcon;
+	JCheckBox mCheckBoxWithIcon;
 
 	@UiText("JTextField")
-	private JLabel mLable4;
+	JLabel mLable4;
 
 	@UiText("JTextField")
-	private JTextField mTextField;
+	JTextField mTextField;
 
 	@UiText("JFormattedTextField")
-	private JLabel mLable5;
+	JLabel mLable5;
 
 	@UiType(JFormattedTextField.class)
 	@UiTextFormat(formatter = DateFormat.class, pattern = "dd MMM yyyy")
 	@UiText("10 MAY 2010")
-	private JTextField mFormattedDateField;
+	JTextField mFormattedDateField;
 
 	@UiText("JPasswordField")
-	private JLabel mlabel9;
+	JLabel mlabel9;
 
 	@UiType(JPasswordField.class)
 	@UiEchoChar('?')
-	private JTextField mPasswordField;
+	JTextField mPasswordField;
 
 	@UiText("JLable with Icon")
-	private JLabel mLable6;
+	JLabel mLable6;
 
 	@UiIcon("iMac.icon")
 	@UiText("JLabel with Icon")
-	private JLabel mLabelWithIcon;
+	JLabel mLabelWithIcon;
 
 	@UiText("JComboBox")
-	private JLabel mLable7;
-	private JComboBox mComboBox;
+	JLabel mLable7;
+	JComboBox mComboBox;
 
 	@UiText("JRadioButton")
-	private JLabel mLabel8;
-	private JRadioButton mRadioButton;
+	JLabel mLabel8;
+	JRadioButton mRadioButton;
 
-	public static void main(String[] args) {
-		SamplePanel panel = SwingFactory.create(SamplePanel.class);
-		JFrame frame = new JFrame();
+	public static void main(final String[] args) {
+		final SamplePanel panel = SwingFactory.create(SamplePanel.class);
+		final JFrame frame = new JFrame();
 		frame.setTitle("Sample Panel");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());

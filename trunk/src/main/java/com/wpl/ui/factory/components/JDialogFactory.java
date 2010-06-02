@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
  * @since 1.0
  */
 public class JDialogFactory extends DialogFactory {
+	@SuppressWarnings("unused")
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(JDialogFactory.class);
 

@@ -13,21 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.factory.components;
+package com.wpl.ui.annotations.components;
 
-import javax.swing.JCheckBox;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+/**
+ * 
+ * @since 1.0
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target( { ElementType.FIELD })
+public @interface JTextAreaProperties {
 
-public class JCheckBoxFactory extends JToggleButtonFactory {
+	String text() default "";
 
-	@SuppressWarnings("unused")
-	private static Logger LOGGER = LoggerFactory
-			.getLogger(JCheckBoxFactory.class);
+	int columns() default -1;
 
-	@Override
-	protected Class<?> defaultType() {
-		return JCheckBox.class;
-	}
+	int rows() default -1;
 }

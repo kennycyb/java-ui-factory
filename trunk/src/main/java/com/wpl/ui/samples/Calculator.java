@@ -23,10 +23,15 @@ import org.slf4j.LoggerFactory;
 import com.wpl.ui.annotations.UiInit;
 
 public class Calculator extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7884990106070193622L;
+	@SuppressWarnings("unused")
 	private static Logger LOGGER = LoggerFactory.getLogger(Calculator.class);
 
 	@UiInit
-	private void init() {
+	void init() {
 
 	}
 }
