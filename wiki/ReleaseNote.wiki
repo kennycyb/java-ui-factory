@@ -8,3 +8,7 @@ Components:
 
 Layouts:
 * [BorderLayout], [SpringLayout], [FlowLayout], [VerticalFlowLayout], [GridLayout] is supported.
+
+Event/Listeners:
+* [KeyListener], [MouseListener], [MouseMotionListener], [MouseWheelListener]
+* [ActionListener], [ItemListener]
