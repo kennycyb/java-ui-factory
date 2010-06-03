@@ -16,7 +16,10 @@
 package com.wpl.ui.factory.components;
 
 import java.io.InputStream;
+import java.net.URL;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -63,6 +66,14 @@ public class JToolBarFactory extends JComponentFactory {
 
 			case BUTTON:
 				final JButton button = new JButton();
+				if (item.getIcon() != null) {
+					final URL iconUrl = getClass().getClassLoader()
+							.getResource(item.getIcon());
+
+					final Icon image = new ImageIcon(iconUrl);
+
+					button.setIcon(image);
+				}
 				button.setText(item.getText());
 				button.setActionCommand(item.getId());
 				component.add(button);

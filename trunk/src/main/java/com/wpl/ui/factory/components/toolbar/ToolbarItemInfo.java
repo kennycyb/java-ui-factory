@@ -30,6 +30,16 @@ public class ToolbarItemInfo extends ComponentInfo {
 	String mText;
 	ToolbarItemType mType;
 	ComboBoxInfo mComboBox;
+	String mIcon;
+
+	@XmlAttribute
+	public String getIcon() {
+		return mIcon;
+	}
+
+	public void setIcon(final String icon) {
+		mIcon = icon;
+	}
 
 	@XmlAttribute
 	public String getText() {
