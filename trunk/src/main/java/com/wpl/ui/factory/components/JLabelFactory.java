@@ -33,11 +33,6 @@ public class JLabelFactory extends JComponentFactory {
 
 	private static Logger LOGGER = LoggerFactory.getLogger(JLabelFactory.class);
 
-	@Override
-	protected Class<?> defaultType() {
-		return JLabel.class;
-	}
-
 	@UiAnnotationHandler(UiText.class)
 	protected void handleUiText(ComponentContext context, JLabel component,
 			UiText annotate) {

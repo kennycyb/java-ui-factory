@@ -15,8 +15,6 @@
  */
 package com.wpl.ui.factory.components;
 
-import javax.swing.JRadioButton;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,8 +22,4 @@ public class JRadioButtonFactory extends JToggleButtonFactory {
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(JRadioButtonFactory.class);
 
-	@Override
-	protected Class<?> defaultType() {
-		return JRadioButton.class;
-	}
 }

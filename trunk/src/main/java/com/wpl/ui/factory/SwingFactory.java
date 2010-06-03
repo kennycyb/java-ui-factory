@@ -36,6 +36,7 @@ import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
@@ -46,6 +47,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -66,12 +68,14 @@ import com.wpl.ui.annotations.UiType;
 import com.wpl.ui.annotations.frame.UiFrameMenu;
 import com.wpl.ui.events.EventHandler;
 import com.wpl.ui.events.IEventHandler;
+import com.wpl.ui.factory.components.ComponentFactory;
 import com.wpl.ui.factory.components.DialogFactory;
 import com.wpl.ui.factory.components.FileDialogFactory;
 import com.wpl.ui.factory.components.FrameFactory;
 import com.wpl.ui.factory.components.JButtonFactory;
 import com.wpl.ui.factory.components.JCheckBoxFactory;
 import com.wpl.ui.factory.components.JComboBoxFactory;
+import com.wpl.ui.factory.components.JComponentFactory;
 import com.wpl.ui.factory.components.JDialogFactory;
 import com.wpl.ui.factory.components.JFormattedTextFieldFactory;
 import com.wpl.ui.factory.components.JFrameFactory;
@@ -82,6 +86,7 @@ import com.wpl.ui.factory.components.JMenuFactory;
 import com.wpl.ui.factory.components.JPanelFactory;
 import com.wpl.ui.factory.components.JPasswordFieldFactory;
 import com.wpl.ui.factory.components.JRadioButtonFactory;
+import com.wpl.ui.factory.components.JSliderFactory;
 import com.wpl.ui.factory.components.JTabbedPaneFactory;
 import com.wpl.ui.factory.components.JTextAreaFactory;
 import com.wpl.ui.factory.components.JTextFieldFactory;
@@ -116,6 +121,12 @@ public class SwingFactory {
 	private static Map<Class<?>, ILayoutHandler> sDefaultLayout = new HashMap<Class<?>, ILayoutHandler>();
 
 	static {
+
+		sDefaultFactory.put(Component.class, new ComponentFactory());
+
+		sDefaultFactory.put(JComponent.class, new JComponentFactory());
+		sDefaultFactory.put(JSlider.class, new JSliderFactory());
+
 		sDefaultFactory.put(JLabel.class, new JLabelFactory());
 		sDefaultFactory.put(JButton.class, new JButtonFactory());
 		sDefaultFactory.put(JPanel.class, new JPanelFactory());

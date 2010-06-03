@@ -38,11 +38,6 @@ public class JComboBoxFactory extends JComponentFactory {
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(JComboBoxFactory.class);
 
-	@Override
-	protected Class<?> defaultType() {
-		return JComboBox.class;
-	}
-
 	@UiAnnotationHandler(UiSimpleItems.class)
 	protected void handleUiSimpleItems(ComponentContext context,
 			JComboBox component, UiSimpleItems annotate) {

@@ -23,11 +23,6 @@ import com.wpl.ui.factory.UiAnnotationHandler;
 
 public class JButtonFactory extends AbstractButtonFactory {
 
-	@Override
-	protected Class<?> defaultType() {
-		return JButton.class;
-	}
-
 	@UiAnnotationHandler(UiDefaultButton.class)
 	public void handleUiDefaultButton(ComponentContext context,
 			JButton component, UiDefaultButton annotate) {

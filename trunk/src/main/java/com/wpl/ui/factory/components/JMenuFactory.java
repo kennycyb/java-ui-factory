@@ -29,11 +29,6 @@ import com.wpl.ui.factory.UiAnnotationHandler;
 public class JMenuFactory extends JComponentFactory {
 	private static Logger LOGGER = LoggerFactory.getLogger(JMenuFactory.class);
 
-	@Override
-	protected Class<?> defaultType() {
-		return JMenu.class;
-	}
-
 	@UiAnnotationHandler(UiText.class)
 	protected void handleUiText(ComponentContext context, JMenu component,
 			UiText annotate) {

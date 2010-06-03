@@ -28,32 +28,6 @@ import com.wpl.ui.factory.UiAnnotationHandler;
 public class FrameFactory extends WindowFactory {
 	private static Logger LOGGER = LoggerFactory.getLogger(FrameFactory.class);
 
-	@Override
-	protected Class<?> defaultType() {
-		return Frame.class;
-	}
-
-	// @Override
-	// protected void init(FactoryContext factory, final ComponentContext
-	// context) {
-	//
-	// context.addPostInit(new Runnable() {
-	// @Override
-	// public void run() {
-	// Frame f = (Frame) context.getComponent();
-	// if (f == null) {
-	// return;
-	// }
-	//
-	// if (context.getAnnotatedElement().getAnnotation(UiSize.class) == null) {
-	// f.pack();
-	// }
-	// }
-	// });
-	//
-	// super.init(factory, context);
-	// }
-
 	protected void title(ComponentContext context, Frame frame, String title) {
 		frame.setTitle(title);
 

@@ -50,7 +50,7 @@ import com.wpl.ui.factory.IComponentFactory;
 import com.wpl.ui.factory.UiAnnotationHandler;
 import com.wpl.ui.listeners.MethodListenerProxy;
 
-public abstract class ComponentFactory implements IComponentFactory {
+public class ComponentFactory implements IComponentFactory {
 
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(ComponentFactory.class);
@@ -81,8 +81,6 @@ public abstract class ComponentFactory implements IComponentFactory {
 			}
 		}
 	}
-
-	abstract protected Class<?> defaultType();
 
 	public void createInstance(final ComponentContext context) throws Exception {
 

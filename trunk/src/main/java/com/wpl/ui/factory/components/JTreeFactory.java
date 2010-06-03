@@ -15,17 +15,11 @@
  */
 package com.wpl.ui.factory.components;
 
-import javax.swing.JTree;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class JTreeFactory extends JComponentFactory {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(JTreeFactory.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(JTreeFactory.class);
 
-    @Override
-    protected Class<?> defaultType() {
-        return JTree.class;
-    }
 }

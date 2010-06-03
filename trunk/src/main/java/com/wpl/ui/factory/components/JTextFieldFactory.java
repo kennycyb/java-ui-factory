@@ -37,11 +37,6 @@ public class JTextFieldFactory extends JTextComponentFactory {
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(JTextFieldFactory.class);
 
-	@Override
-	protected Class<?> defaultType() {
-		return JTextField.class;
-	}
-
 	@UiAnnotationHandler(UiColumns.class)
 	void handleAnnotation(ComponentContext context, JTextField component,
 			UiColumns annotate) {

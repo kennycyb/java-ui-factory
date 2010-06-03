@@ -31,11 +31,6 @@ public class JPanelFactory extends JComponentFactory {
 
 	private static Logger LOGGER = LoggerFactory.getLogger(JPanelFactory.class);
 
-	@Override
-	protected Class<?> defaultType() {
-		return JPanel.class;
-	}
-
 	@UiAnnotationHandler(UiGridLayoutConstraint.class)
 	protected void handleUiGridLayoutConstraint(ComponentContext context,
 			JPanel component, UiGridLayoutConstraint annotate) {

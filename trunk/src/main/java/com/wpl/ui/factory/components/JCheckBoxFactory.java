@@ -15,8 +15,6 @@
  */
 package com.wpl.ui.factory.components;
 
-import javax.swing.JCheckBox;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,8 +24,4 @@ public class JCheckBoxFactory extends JToggleButtonFactory {
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(JCheckBoxFactory.class);
 
-	@Override
-	protected Class<?> defaultType() {
-		return JCheckBox.class;
-	}
 }

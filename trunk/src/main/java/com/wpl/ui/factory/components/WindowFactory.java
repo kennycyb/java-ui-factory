@@ -34,11 +34,6 @@ public class WindowFactory extends ContainerFactory {
 	private static Logger LOGGER = LoggerFactory.getLogger(WindowFactory.class);
 
 	@Override
-	protected Class<?> defaultType() {
-		return Window.class;
-	}
-
-	@Override
 	public void initialize(ComponentContext context) {
 		super.initialize(context);
 

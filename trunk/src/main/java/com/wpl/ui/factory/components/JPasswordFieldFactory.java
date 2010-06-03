@@ -28,11 +28,6 @@ public class JPasswordFieldFactory extends JTextFieldFactory {
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(JPasswordFieldFactory.class);
 
-	@Override
-	protected Class<?> defaultType() {
-		return JPasswordField.class;
-	}
-
 	@UiAnnotationHandler(UiEchoChar.class)
 	protected void handleUiEchoChar(ComponentContext componentContext,
 			JPasswordField component, UiEchoChar annotate) {

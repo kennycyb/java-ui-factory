@@ -51,11 +51,6 @@ public class JMenuBarFactory extends JComponentFactory {
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(JMenuBarFactory.class);
 
-	@Override
-	protected Class<?> defaultType() {
-		return JMenuBar.class;
-	}
-
 	@UiAnnotationHandler(UiFrameMenu.class)
 	protected void handleUiFrameMenu(final ComponentContext context,
 			final JMenuBar component, UiFrameMenu annotate) {

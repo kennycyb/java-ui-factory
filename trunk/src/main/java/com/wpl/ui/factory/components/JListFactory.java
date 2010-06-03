@@ -31,11 +31,6 @@ import com.wpl.ui.factory.UiAnnotationHandler;
 public class JListFactory extends JComponentFactory {
 	private static Logger LOGGER = LoggerFactory.getLogger(JListFactory.class);
 
-	@Override
-	protected Class<?> defaultType() {
-		return JList.class;
-	}
-
 	@UiAnnotationHandler(UiSimpleItems.class)
 	void handleUiSimpleItems(final ComponentContext context,
 			final JList component, final UiSimpleItems annotate) {

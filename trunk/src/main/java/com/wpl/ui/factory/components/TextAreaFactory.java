@@ -15,8 +15,6 @@
  */
 package com.wpl.ui.factory.components;
 
-import java.awt.TextArea;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,8 +26,4 @@ public class TextAreaFactory extends TextComponentFactory {
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(TextAreaFactory.class);
 
-	@Override
-	protected Class<?> defaultType() {
-		return TextArea.class;
-	}
 }

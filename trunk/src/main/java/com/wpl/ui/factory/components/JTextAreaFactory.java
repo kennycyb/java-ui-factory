@@ -39,11 +39,6 @@ public class JTextAreaFactory extends JTextComponentFactory {
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(JTextAreaFactory.class);
 
-	@Override
-	protected Class<?> defaultType() {
-		return JTextArea.class;
-	}
-
 	@UiAnnotationHandler(JTextAreaProperties.class)
 	protected void handleJTextAreaProperties(final ComponentContext context,
 			final JTextArea component, final JTextAreaProperties annotate) {

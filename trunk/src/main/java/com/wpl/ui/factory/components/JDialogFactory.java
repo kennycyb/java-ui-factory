@@ -15,8 +15,6 @@
  */
 package com.wpl.ui.factory.components;
 
-import javax.swing.JDialog;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +27,4 @@ public class JDialogFactory extends DialogFactory {
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(JDialogFactory.class);
 
-	@Override
-	protected Class<?> defaultType() {
-		return JDialog.class;
-	}
 }

@@ -34,11 +34,6 @@ public class JFrameFactory extends FrameFactory {
 
 	private static Logger LOGGER = LoggerFactory.getLogger(JFrameFactory.class);
 
-	@Override
-	protected Class<?> defaultType() {
-		return JFrame.class;
-	}
-
 	protected void frameCloseOperation(ComponentContext context,
 			JFrame component, FrameCloseOperation value) {
 		component.setDefaultCloseOperation(value.getSwingConstant());

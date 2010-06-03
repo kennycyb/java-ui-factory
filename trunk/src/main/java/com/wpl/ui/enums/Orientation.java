@@ -13,17 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.factory.components;
+package com.wpl.ui.enums;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.swing.SwingConstants;
 
 /**
  * 
  * @since 1.0
  */
-public class TextFieldFactory extends TextComponentFactory {
-	private static Logger LOGGER = LoggerFactory
-			.getLogger(TextFieldFactory.class);
+public enum Orientation {
 
+	VERTICAL(SwingConstants.VERTICAL),
+
+	HORIZONTAL(SwingConstants.HORIZONTAL),
+
+	;
+
+	private final int mSwingConstant;
+
+	private Orientation(int swingConstant) {
+		mSwingConstant = swingConstant;
+	}
+
+	public int getSwingConstant() {
+		return mSwingConstant;
+	}
 }

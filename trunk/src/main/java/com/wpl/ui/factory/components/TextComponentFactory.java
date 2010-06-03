@@ -32,11 +32,6 @@ public class TextComponentFactory extends ComponentFactory {
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(TextComponentFactory.class);
 
-	@Override
-	protected Class<?> defaultType() {
-		return TextComponent.class;
-	}
-
 	@UiAnnotationHandler(UiText.class)
 	void handleUiText(ComponentContext context, TextComponent component,
 			UiText annotate) {

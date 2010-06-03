@@ -33,11 +33,6 @@ public class JFormattedTextFieldFactory extends JTextFieldFactory {
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(JFormattedTextFieldFactory.class);
 
-	@Override
-	protected Class<?> defaultType() {
-		return JFormattedTextField.class;
-	}
-
 	@UiAnnotationHandler(UiTextFormat.class)
 	protected void handleUiTextFormat(ComponentContext context,
 			JFormattedTextField component, UiTextFormat annotate) {

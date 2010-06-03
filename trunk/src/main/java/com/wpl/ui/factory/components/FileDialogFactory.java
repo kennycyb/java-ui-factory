@@ -15,8 +15,6 @@
  */
 package com.wpl.ui.factory.components;
 
-import java.awt.FileDialog;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,8 +26,4 @@ public class FileDialogFactory extends DialogFactory {
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(FileDialogFactory.class);
 
-	@Override
-	protected Class<?> defaultType() {
-		return FileDialog.class;
-	}
 }

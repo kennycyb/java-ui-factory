@@ -29,7 +29,7 @@ import com.wpl.ui.factory.UiAnnotationHandler;
  * @author kenny
  * 
  */
-public abstract class JComponentFactory extends ComponentFactory {
+public class JComponentFactory extends ComponentFactory {
 
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(JComponentFactory.class);

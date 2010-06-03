@@ -44,11 +44,6 @@ public class JToolBarFactory extends JComponentFactory {
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(JToolBarFactory.class);
 
-	@Override
-	protected Class<?> defaultType() {
-		return JToolBarFactory.class;
-	}
-
 	@UiAnnotationHandler(UiResource.class)
 	void handleUiResource(final ComponentContext context,
 			final JToolBar component, final UiResource annotate) {

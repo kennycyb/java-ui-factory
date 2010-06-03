@@ -31,11 +31,6 @@ public class JTabbedPaneFactory extends JComponentFactory {
 			.getLogger(JTabbedPaneFactory.class);
 
 	@Override
-	protected Class<?> defaultType() {
-		return JTabbedPane.class;
-	}
-
-	@Override
 	public void initialize(final ComponentContext context) {
 		super.initialize(context);
 

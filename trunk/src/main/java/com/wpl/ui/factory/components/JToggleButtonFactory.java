@@ -15,17 +15,12 @@
  */
 package com.wpl.ui.factory.components;
 
-import javax.swing.JToggleButton;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class JToggleButtonFactory extends AbstractButtonFactory {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(JToggleButtonFactory.class);
+	private static Logger LOGGER = LoggerFactory
+			.getLogger(JToggleButtonFactory.class);
 
-    @Override
-    protected Class<?> defaultType() {
-        return JToggleButton.class;
-    }
 }
