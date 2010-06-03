@@ -228,19 +228,6 @@ public abstract class ComponentFactory implements IComponentFactory {
 		LOGGER.debug("{}|is {}", context.getId(), context.getType());
 	}
 
-	// @UiAnnotationHandler(UiComponentOf.class)
-	// protected void handleUiAnnotation(ComponentContext context,
-	// Component component, UiComponentOf annotate) {
-	//
-	// final ComponentContext target = factory.findComponentContext(annotate
-	// .value());
-	//
-	// target.addChild(context);
-	//
-	// LOGGER.debug("{}|is a component of {}", context.getId(), annotate
-	// .value());
-	// }
-
 	@UiAnnotationHandler(UiBorderLayoutConstraint.class)
 	protected void handleUiBorderLayoutConstraint(
 			final ComponentContext context, final Component component,

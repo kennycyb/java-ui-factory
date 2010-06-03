@@ -16,8 +16,10 @@
 package com.wpl.ui.samples.components;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 
@@ -57,6 +59,11 @@ public class JToolBarSample extends JFrame {
 
 	@UiInit
 	void init() {
+	}
+
+	void onToolbar_actionPerformed(ActionEvent e) {
+		JOptionPane.showMessageDialog(this, "onToolbar_actionPerformed: "
+				+ e.getActionCommand());
 	}
 
 	public static void main(final String[] args) {
