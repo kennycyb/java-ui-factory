@@ -4,6 +4,11 @@
 	<groupId>com.wpl.ui</groupId>
 	<artifactId>java-ui-factory</artifactId>
 	<version>0.2-SNAPSHOT</version>
+	<url>https://code.google.com/p/java-ui-factory/</url>
+	<issueManagement>
+		<system>GOOGLE</system>
+		<url>https://code.google.com/p/java-ui-factory/issues/list</url>
+	</issueManagement>
 	<build>
 		<plugins>
 			<plugin>
@@ -35,4 +40,7 @@
 			<version>2.2</version>
 		</dependency>
 	</dependencies>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>	
 </project>
