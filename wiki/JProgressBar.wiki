@@ -1,0 +1,100 @@
+#summary Using JProgressBar
+#labels Phase-Implementation
+
+= Introduction =
+
+Using JProgressBar.
+
+
+= Details =
+
+
+
+== JProgressBar Sample ==
+
+[http://java-ui-factory.googlecode.com/svn/trunk/docs/samples/JProgressBarSample.png]
+
+{{{
+@JFrameProperties(frameCloseOperation = FrameCloseOperation.EXIT, title = "JProgressBarSample", windowPosition = WindowPosition.CENTER)
+@UiLayout(BorderLayout.class)
+public class JProgressBarSample extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private static Logger LOGGER = LoggerFactory
+			.getLogger(JProgressBarSample.class);
+
+	@UiLayout(SpringLayout.class)
+	@UiSpringGridConstraint(cols = 2)
+	class CenterPanel extends JPanel {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		@UiText("Horizontal")
+		JLabel label1;
+
+		@JProgressBarProperties(minimum = 0, maximum = 100, orientation = Orientation.HORIZONTAL)
+		JProgressBar horizontal;
+
+		@UiText("Vertical")
+		JLabel label2;
+
+		@JProgressBarProperties(minimum = 0, maximum = 100, orientation = Orientation.VERTICAL)
+		JProgressBar vertical;
+	}
+
+	@UiLayout(FlowLayout.class)
+	class ButtonPanel extends JPanel {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		@UiText("Start")
+		JButton start;
+	}
+
+	@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
+	CenterPanel center;
+
+	@UiBorderLayoutConstraint(BorderLayoutConstraint.SOUTH)
+	ButtonPanel south;
+
+	void onStart_actionPerformed(final ActionEvent e) {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+
+				JButton sender = (JButton) e.getSource();
+				sender.setEnabled(false);
+
+				for (int i = 0; i <= 100; i++) {
+
+					center.vertical.setValue(i);
+					center.horizontal.setValue(i);
+
+					LOGGER.debug("setValue={}", i);
+
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+
+				sender.setEnabled(true);
+			}
+		}).start();
+	}
+
+	public static void main(String[] args) {
+		SwingFactory.create(JProgressBarSample.class).setVisible(true);
+	}
+}
+}}}
