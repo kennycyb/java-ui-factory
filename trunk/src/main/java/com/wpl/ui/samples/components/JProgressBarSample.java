@@ -60,6 +60,11 @@ public class JProgressBarSample extends JFrame {
 	@UiSpringGridConstraint(cols = 2)
 	class CenterPanel extends JPanel {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		@UiText("Horizontal")
 		JLabel label1;
 
@@ -76,6 +81,10 @@ public class JProgressBarSample extends JFrame {
 	@UiLayout(FlowLayout.class)
 	class ButtonPanel extends JPanel {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@UiText("Start")
 		JButton start;
 	}
@@ -105,7 +114,6 @@ public class JProgressBarSample extends JFrame {
 					try {
 						Thread.sleep(100);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
