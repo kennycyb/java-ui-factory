@@ -48,6 +48,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
+import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -87,6 +88,7 @@ import com.wpl.ui.factory.components.JPanelFactory;
 import com.wpl.ui.factory.components.JPasswordFieldFactory;
 import com.wpl.ui.factory.components.JRadioButtonFactory;
 import com.wpl.ui.factory.components.JSliderFactory;
+import com.wpl.ui.factory.components.JSpinnerFactory;
 import com.wpl.ui.factory.components.JTabbedPaneFactory;
 import com.wpl.ui.factory.components.JTextAreaFactory;
 import com.wpl.ui.factory.components.JTextFieldFactory;
@@ -126,6 +128,7 @@ public class SwingFactory {
 
 		sDefaultFactory.put(JComponent.class, new JComponentFactory());
 		sDefaultFactory.put(JSlider.class, new JSliderFactory());
+		sDefaultFactory.put(JSpinner.class, new JSpinnerFactory());
 
 		sDefaultFactory.put(JLabel.class, new JLabelFactory());
 		sDefaultFactory.put(JButton.class, new JButtonFactory());

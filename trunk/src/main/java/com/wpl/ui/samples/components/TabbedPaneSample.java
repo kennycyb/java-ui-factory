@@ -46,11 +46,21 @@ import com.wpl.ui.factory.SwingFactory;
 @UiSize(height = 600, width = 800)
 @UiLayout(BorderLayout.class)
 public class TabbedPaneSample extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@SuppressWarnings("unused")
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(TabbedPaneSample.class);
 
 	public static class Tab1 extends JPanel {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@JTextFieldProperties(text = "Tab1")
 		JTextField field1;
 
@@ -58,6 +68,11 @@ public class TabbedPaneSample extends JFrame {
 
 	private class Tab2 extends JPanel {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		@SuppressWarnings("unused")
 		@UiText("HELLO")
 		JLabel field2;
 	}
