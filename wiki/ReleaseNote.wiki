@@ -1,0 +1,10 @@
+#summary Release Note
+
+= 0.1 (June 3, 2010) =
+
+Components:
+* JTabbedPane, JMenuBar, JToolBar is supported.
+* JTextArea, JTextField, JPasswordField, is supported.
+
+Layouts:
+* [BorderLayout], [SpringLayout], [FlowLayout], [VerticalFlowLayout], [GridLayout] is supported.
