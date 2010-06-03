@@ -1,0 +1,24 @@
+#summary KeyListener
+
+= Introduction =
+
+KeyListener is available for all [Component]s. 
+
+Javadoc: http://java.sun.com/javase/6/docs/api/java/awt/event/KeyListener.html
+
+= Events =
+
+ * Invoked when a key has been pressed.
+{{{ 
+void	onComponent_keyPressed(KeyEvent e) {}
+}}}
+
+ * Invoked when a key has been released.
+{{{ 
+void	onComponent_keyReleased(KeyEvent e) () {} 
+}}}
+          
+ * Invoked when a key has been typed.
+{{{ 
+void	onComponent_keyTyped(KeyEvent e) () {} 
+}}}
