@@ -46,6 +46,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
@@ -86,6 +87,7 @@ import com.wpl.ui.factory.components.JMenuBarFactory;
 import com.wpl.ui.factory.components.JMenuFactory;
 import com.wpl.ui.factory.components.JPanelFactory;
 import com.wpl.ui.factory.components.JPasswordFieldFactory;
+import com.wpl.ui.factory.components.JProgressBarFactory;
 import com.wpl.ui.factory.components.JRadioButtonFactory;
 import com.wpl.ui.factory.components.JSliderFactory;
 import com.wpl.ui.factory.components.JSpinnerFactory;
@@ -129,6 +131,7 @@ public class SwingFactory {
 		sDefaultFactory.put(JComponent.class, new JComponentFactory());
 		sDefaultFactory.put(JSlider.class, new JSliderFactory());
 		sDefaultFactory.put(JSpinner.class, new JSpinnerFactory());
+		sDefaultFactory.put(JProgressBar.class, new JProgressBarFactory());
 
 		sDefaultFactory.put(JLabel.class, new JLabelFactory());
 		sDefaultFactory.put(JButton.class, new JButtonFactory());
