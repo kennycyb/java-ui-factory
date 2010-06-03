@@ -17,6 +17,7 @@ package com.wpl.ui.samples.components;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -64,6 +65,19 @@ public class JToolBarSample extends JFrame {
 	void onToolbar_actionPerformed(ActionEvent e) {
 		JOptionPane.showMessageDialog(this, "onToolbar_actionPerformed: "
 				+ e.getActionCommand());
+	}
+
+	void onToolbar_itemStateChanged(final ItemEvent e) {
+		LOGGER
+				.debug(
+						"onToolbar_itemStateChanged: {} ({})",
+						e.getItem(),
+						e.getStateChange() == ItemEvent.DESELECTED ? "DESELECTED"
+								: e.getStateChange() == ItemEvent.ITEM_FIRST ? "ITEM_FIRST"
+										: e.getStateChange() == ItemEvent.ITEM_LAST ? "ITEM_LAST"
+												: e.getStateChange() == ItemEvent.ITEM_STATE_CHANGED ? "ITEM_STATE_CHANGED"
+														: e.getStateChange() == ItemEvent.SELECTED ? "SELECTED"
+																: "UNKNOWN");
 	}
 
 	public static void main(final String[] args) {

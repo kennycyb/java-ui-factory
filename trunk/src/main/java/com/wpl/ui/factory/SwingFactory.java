@@ -65,6 +65,7 @@ import com.wpl.ui.annotations.UiPreInit;
 import com.wpl.ui.annotations.UiType;
 import com.wpl.ui.annotations.frame.UiFrameMenu;
 import com.wpl.ui.events.EventHandler;
+import com.wpl.ui.events.IEventHandler;
 import com.wpl.ui.factory.components.DialogFactory;
 import com.wpl.ui.factory.components.FileDialogFactory;
 import com.wpl.ui.factory.components.FrameFactory;
@@ -305,7 +306,7 @@ public class SwingFactory {
 				continue;
 			}
 
-			if (f.getType() == EventHandler.class) {
+			if (IEventHandler.class.isAssignableFrom(f.getType())) {
 
 				componentContext.addPostInit(new Runnable() {
 
@@ -338,6 +339,7 @@ public class SwingFactory {
 					}
 				});
 
+				continue;
 			}
 
 			if (Modifier.isFinal(f.getModifiers())) {
@@ -512,8 +514,10 @@ public class SwingFactory {
 					componentContext.addPreInit(new Runnable() {
 						@Override
 						public void run() {
-							final ComponentContext childContext = componentContext
-									.findChildContext(componentName);
+							final ComponentContext childContext = componentName
+									.equals("this") ? componentContext
+									: componentContext
+											.findChildContext(componentName);
 
 							if (childContext == null) {
 								LOGGER

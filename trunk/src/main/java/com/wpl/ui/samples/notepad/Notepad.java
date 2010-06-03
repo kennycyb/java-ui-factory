@@ -108,24 +108,25 @@ public class Notepad extends JFrame {
 		LOGGER.debug("onContext_caretPositionChanged");
 	}
 
-	@SuppressWarnings("unused")
-	private void onNotepad_windowClosing(WindowEvent e) {
-		LOGGER.debug("onNotepad_windowClosing: new state={}", e.getNewState());
+	void onThis_windowClosing(WindowEvent e) {
+		LOGGER.debug("onThis_windowClosing: new state={}", e.getNewState());
 	}
 
-	@SuppressWarnings("unused")
-	private void onNotepad_windowActivated(WindowEvent e) {
+	void onThis_windowActivated(WindowEvent e) {
 		LOGGER.debug("onNotepad_windowActivated");
 	}
 
-	@SuppressWarnings("unused")
-	private void onNotepad_windowGainedFocus(WindowEvent e) {
+	void onThis_windowGainedFocus(WindowEvent e) {
 		LOGGER.debug("onNotepad_windowGainedFocus");
 	}
 
-	@SuppressWarnings("unused")
-	private void onNotepad_windowLostFocus(WindowEvent e) {
+	void onThis_windowLostFocus(WindowEvent e) {
 		LOGGER.debug("onNotepad_windowLostFocus");
+	}
+
+	// TODO:
+	void onMenuBar_undo_itemStateChanged(ItemEvent e) {
+
 	}
 
 	void onMenuBar_itemStateChanged(ItemEvent e) {
