@@ -1,5 +1,11 @@
 #summary Release Note
 
+= 0.2 (Unreleased) =
+
+== New ==
+* [JSlider]
+
+
 = 0.1 (June 3, 2010) =
 
 Components:
