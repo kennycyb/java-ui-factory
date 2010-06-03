@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.annotations.UiLayout;
+import com.wpl.ui.annotations.UiToolTip;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.UiAnnotationHandler;
 
@@ -49,6 +50,13 @@ public class JComponentFactory extends ComponentFactory {
 			LOGGER.error("{}|Unable to create layout manager {}", context
 					.getId(), layout.value());
 		}
+	}
+
+	@UiAnnotationHandler(UiToolTip.class)
+	protected void handleUiToolTip(final ComponentContext context,
+			final JComponent component, final UiToolTip annotate) {
+
+		component.setToolTipText(annotate.value());
 	}
 
 	@Override

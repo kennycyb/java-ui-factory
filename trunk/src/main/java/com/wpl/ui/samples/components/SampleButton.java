@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.samples.button;
+package com.wpl.ui.samples.components;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -29,6 +29,7 @@ import com.wpl.ui.annotations.UiEnabled;
 import com.wpl.ui.annotations.UiIcon;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiText;
+import com.wpl.ui.annotations.UiToolTip;
 import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
 import com.wpl.ui.annotations.frame.UiWindowPosition;
 import com.wpl.ui.enums.FrameCloseOperation;
@@ -52,6 +53,7 @@ public class SampleButton extends JFrame {
 	@SuppressWarnings("unused")
 	private static Logger LOGGER = LoggerFactory.getLogger(SampleButton.class);
 
+	@UiToolTip("hello tooltip")
 	@UiText("hello")
 	JButton hello;
 
