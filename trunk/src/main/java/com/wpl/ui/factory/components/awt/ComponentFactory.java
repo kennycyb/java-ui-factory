@@ -16,6 +16,7 @@
 package com.wpl.ui.factory.components.awt;
 
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.FocusListener;
@@ -37,6 +38,7 @@ import javax.swing.JScrollPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wpl.ui.annotations.UiCursor;
 import com.wpl.ui.annotations.UiFont;
 import com.wpl.ui.annotations.UiLocation;
 import com.wpl.ui.annotations.UiName;
@@ -156,25 +158,35 @@ public class ComponentFactory implements IComponentFactory {
 			final Method handler = mAnnotationHandlerMap.get(annotate
 					.annotationType());
 			if (handler == null) {
-				LOGGER.debug("No handler for {}", annotate.annotationType());
+				LOGGER.debug("{}|No handler for {}", context.getId(), annotate
+						.annotationType());
 				continue;
 			}
 
 			try {
+				handler.setAccessible(true);
 				handler.invoke(this, context, context.getComponent(), annotate);
 			} catch (final IllegalArgumentException e1) {
 
-				LOGGER.warn("IllegalArgument: {}({}, {})", new Object[] {
+				LOGGER.error("IllegalArgument: {}({}, {})", new Object[] {
 						handler.getName(),
 						context.getComponent().getClass().getSimpleName(),
 						annotate.annotationType().getSimpleName() });
 
 			} catch (final IllegalAccessException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				LOGGER.error("IllegalAccessException: {}({}, {})",
+						new Object[] {
+								handler.getName(),
+								context.getComponent().getClass()
+										.getSimpleName(),
+								annotate.annotationType().getSimpleName() });
 			} catch (final InvocationTargetException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				LOGGER.error("InvocationTargetException: {}({}, {})",
+						new Object[] {
+								handler.getName(),
+								context.getComponent().getClass()
+										.getSimpleName(),
+								annotate.annotationType().getSimpleName() });
 			}
 		}
 
@@ -229,6 +241,14 @@ public class ComponentFactory implements IComponentFactory {
 	protected void handleUiAnnotation(final ComponentContext context,
 			final Component component, final UiType annotate) {
 		LOGGER.debug("{}|is {}", context.getId(), context.getType());
+	}
+
+	@UiAnnotationHandler(UiCursor.class)
+	protected void handleUiCursor(final ComponentContext context,
+			final Component component, final UiCursor annotate) {
+		component.setCursor(new Cursor(annotate.value().getSwingConstant()));
+		LOGGER.debug("{}|Component.setCursor({})", context.getId(), annotate
+				.value());
 	}
 
 	@UiAnnotationHandler(UiBorderLayoutConstraint.class)

@@ -15,23 +15,28 @@
  */
 package com.wpl.ui.samples.components;
 
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.SpringLayout;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wpl.ui.annotations.UiCursor;
 import com.wpl.ui.annotations.UiEnabled;
 import com.wpl.ui.annotations.UiIcon;
 import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.annotations.UiToolTip;
+import com.wpl.ui.annotations.UiType;
+import com.wpl.ui.annotations.constraints.UiSpringGridConstraint;
 import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
 import com.wpl.ui.annotations.frame.UiWindowPosition;
+import com.wpl.ui.enums.CursorType;
 import com.wpl.ui.enums.FrameCloseOperation;
 import com.wpl.ui.enums.WindowPosition;
 import com.wpl.ui.factory.SwingFactory;
@@ -42,8 +47,9 @@ import com.wpl.ui.factory.SwingFactory;
  */
 @UiWindowPosition(WindowPosition.CENTER)
 @UiText("Sample Button")
-@UiLayout(FlowLayout.class)
+@UiLayout(SpringLayout.class)
 @UiFrameCloseOperation(FrameCloseOperation.EXIT)
+@UiSpringGridConstraint(cols = 2)
 public class SampleButton extends JFrame {
 	/**
 	 * 
@@ -53,30 +59,49 @@ public class SampleButton extends JFrame {
 	@SuppressWarnings("unused")
 	private static Logger LOGGER = LoggerFactory.getLogger(SampleButton.class);
 
+	@UiText("Button with tooltip")
+	JLabel label1;
+
 	@UiToolTip("hello tooltip")
 	@UiText("hello")
 	JButton hello;
+
+	@UiText("Button disabled")
+	JLabel label2;
 
 	@UiEnabled(false)
 	@UiText("disabled")
 	JButton disabled;
 
+	@UiText("Button with icon only")
+	JLabel label3;
+
 	@UiIcon("iMac.icon")
 	JButton iconButton;
 
+	@UiText("Button with icon and text")
+	JLabel label4;
 	@UiText("iconWithText")
 	@UiIcon("iMac.icon")
 	JButton iconWithText;
 
-	void onHello_actionPerformed(ActionEvent e) {
+	@UiText("Custom Button")
+	JLabel label5;
+
+	@UiType(CustomJButton.class)
+	@UiText("custom button")
+	@UiCursor(CursorType.HAND)
+	JButton customButton;
+
+	void onHello_actionPerformed(final ActionEvent e) {
 		JOptionPane.showMessageDialog(this, "onHello_actionPerformed");
 	}
 
-	void onIconWithText_actionPerformed(ActionEvent e) {
+	void onIconWithText_actionPerformed(final ActionEvent e) {
 		JOptionPane.showMessageDialog(this, "onIconWithText_actionPerformed");
 	}
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		SwingFactory.create(SampleButton.class).setVisible(true);
 	}
 }
