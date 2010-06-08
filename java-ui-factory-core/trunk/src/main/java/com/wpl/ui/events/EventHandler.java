@@ -27,26 +27,27 @@ import org.slf4j.LoggerFactory;
  */
 public class EventHandler<E> implements IEventHandler<E> {
 
+	@SuppressWarnings("unused")
 	private static Logger LOGGER = LoggerFactory.getLogger(EventHandler.class);
 
 	private final List<IEventListener<E>> mListeners = new ArrayList<IEventListener<E>>();
 
-	public void addListener(IEventListener<E> listener) {
+	public void addListener(final IEventListener<E> listener) {
 		if (listener == null) {
 			return;
 		}
 		mListeners.add(listener);
 	}
 
-	public void removeListener(IEventListener<E> listener) {
+	public void removeListener(final IEventListener<E> listener) {
 		if (listener == null) {
 			return;
 		}
 		mListeners.remove(listener);
 	}
 
-	public void invoke(E args) {
-		for (IEventListener<E> listener : mListeners) {
+	public void invoke(final E args) {
+		for (final IEventListener<E> listener : mListeners) {
 			listener.invoke(args);
 		}
 	}

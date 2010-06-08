@@ -24,9 +24,18 @@ import com.wpl.ui.factory.UiAnnotationHandler;
 public class JButtonFactory extends AbstractButtonFactory {
 
 	@UiAnnotationHandler(UiDefaultButton.class)
-	public void handleUiDefaultButton(ComponentContext context,
-			JButton component, UiDefaultButton annotate) {
+	public void handleUiDefaultButton(final ComponentContext context,
+			final JButton component, final UiDefaultButton annotate) {
 		component.setDefaultCapable(true);
 	}
 
+	@Override
+	public void initialize(final ComponentContext context) {
+		super.initialize(context);
+
+		final JButton component = (JButton) context.getComponent();
+		if (component.getText() == null || component.getText().length() == 0) {
+			component.setText(context.getId());
+		}
+	}
 }

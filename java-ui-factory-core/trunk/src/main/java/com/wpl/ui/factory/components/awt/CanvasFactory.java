@@ -18,11 +18,11 @@ package com.wpl.ui.factory.components.awt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * 
  * @since 1.0
  */
 public class CanvasFactory extends ComponentFactory {
+	@SuppressWarnings("unused")
 	private static Logger LOGGER = LoggerFactory.getLogger(CanvasFactory.class);
 }

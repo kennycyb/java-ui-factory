@@ -335,6 +335,7 @@ public class SwingFactory {
 
 				componentContext.addPostInit(new Runnable() {
 
+					@SuppressWarnings("unchecked")
 					@Override
 					public void run() {
 						try {
@@ -537,6 +538,7 @@ public class SwingFactory {
 					final String actionName = methodName.substring(action + 1);
 
 					componentContext.addPreInit(new Runnable() {
+						@SuppressWarnings("unchecked")
 						@Override
 						public void run() {
 							final ComponentContext childContext = componentName
