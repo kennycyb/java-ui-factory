@@ -7,7 +7,7 @@ Using Vertical Flow Layout
 
 = Details =
 
-[http://java-ui-factory.googlecode.com/svn/trunk/docs/samples/VerticalFlowSampleOutput.png]
+[http://java-ui-factory.googlecode.com/svn/java-ui-factory-sample/trunk/docs/samples/VerticalFlowSampleOutput.png]
 
 {{{
 **

@@ -7,7 +7,7 @@ Using inner class to group components into panels.
 
 = Details =
 
-[http://java-ui-factory.googlecode.com/svn/trunk/docs/samples/SampleFrameWithInnerClasses.png]
+[http://java-ui-factory.googlecode.com/svn/java-ui-factory-sample/trunk/docs/samples/SampleFrameWithInnerClasses.png]
 
 {{{
 @UiText("Sample Frame")
