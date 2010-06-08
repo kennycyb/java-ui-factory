@@ -3,7 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>java-ui-factory</groupId>
 	<artifactId>java-ui-factory-pom</artifactId>
+	<packaging>pom</packaging>
 	<version>1.0-SNAPSHOT</version>
+	<issueManagement>
+		<system>GOOGLE</system>
+		<url>https://code.google.com/p/java-ui-factory/issues/list</url>
+	</issueManagement>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
