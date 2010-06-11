@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<comboBox id="comboBox">
+	<item text="Male"/>
+	<item text="Female"/>
+	<item text="Unknown"/>
+</comboBox>
