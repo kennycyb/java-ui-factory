@@ -6,7 +6,25 @@ This sample show how to implement custom events.
 
 = Details =
 
+
+ * Standard Java Events - e.g. [KeyListener], [MouseListener], etc.
+ * Custom Event Handlers
+ 
+== Standard Java Events ==
+
 {{{
+JButton myButton;
+
+void myButton_actionPerformed(ActionEvent e) {
+    // invoked when myButton is clicked
+}
+}}}
+
+== Custom Event Handlers ==
+
+Declaring an custom event object.
+{{{
+// An event object
 public class CustomEventArgs {
 
 	private final ExternalPanel mSource;
@@ -27,6 +45,7 @@ public class CustomEventArgs {
 }
 }}}
 
+Using EventHandler<>
 {{{
 @UiLayout(BorderLayout.class)
 public class ExternalPanel extends JPanel {
@@ -56,6 +75,7 @@ public class ExternalPanel extends JPanel {
 }
 }}}
 
+Class that receive the custom event.
 {{{
 @UiLayout(BorderLayout.class)
 @JFrameProperties(title = "Sample With External Panel", windowPosition = WindowPosition.CENTER, width = 800, height = 600, frameCloseOperation = FrameCloseOperation.EXIT)
