@@ -6,11 +6,12 @@ This sample show how to implement custom events.
 
 = Details =
 
-
  * Standard Java Events - e.g. [KeyListener], [MouseListener], etc.
  * Custom Event Handlers
  
 == Standard Java Events ==
+
+=== Sample ===
 
 {{{
 JButton myButton;
@@ -19,6 +20,12 @@ void myButton_actionPerformed(ActionEvent e) {
     // invoked when myButton is clicked
 }
 }}}
+
+=== List of Supported Listeners ===
+
+|| *Listener* || *Description* || *javadoc* ||
+|| [FocusListener] || Receiving keyboard focus events on a component || http://java.sun.com/javase/6/docs/api/java/awt/event/FocusListener.html || 
+
 
 == Custom Event Handlers ==
 

@@ -1,0 +1,54 @@
+
+#summary FocusListener
+
+= Introduction =
+
+FocusListener is available for all [Component]s. 
+
+ * Javadoc: http://java.sun.com/javase/6/docs/api/java/awt/event/FocusListener.html
+ * Supported since java-ui-factory-0.1
+
+= Events =
+
+ * Invoked when a component gains the keyboard focus. 
+{{{
+void onComponent_focusGained(FocusEvent e) {}
+}}}   
+          
+ * Invoked when a component loses the keyboard focus.
+{{{ 
+void onComponent_focusLost(FocusEvent e) {}
+}}} 
+
+= Sample =
+{{{
+@JFrameProperties(frameCloseOperation = FrameCloseOperation.EXIT, height = 600, width = 800, title = "KeyListenerSample", windowPosition = WindowPosition.CENTER)
+@UiLayout(BorderLayout.class)
+public class FocusListenerSample extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static Logger LOGGER = LoggerFactory
+			.getLogger(FocusListenerSample.class);
+
+	@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
+	@UiScrollable(horizontal = ScrollBarPolicy.ALWAYS, vertical = ScrollBarPolicy.ALWAYS)
+	JTextArea textarea;
+
+	void onTextarea_focusGained(final FocusEvent e) {
+		// Invoked when a component gains the keyboard focus.
+		LOGGER.debug("onTextarea_focusGained");
+	}
+
+	void onTextarea_focusLost(final FocusEvent e) {
+		// Invoked when a component loses the keyboard focus.
+		LOGGER.debug("onTextarea_focusGained");
+	}
+
+	public static void main(final String[] args) {
+		SwingFactory.create(FocusListenerSample.class).setVisible(true);
+	}
+}
+}}}
+          
