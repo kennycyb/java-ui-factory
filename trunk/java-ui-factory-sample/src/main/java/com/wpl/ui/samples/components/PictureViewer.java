@@ -19,15 +19,18 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
-import java.awt.RenderingHints;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
 import java.awt.image.VolatileImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -59,7 +62,6 @@ public class PictureViewer extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@SuppressWarnings("unused")
 	private static Logger LOGGER = LoggerFactory.getLogger(PictureViewer.class);
 
 	public class Viewer extends JPanel {
@@ -69,62 +71,108 @@ public class PictureViewer extends JFrame {
 		 */
 		private static final long serialVersionUID = 1L;
 
-		private VolatileImage mVolatileImage;
-
-		private int width, height;
-
 		public Viewer() {
 			super(null, true);
 		}
 
-		private Image mSource;
+		private BufferedImage mSource;
+
+		private Graphics2D mG2d;
+		private VolatileImage mVolatiledImage;
+
 		private Image mScaled;
 
-		@Override
-		protected void paintComponent(final Graphics g) {
-			// super.paintComponent(g);
+		protected void checkVolatiledImage() {
+		}
 
-			if (mVolatileImage == null || width != getWidth()
-					|| height != getHeight()) {
-				width = getWidth();
-				height = getHeight();
-				mVolatileImage = createVolatileImage(width, height);
-			}
-
-			if (mSourceImage == null) {
+		protected void prepareNonVolatiled() {
+			if (mSource == mSourceImage) {
 				return;
 			}
 
-			if (mSource != mSourceImage) {
-				mSource = mSourceImage;
+			mSource = mSourceImage;
 
-				if (mSource == null) {
-					return;
-				}
+			long start = System.currentTimeMillis();
 
-				mScaled = mSource.getScaledInstance(width, height,
-						Image.SCALE_FAST);
+			mScaled = mSource.getScaledInstance(getWidth(), getHeight(),
+					Image.SCALE_FAST);
+
+			LOGGER.debug("Time for prepare image: {}", System
+					.currentTimeMillis()
+					- start);
+		}
+
+		private int width, height;
+
+		protected void prepare() {
+
+			if (mSource == mSourceImage) {
+				return;
 			}
 
-			final Graphics2D g2d = (Graphics2D) g;
-			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-					RenderingHints.VALUE_ANTIALIAS_OFF);
-			g2d.drawImage(mScaled, 0, 0, this);
+			long start = System.currentTimeMillis();
 
-			// final GraphicsConfiguration gc = getGraphicsConfiguration();
-			// final int valCode = mVolatileImage.validate(gc);
-			// if (valCode == VolatileImage.IMAGE_INCOMPATIBLE) {
-			// mVolatileImage = createVolatileImage(width, height);
-			// }
-			//
-			// final Graphics2D g2D = mVolatileImage.createGraphics();
-			// g2D.drawImage(mScaled, 0, 0, this);
-			// g2D.dispose();
-			// g.drawImage(mVolatileImage, 0, 0, this);
+			mSource = mSourceImage;
+
+			if (mVolatiledImage == null || width != getWidth()
+					|| height != getHeight()) {
+
+				width = getWidth();
+				height = getHeight();
+
+				GraphicsEnvironment ge = GraphicsEnvironment
+						.getLocalGraphicsEnvironment();
+				GraphicsConfiguration gc = ge.getDefaultScreenDevice()
+						.getDefaultConfiguration();
+
+				mVolatiledImage = gc.createCompatibleVolatileImage(width,
+						height);
+
+				mG2d = mVolatiledImage.createGraphics();
+			}
+
+			do {
+
+				Graphics2D g = mG2d;
+
+				try {
+					// g = mVolatiledImage.createGraphics();
+
+					g.drawImage(mSource, 0, 0, getWidth(), getHeight(), 0, 0,
+							mSource.getWidth(), mSource.getHeight(), this);
+
+				} finally {
+					// It's always best to dispose of your Graphics objects.
+					// g.dispose();
+				}
+
+				mScaled = mVolatiledImage;
+
+			} while (mVolatiledImage.contentsLost());
+
+			LOGGER.debug("Time for prepare image: {}", System
+					.currentTimeMillis()
+					- start);
+		}
+
+		@Override
+		protected void paintComponent(final Graphics g) {
+
+			// prepare();
+
+			prepareNonVolatiled();
+
+			long start = System.currentTimeMillis();
+
+			g.drawImage(mScaled, 0, 0, this);
+
+			LOGGER.debug("Time taken in paintComponent: {}", System
+					.currentTimeMillis()
+					- start);
 		}
 	}
 
-	private Image mSourceImage;
+	private BufferedImage mSourceImage;
 
 	@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
 	Viewer viewer;
@@ -155,12 +203,15 @@ public class PictureViewer extends JFrame {
 			return;
 		}
 
+		long start = System.currentTimeMillis();
+
 		if (++mCurrentIndex >= mImages.size()) {
 			mCurrentIndex = 0;
 		}
 
-		setImage(Toolkit.getDefaultToolkit().getImage(
-				mImages.get(mCurrentIndex)));
+		setImage(mImages.get(mCurrentIndex));
+
+		LOGGER.debug("onNext taken: {}", System.currentTimeMillis() - start);
 	}
 
 	volatile boolean doSlideShow = false;
@@ -178,15 +229,26 @@ public class PictureViewer extends JFrame {
 
 			@Override
 			public void run() {
+
+				long start = System.currentTimeMillis();
+
+				mCurrentIndex = 0;
+
 				while (doSlideShow) {
 					onNext_actionPerformed(e);
+					if (mCurrentIndex == 0 || mCurrentIndex == 10) {
+						break;
+					}
 					try {
-						Thread.sleep(100);
+						Thread.sleep(10);
 					} catch (final InterruptedException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
+
+				LOGGER.debug("Slide Show Time: {}", System.currentTimeMillis()
+						- start);
 			}
 		}).start();
 
@@ -197,11 +259,13 @@ public class PictureViewer extends JFrame {
 
 	@UiInit
 	void init() {
-		final File dir = new File("docs/samples");
+		// final File dir = new File("docs/samples");
+
+		File dir = new File("/media/Backup/Backup/My Pictures/Wedding/ALL");
 		final File[] files = dir.listFiles();
 
 		for (final File f : files) {
-			if (f.getName().endsWith(".png")) {
+			if (f.getName().endsWith(".jpg") || f.getName().endsWith(".png")) {
 				mImages.add(f.getAbsolutePath());
 			}
 		}
@@ -210,12 +274,31 @@ public class PictureViewer extends JFrame {
 			return;
 		}
 
-		setImage(Toolkit.getDefaultToolkit().getImage(mImages.get(0)));
+		setImage(mImages.get(0));
 	}
 
-	public void setImage(final Image image) {
-		mSourceImage = image;
+	public BufferedImage loadFromFile(String file) throws IOException {
+
+		return ImageIO.read(new File(file));
+	}
+
+	public void setImage(final String file) {
+
+		long start = System.currentTimeMillis();
+
+		try {
+			mSourceImage = loadFromFile(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
+		}
+		LOGGER.debug("Time to load: {}", System.currentTimeMillis() - start);
+
+		start = System.currentTimeMillis();
+
 		viewer.repaint();
+
+		LOGGER.debug("Time to repaint: {}", System.currentTimeMillis() - start);
 	}
 
 	public static void main(final String[] args) {
