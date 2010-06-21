@@ -52,6 +52,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
+import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -70,6 +71,7 @@ import com.wpl.ui.annotations.UiName;
 import com.wpl.ui.annotations.UiPreInit;
 import com.wpl.ui.annotations.UiType;
 import com.wpl.ui.annotations.frame.UiFrameMenu;
+import com.wpl.ui.annotations.layouts.SplitPaneContent;
 import com.wpl.ui.events.EventHandler;
 import com.wpl.ui.events.IEventHandler;
 import com.wpl.ui.factory.components.awt.CanvasFactory;
@@ -303,6 +305,14 @@ public class SwingFactory {
 				continue;
 			}
 
+			if (childContext.getAnnotatedElement().isAnnotationPresent(
+					SplitPaneContent.class)) {
+				LOGGER.debug(
+						"{}|is a SplitPaneContent, not added as Component",
+						childContext.getId());
+				continue;
+			}
+
 			layoutHandler.layoutComponent(childContext);
 		}
 
@@ -310,6 +320,115 @@ public class SwingFactory {
 		componentContext.init();
 
 		layoutHandler.finalLayout(componentContext);
+	}
+
+	private boolean handleSplitPaneContext(
+			final ComponentContext componentContext,
+			final ComponentContext childContext) {
+
+		final SplitPaneContent spc = childContext.getAnnotatedElement()
+				.getAnnotation(SplitPaneContent.class);
+
+		if (spc == null) {
+			return false;
+		}
+
+		final ComponentContext splitPaneContext = componentContext
+				.findChildContext(spc.splitPaneName());
+
+		if (splitPaneContext == null) {
+			LOGGER.warn("{}|is SplitPaneContent, but owner not found {}",
+					childContext.getId(), spc.splitPaneName());
+			return true;
+		}
+
+		childContext.addPostInit(new Runnable() {
+			@Override
+			public void run() {
+				final Component component = splitPaneContext.getComponent();
+				final JSplitPane sp = (JSplitPane) component;
+
+				switch (spc.position()) {
+				case LEFT:
+					sp.setLeftComponent(childContext.getComponent());
+					LOGGER.debug("{}|set {} to left", splitPaneContext.getId(),
+							childContext.getId());
+					break;
+
+				case RIGHT:
+					sp.setRightComponent(childContext.getComponent());
+					LOGGER.debug("{}|set {} to right",
+							splitPaneContext.getId(), childContext.getId());
+					break;
+
+				case TOP:
+					sp.setTopComponent(childContext.getComponent());
+					LOGGER.debug("{}|set {} to top", splitPaneContext.getId(),
+							childContext.getId());
+					break;
+
+				case BOTTOM:
+					sp.setBottomComponent(childContext.getComponent());
+					LOGGER.debug("{}|set {} to bottom", splitPaneContext
+							.getId(), childContext.getId());
+					break;
+				}
+
+			}
+		});
+
+		return true;
+	}
+
+	private boolean handleUiComponentOf(
+			final ComponentContext componentContext,
+			final ComponentContext childContext) {
+
+		final UiComponentOf c = childContext.getAnnotatedElement()
+				.getAnnotation(UiComponentOf.class);
+
+		if (c == null) {
+			return false;
+		}
+
+		childContext.setComponentOf(true);
+
+		final ComponentContext owner = componentContext.findChildContext(c
+				.value());
+
+		if (owner == null) {
+			LOGGER.warn("{}|is UiComponentOf, but owner not found {}",
+					childContext.getId(), c.value());
+			return true;
+		}
+
+		componentContext.addInit(new Runnable() {
+			@Override
+			public void run() {
+				final ComponentContext ownerChild = owner
+						.findChildContext(childContext.getId());
+				if (ownerChild != null) {
+
+					final Field f = (Field) childContext.getAnnotatedElement();
+
+					f.setAccessible(true);
+
+					try {
+						f.set(componentContext.getComponent(), ownerChild
+								.getComponent());
+					} catch (final IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (final IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+			}
+		});
+
+		return true;
 	}
 
 	private void plan(final ComponentContext componentContext) {
@@ -407,46 +526,8 @@ public class SwingFactory {
 			childContext.setDeclared(true);
 			childContext.setType(childType);
 
-			final UiComponentOf c = childContext.getAnnotatedElement()
-					.getAnnotation(UiComponentOf.class);
-
-			if (c != null) {
-
-				childContext.setComponentOf(true);
-
-				final ComponentContext owner = componentContext
-						.findChildContext(c.value());
-
-				if (owner != null) {
-					componentContext.addInit(new Runnable() {
-						@Override
-						public void run() {
-							final ComponentContext ownerChild = owner
-									.findChildContext(childContext.getId());
-							if (ownerChild != null) {
-
-								final Field f = (Field) childContext
-										.getAnnotatedElement();
-
-								f.setAccessible(true);
-
-								try {
-									f.set(componentContext.getComponent(),
-											ownerChild.getComponent());
-								} catch (final IllegalArgumentException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								} catch (final IllegalAccessException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-
-							}
-						}
-					});
-				}
-			} else {
-
+			if (!handleUiComponentOf(componentContext, childContext)
+					&& !handleSplitPaneContext(componentContext, childContext)) {
 				componentContext.addInit(new Runnable() {
 					@Override
 					public void run() {
