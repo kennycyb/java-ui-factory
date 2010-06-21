@@ -4,13 +4,13 @@
 
 == New ==
 * Split to two project: java-ui-factory-core and java-ui-factory-sample
-* [JSlider]
+* [JSlider], [JSplitPane]
 
 
 = 0.1 (June 3, 2010) =
 
 Components:
-* JTabbedPane, JMenuBar, JToolBar is supported.
+* [JTabbedPane], JMenuBar, JToolBar is supported.
 * JTextArea, JTextField, JPasswordField, is supported.
 
 Layouts:

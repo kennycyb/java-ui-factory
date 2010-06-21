@@ -1,0 +1,43 @@
+#summary Using JSplitPane
+#labels Phase-Implementation
+
+= Introduction =
+
+Using JSplitPane.
+
+
+= Details =
+
+
+
+== Sample ==
+
+{{{
+@UiText("JSplitPane Sample")
+@UiSize(height = 600, width = 800)
+@UiLayout(BorderLayout.class)
+@UiFrameCloseOperation(FrameCloseOperation.EXIT)
+@UiFrameResizable
+public class SplitPaneSample extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@JSplitPaneProperties(orientation = SplitPaneOrientation.HORIZONTAL)
+	@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
+	JSplitPane splitPane;
+
+	@SplitPaneContent(splitPaneName = "splitPane", position = SplitPanePosition.LEFT)
+	JTree left;
+
+	@SplitPaneContent(splitPaneName = "splitPane", position = SplitPanePosition.RIGHT)
+	@UiScrollable(horizontal = ScrollBarPolicy.ALWAYS, vertical = ScrollBarPolicy.ALWAYS)
+	JTextArea right;
+
+	public static void main(String[] args) {
+		SwingFactory.create(SplitPaneSample.class).setVisible(true);
+	}
+}
+}}}
