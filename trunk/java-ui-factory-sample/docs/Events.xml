@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<Module>
+  <ModulePrefs title="Supported Events" /> 
+  <Content type="html">
+     <![CDATA[ 
+       
+       <table width="100%">
+       	<tr>
+       		<td><a href="http://code.google.com/p/java-ui-factory/wiki/KeyListener">KeyListener</a></td>
+       		<td></td>
+       	</tr>
+       	<tr>
+       		<td><a href="http://code.google.com/p/java-ui-factory/wiki/MouseListener">MouseListener</a></td>
+       		<td></td>
+       	</tr>
+       	<tr>
+       		<td><a href="http://code.google.com/p/java-ui-factory/wiki/WindowListener">WindowListener</a></td>
+       		<td></td>
+       	</tr>
+       	<tr>
+       		<td><a href="http://code.google.com/p/java-ui-factory/wiki/WindowFocusListener">WindowFocusListener</a></td>
+       		<td></td>
+       	</tr>
+       </table>
+     ]]>
+  </Content> 
+</Module>
