@@ -273,8 +273,8 @@ public class SwingFactory {
 			componentContext.getAnnotatedElement()
 					.getAnnotation(UiLayout.class);
 			LOGGER.debug("{}|looking @UiLayout from annotate element {}",
-					componentContext.getId(), componentContext
-							.getAnnotatedElement());
+					componentContext.getId(),
+					componentContext.getAnnotatedElement());
 		} else {
 			LOGGER.debug("{}|looking @UiLayout from enclosed type {}",
 					componentContext.getId(), componentContext.getType());
@@ -350,13 +350,13 @@ public class SwingFactory {
 
 				switch (spc.position()) {
 				case LEFT:
-					sp.setLeftComponent(childContext.getComponent());
+					sp.setLeftComponent(childContext.getEnclosedComponent());
 					LOGGER.debug("{}|set {} to left", splitPaneContext.getId(),
 							childContext.getId());
 					break;
 
 				case RIGHT:
-					sp.setRightComponent(childContext.getComponent());
+					sp.setRightComponent(childContext.getEnclosedComponent());
 					LOGGER.debug("{}|set {} to right",
 							splitPaneContext.getId(), childContext.getId());
 					break;
@@ -369,8 +369,8 @@ public class SwingFactory {
 
 				case BOTTOM:
 					sp.setBottomComponent(childContext.getComponent());
-					LOGGER.debug("{}|set {} to bottom", splitPaneContext
-							.getId(), childContext.getId());
+					LOGGER.debug("{}|set {} to bottom",
+							splitPaneContext.getId(), childContext.getId());
 					break;
 				}
 
@@ -414,8 +414,8 @@ public class SwingFactory {
 					f.setAccessible(true);
 
 					try {
-						f.set(componentContext.getComponent(), ownerChild
-								.getComponent());
+						f.set(componentContext.getComponent(),
+								ownerChild.getComponent());
 					} catch (final IllegalArgumentException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -445,8 +445,8 @@ public class SwingFactory {
 		for (final Field f : fields) {
 
 			if (Modifier.isStatic(f.getModifiers())) {
-				LOGGER.debug("{}|ignore static field: {}", componentContext
-						.getId(), f.getName());
+				LOGGER.debug("{}|ignore static field: {}",
+						componentContext.getId(), f.getName());
 				continue;
 			}
 
@@ -463,6 +463,7 @@ public class SwingFactory {
 							final EventHandler<?> handler = (EventHandler<?>) f
 									.get(componentContext.getComponent());
 
+							@SuppressWarnings("rawtypes")
 							final MethodListener ml = componentContext
 									.getActionListeners().get(f.getName());
 
@@ -470,7 +471,8 @@ public class SwingFactory {
 								handler.addListener(ml);
 							}
 
-							LOGGER.debug("{}|CustomEventHandler added from {}",
+							LOGGER.debug(
+									"{}|CustomEventHandler added from {}",
 									new Object[] { componentContext.getId(),
 											f.getName() });
 
@@ -488,8 +490,8 @@ public class SwingFactory {
 			}
 
 			if (Modifier.isFinal(f.getModifiers())) {
-				LOGGER.debug("{}|ignore final field: {}", componentContext
-						.getId(), f.getName());
+				LOGGER.debug("{}|ignore final field: {}",
+						componentContext.getId(), f.getName());
 				continue;
 			}
 
@@ -533,8 +535,8 @@ public class SwingFactory {
 					public void run() {
 						f.setAccessible(true);
 						try {
-							f.set(componentContext.getComponent(), childContext
-									.getComponent());
+							f.set(componentContext.getComponent(),
+									childContext.getComponent());
 						} catch (final Throwable t) {
 
 						}
@@ -614,8 +616,7 @@ public class SwingFactory {
 				final int action = methodName.indexOf('_');
 				if (action > 0) {
 					final String componentName = methodName.substring(2, 3)
-							.toLowerCase()
-							+ methodName.substring(3, action);
+							.toLowerCase() + methodName.substring(3, action);
 					final String actionName = methodName.substring(action + 1);
 
 					componentContext.addPreInit(new Runnable() {
@@ -628,36 +629,29 @@ public class SwingFactory {
 											.findChildContext(componentName);
 
 							if (childContext == null) {
-								LOGGER
-										.debug("{}|child context not found {}",
-												componentContext.getId(),
-												componentName);
+								LOGGER.debug("{}|child context not found {}",
+										componentContext.getId(), componentName);
 								return;
 							}
 
-							childContext.addActionListener(actionName,
+							childContext.addActionListener(
+									actionName,
 									new MethodListener(componentContext
 											.getComponent(), m));
 
-							LOGGER
-									.debug(
-											"{}|context={}, action={}, source={}, listener={})",
-											new Object[] {
-													componentContext.getId(),
-													childContext.getId(),
-													actionName,
-													childContext.getId(), m });
+							LOGGER.debug(
+									"{}|context={}, action={}, source={}, listener={})",
+									new Object[] { componentContext.getId(),
+											childContext.getId(), actionName,
+											childContext.getId(), m });
 						}
 					});
 
 					if (LOGGER.isDebugEnabled()) {
-						LOGGER
-								.debug(
-										"{}|Found autowired listener: {}, registered for {} on {}",
-										new Object[] {
-												componentContext.getId(),
-												methodName, componentName,
-												actionName });
+						LOGGER.debug(
+								"{}|Found autowired listener: {}, registered for {} on {}",
+								new Object[] { componentContext.getId(),
+										methodName, componentName, actionName });
 					}
 				}
 			}
