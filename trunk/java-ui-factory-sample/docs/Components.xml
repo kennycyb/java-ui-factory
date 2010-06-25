@@ -4,7 +4,9 @@
   <Content type="html">
      <![CDATA[ 
        
-       JTabbedPane, JMenuBar, JToolBar
+       <a href="http://code.google.com/p/java-ui-factory/wiki/JTabbedPane">JTabbedPane</a>
+       
+       JMenuBar, JToolBar
      ]]>
   </Content> 
 </Module>
