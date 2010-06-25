@@ -4,9 +4,21 @@
   <Content type="html">
      <![CDATA[ 
        
-       <a href="http://code.google.com/p/java-ui-factory/wiki/JTabbedPane">JTabbedPane</a>
-       
-       JMenuBar, JToolBar
+       <table width="100%">
+       	<tr>
+       		<td><a href="http://code.google.com/p/java-ui-factory/wiki/JTabbedPane">JTabbedPane</a></td>
+       		<td></td>
+       	</tr>
+       	<tr>
+       		<td><a href="http://code.google.com/p/java-ui-factory/wiki/JMenuBar">JMenuBar</a></td>
+       		<td></td>
+       	</tr>
+       	<tr>
+       		<td><a href="http://code.google.com/p/java-ui-factory/wiki/JToolBar">JToolBar</a></td>
+       		<td></td>
+       	</tr>
+       	
+       </table>
      ]]>
   </Content> 
 </Module>
