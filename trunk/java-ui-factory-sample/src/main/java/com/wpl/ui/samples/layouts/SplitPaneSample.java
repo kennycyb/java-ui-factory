@@ -23,7 +23,7 @@ import com.wpl.ui.enums.SplitPaneOrientation;
 import com.wpl.ui.enums.SplitPanePosition;
 import com.wpl.ui.factory.SwingFactory;
 
-@UiText("Sample Frame with Inner Classes")
+@UiText("JSplitPane Sample")
 @UiSize(height = 600, width = 800)
 @UiLayout(BorderLayout.class)
 @UiFrameCloseOperation(FrameCloseOperation.EXIT)
