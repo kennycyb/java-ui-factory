@@ -40,6 +40,7 @@ import com.wpl.ui.enums.CursorType;
 import com.wpl.ui.enums.FrameCloseOperation;
 import com.wpl.ui.enums.WindowPosition;
 import com.wpl.ui.factory.SwingFactory;
+import com.wpl.ui.samples.components.swing.CustomJButton;
 
 /**
  * 

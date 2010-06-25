@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.samples.components;
+package com.wpl.ui.samples.components.swing;
 
 import java.awt.BorderLayout;
 
