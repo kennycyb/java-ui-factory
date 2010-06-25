@@ -12,7 +12,7 @@ Using JProgressBar.
 
 == JProgressBar Sample ==
 
-[http://java-ui-factory.googlecode.com/svn/java-ui-factory-sample/trunk/docs/samples/JProgressBarSample.png]
+[http://java-ui-factory.googlecode.com/svn/trunk/java-ui-factory-sample/docs/samples/JProgressBarSample.png]
 
 {{{
 @JFrameProperties(frameCloseOperation = FrameCloseOperation.EXIT, title = "JProgressBarSample", windowPosition = WindowPosition.CENTER)

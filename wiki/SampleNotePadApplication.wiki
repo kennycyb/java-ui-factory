@@ -8,7 +8,7 @@ This sample show how to create a notepad application.
 
 = Details =
 
-[http://java-ui-factory.googlecode.com/svn/java-ui-factory-sample/trunk/docs/samples/NotepadOutput.png]
+[http://java-ui-factory.googlecode.com/svn/trunk/java-ui-factory-sample/docs/samples/NotepadOutput.png]
 
 {{{
 

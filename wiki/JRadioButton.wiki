@@ -13,7 +13,7 @@ Using JRadioButton.
 
 == Sample ==
 
-[http://java-ui-factory.googlecode.com/svn/java-ui-factory-sample/trunk/docs/samples/JRadioButtonSampleOutput.png]
+[http://java-ui-factory.googlecode.com/svn/trunk/java-ui-factory-sample/docs/samples/JRadioButtonSampleOutput.png]
 
 {{{
 @JFrameProperties(frameCloseOperation = FrameCloseOperation.EXIT, title = "JRadioButtonSample", windowPosition = WindowPosition.CENTER)

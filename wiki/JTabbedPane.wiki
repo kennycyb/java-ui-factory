@@ -8,7 +8,7 @@ Using JTabbedPane
 
 = Details =
 
-[http://java-ui-factory.googlecode.com/svn/java-ui-factory-sample/trunk/docs/samples/TabbedPaneSampleOutput.png]
+[http://java-ui-factory.googlecode.com/svn/trunk/java-ui-factory-sample/docs/samples/TabbedPaneSampleOutput.png]
 
 {{{
 @UiWindowPosition(WindowPosition.CENTER)
