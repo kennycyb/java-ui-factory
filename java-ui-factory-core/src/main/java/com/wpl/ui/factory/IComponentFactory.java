@@ -20,4 +20,5 @@ public interface IComponentFactory {
 	public void createInstance(ComponentContext context) throws Exception;
 
 	public void initialize(ComponentContext context);
+
 }

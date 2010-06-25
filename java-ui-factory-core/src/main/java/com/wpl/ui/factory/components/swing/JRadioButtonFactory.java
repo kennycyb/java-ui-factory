@@ -15,18 +15,55 @@
  */
 package com.wpl.ui.factory.components.swing;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JRadioButton;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wpl.ui.annotations.components.JRadioButtonProperties;
+import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.UiAnnotationHandler;
 
 /**
- * 
  * @author kenny
  * @since 1.0
  */
 public class JRadioButtonFactory extends JToggleButtonFactory {
-	@SuppressWarnings("unused")
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(JRadioButtonFactory.class);
 
+	private static final ThreadLocal<Map<String, ButtonGroup>> buttonGroups = new ThreadLocal<Map<String, ButtonGroup>>();
+
+	@UiAnnotationHandler(JRadioButtonProperties.class)
+	void handleJRadioButtonProperties(final ComponentContext context,
+			final JRadioButton component, final JRadioButtonProperties annotate) {
+
+		component.setText(annotate.text());
+		LOGGER.debug("{}|JRadioButton.setText(\"{}\")", context.getId(),
+				annotate.text());
+
+		component.setSelected(annotate.selected());
+		LOGGER.debug("{}|JRadioButton.setSelected({})", context.getId(),
+				annotate.selected());
+
+		if (!annotate.groupId().isEmpty()) {
+			if (buttonGroups.get() == null) {
+				buttonGroups.set(new HashMap<String, ButtonGroup>());
+			}
+
+			ButtonGroup group = buttonGroups.get().get(annotate.groupId());
+			if (group == null) {
+				group = new ButtonGroup();
+				buttonGroups.get().put(annotate.groupId(), group);
+			}
+
+			group.add(component);
+			LOGGER.debug("{}|added to ButtonGroup: {}", context.getId(),
+					annotate.groupId());
+		}
+	}
 }
