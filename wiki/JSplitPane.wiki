@@ -9,8 +9,9 @@ Using JSplitPane.
 = Details =
 
 
-
 == Sample ==
+
+[http://java-ui-factory.googlecode.com/svn/java-ui-factory-sample/trunk/docs/JSplitPaneSampleOutput.png]
 
 {{{
 @UiText("JSplitPane Sample")
