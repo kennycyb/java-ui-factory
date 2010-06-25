@@ -4,7 +4,7 @@
 
 == New ==
 * Split to two project: java-ui-factory-core and java-ui-factory-sample
-* [JSlider], [JSplitPane]
+* [JSlider], [JRadioButton], [JSplitPane]
 
 
 = 0.1 (June 3, 2010) =

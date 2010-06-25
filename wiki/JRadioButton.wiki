@@ -1,0 +1,38 @@
+#summary Using JSplitPane
+#labels Phase-Implementation
+
+= Introduction =
+
+Using JRadioButton.
+
+ * Annotate with [JRadioButtonProperties].
+ * Group buttons automatically by groupId in [JRadioButtonProperties].
+
+= Details =
+
+
+== Sample ==
+
+[http://java-ui-factory.googlecode.com/svn/java-ui-factory-sample/trunk/docs/samples/JRadioButtonSampleOutput.png]
+
+{{{
+@JFrameProperties(frameCloseOperation = FrameCloseOperation.EXIT, title = "JRadioButtonSample", windowPosition = WindowPosition.CENTER)
+@UiLayout(VerticalFlowLayout.class)
+public class JRadioButtonSample extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@JRadioButtonProperties(text = "Male", groupId = "sex", selected = true)
+	JRadioButton male;
+
+	@JRadioButtonProperties(text = "Female", groupId = "sex")
+	JRadioButton female;
+
+	public static void main(final String[] args) {
+		SwingFactory.create(JRadioButtonSample.class).setVisible(true);
+	}
+}
+}}}

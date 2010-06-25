@@ -11,7 +11,7 @@ Using JSplitPane.
 
 == Sample ==
 
-[http://java-ui-factory.googlecode.com/svn/java-ui-factory-sample/trunk/docs/JSplitPaneSampleOutput.png]
+[http://java-ui-factory.googlecode.com/svn/java-ui-factory-sample/trunk/docs/samples/JSplitPaneSampleOutput.png]
 
 {{{
 @UiText("JSplitPane Sample")

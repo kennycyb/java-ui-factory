@@ -9,6 +9,23 @@ This sample show how to implement custom events.
  * Standard Java Events - e.g. [KeyListener], [MouseListener], etc.
  * Custom Event Handlers
  
+== Declaration ==
+
+Standard declaration:
+{{{
+void onComponentName_actionName(Eventobject e) {}
+}}}
+
+ * ComponentName is the name of the declared field name
+ * actionName is the listener's method, e.g. actionPerformed, keyPressed
+ * eventObject is the listener's method parameter, e.g. actionPerformed(ActionEvent e)
+
+Use onThis:
+{{{
+void onThis_windowClosing(WindowEvent e) {}
+}}}
+
+ 
 == Standard Java Events ==
 
 === Sample ===
@@ -16,7 +33,7 @@ This sample show how to implement custom events.
 {{{
 JButton myButton;
 
-void myButton_actionPerformed(ActionEvent e) {
+void onMyButton_actionPerformed(ActionEvent e) {
     // invoked when myButton is clicked
 }
 }}}
