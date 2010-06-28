@@ -23,10 +23,10 @@ import javax.swing.JLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiAlignment;
-import com.wpl.ui.annotations.UiIcon;
-import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.annotations.UiAlignment;
+import com.wpl.ui.factory.annotations.UiIcon;
+import com.wpl.ui.factory.annotations.UiText;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 
 public class JLabelFactory extends JComponentFactory {

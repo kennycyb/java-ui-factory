@@ -20,8 +20,8 @@ import javax.swing.JList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiSimpleItems;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.annotations.UiSimpleItems;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 
 /**

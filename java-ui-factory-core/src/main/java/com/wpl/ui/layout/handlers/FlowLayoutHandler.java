@@ -15,8 +15,8 @@
  */
 package com.wpl.ui.layout.handlers;
 
-import com.wpl.ui.annotations.constraints.UiFlowLayoutConstraint;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.annotations.constraints.UiFlowLayoutConstraint;
 
 /**
  * 

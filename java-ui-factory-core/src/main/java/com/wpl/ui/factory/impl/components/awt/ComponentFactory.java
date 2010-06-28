@@ -38,17 +38,17 @@ import javax.swing.JScrollPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiCursor;
-import com.wpl.ui.annotations.UiFont;
-import com.wpl.ui.annotations.UiLocation;
-import com.wpl.ui.annotations.UiName;
-import com.wpl.ui.annotations.UiScrollable;
-import com.wpl.ui.annotations.UiSize;
-import com.wpl.ui.annotations.UiType;
-import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
-import com.wpl.ui.enums.ScrollBarPolicy;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.IComponentFactory;
+import com.wpl.ui.factory.annotations.UiCursor;
+import com.wpl.ui.factory.annotations.UiFont;
+import com.wpl.ui.factory.annotations.UiLocation;
+import com.wpl.ui.factory.annotations.UiName;
+import com.wpl.ui.factory.annotations.UiScrollable;
+import com.wpl.ui.factory.annotations.UiSize;
+import com.wpl.ui.factory.annotations.UiType;
+import com.wpl.ui.factory.annotations.constraints.UiBorderLayoutConstraint;
+import com.wpl.ui.factory.enums.ScrollBarPolicy;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 import com.wpl.ui.listeners.MethodListenerProxy;
 

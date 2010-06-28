@@ -22,9 +22,9 @@ import javax.swing.RootPaneContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.constraints.UiSpringGridConstraint;
-import com.wpl.ui.enums.SpringGridType;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.annotations.constraints.UiSpringGridConstraint;
+import com.wpl.ui.factory.enums.SpringGridType;
 import com.wpl.ui.utils.SpringUtilities;
 
 /**

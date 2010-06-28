@@ -23,8 +23,8 @@ import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.constraints.UiGridLayoutConstraint;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.annotations.constraints.UiGridLayoutConstraint;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 
 /**

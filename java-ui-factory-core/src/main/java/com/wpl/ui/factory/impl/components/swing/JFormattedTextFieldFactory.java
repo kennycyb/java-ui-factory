@@ -25,8 +25,8 @@ import javax.swing.text.DefaultFormatterFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiTextFormat;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.annotations.UiTextFormat;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 
 /**
