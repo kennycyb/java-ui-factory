@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import com.wpl.ui.factory.SwingFactory;
 import com.wpl.ui.factory.annotations.UiInit;
 import com.wpl.ui.factory.annotations.UiLayout;
+import com.wpl.ui.factory.annotations.UiResource;
 import com.wpl.ui.factory.annotations.UiSimpleItems;
 import com.wpl.ui.factory.annotations.components.JFrameProperties;
 import com.wpl.ui.factory.enums.FrameCloseOperation;
@@ -38,10 +39,19 @@ import com.wpl.ui.layout.managers.VerticalFlowLayout;
 @UiLayout(VerticalFlowLayout.class)
 public class JListSample extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@SuppressWarnings("unused")
 	private static Logger LOGGER = LoggerFactory.getLogger(JListSample.class);
 
-	@UiSimpleItems( { "Monday", "Tuesday", "Wednesday" })
+	@UiSimpleItems({ "Monday", "Tuesday", "Wednesday" })
 	JList simpleList;
+
+	@UiResource("JListSample-List.xml")
+	JList xmlList;
 
 	@UiInit
 	void init() {
