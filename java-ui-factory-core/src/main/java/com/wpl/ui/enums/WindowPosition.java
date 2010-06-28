@@ -33,4 +33,9 @@ public enum WindowPosition {
 	 * @since 1.0
 	 */
 	CENTER,
+
+	/**
+	 * Show a full screen window.
+	 */
+	FULL,
 }

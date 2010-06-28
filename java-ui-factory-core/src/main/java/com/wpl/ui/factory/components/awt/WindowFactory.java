@@ -17,6 +17,7 @@ package com.wpl.ui.factory.components.awt;
 
 import java.awt.Dimension;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowListener;
@@ -34,7 +35,7 @@ public class WindowFactory extends ContainerFactory {
 	private static Logger LOGGER = LoggerFactory.getLogger(WindowFactory.class);
 
 	@Override
-	public void initialize(ComponentContext context) {
+	public void initialize(final ComponentContext context) {
 		super.initialize(context);
 
 		if (context.isPack()) {
@@ -42,6 +43,13 @@ public class WindowFactory extends ContainerFactory {
 		}
 	}
 
+	/**
+	 * Handle WindowPosition.
+	 * 
+	 * @param context
+	 * @param component
+	 * @param value
+	 */
 	protected void windowPosition(final ComponentContext context,
 			final Window component, final WindowPosition value) {
 
@@ -50,7 +58,20 @@ public class WindowFactory extends ContainerFactory {
 			return;
 		}
 
-		// WindowPosition.CENTER
+		if (value == WindowPosition.FULL) {
+			context.addPostInit(new Runnable() {
+				@Override
+				public void run() {
+					final Dimension dim = Toolkit.getDefaultToolkit()
+							.getScreenSize();
+					component.setSize(dim);
+					component.setLocation(0, 0);
+					component.validate();
+					component.repaint();
+				}
+			});
+			return;
+		}
 
 		context.addPostInit(new Runnable() {
 			@Override
@@ -79,22 +100,22 @@ public class WindowFactory extends ContainerFactory {
 	}
 
 	@UiAnnotationHandler(UiWindowPosition.class)
-	void handleUiWindowPosition(ComponentContext context,
-			final Window component, UiWindowPosition annotate) {
+	void handleUiWindowPosition(final ComponentContext context,
+			final Window component, final UiWindowPosition annotate) {
 		windowPosition(context, component, annotate.value());
 	}
 
 	@Override
-	protected void wireComponent(ComponentContext context) {
+	protected void wireComponent(final ComponentContext context) {
 
 		super.wireComponent(context);
 
-		Window window = (Window) context.getComponent();
+		final Window window = (Window) context.getComponent();
 
-		MethodListenerProxy<WindowListener> windowListenerProxy = new MethodListenerProxy<WindowListener>(
+		final MethodListenerProxy<WindowListener> windowListenerProxy = new MethodListenerProxy<WindowListener>(
 				WindowListener.class, context.getActionListeners());
 
-		MethodListenerProxy<WindowFocusListener> windowFocusListenerProxy = new MethodListenerProxy<WindowFocusListener>(
+		final MethodListenerProxy<WindowFocusListener> windowFocusListenerProxy = new MethodListenerProxy<WindowFocusListener>(
 				WindowFocusListener.class, context.getActionListeners());
 
 		if (windowListenerProxy.hasListeningMethod()) {
