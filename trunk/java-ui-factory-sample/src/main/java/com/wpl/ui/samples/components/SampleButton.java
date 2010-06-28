@@ -26,20 +26,20 @@ import javax.swing.SpringLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiCursor;
-import com.wpl.ui.annotations.UiEnabled;
-import com.wpl.ui.annotations.UiIcon;
-import com.wpl.ui.annotations.UiLayout;
-import com.wpl.ui.annotations.UiText;
-import com.wpl.ui.annotations.UiToolTip;
-import com.wpl.ui.annotations.UiType;
-import com.wpl.ui.annotations.constraints.UiSpringGridConstraint;
-import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
-import com.wpl.ui.annotations.frame.UiWindowPosition;
-import com.wpl.ui.enums.CursorType;
-import com.wpl.ui.enums.FrameCloseOperation;
-import com.wpl.ui.enums.WindowPosition;
 import com.wpl.ui.factory.SwingFactory;
+import com.wpl.ui.factory.annotations.UiCursor;
+import com.wpl.ui.factory.annotations.UiEnabled;
+import com.wpl.ui.factory.annotations.UiIcon;
+import com.wpl.ui.factory.annotations.UiLayout;
+import com.wpl.ui.factory.annotations.UiText;
+import com.wpl.ui.factory.annotations.UiToolTip;
+import com.wpl.ui.factory.annotations.UiType;
+import com.wpl.ui.factory.annotations.constraints.UiSpringGridConstraint;
+import com.wpl.ui.factory.annotations.frame.UiFrameCloseOperation;
+import com.wpl.ui.factory.annotations.frame.UiWindowPosition;
+import com.wpl.ui.factory.enums.CursorType;
+import com.wpl.ui.factory.enums.FrameCloseOperation;
+import com.wpl.ui.factory.enums.WindowPosition;
 import com.wpl.ui.samples.components.swing.CustomJButton;
 
 /**

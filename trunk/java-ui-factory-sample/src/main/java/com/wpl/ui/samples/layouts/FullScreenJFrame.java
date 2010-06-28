@@ -13,56 +13,64 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.samples.listeners;
+package com.wpl.ui.samples.layouts;
 
-import java.awt.BorderLayout;
-import java.awt.event.FocusEvent;
-
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.factory.SwingFactory;
 import com.wpl.ui.factory.annotations.UiLayout;
+import com.wpl.ui.factory.annotations.UiRows;
 import com.wpl.ui.factory.annotations.UiScrollable;
+import com.wpl.ui.factory.annotations.UiText;
 import com.wpl.ui.factory.annotations.components.JFrameProperties;
-import com.wpl.ui.factory.annotations.constraints.UiBorderLayoutConstraint;
-import com.wpl.ui.factory.enums.BorderLayoutConstraint;
+import com.wpl.ui.factory.annotations.frame.UiFrameCloseOperation;
+import com.wpl.ui.factory.annotations.frame.UiWindowPosition;
 import com.wpl.ui.factory.enums.FrameCloseOperation;
 import com.wpl.ui.factory.enums.ScrollBarPolicy;
 import com.wpl.ui.factory.enums.WindowPosition;
+import com.wpl.ui.layout.managers.VerticalFlowLayout;
 
 /**
  * 
  * @since 1.0
  */
-@JFrameProperties(frameCloseOperation = FrameCloseOperation.EXIT, height = 600, width = 800, title = "KeyListenerSample", windowPosition = WindowPosition.CENTER)
-@UiLayout(BorderLayout.class)
-public class FocusListenerSample extends JFrame {
+@UiLayout(VerticalFlowLayout.class)
+@JFrameProperties(windowPosition=WindowPosition.FULL, title="Full Screen Sample", frameCloseOperation=FrameCloseOperation.EXIT)
+public class FullScreenJFrame extends JFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	@SuppressWarnings("unused")
 	private static Logger LOGGER = LoggerFactory
-			.getLogger(FocusListenerSample.class);
+			.getLogger(VerticalFlowLayoutSample.class);
 
-	@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
-	@UiScrollable(horizontal = ScrollBarPolicy.ALWAYS, vertical = ScrollBarPolicy.ALWAYS)
-	JTextArea textarea;
+	@UiText("line 1")
+	JLabel line1;
 
-	void onTextarea_focusGained(final FocusEvent e) {
-		// Invoked when a component gains the keyboard focus.
-		LOGGER.debug("onTextarea_focusGained");
-	}
+	@UiText("line 2")
+	JLabel line2;
 
-	void onTextarea_focusLost(final FocusEvent e) {
-		// Invoked when a component loses the keyboard focus.
-		LOGGER.debug("onTextarea_focusGained");
-	}
+	@UiText("text 3")
+	JTextField text3;
 
-	public static void main(final String[] args) {
-		SwingFactory.create(FocusListenerSample.class).setVisible(true);
+	@UiText("check 4")
+	JCheckBox check4;
+
+	@UiScrollable(autoScroll = true, horizontal = ScrollBarPolicy.ALWAYS, vertical = ScrollBarPolicy.ALWAYS)
+	@UiText("=============== text area 5 ===============")
+	@UiRows(5)
+	JTextArea textarea5;
+
+	public static void main(String[] args) {
+		SwingFactory.create(FullScreenJFrame.class).setVisible(true);
 	}
 }

@@ -24,16 +24,16 @@ import javax.swing.JTextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiLayout;
-import com.wpl.ui.annotations.UiRows;
-import com.wpl.ui.annotations.UiScrollable;
-import com.wpl.ui.annotations.UiText;
-import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
-import com.wpl.ui.annotations.frame.UiWindowPosition;
-import com.wpl.ui.enums.FrameCloseOperation;
-import com.wpl.ui.enums.ScrollBarPolicy;
-import com.wpl.ui.enums.WindowPosition;
 import com.wpl.ui.factory.SwingFactory;
+import com.wpl.ui.factory.annotations.UiLayout;
+import com.wpl.ui.factory.annotations.UiRows;
+import com.wpl.ui.factory.annotations.UiScrollable;
+import com.wpl.ui.factory.annotations.UiText;
+import com.wpl.ui.factory.annotations.frame.UiFrameCloseOperation;
+import com.wpl.ui.factory.annotations.frame.UiWindowPosition;
+import com.wpl.ui.factory.enums.FrameCloseOperation;
+import com.wpl.ui.factory.enums.ScrollBarPolicy;
+import com.wpl.ui.factory.enums.WindowPosition;
 import com.wpl.ui.layout.managers.VerticalFlowLayout;
 
 /**

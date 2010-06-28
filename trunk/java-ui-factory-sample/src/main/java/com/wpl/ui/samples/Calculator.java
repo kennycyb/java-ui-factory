@@ -20,7 +20,7 @@ import javax.swing.JFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiInit;
+import com.wpl.ui.factory.annotations.UiInit;
 
 public class Calculator extends JFrame {
 	/**

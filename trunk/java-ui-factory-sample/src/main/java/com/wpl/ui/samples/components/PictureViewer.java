@@ -38,17 +38,17 @@ import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiInit;
-import com.wpl.ui.annotations.UiLayout;
-import com.wpl.ui.annotations.UiText;
-import com.wpl.ui.annotations.components.JFrameProperties;
-import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
-import com.wpl.ui.annotations.constraints.UiFlowLayoutConstraint;
-import com.wpl.ui.enums.BorderLayoutConstraint;
-import com.wpl.ui.enums.FlowLayoutConstraint;
-import com.wpl.ui.enums.FrameCloseOperation;
-import com.wpl.ui.enums.WindowPosition;
 import com.wpl.ui.factory.SwingFactory;
+import com.wpl.ui.factory.annotations.UiInit;
+import com.wpl.ui.factory.annotations.UiLayout;
+import com.wpl.ui.factory.annotations.UiText;
+import com.wpl.ui.factory.annotations.components.JFrameProperties;
+import com.wpl.ui.factory.annotations.constraints.UiBorderLayoutConstraint;
+import com.wpl.ui.factory.annotations.constraints.UiFlowLayoutConstraint;
+import com.wpl.ui.factory.enums.BorderLayoutConstraint;
+import com.wpl.ui.factory.enums.FlowLayoutConstraint;
+import com.wpl.ui.factory.enums.FrameCloseOperation;
+import com.wpl.ui.factory.enums.WindowPosition;
 
 /**
  * 

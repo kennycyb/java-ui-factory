@@ -21,13 +21,13 @@ import javax.swing.JList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiInit;
-import com.wpl.ui.annotations.UiLayout;
-import com.wpl.ui.annotations.UiSimpleItems;
-import com.wpl.ui.annotations.components.JFrameProperties;
-import com.wpl.ui.enums.FrameCloseOperation;
-import com.wpl.ui.enums.WindowPosition;
 import com.wpl.ui.factory.SwingFactory;
+import com.wpl.ui.factory.annotations.UiInit;
+import com.wpl.ui.factory.annotations.UiLayout;
+import com.wpl.ui.factory.annotations.UiSimpleItems;
+import com.wpl.ui.factory.annotations.components.JFrameProperties;
+import com.wpl.ui.factory.enums.FrameCloseOperation;
+import com.wpl.ui.factory.enums.WindowPosition;
 import com.wpl.ui.layout.managers.VerticalFlowLayout;
 
 /**

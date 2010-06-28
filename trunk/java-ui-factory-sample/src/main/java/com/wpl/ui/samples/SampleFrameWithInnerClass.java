@@ -25,19 +25,19 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import com.wpl.ui.annotations.UiLayout;
-import com.wpl.ui.annotations.UiName;
-import com.wpl.ui.annotations.UiScrollable;
-import com.wpl.ui.annotations.UiSize;
-import com.wpl.ui.annotations.UiText;
-import com.wpl.ui.annotations.UiType;
-import com.wpl.ui.annotations.button.UiDefaultButton;
-import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
-import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
-import com.wpl.ui.annotations.frame.UiFrameResizable;
-import com.wpl.ui.enums.BorderLayoutConstraint;
-import com.wpl.ui.enums.FrameCloseOperation;
 import com.wpl.ui.factory.SwingFactory;
+import com.wpl.ui.factory.annotations.UiLayout;
+import com.wpl.ui.factory.annotations.UiName;
+import com.wpl.ui.factory.annotations.UiScrollable;
+import com.wpl.ui.factory.annotations.UiSize;
+import com.wpl.ui.factory.annotations.UiText;
+import com.wpl.ui.factory.annotations.UiType;
+import com.wpl.ui.factory.annotations.button.UiDefaultButton;
+import com.wpl.ui.factory.annotations.constraints.UiBorderLayoutConstraint;
+import com.wpl.ui.factory.annotations.frame.UiFrameCloseOperation;
+import com.wpl.ui.factory.annotations.frame.UiFrameResizable;
+import com.wpl.ui.factory.enums.BorderLayoutConstraint;
+import com.wpl.ui.factory.enums.FrameCloseOperation;
 
 @UiText("Sample Frame with Inner Classes")
 @UiSize(height = 600, width = 800)
