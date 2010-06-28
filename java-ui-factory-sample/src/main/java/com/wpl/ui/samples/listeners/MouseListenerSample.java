@@ -23,10 +23,10 @@ import javax.swing.JFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.components.JFrameProperties;
-import com.wpl.ui.enums.FrameCloseOperation;
-import com.wpl.ui.enums.WindowPosition;
 import com.wpl.ui.factory.SwingFactory;
+import com.wpl.ui.factory.annotations.components.JFrameProperties;
+import com.wpl.ui.factory.enums.FrameCloseOperation;
+import com.wpl.ui.factory.enums.WindowPosition;
 
 /**
  * 

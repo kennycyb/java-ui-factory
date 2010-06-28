@@ -24,18 +24,18 @@ import javax.swing.SpringLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiColumns;
-import com.wpl.ui.annotations.UiLayout;
-import com.wpl.ui.annotations.UiRows;
-import com.wpl.ui.annotations.UiScrollable;
-import com.wpl.ui.annotations.UiText;
-import com.wpl.ui.annotations.constraints.UiSpringGridConstraint;
-import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
-import com.wpl.ui.annotations.frame.UiWindowPosition;
-import com.wpl.ui.enums.FrameCloseOperation;
-import com.wpl.ui.enums.SpringGridType;
-import com.wpl.ui.enums.WindowPosition;
 import com.wpl.ui.factory.SwingFactory;
+import com.wpl.ui.factory.annotations.UiColumns;
+import com.wpl.ui.factory.annotations.UiLayout;
+import com.wpl.ui.factory.annotations.UiRows;
+import com.wpl.ui.factory.annotations.UiScrollable;
+import com.wpl.ui.factory.annotations.UiText;
+import com.wpl.ui.factory.annotations.constraints.UiSpringGridConstraint;
+import com.wpl.ui.factory.annotations.frame.UiFrameCloseOperation;
+import com.wpl.ui.factory.annotations.frame.UiWindowPosition;
+import com.wpl.ui.factory.enums.FrameCloseOperation;
+import com.wpl.ui.factory.enums.SpringGridType;
+import com.wpl.ui.factory.enums.WindowPosition;
 
 /**
  * 

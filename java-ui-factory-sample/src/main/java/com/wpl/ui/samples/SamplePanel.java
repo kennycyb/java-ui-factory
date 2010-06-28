@@ -30,19 +30,19 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import com.wpl.ui.annotations.UiColumns;
-import com.wpl.ui.annotations.UiEchoChar;
-import com.wpl.ui.annotations.UiEnabled;
-import com.wpl.ui.annotations.UiIcon;
-import com.wpl.ui.annotations.UiLayout;
-import com.wpl.ui.annotations.UiRows;
-import com.wpl.ui.annotations.UiText;
-import com.wpl.ui.annotations.UiTextFormat;
-import com.wpl.ui.annotations.UiType;
-import com.wpl.ui.annotations.constraints.UiSpringGridConstraint;
-import com.wpl.ui.annotations.frame.UiWindowPosition;
-import com.wpl.ui.enums.WindowPosition;
 import com.wpl.ui.factory.SwingFactory;
+import com.wpl.ui.factory.annotations.UiColumns;
+import com.wpl.ui.factory.annotations.UiEchoChar;
+import com.wpl.ui.factory.annotations.UiEnabled;
+import com.wpl.ui.factory.annotations.UiIcon;
+import com.wpl.ui.factory.annotations.UiLayout;
+import com.wpl.ui.factory.annotations.UiRows;
+import com.wpl.ui.factory.annotations.UiText;
+import com.wpl.ui.factory.annotations.UiTextFormat;
+import com.wpl.ui.factory.annotations.UiType;
+import com.wpl.ui.factory.annotations.constraints.UiSpringGridConstraint;
+import com.wpl.ui.factory.annotations.frame.UiWindowPosition;
+import com.wpl.ui.factory.enums.WindowPosition;
 
 @UiWindowPosition(WindowPosition.CENTER)
 @UiLayout(SpringLayout.class)

@@ -25,17 +25,17 @@ import javax.swing.event.ChangeEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiColumns;
-import com.wpl.ui.annotations.UiEnabled;
-import com.wpl.ui.annotations.UiLayout;
-import com.wpl.ui.annotations.UiText;
-import com.wpl.ui.annotations.components.JFrameProperties;
-import com.wpl.ui.annotations.components.JSliderProperties;
-import com.wpl.ui.annotations.constraints.UiSpringGridConstraint;
-import com.wpl.ui.enums.FrameCloseOperation;
-import com.wpl.ui.enums.Orientation;
-import com.wpl.ui.enums.WindowPosition;
 import com.wpl.ui.factory.SwingFactory;
+import com.wpl.ui.factory.annotations.UiColumns;
+import com.wpl.ui.factory.annotations.UiEnabled;
+import com.wpl.ui.factory.annotations.UiLayout;
+import com.wpl.ui.factory.annotations.UiText;
+import com.wpl.ui.factory.annotations.components.JFrameProperties;
+import com.wpl.ui.factory.annotations.components.JSliderProperties;
+import com.wpl.ui.factory.annotations.constraints.UiSpringGridConstraint;
+import com.wpl.ui.factory.enums.FrameCloseOperation;
+import com.wpl.ui.factory.enums.Orientation;
+import com.wpl.ui.factory.enums.WindowPosition;
 
 /**
  * 

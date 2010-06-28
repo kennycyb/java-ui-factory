@@ -23,14 +23,14 @@ import javax.swing.SpringLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiLayout;
-import com.wpl.ui.annotations.UiText;
-import com.wpl.ui.annotations.components.JFrameProperties;
-import com.wpl.ui.annotations.components.spinner.SpinnerIntegerModelProperties;
-import com.wpl.ui.annotations.constraints.UiSpringGridConstraint;
-import com.wpl.ui.enums.FrameCloseOperation;
-import com.wpl.ui.enums.WindowPosition;
 import com.wpl.ui.factory.SwingFactory;
+import com.wpl.ui.factory.annotations.UiLayout;
+import com.wpl.ui.factory.annotations.UiText;
+import com.wpl.ui.factory.annotations.components.JFrameProperties;
+import com.wpl.ui.factory.annotations.components.spinner.SpinnerIntegerModelProperties;
+import com.wpl.ui.factory.annotations.constraints.UiSpringGridConstraint;
+import com.wpl.ui.factory.enums.FrameCloseOperation;
+import com.wpl.ui.factory.enums.WindowPosition;
 
 /**
  * 

@@ -21,9 +21,9 @@ import javax.swing.SpringLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiLayout;
-import com.wpl.ui.annotations.frame.UiWindowPosition;
-import com.wpl.ui.enums.WindowPosition;
+import com.wpl.ui.factory.annotations.UiLayout;
+import com.wpl.ui.factory.annotations.frame.UiWindowPosition;
+import com.wpl.ui.factory.enums.WindowPosition;
 
 @UiWindowPosition(WindowPosition.CENTER)
 @UiLayout(SpringLayout.class)

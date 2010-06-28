@@ -31,26 +31,26 @@ import javax.swing.JTextArea;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiAutoWired;
-import com.wpl.ui.annotations.UiComponentOf;
-import com.wpl.ui.annotations.UiFont;
-import com.wpl.ui.annotations.UiInit;
-import com.wpl.ui.annotations.UiLayout;
-import com.wpl.ui.annotations.UiResource;
-import com.wpl.ui.annotations.UiScrollable;
-import com.wpl.ui.annotations.UiSize;
-import com.wpl.ui.annotations.UiText;
-import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
-import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
-import com.wpl.ui.annotations.frame.UiFrameMenu;
-import com.wpl.ui.annotations.frame.UiFrameResizable;
-import com.wpl.ui.annotations.frame.UiWindowPosition;
-import com.wpl.ui.enums.BorderLayoutConstraint;
-import com.wpl.ui.enums.FontStyle;
-import com.wpl.ui.enums.FrameCloseOperation;
-import com.wpl.ui.enums.ScrollBarPolicy;
-import com.wpl.ui.enums.WindowPosition;
 import com.wpl.ui.factory.SwingFactory;
+import com.wpl.ui.factory.annotations.UiAutoWired;
+import com.wpl.ui.factory.annotations.UiComponentOf;
+import com.wpl.ui.factory.annotations.UiFont;
+import com.wpl.ui.factory.annotations.UiInit;
+import com.wpl.ui.factory.annotations.UiLayout;
+import com.wpl.ui.factory.annotations.UiResource;
+import com.wpl.ui.factory.annotations.UiScrollable;
+import com.wpl.ui.factory.annotations.UiSize;
+import com.wpl.ui.factory.annotations.UiText;
+import com.wpl.ui.factory.annotations.constraints.UiBorderLayoutConstraint;
+import com.wpl.ui.factory.annotations.frame.UiFrameCloseOperation;
+import com.wpl.ui.factory.annotations.frame.UiFrameMenu;
+import com.wpl.ui.factory.annotations.frame.UiFrameResizable;
+import com.wpl.ui.factory.annotations.frame.UiWindowPosition;
+import com.wpl.ui.factory.enums.BorderLayoutConstraint;
+import com.wpl.ui.factory.enums.FontStyle;
+import com.wpl.ui.factory.enums.FrameCloseOperation;
+import com.wpl.ui.factory.enums.ScrollBarPolicy;
+import com.wpl.ui.factory.enums.WindowPosition;
 
 /**
  * Sample of Notepad Application.
