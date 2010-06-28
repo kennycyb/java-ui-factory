@@ -1,0 +1,24 @@
+#summary LifeCycle of SwingFactory
+
+|| Annotation || Description ||
+|| UiPreInit || Method to be called before any field is initialized ||
+|| Init || Method to be called after all field is initialized ||
+
+{{{
+class MyFrame extends JFrame {
+
+    JTextArea textarea;
+    
+    
+    @UiPreInit
+    void preInit () {
+        // this method will be call after MyFrame is created, but before textarea (and any other Component) is created.
+    }
+
+    @UiInit
+    void init () {
+        // this method will be call after textarea (and any other Component) is created.
+    }
+
+}
+}}}

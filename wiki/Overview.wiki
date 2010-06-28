@@ -32,3 +32,5 @@ See more details at [EventHandler].
  * [SpringLayout]
  * [GridLayout]
  
+== Misc ==
+ * [LifeCycle] - describes the LifeCycle of a component
