@@ -3,20 +3,22 @@
 = 0.2 (development) =
 
 == New ==
-* Split to two project: java-ui-factory-core and java-ui-factory-sample
-* [JSlider], [JRadioButton], [JSplitPane]
+ * Split to two project: java-ui-factory-core and java-ui-factory-sample
+ * [JSlider], [JRadioButton], [JSplitPane]
+ * [JList] - support loading from Xml
 
 
 = 0.1 (June 3, 2010) =
 
 Components:
-* [JTabbedPane], [JMenuBar], [JToolBar] is supported.
-* [JTextArea], [JTextField], [JPasswordField], is supported.
+ * [JTabbedPane], [JMenuBar], [JToolBar] is supported.
+ * [JTextArea], [JTextField], [JPasswordField], is supported.
+ * [JList] - simple data list
 
 Layouts:
-* [BorderLayout], [SpringLayout], [FlowLayout], [VerticalFlowLayout], [GridLayout] is supported.
+ * [BorderLayout], [SpringLayout], [FlowLayout], [VerticalFlowLayout], [GridLayout] is supported.
 
 Event/Listeners:
-* [KeyListener], [FocusListener], [MouseListener], [MouseMotionListener], [MouseWheelListener]
-* [ActionListener], [ItemListener]
-* [WindowListener], [WindowFocusListener]
+ * [KeyListener], [FocusListener], [MouseListener], [MouseMotionListener], [MouseWheelListener]
+ * [ActionListener], [ItemListener]
+ * [WindowListener], [WindowFocusListener]

@@ -11,6 +11,7 @@
  * [JSplitPane]
  * [JTabbedPane]
  * [JTextField]
+ * [JList]
  
 == Event / Listeners ==
 

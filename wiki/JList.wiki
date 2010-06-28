@@ -1,0 +1,40 @@
+#summary Using JList
+
+ * See the [Overview] for java-ui-factory-core library.
+ 
+{{{
+@JFrameProperties(frameCloseOperation = FrameCloseOperation.EXIT, title = "JComboBoxSample", windowPosition = WindowPosition.CENTER)
+@UiLayout(VerticalFlowLayout.class)
+public class JListSample extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@SuppressWarnings("unused")
+	private static Logger LOGGER = LoggerFactory.getLogger(JListSample.class);
+
+	@UiSimpleItems({ "Monday", "Tuesday", "Wednesday" })
+	JList simpleList;
+
+	@UiResource("JListSample-List.xml")
+	JList xmlList;
+
+	@UiInit
+	void init() {
+	}
+
+	public static void main(final String[] args) {
+		SwingFactory.create(JListSample.class).setVisible(true);
+	}
+}
+}}}
+
+{{{
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<listInfo id="list">
+	<item id="male" text="Male"/>
+	<item id="female" text="Female"/>
+</listInfo>
+}}}
