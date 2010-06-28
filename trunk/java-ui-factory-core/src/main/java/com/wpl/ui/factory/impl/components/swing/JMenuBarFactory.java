@@ -36,15 +36,15 @@ import javax.xml.bind.JAXB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiFont;
-import com.wpl.ui.annotations.UiResource;
-import com.wpl.ui.annotations.frame.UiFrameMenu;
 import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.components.info.menu.MenuBarInfo;
-import com.wpl.ui.factory.components.info.menu.MenuInfo;
-import com.wpl.ui.factory.components.info.menu.MenuItemInfo;
-import com.wpl.ui.factory.components.info.menu.MenuItemType;
+import com.wpl.ui.factory.annotations.UiFont;
+import com.wpl.ui.factory.annotations.UiResource;
+import com.wpl.ui.factory.annotations.frame.UiFrameMenu;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
+import com.wpl.ui.factory.impl.components.xinfo.menu.MenuBarInfo;
+import com.wpl.ui.factory.impl.components.xinfo.menu.MenuInfo;
+import com.wpl.ui.factory.impl.components.xinfo.menu.MenuItemInfo;
+import com.wpl.ui.factory.impl.components.xinfo.menu.MenuItemType;
 import com.wpl.ui.listeners.MethodListenerProxy;
 
 /**

@@ -24,11 +24,11 @@ import javax.swing.ImageIcon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiEnabled;
-import com.wpl.ui.annotations.UiIcon;
-import com.wpl.ui.annotations.UiText;
-import com.wpl.ui.annotations.actions.UiActionCommand;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.annotations.UiEnabled;
+import com.wpl.ui.factory.annotations.UiIcon;
+import com.wpl.ui.factory.annotations.UiText;
+import com.wpl.ui.factory.annotations.actions.UiActionCommand;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 import com.wpl.ui.listeners.MethodListenerProxy;
 

@@ -17,8 +17,8 @@ package com.wpl.ui.factory.impl.components.swing;
 
 import javax.swing.JButton;
 
-import com.wpl.ui.annotations.button.UiDefaultButton;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.annotations.button.UiDefaultButton;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 
 public class JButtonFactory extends AbstractButtonFactory {

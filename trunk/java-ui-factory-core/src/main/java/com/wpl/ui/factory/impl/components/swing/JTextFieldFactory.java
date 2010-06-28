@@ -21,9 +21,9 @@ import javax.swing.JTextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiColumns;
-import com.wpl.ui.annotations.components.JTextFieldProperties;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.annotations.UiColumns;
+import com.wpl.ui.factory.annotations.components.JTextFieldProperties;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 
 /**

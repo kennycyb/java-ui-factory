@@ -21,9 +21,9 @@ import javax.swing.JMenuItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiText;
-import com.wpl.ui.annotations.menu.UiMenuBarItems;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.annotations.UiText;
+import com.wpl.ui.factory.annotations.menu.UiMenuBarItems;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 
 /**

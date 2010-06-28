@@ -20,9 +20,9 @@ import java.awt.Frame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiText;
-import com.wpl.ui.annotations.frame.UiFrameResizable;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.annotations.UiText;
+import com.wpl.ui.factory.annotations.frame.UiFrameResizable;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 
 /**

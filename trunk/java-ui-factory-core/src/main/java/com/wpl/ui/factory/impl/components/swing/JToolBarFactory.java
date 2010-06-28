@@ -32,11 +32,11 @@ import javax.xml.bind.JAXB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiResource;
 import com.wpl.ui.factory.ComponentContext;
-import com.wpl.ui.factory.components.info.toolbar.ToolbarInfo;
-import com.wpl.ui.factory.components.info.toolbar.ToolbarItemInfo;
+import com.wpl.ui.factory.annotations.UiResource;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
+import com.wpl.ui.factory.impl.components.xinfo.toolbar.ToolbarInfo;
+import com.wpl.ui.factory.impl.components.xinfo.toolbar.ToolbarItemInfo;
 import com.wpl.ui.listeners.MethodListenerProxy;
 
 public class JToolBarFactory extends JComponentFactory {

@@ -21,8 +21,8 @@ import javax.swing.event.ChangeListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.components.JSliderProperties;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.annotations.components.JSliderProperties;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 import com.wpl.ui.listeners.MethodListenerProxy;
 

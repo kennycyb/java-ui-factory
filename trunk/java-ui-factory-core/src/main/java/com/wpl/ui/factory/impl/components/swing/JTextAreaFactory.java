@@ -20,12 +20,12 @@ import javax.swing.JTextArea;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiColumns;
-import com.wpl.ui.annotations.UiRows;
-import com.wpl.ui.annotations.components.JTextAreaProperties;
-import com.wpl.ui.annotations.textarea.UiLineWrap;
-import com.wpl.ui.annotations.textarea.UiTabSize;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.annotations.UiColumns;
+import com.wpl.ui.factory.annotations.UiRows;
+import com.wpl.ui.factory.annotations.components.JTextAreaProperties;
+import com.wpl.ui.factory.annotations.textarea.UiLineWrap;
+import com.wpl.ui.factory.annotations.textarea.UiTabSize;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 
 /**

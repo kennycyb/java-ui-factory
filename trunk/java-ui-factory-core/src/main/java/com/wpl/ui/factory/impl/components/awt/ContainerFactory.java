@@ -20,8 +20,8 @@ import java.awt.Container;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiLayout;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.annotations.UiLayout;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 
 public class ContainerFactory extends ComponentFactory {

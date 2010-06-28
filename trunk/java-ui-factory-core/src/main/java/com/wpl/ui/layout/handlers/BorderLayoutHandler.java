@@ -18,8 +18,8 @@ package com.wpl.ui.layout.handlers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.constraints.UiBorderLayoutConstraint;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.annotations.constraints.UiBorderLayoutConstraint;
 
 /**
  * 

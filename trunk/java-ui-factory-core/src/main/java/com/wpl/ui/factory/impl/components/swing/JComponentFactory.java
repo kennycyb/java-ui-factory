@@ -20,9 +20,9 @@ import javax.swing.JComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiLayout;
-import com.wpl.ui.annotations.UiToolTip;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.annotations.UiLayout;
+import com.wpl.ui.factory.annotations.UiToolTip;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 import com.wpl.ui.factory.impl.components.awt.ComponentFactory;
 

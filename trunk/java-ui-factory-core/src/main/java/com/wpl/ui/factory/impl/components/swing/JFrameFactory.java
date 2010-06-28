@@ -22,11 +22,11 @@ import javax.swing.JFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.UiLayout;
-import com.wpl.ui.annotations.components.JFrameProperties;
-import com.wpl.ui.annotations.frame.UiFrameCloseOperation;
-import com.wpl.ui.enums.FrameCloseOperation;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.annotations.UiLayout;
+import com.wpl.ui.factory.annotations.components.JFrameProperties;
+import com.wpl.ui.factory.annotations.frame.UiFrameCloseOperation;
+import com.wpl.ui.factory.enums.FrameCloseOperation;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 import com.wpl.ui.factory.impl.components.awt.FrameFactory;
 import com.wpl.ui.layout.managers.NullLayout;

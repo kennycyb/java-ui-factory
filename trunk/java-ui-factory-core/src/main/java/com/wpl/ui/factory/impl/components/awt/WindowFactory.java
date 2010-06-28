@@ -25,9 +25,9 @@ import java.awt.event.WindowListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.annotations.frame.UiWindowPosition;
-import com.wpl.ui.enums.WindowPosition;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.annotations.frame.UiWindowPosition;
+import com.wpl.ui.factory.enums.WindowPosition;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 import com.wpl.ui.listeners.MethodListenerProxy;
 

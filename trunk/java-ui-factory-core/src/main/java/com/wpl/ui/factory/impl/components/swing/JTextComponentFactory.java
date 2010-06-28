@@ -19,8 +19,8 @@ import java.awt.event.InputMethodListener;
 
 import javax.swing.text.JTextComponent;
 
-import com.wpl.ui.annotations.UiText;
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.annotations.UiText;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 import com.wpl.ui.listeners.MethodListenerProxy;
 
