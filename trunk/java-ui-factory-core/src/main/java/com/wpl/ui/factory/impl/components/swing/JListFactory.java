@@ -15,14 +15,19 @@
  */
 package com.wpl.ui.factory.impl.components.swing;
 
+import java.io.InputStream;
+
 import javax.swing.JList;
+import javax.xml.bind.JAXB;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.annotations.UiResource;
 import com.wpl.ui.factory.annotations.UiSimpleItems;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
+import com.wpl.ui.factory.impl.components.xinfo.list.ListInfo;
 
 /**
  * 
@@ -48,5 +53,32 @@ public class JListFactory extends JComponentFactory {
 			LOGGER.debug("{}|JList.setListData(count={})", context.getId(),
 					annotate.value().length);
 		}
+	}
+
+	/**
+	 * 
+	 * @since 1.0
+	 * @param context
+	 * @param component
+	 * @param annotate
+	 */
+	@UiAnnotationHandler(UiResource.class)
+	void handleUiResource(final ComponentContext context,
+			final JList component, final UiResource annotate) {
+
+		final InputStream in = this.getClass().getClassLoader()
+				.getResourceAsStream(annotate.value());
+
+		if (in == null) {
+			LOGGER.error("{}|resource {} not found", context.getId(),
+					annotate.value());
+			return;
+		}
+
+		final ListInfo info = JAXB.unmarshal(in, ListInfo.class);
+
+		component.setListData(info.getItems().toArray());
+		LOGGER.debug("{}|JList.setListData(count={})", context.getId(), info
+				.getItems().size());
 	}
 }

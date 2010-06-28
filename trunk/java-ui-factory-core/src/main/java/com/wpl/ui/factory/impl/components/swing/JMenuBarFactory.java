@@ -65,7 +65,7 @@ public class JMenuBarFactory extends JComponentFactory {
 	 */
 	@UiAnnotationHandler(UiFrameMenu.class)
 	protected void handleUiFrameMenu(final ComponentContext context,
-			final JMenuBar component, UiFrameMenu annotate) {
+			final JMenuBar component, final UiFrameMenu annotate) {
 
 		if (context.getParentContext() == null
 				|| context.getParentContext().getComponent() == null) {
@@ -87,13 +87,14 @@ public class JMenuBarFactory extends JComponentFactory {
 	 */
 	@UiAnnotationHandler(UiResource.class)
 	protected void handleUiResource(final ComponentContext context,
-			final JMenuBar component, UiResource annotate) {
+			final JMenuBar component, final UiResource annotate) {
 
-		InputStream in = this.getClass().getClassLoader().getResourceAsStream(
-				annotate.value());
+		final InputStream in = this.getClass().getClassLoader()
+				.getResourceAsStream(annotate.value());
 
 		if (in == null) {
-			LOGGER.error("resource {} not found", annotate.value());
+			LOGGER.error("{}|resource {} not found", context.getId(),
+					annotate.value());
 			return;
 		}
 
@@ -101,7 +102,7 @@ public class JMenuBarFactory extends JComponentFactory {
 		final UiFont uiFont = context.getAnnotatedElement().getAnnotation(
 				UiFont.class);
 
-		LOGGER.debug("(JMenuBar){}.id={}", context.getId(), menuInfo.getId());
+		LOGGER.debug("{}|JMenuBar-id={}", context.getId(), menuInfo.getId());
 
 		Font font = null;
 		if (uiFont != null) {
@@ -110,28 +111,28 @@ public class JMenuBarFactory extends JComponentFactory {
 					uiFont.size());
 		}
 
-		MethodListenerProxy<ActionListener> actionListenerProxy = new MethodListenerProxy<ActionListener>(
+		final MethodListenerProxy<ActionListener> actionListenerProxy = new MethodListenerProxy<ActionListener>(
 				ActionListener.class, context.getActionListeners());
 
-		MethodListenerProxy<ItemListener> itemListenerProxy = new MethodListenerProxy<ItemListener>(
+		final MethodListenerProxy<ItemListener> itemListenerProxy = new MethodListenerProxy<ItemListener>(
 				ItemListener.class, context.getActionListeners());
 
 		int menuIndex = -1;
 
-		for (MenuInfo menuItemInfo : menuInfo.getMenu()) {
+		for (final MenuInfo menuItemInfo : menuInfo.getMenu()) {
 
-			Map<String, ButtonGroup> radioGroup = new HashMap<String, ButtonGroup>();
+			final Map<String, ButtonGroup> radioGroup = new HashMap<String, ButtonGroup>();
 
 			menuIndex++;
 
-			JMenu menu = new JMenu(menuItemInfo.getText());
+			final JMenu menu = new JMenu(menuItemInfo.getText());
 			component.add(menu);
 
 			if (menuItemInfo.getId() == null) {
 				menuItemInfo.setId(menuItemInfo.getId());
 			}
 
-			ComponentContext child = new ComponentContext();
+			final ComponentContext child = new ComponentContext();
 			child.setId(menuItemInfo.getId());
 			child.setComponent(menu);
 			child.setDeclared(false);
@@ -149,7 +150,7 @@ public class JMenuBarFactory extends JComponentFactory {
 
 			int menuChildIndex = -1;
 
-			for (MenuItemInfo item : menuItemInfo.getMenuItem()) {
+			for (final MenuItemInfo item : menuItemInfo.getMenuItem()) {
 				if (item.getType() == MenuItemType.SEPARATOR) {
 					menu.addSeparator();
 					continue;
@@ -192,7 +193,7 @@ public class JMenuBarFactory extends JComponentFactory {
 				}
 
 				if (item.getIcon() != null) {
-					URL url = getClass().getClassLoader().getResource(
+					final URL url = getClass().getClassLoader().getResource(
 							item.getIcon());
 					if (url != null) {
 						mi.setIcon(new ImageIcon(url));
@@ -203,7 +204,7 @@ public class JMenuBarFactory extends JComponentFactory {
 					item.setId(item.getText());
 				}
 
-				ComponentContext menuChild = new ComponentContext();
+				final ComponentContext menuChild = new ComponentContext();
 				menuChild.setId(item.getId());
 				menuChild.setComponent(mi);
 				child.addChild(menuChild);
