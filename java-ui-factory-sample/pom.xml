@@ -31,5 +31,10 @@
 			<artifactId>java-ui-factory-core</artifactId>
 			<version>0.2-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>java-ui-factory</groupId>
+			<artifactId>java-ui-factory-ext</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>		
 	</dependencies>
 </project>

@@ -15,19 +15,28 @@
  */
 package com.wpl.ui.samples.components.swing;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.ListModel;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wpl.ui.ext.MutableList;
 import com.wpl.ui.factory.SwingFactory;
 import com.wpl.ui.factory.annotations.UiInit;
 import com.wpl.ui.factory.annotations.UiLayout;
 import com.wpl.ui.factory.annotations.UiResource;
+import com.wpl.ui.factory.annotations.UiScrollable;
 import com.wpl.ui.factory.annotations.UiSimpleItems;
 import com.wpl.ui.factory.annotations.components.JFrameProperties;
 import com.wpl.ui.factory.enums.FrameCloseOperation;
+import com.wpl.ui.factory.enums.ScrollBarPolicy;
 import com.wpl.ui.factory.enums.WindowPosition;
 import com.wpl.ui.layout.managers.VerticalFlowLayout;
 
@@ -51,10 +60,16 @@ public class JListSample extends JFrame {
 	JList simpleList;
 
 	@UiResource("JListSample-List.xml")
+	@UiScrollable(horizontal = ScrollBarPolicy.ALWAYS, vertical = ScrollBarPolicy.ALWAYS)
 	JList xmlList;
+	
+	MutableList mutableList;
 
 	@UiInit
 	void init() {
+		mutableList.addElement("HELLO WORLD");
+		mutableList.addElement("WHO");
+		
 	}
 
 	public static void main(final String[] args) {
