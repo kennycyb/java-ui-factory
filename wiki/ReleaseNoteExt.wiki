@@ -1,0 +1,6 @@
+#summary Release Note for java-ui-factory-ext
+
+1.0 (Development)
+
+New:
+ * [MutableList] - Dynamic JList that could add / remove elements
