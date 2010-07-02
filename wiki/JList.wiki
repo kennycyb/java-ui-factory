@@ -2,6 +2,41 @@
 
  * See the [Overview] for java-ui-factory-core library.
  
+= Features =
+
+ * Using UiSimpleItems annotation
+ * Using XML
+ * Scrollable  
+ 
+In java-ui-factory-ext:
+ * [MutableList]
+ 
+== Using UiSimpleItems == 
+
+{{{ 
+@UiSimpleItems({ "Monday", "Tuesday", "Wednesday" })
+JList simpleList;
+}}}
+
+== Using XML ==
+
+{{{
+@UiResource("JListSample-List.xml")
+JList xmlList;
+}}
+
+== Scrollable JList ==
+
+ * Simply annotate with UiScrollable, the JList will be scrollable
+
+{{{
+@UiResource("JListSample-List.xml")
+@UiScrollable
+JList xmlList;
+}}}
+ 
+== Sample Code ==
+ 
 {{{
 @JFrameProperties(frameCloseOperation = FrameCloseOperation.EXIT, title = "JComboBoxSample", windowPosition = WindowPosition.CENTER)
 @UiLayout(VerticalFlowLayout.class)
