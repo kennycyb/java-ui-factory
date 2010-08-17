@@ -63,8 +63,11 @@ import javax.swing.SpringLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wpl.ui.components.IComponent;
+import com.wpl.ui.components.ILabel;
 import com.wpl.ui.events.EventHandler;
 import com.wpl.ui.events.IEventHandler;
+import com.wpl.ui.factory.annotations.DefaultFactory;
 import com.wpl.ui.factory.annotations.UiAddComponentTo;
 import com.wpl.ui.factory.annotations.UiComponentOf;
 import com.wpl.ui.factory.annotations.UiInit;
@@ -85,6 +88,7 @@ import com.wpl.ui.factory.impl.components.awt.TextAreaFactory;
 import com.wpl.ui.factory.impl.components.awt.TextComponentFactory;
 import com.wpl.ui.factory.impl.components.awt.TextFieldFactory;
 import com.wpl.ui.factory.impl.components.awt.WindowFactory;
+import com.wpl.ui.factory.impl.components.juf.ULabelFactory;
 import com.wpl.ui.factory.impl.components.swing.JButtonFactory;
 import com.wpl.ui.factory.impl.components.swing.JCheckBoxFactory;
 import com.wpl.ui.factory.impl.components.swing.JComboBoxFactory;
@@ -177,6 +181,10 @@ public class SwingFactory implements IUiFactory {
 		sDefaultFactory.put(Dialog.class, new DialogFactory());
 		sDefaultFactory.put(FileDialog.class, new FileDialogFactory());
 		sDefaultFactory.put(JDialog.class, new JDialogFactory());
+
+		// JUF
+		sDefaultFactory.put(ILabel.class, new ULabelFactory());
+
 	}
 
 	static {
@@ -206,10 +214,27 @@ public class SwingFactory implements IUiFactory {
 			return null;
 		}
 
-		final IComponentFactory factory = mComponentFactory.get(type);
+		IComponentFactory factory = mComponentFactory.get(type);
 
 		if (factory != null) {
 			return factory;
+		}
+
+		final DefaultFactory defaultFactory = type
+				.getAnnotation(DefaultFactory.class);
+
+		if (defaultFactory != null) {
+			try {
+				factory = defaultFactory.value().newInstance();
+
+				mComponentFactory.put(type, factory);
+
+				return factory;
+
+			} catch (final Throwable ignored) {
+				LOGGER.warn("Failed to create DefaultFactory {} for {}",
+						defaultFactory.value().getName(), type.getName());
+			}
 		}
 
 		return findFactory(type.getSuperclass());
@@ -495,7 +520,8 @@ public class SwingFactory implements IUiFactory {
 				continue;
 			}
 
-			if (!Component.class.isAssignableFrom(f.getType())) {
+			if (!(Component.class.isAssignableFrom(f.getType()) || IComponent.class
+					.isAssignableFrom(f.getType()))) {
 				LOGGER.debug("{}|ignore non-component field: {}",
 						componentContext.getId(), f.getName());
 				continue;
@@ -619,6 +645,46 @@ public class SwingFactory implements IUiFactory {
 							.toLowerCase() + methodName.substring(3, action);
 					final String actionName = methodName.substring(action + 1);
 
+					if (actionName.equalsIgnoreCase("init")) {
+						componentContext.addPreInit(new Runnable() {
+							@Override
+							public void run() {
+
+								final ComponentContext childContext = componentName
+										.equals("this") ? componentContext
+										: componentContext
+												.findChildContext(componentName);
+
+								if (childContext == null) {
+									LOGGER.debug(
+											"{}|child context not found {}",
+											componentContext.getId(),
+											componentName);
+									return;
+								}
+
+								childContext.addPreInit(new Runnable() {
+									@Override
+									public void run() {
+										try {
+											m.setAccessible(true);
+											m.invoke(componentContext
+													.getComponent());
+										} catch (final Throwable t) {
+											LOGGER.error(
+													"{}|component init method {} failed {}",
+													new Object[] {
+															componentContext
+																	.getId(),
+															m.getName(), t });
+										}
+									}
+								});
+							}
+						});
+						continue;
+					}
+
 					componentContext.addPreInit(new Runnable() {
 						@SuppressWarnings("unchecked")
 						@Override
@@ -698,5 +764,9 @@ public class SwingFactory implements IUiFactory {
 				mainContext.getId(), System.currentTimeMillis() - startTime);
 
 		return componentClass.cast(mainContext.getComponent());
+	}
+
+	public static SwingFactory instance() {
+		return sInstance;
 	}
 }
