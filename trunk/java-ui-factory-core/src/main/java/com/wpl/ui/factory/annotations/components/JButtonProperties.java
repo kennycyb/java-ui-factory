@@ -13,31 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.factory.impl.components.juf;
+package com.wpl.ui.factory.annotations.components;
 
-import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.wpl.ui.components.ILabel;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * 
  * @since 1.0
  */
-public class ULabel extends UComponent<JLabel> implements ILabel {
-	@SuppressWarnings("unused")
-	private static Logger LOGGER = LoggerFactory.getLogger(ULabel.class);
-
-	@Override
-	public void setText(final String text) {
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				getComponent().setText(text);
-			}
-		});
-	}
+@Target({ ElementType.FIELD })
+@Retention(RetentionPolicy.RUNTIME)
+public @interface JButtonProperties {
+	String text() default "";
 }

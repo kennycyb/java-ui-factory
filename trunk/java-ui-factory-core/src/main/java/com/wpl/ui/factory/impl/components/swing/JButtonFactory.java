@@ -19,6 +19,7 @@ import javax.swing.JButton;
 
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.annotations.button.UiDefaultButton;
+import com.wpl.ui.factory.annotations.components.JButtonProperties;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 
 public class JButtonFactory extends AbstractButtonFactory {
@@ -27,6 +28,13 @@ public class JButtonFactory extends AbstractButtonFactory {
 	public void handleUiDefaultButton(final ComponentContext context,
 			final JButton component, final UiDefaultButton annotate) {
 		component.setDefaultCapable(true);
+	}
+
+	@UiAnnotationHandler(JButtonProperties.class)
+	protected void handleJFrameProperties(final ComponentContext context,
+			final JButton component, final JButtonProperties annotate) {
+
+		component.setText(annotate.text());
 	}
 
 	@Override

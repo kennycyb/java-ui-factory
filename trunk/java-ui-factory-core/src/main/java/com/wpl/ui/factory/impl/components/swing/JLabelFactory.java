@@ -27,6 +27,7 @@ import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.annotations.UiAlignment;
 import com.wpl.ui.factory.annotations.UiIcon;
 import com.wpl.ui.factory.annotations.UiText;
+import com.wpl.ui.factory.annotations.components.JLabelProperties;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 
 public class JLabelFactory extends JComponentFactory {
@@ -34,33 +35,41 @@ public class JLabelFactory extends JComponentFactory {
 	private static Logger LOGGER = LoggerFactory.getLogger(JLabelFactory.class);
 
 	@UiAnnotationHandler(UiText.class)
-	protected void handleUiText(ComponentContext context, JLabel component,
-			UiText annotate) {
+	protected void handleUiText(final ComponentContext context,
+			final JLabel component, final UiText annotate) {
 		component.setText(annotate.value());
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("{}|JLabel.setText(\"{}\")", context.getId(), annotate
-					.value());
+			LOGGER.debug("{}|JLabel.setText(\"{}\")", context.getId(),
+					annotate.value());
 		}
 	}
 
+	@UiAnnotationHandler(JLabelProperties.class)
+	protected void handleJFrameProperties(final ComponentContext context,
+			final JLabel component, final JLabelProperties annotate) {
+
+		component.setText(annotate.text());
+	}
+
 	@UiAnnotationHandler(UiAlignment.class)
-	protected void handleUiAlignment(ComponentContext context,
-			JLabel component, UiAlignment annotate) {
+	protected void handleUiAlignment(final ComponentContext context,
+			final JLabel component, final UiAlignment annotate) {
 
 		component.setHorizontalAlignment(annotate.horizontal()
 				.getSwingConstant());
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("{}|JLabel.setHorizontalAlignment({})", context
-					.getId(), annotate.horizontal());
+			LOGGER.debug("{}|JLabel.setHorizontalAlignment({})",
+					context.getId(), annotate.horizontal());
 		}
 	}
 
 	@UiAnnotationHandler(UiIcon.class)
-	protected void handleUiIcon(ComponentContext context, JLabel component,
-			UiIcon annotate) {
-		URL url = getClass().getClassLoader().getResource(annotate.value());
+	protected void handleUiIcon(final ComponentContext context,
+			final JLabel component, final UiIcon annotate) {
+		final URL url = getClass().getClassLoader().getResource(
+				annotate.value());
 		if (url == null) {
 			LOGGER.warn("{}|JLabel - icon not found - {}", context.getId(),
 					annotate.value());
@@ -69,8 +78,8 @@ public class JLabelFactory extends JComponentFactory {
 
 		component.setIcon(new ImageIcon(url));
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("{}|JLabel.setIcon(new ImageIcon(\"{}\"))", context
-					.getId(), annotate.value());
+			LOGGER.debug("{}|JLabel.setIcon(new ImageIcon(\"{}\"))",
+					context.getId(), annotate.value());
 		}
 	}
 }
