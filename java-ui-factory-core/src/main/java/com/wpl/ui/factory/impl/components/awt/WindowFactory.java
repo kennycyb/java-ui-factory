@@ -53,10 +53,14 @@ public class WindowFactory extends ContainerFactory {
 	protected void windowPosition(final ComponentContext context,
 			final Window component, final WindowPosition value) {
 
+		// Default position - do nothing
+
 		if (value == WindowPosition.DEFAULT) {
 			LOGGER.debug("{}|default window position", context.getId());
 			return;
 		}
+
+		// Full screen
 
 		if (value == WindowPosition.FULL) {
 			context.addPostInit(new Runnable() {
@@ -72,6 +76,8 @@ public class WindowFactory extends ContainerFactory {
 			});
 			return;
 		}
+
+		// Center the Window
 
 		context.addPostInit(new Runnable() {
 			@Override
