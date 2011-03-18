@@ -32,19 +32,25 @@ import com.wpl.ui.factory.annotations.actions.UiActionCommand;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 import com.wpl.ui.listeners.MethodListenerProxy;
 
+/**
+ * Component Factory for AbstractButton.
+ * 
+ * @since 1.0
+ */
 public abstract class AbstractButtonFactory extends JComponentFactory {
 
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(AbstractButtonFactory.class);
 
 	@Override
-	public void wireComponent(ComponentContext context) {
+	public void wireComponent(final ComponentContext context) {
 
 		super.wireComponent(context);
 
-		AbstractButton component = (AbstractButton) context.getComponent();
+		final AbstractButton component = (AbstractButton) context
+				.getComponent();
 
-		MethodListenerProxy<ActionListener> actionListenerProxy = new MethodListenerProxy<ActionListener>(
+		final MethodListenerProxy<ActionListener> actionListenerProxy = new MethodListenerProxy<ActionListener>(
 				ActionListener.class, context.getActionListeners());
 
 		if (actionListenerProxy.hasListeningMethod()) {
@@ -53,27 +59,28 @@ public abstract class AbstractButtonFactory extends JComponentFactory {
 	}
 
 	@UiAnnotationHandler(UiText.class)
-	protected void handleUiText(ComponentContext context,
-			AbstractButton component, UiText text) {
+	protected void handleUiText(final ComponentContext context,
+			final AbstractButton component, final UiText text) {
 		component.setText(text.value());
 	}
 
 	@UiAnnotationHandler(UiActionCommand.class)
-	protected void handleUiActionCommand(ComponentContext context,
-			AbstractButton component, UiActionCommand annotate) {
+	protected void handleUiActionCommand(final ComponentContext context,
+			final AbstractButton component, final UiActionCommand annotate) {
 		component.setActionCommand(annotate.value());
 	}
 
 	@UiAnnotationHandler(UiEnabled.class)
-	protected void handleUiEnabled(ComponentContext context,
-			AbstractButton component, UiEnabled annotate) {
+	protected void handleUiEnabled(final ComponentContext context,
+			final AbstractButton component, final UiEnabled annotate) {
 		component.setEnabled(annotate.value());
 	}
 
 	@UiAnnotationHandler(UiIcon.class)
-	protected void handleUiIcon(ComponentContext context,
-			AbstractButton component, UiIcon annotate) {
-		URL url = getClass().getClassLoader().getResource(annotate.value());
+	protected void handleUiIcon(final ComponentContext context,
+			final AbstractButton component, final UiIcon annotate) {
+		final URL url = getClass().getClassLoader().getResource(
+				annotate.value());
 		if (url == null) {
 			LOGGER.warn("(AbstractButtonFactory){} - icon not found - {}",
 					context.getId(), annotate.value());

@@ -132,7 +132,14 @@ public class SwingFactory implements IUiFactory {
 		return sInstance.createComponent(componentClass);
 	}
 
+	/**
+	 * Default component factory that built-in the library.
+	 */
 	private static Map<Class<?>, IComponentFactory> sDefaultFactory = new HashMap<Class<?>, IComponentFactory>();
+
+	/**
+	 * Default layout handler that built-in the library.
+	 */
 	private static Map<Class<?>, ILayoutHandler> sDefaultLayout = new HashMap<Class<?>, ILayoutHandler>();
 
 	static {
@@ -208,6 +215,9 @@ public class SwingFactory implements IUiFactory {
 		mLayoutHandlerMap.putAll(sDefaultLayout);
 	}
 
+	/**
+	 * Find a factory for a specified class.
+	 */
 	public IComponentFactory findFactory(final Class<?> type) {
 
 		if (type == Object.class || type.isPrimitive() || type.isEnum()) {
