@@ -29,7 +29,7 @@ public class VerticalFlowLayoutHandler implements ILayoutHandler {
 			.getLogger(VerticalFlowLayoutHandler.class);
 
 	@Override
-	public void finalLayout(ComponentContext containerContext) {
+	public void finalLayout(final ComponentContext containerContext) {
 		/*
 		 * 
 		 * Container container = null;
@@ -47,7 +47,7 @@ public class VerticalFlowLayoutHandler implements ILayoutHandler {
 	}
 
 	@Override
-	public void layoutComponent(ComponentContext componentContext) {
+	public void layoutComponent(final ComponentContext componentContext) {
 
 		componentContext.getContainer().add(
 				componentContext.getEnclosedComponent());

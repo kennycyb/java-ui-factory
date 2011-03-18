@@ -15,15 +15,16 @@
  */
 package com.wpl.ui.components;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.awt.Component;
 
 /**
- *
+ * 
  * @since 1.0
  */
 public interface IComponent {
 
+	/**
+	 * @return The AWT component
+	 */
+	public Component getComponent();
 }
-
-

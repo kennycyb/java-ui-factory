@@ -40,6 +40,7 @@ import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.IComponentFactory;
+import com.wpl.ui.factory.IUiFactory;
 import com.wpl.ui.factory.annotations.UiCursor;
 import com.wpl.ui.factory.annotations.UiFont;
 import com.wpl.ui.factory.annotations.UiLocation;
@@ -89,7 +90,8 @@ public class ComponentFactory implements IComponentFactory {
 		}
 	}
 
-	public void createInstance(final ComponentContext context) throws Exception {
+	public void createInstance(final IUiFactory factory,
+			final ComponentContext context) throws Exception {
 
 		Object instance = null;
 
@@ -109,8 +111,8 @@ public class ComponentFactory implements IComponentFactory {
 					.getParentContext().getComponent());
 		} else {
 
-			LOGGER.debug("{}|creating from {}", context.getId(), context
-					.getType());
+			LOGGER.debug("{}|creating from {}", context.getId(),
+					context.getType());
 
 			instance = context.getType().newInstance();
 		}
@@ -158,8 +160,8 @@ public class ComponentFactory implements IComponentFactory {
 			final Method handler = mAnnotationHandlerMap.get(annotate
 					.annotationType());
 			if (handler == null) {
-				LOGGER.debug("{}|No handler for {}", context.getId(), annotate
-						.annotationType());
+				LOGGER.debug("{}|No handler for {}", context.getId(),
+						annotate.annotationType());
 				continue;
 			}
 
@@ -196,7 +198,13 @@ public class ComponentFactory implements IComponentFactory {
 		LOGGER.debug("{}|listeners={}", context.getId(), context
 				.getActionListeners().size());
 
-		final Component component = context.getComponent();
+		final Object c = context.getComponent();
+
+		if (!(c instanceof Component)) {
+			return;
+		}
+
+		final Component component = (Component) c;
 
 		final MethodListenerProxy<MouseMotionListener> mouseMotionListenerProxy = new MethodListenerProxy<MouseMotionListener>(
 				MouseMotionListener.class, context.getActionListeners());
@@ -247,8 +255,8 @@ public class ComponentFactory implements IComponentFactory {
 	protected void handleUiCursor(final ComponentContext context,
 			final Component component, final UiCursor annotate) {
 		component.setCursor(new Cursor(annotate.value().getSwingConstant()));
-		LOGGER.debug("{}|Component.setCursor({})", context.getId(), annotate
-				.value());
+		LOGGER.debug("{}|Component.setCursor({})", context.getId(),
+				annotate.value());
 	}
 
 	@UiAnnotationHandler(UiBorderLayoutConstraint.class)
@@ -256,8 +264,8 @@ public class ComponentFactory implements IComponentFactory {
 			final ComponentContext context, final Component component,
 			final UiBorderLayoutConstraint annotate) {
 
-		LOGGER.debug("{}|BorderLayoutConstraint.{}", context.getId(), annotate
-				.value());
+		LOGGER.debug("{}|BorderLayoutConstraint.{}", context.getId(),
+				annotate.value());
 	}
 
 	@UiAnnotationHandler(UiSize.class)
@@ -268,7 +276,8 @@ public class ComponentFactory implements IComponentFactory {
 				.height()));
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("{}|Component.setSize(width={}, height={})",
+			LOGGER.debug(
+					"{}|Component.setSize(width={}, height={})",
 					new Object[] { context.getId(), annotate.width(),
 							annotate.height() });
 		}
@@ -306,8 +315,8 @@ public class ComponentFactory implements IComponentFactory {
 		component.setName(name.value());
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("{}|Component.setName(\"{}\")", context.getId(), name
-					.value());
+			LOGGER.debug("{}|Component.setName(\"{}\")", context.getId(),
+					name.value());
 		}
 	}
 

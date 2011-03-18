@@ -15,6 +15,17 @@
  */
 package com.wpl.ui.factory;
 
+/**
+ * 
+ * @since 1.0
+ */
 public interface IUiFactory {
-
+	/**
+	 * Find a factory that will create a specified class.
+	 * 
+	 * @param type
+	 * @return IComponentFactory
+	 * @since 1.0
+	 */
+	public IComponentFactory findFactory(final Class<?> type);
 }

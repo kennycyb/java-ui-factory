@@ -26,7 +26,8 @@ import java.lang.annotation.Target;
  * The method must have 0 argument, e.g.
  * 
  * <pre>
- * public void init() {
+ * &#064;UiInit
+ * void init() {
  * 
  * }
  * </pre>
@@ -35,7 +36,7 @@ import java.lang.annotation.Target;
  * 
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.METHOD })
+@Target({ ElementType.METHOD })
 public @interface UiInit {
 
 }

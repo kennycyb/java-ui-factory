@@ -39,10 +39,12 @@ public class JTabbedPaneFactory extends JComponentFactory {
 			@Override
 			public void run() {
 
-				JTabbedPane tabPane = (JTabbedPane) context.getComponent();
+				final JTabbedPane tabPane = (JTabbedPane) context
+						.getComponent();
 
-				for (ComponentContext child : context.getChildren()) {
-					if (child.getComponent() == null) {
+				for (final ComponentContext child : context.getChildren()) {
+					if (child.getComponent() == null
+							|| child.getComponent() == null) {
 						continue;
 					}
 					tabPane.add(child.getComponent());

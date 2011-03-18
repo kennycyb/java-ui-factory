@@ -15,6 +15,8 @@
  */
 package com.wpl.ui.components;
 
+import javax.swing.Icon;
+
 /**
  * 
  * @since 1.0
@@ -22,4 +24,6 @@ package com.wpl.ui.components;
 public interface ILabel extends IComponent {
 
 	public void setText(String text);
+
+	public void setIcon(final Icon icon);
 }
