@@ -27,24 +27,32 @@ import net.sf.cglib.proxy.MethodProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @since 1.0
+ * 
+ * @param <E>
+ */
 public class MethodListenerProxy<E> implements MethodInterceptor {
+
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(MethodListenerProxy.class);
 
 	Map<String, MethodListener<?>> mMethodListeners = new HashMap<String, MethodListener<?>>();
+
 	private final E mProxy;
 
-	public MethodListenerProxy(Class<E> listenerClass,
-			Map<String, MethodListener<?>> methods) {
+	public MethodListenerProxy(final Class<E> listenerClass,
+			final Map<String, MethodListener<?>> methods) {
 
 		mProxy = listenerClass.cast(Enhancer.create(listenerClass, this));
 
-		for (Field f : listenerClass.getDeclaredFields()) {
+		for (final Field f : listenerClass.getDeclaredFields()) {
 			if (f.getType() != MethodListener.class) {
 				continue;
 			}
 
-			MethodListener<?> m = methods.get(f.getName());
+			final MethodListener<?> m = methods.get(f.getName());
 			if (m == null) {
 				continue;
 			}
@@ -53,19 +61,19 @@ public class MethodListenerProxy<E> implements MethodInterceptor {
 
 			try {
 				f.set(mProxy, m);
-			} catch (IllegalArgumentException e) {
+			} catch (final IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (IllegalAccessException e) {
+			} catch (final IllegalAccessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			mMethodListeners.put(f.getName(), m);
 		}
 
-		for (Method m : listenerClass.getMethods()) {
+		for (final Method m : listenerClass.getMethods()) {
 
-			MethodListener<?> ml = methods.get(m.getName());
+			final MethodListener<?> ml = methods.get(m.getName());
 
 			if (ml == null) {
 				continue;
@@ -75,7 +83,7 @@ public class MethodListenerProxy<E> implements MethodInterceptor {
 		}
 
 		if (LOGGER.isDebugEnabled()) {
-			for (Map.Entry<String, MethodListener<?>> entry : mMethodListeners
+			for (final Map.Entry<String, MethodListener<?>> entry : mMethodListeners
 					.entrySet()) {
 				LOGGER.debug("{}|Listening on {}", entry.getValue()
 						.getListenerName(), entry.getValue().getMethodName());
@@ -95,9 +103,13 @@ public class MethodListenerProxy<E> implements MethodInterceptor {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Object intercept(Object proxy, Method method, Object[] args,
-			MethodProxy methodProxy) throws Throwable {
-		MethodListener methodListener = mMethodListeners.get(method.getName());
+	public Object intercept(final Object proxy, final Method method,
+			final Object[] args, final MethodProxy methodProxy)
+			throws Throwable {
+
+		@SuppressWarnings("rawtypes")
+		final MethodListener methodListener = mMethodListeners.get(method
+				.getName());
 		if (methodListener == null) {
 			return null;
 		}

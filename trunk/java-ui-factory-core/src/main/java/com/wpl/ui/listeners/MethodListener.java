@@ -23,44 +23,69 @@ import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.events.IEventListener;
 
+/**
+ * Call back to a method.
+ * 
+ * @since 1.0
+ * 
+ * @param <E>
+ */
 public class MethodListener<E> implements IEventListener<E> {
+
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(MethodListener.class);
 
 	private final Method mMethod;
 	private final Object mListenObject;
 
-	public MethodListener(Object object, Method method) {
+	/**
+	 * 
+	 * @since 1.0
+	 * 
+	 * @param object
+	 * @param method
+	 */
+	public MethodListener(final Object object, final Method method) {
 		mListenObject = object;
 		mMethod = method;
 	}
 
+	/**
+	 * @since 1.0
+	 * 
+	 * @return
+	 */
 	public String getListenerName() {
 		return mListenObject.getClass().getSimpleName();
 	}
 
+	/**
+	 * @since 1.0
+	 * 
+	 * @return
+	 */
 	public String getMethodName() {
 		return mMethod.getName();
 	}
 
-	public void invoke(E args) {
+	/**
+	 * @since 1.0
+	 */
+	public void invoke(final E args) {
+
+		LOGGER.debug("invoke: {}.{}", mListenObject.getClass().getSimpleName(),
+				mMethod.getName());
+
 		try {
 			this.mMethod.setAccessible(true);
 			this.mMethod.invoke(mListenObject, args);
 
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			LOGGER.debug("invoke: {}.{}", mListenObject.getClass()
-					.getSimpleName(), mMethod.getName());
+		} catch (final IllegalArgumentException e) {
+			LOGGER.debug("IllegalArgument", e);
+		} catch (final IllegalAccessException e) {
+			LOGGER.debug("IllegalAccess", e);
+		} catch (final InvocationTargetException e) {
+			LOGGER.debug("InvocationTarget", e);
 		}
 	}
-
 }
