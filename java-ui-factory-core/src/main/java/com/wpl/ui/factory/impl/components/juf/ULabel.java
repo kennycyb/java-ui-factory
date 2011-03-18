@@ -15,6 +15,7 @@
  */
 package com.wpl.ui.factory.impl.components.juf;
 
+import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
@@ -37,6 +38,15 @@ public class ULabel extends UComponent<JLabel> implements ILabel {
 			@Override
 			public void run() {
 				getComponent().setText(text);
+			}
+		});
+	}
+
+	public void setIcon(final Icon icon) {
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				getComponent().setIcon(icon);
 			}
 		});
 	}

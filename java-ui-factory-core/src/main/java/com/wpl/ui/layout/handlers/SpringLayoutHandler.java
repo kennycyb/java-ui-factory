@@ -15,6 +15,7 @@
  */
 package com.wpl.ui.layout.handlers;
 
+import java.awt.Component;
 import java.awt.Container;
 
 import javax.swing.RootPaneContainer;
@@ -37,10 +38,12 @@ public class SpringLayoutHandler implements ILayoutHandler {
 			.getLogger(SpringLayoutHandler.class);
 
 	@Override
-	public void layoutComponent(ComponentContext componentContext) {
+	public void layoutComponent(final ComponentContext componentContext) {
 
-		componentContext.getContainer().add(
-				componentContext.getEnclosedComponent());
+		final Object enclosed = componentContext.getEnclosedComponent();
+		if (enclosed instanceof Component) {
+			componentContext.getContainer().add((Component) enclosed);
+		}
 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("{}|added to container - {}",
@@ -50,7 +53,7 @@ public class SpringLayoutHandler implements ILayoutHandler {
 	}
 
 	@Override
-	public void finalLayout(ComponentContext containerContext) {
+	public void finalLayout(final ComponentContext containerContext) {
 
 		Container container = null;
 		if (containerContext.getComponent() instanceof RootPaneContainer) {
@@ -60,14 +63,14 @@ public class SpringLayoutHandler implements ILayoutHandler {
 			container = (Container) containerContext.getComponent();
 		}
 
-		UiSpringGridConstraint constraint = containerContext
+		final UiSpringGridConstraint constraint = containerContext
 				.getAnnotatedElement().getAnnotation(
 						UiSpringGridConstraint.class);
 
 		if (constraint == null) {
 
-			int rows = container.getComponentCount() / 2;
-			int cols = 2;
+			final int rows = container.getComponentCount() / 2;
+			final int cols = 2;
 
 			SpringUtilities.makeCompactGrid(container, rows, cols, 5, 5, 5, 5);
 			LOGGER.debug("SpringUtilities.makeCompactGrid - rows={}, cols={}",
@@ -75,14 +78,14 @@ public class SpringLayoutHandler implements ILayoutHandler {
 			return;
 		}
 
-		int cols = constraint.cols() <= 0 ? 2 : constraint.cols();
-		int rows = constraint.rows() <= 0 ? container.getComponentCount()
+		final int cols = constraint.cols() <= 0 ? 2 : constraint.cols();
+		final int rows = constraint.rows() <= 0 ? container.getComponentCount()
 				/ cols : constraint.rows();
 
 		if (constraint.gridType() == SpringGridType.COMPACT) {
-			SpringUtilities.makeCompactGrid(container, rows, cols, constraint
-					.initialX(), constraint.initialY(), constraint.xPad(),
-					constraint.yPad());
+			SpringUtilities.makeCompactGrid(container, rows, cols,
+					constraint.initialX(), constraint.initialY(),
+					constraint.xPad(), constraint.yPad());
 			LOGGER.debug("SpringUtilities.makeCompactGrid - rows={}, cols={}",
 					rows, cols);
 			return;

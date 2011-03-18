@@ -26,6 +26,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wpl.ui.components.IComponent;
 import com.wpl.ui.events.EventHandler;
 import com.wpl.ui.listeners.MethodListener;
 
@@ -51,7 +52,7 @@ public class ComponentContext {
 	/**
 	 * The component.
 	 */
-	private Component mComponent;
+	private IComponent mComponent;
 
 	/**
 	 * The container that contain this component.
@@ -81,7 +82,7 @@ public class ComponentContext {
 	public ComponentContext() {
 	}
 
-	public void addCustomEventHandler(EventHandler<?> customEventHandler) {
+	public void addCustomEventHandler(final EventHandler<?> customEventHandler) {
 		mCustomEventHandler.add(customEventHandler);
 	}
 
@@ -89,7 +90,7 @@ public class ComponentContext {
 		return mComponentOf;
 	}
 
-	public void setComponentOf(boolean componentOf) {
+	public void setComponentOf(final boolean componentOf) {
 		mComponentOf = componentOf;
 	}
 
@@ -97,7 +98,7 @@ public class ComponentContext {
 		return mPack;
 	}
 
-	public void setPack(boolean pack) {
+	public void setPack(final boolean pack) {
 		mPack = pack;
 	}
 
@@ -105,34 +106,34 @@ public class ComponentContext {
 		return mAutoWired;
 	}
 
-	public void setAutoWired(boolean autoWired) {
+	public void setAutoWired(final boolean autoWired) {
 		mAutoWired = autoWired;
 	}
 
-	public void addPreInit(Runnable runnable) {
+	public void addPreInit(final Runnable runnable) {
 		mPreInit.add(runnable);
 	}
 
 	public void preInit() {
 
-		LOGGER.debug("{}|preInit (count={})", this.getId(), mPreInit.size());
+		LOGGER.debug("{}|preInit (count={})", getId(), mPreInit.size());
 
-		for (Runnable r : mPreInit) {
+		for (final Runnable r : mPreInit) {
 			r.run();
 		}
 
 		mPreInit.clear();
 	}
 
-	public void addInit(Runnable runnable) {
+	public void addInit(final Runnable runnable) {
 		mInit.add(runnable);
 	}
 
 	public void init() {
 
-		LOGGER.debug("{}|init (count={})", this.getId(), mInit.size());
+		LOGGER.debug("{}|init (count={})", getId(), mInit.size());
 
-		for (Runnable r : mInit) {
+		for (final Runnable r : mInit) {
 			r.run();
 		}
 
@@ -143,7 +144,7 @@ public class ComponentContext {
 		return mParentContext;
 	}
 
-	public void setParentContext(ComponentContext parentContext) {
+	public void setParentContext(final ComponentContext parentContext) {
 		mParentContext = parentContext;
 	}
 
@@ -152,12 +153,12 @@ public class ComponentContext {
 	 * 
 	 * @param runnable
 	 */
-	public void addPostInit(Runnable runnable) {
+	public void addPostInit(final Runnable runnable) {
 		mPostInit.add(runnable);
 	}
 
 	public void postInit() {
-		for (Runnable r : mPostInit) {
+		for (final Runnable r : mPostInit) {
 			r.run();
 		}
 
@@ -168,7 +169,7 @@ public class ComponentContext {
 		return mParentId;
 	}
 
-	public void setParentId(String parentId) {
+	public void setParentId(final String parentId) {
 		mParentId = parentId;
 	}
 
@@ -176,15 +177,15 @@ public class ComponentContext {
 		return mDeclared;
 	}
 
-	public void setDeclared(boolean declared) {
+	public void setDeclared(final boolean declared) {
 		mDeclared = declared;
 	}
 
-	public void setId(String id) {
+	public void setId(final String id) {
 		mId = id;
 	}
 
-	public void addChild(ComponentContext context) {
+	public void addChild(final ComponentContext context) {
 		mChildren.add(context);
 	}
 
@@ -192,18 +193,18 @@ public class ComponentContext {
 		return mChildren;
 	}
 
-	public ComponentContext findChildContext(String id) {
+	public ComponentContext findChildContext(final String id) {
 
-		if (this.getId().equals(id)) {
+		if (getId().equals(id)) {
 			return this;
 		}
 
-		for (ComponentContext child : mChildren) {
+		for (final ComponentContext child : mChildren) {
 			if (child.getId().equals(id)) {
 				return child;
 			}
 
-			ComponentContext grandChild = child.findChildContext(id);
+			final ComponentContext grandChild = child.findChildContext(id);
 			if (grandChild != null) {
 				return grandChild;
 			}
@@ -213,10 +214,24 @@ public class ComponentContext {
 	}
 
 	public Component getEnclosedComponent() {
-		return mEnclosedComponent == null ? mComponent : mEnclosedComponent;
+
+		if (mEnclosedComponent != null) {
+			return mEnclosedComponent;
+		}
+
+		if (mComponent instanceof Component) {
+			return (Component) mComponent;
+		}
+
+		if (mComponent instanceof IComponent) {
+			// TODO:
+			return null;
+		}
+
+		return null;
 	}
 
-	public void setEnclosedComponent(Component enclosedComponent) {
+	public void setEnclosedComponent(final Component enclosedComponent) {
 		mEnclosedComponent = enclosedComponent;
 	}
 
@@ -224,7 +239,7 @@ public class ComponentContext {
 		return mType;
 	}
 
-	public void setType(Class<?> type) {
+	public void setType(final Class<?> type) {
 		mType = type;
 	}
 
@@ -232,11 +247,12 @@ public class ComponentContext {
 		return mAnnotatedElement;
 	}
 
-	public void setAnnotatedElement(AnnotatedElement annotatedElement) {
+	public void setAnnotatedElement(final AnnotatedElement annotatedElement) {
 		mAnnotatedElement = annotatedElement;
 	}
 
-	public void addActionListener(String actionName, MethodListener<?> method) {
+	public void addActionListener(final String actionName,
+			final MethodListener<?> method) {
 		mActionListeners.put(actionName, method);
 	}
 
@@ -248,19 +264,33 @@ public class ComponentContext {
 		return mId;
 	}
 
+	/**
+	 * 
+	 * @return Get the component.
+	 */
 	public Component getComponent() {
-		return mComponent;
+		return mComponent.getComponent();
 	}
 
-	public void setComponent(Component component) {
+	public void setComponent(final IComponent component) {
 		mComponent = component;
+	}
+
+	public void setComponent(final Component component) {
+		mComponent = new IComponent() {
+
+			@Override
+			public Component getComponent() {
+				return component;
+			}
+		};
 	}
 
 	public Container getContainer() {
 		return mContainer;
 	}
 
-	public void setContainer(Container container) {
+	public void setContainer(final Container container) {
 		mContainer = container;
 	}
 }

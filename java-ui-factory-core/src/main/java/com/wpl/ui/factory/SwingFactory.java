@@ -208,7 +208,7 @@ public class SwingFactory implements IUiFactory {
 		mLayoutHandlerMap.putAll(sDefaultLayout);
 	}
 
-	private IComponentFactory findFactory(final Class<?> type) {
+	public IComponentFactory findFactory(final Class<?> type) {
 
 		if (type == Object.class || type.isPrimitive() || type.isEnum()) {
 			return null;
@@ -261,7 +261,7 @@ public class SwingFactory implements IUiFactory {
 				.getType());
 
 		try {
-			factory.createInstance(componentContext);
+			factory.createInstance(this, componentContext);
 		} catch (final Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -456,7 +456,14 @@ public class SwingFactory implements IUiFactory {
 		return true;
 	}
 
+	/**
+	 * Manufacturing Plan
+	 * 
+	 * @param componentContext
+	 */
 	private void plan(final ComponentContext componentContext) {
+
+		// Do not plan if this is built-in Java's component.
 
 		if (componentContext.getType().getPackage().getName()
 				.startsWith("java")) {
@@ -686,7 +693,7 @@ public class SwingFactory implements IUiFactory {
 					}
 
 					componentContext.addPreInit(new Runnable() {
-						@SuppressWarnings("unchecked")
+						@SuppressWarnings("rawtypes")
 						@Override
 						public void run() {
 							final ComponentContext childContext = componentName
@@ -766,6 +773,11 @@ public class SwingFactory implements IUiFactory {
 		return componentClass.cast(mainContext.getComponent());
 	}
 
+	/**
+	 * Static instance.
+	 * 
+	 * @return SwingFactory
+	 */
 	public static SwingFactory instance() {
 		return sInstance;
 	}
