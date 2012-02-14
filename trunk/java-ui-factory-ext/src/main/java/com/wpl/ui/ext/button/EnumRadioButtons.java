@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import javax.swing.JRadioButton;
 
 
-public class EnumRadioButtons<E extends Enum<?>> extends RadioButtons {
+public final class EnumRadioButtons<E extends Enum<?>> extends RadioButtons {
 
 	/**
 	 * 
