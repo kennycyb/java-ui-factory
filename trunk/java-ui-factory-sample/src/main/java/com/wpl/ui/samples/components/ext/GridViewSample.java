@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
-import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,11 +12,14 @@ import com.wpl.ui.factory.SwingFactory;
 import com.wpl.ui.factory.annotations.UiLayout;
 import com.wpl.ui.factory.annotations.components.JFrameProperties;
 import com.wpl.ui.factory.annotations.constraints.UiBorderLayoutConstraint;
+import com.wpl.ui.factory.annotations.frame.UiWindowPosition;
 import com.wpl.ui.factory.enums.BorderLayoutConstraint;
 import com.wpl.ui.factory.enums.FrameCloseOperation;
 import com.wpl.ui.factory.enums.WindowPosition;
+import com.wpl.ui.samples.model.Person;
 
-@JFrameProperties(frameCloseOperation = FrameCloseOperation.EXIT, height = 600, width = 800, title = "GridViewSample", windowPosition = WindowPosition.CENTER)
+@JFrameProperties(frameCloseOperation = FrameCloseOperation.EXIT, height = 600, width = 800, title = "GridViewSample")
+@UiWindowPosition(WindowPosition.CENTER)
 @UiLayout(BorderLayout.class)
 public class GridViewSample extends JFrame {
 	/**
@@ -29,12 +31,11 @@ public class GridViewSample extends JFrame {
 			.getLogger(GridViewSample.class);
 
 	@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
-	private GridView gridView;
+	private GridView<Person> gridView;
 
 	void onGridView_init() {
 		LOGGER.debug("mainGridView_init");
-		assert(gridView!=null);
-
+		assert (gridView != null);
 
 	}
 

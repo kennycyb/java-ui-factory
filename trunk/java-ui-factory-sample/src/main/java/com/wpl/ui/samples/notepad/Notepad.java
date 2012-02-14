@@ -19,14 +19,19 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputMethodEvent;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,6 +97,23 @@ public class Notepad extends JFrame {
 	void init() {
 		undo.setEnabled(false);
 		cut.setEnabled(false);
+		
+		this.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+				KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, KeyEvent.ALT_DOWN_MASK), "doNothing");
+
+		this.getRootPane().getInputMap().put(
+				KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, KeyEvent.ALT_DOWN_MASK), "doNothing");
+		
+		this.getRootPane().getActionMap().put("doNothing", new AbstractAction("doNothing") {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("doNothing");
+			}
+		});
+		
+		content.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, KeyEvent.ALT_DOWN_MASK)
+				, "doNothing");
+		
 		LOGGER.debug("Notepad.init");
 	}
 
