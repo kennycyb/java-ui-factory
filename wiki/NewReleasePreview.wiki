@@ -64,6 +64,7 @@ Result:
 
 = Radio Buttons =
 
+{{{
 @UiLayout(BorderLayout.class)
 @JFrameProperties(frameCloseOperation = FrameCloseOperation.EXIT, windowPosition = WindowPosition.CENTER)
 public class RadioButtonsSample extends JFrame {
@@ -102,3 +103,7 @@ public class RadioButtonsSample extends JFrame {
 		SwingFactory.create(RadioButtonsSample.class).setVisible(true);
 	}
 }
+}}}
+
+Results:
+[http://java-ui-factory.googlecode.com/svn/trunk/java-ui-factory-sample/docs/samples/RadioButtonsOutput.png]
