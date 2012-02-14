@@ -1,4 +1,5 @@
 #summary List of new feature in next release (available in SVN)
+#labels Featured
 
 = GridView Control =
 
