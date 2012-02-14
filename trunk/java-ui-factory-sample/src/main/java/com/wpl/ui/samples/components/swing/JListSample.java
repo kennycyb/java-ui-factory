@@ -15,14 +15,8 @@
  */
 package com.wpl.ui.samples.components.swing;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.ListModel;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,14 +56,14 @@ public class JListSample extends JFrame {
 	@UiResource("JListSample-List.xml")
 	@UiScrollable(horizontal = ScrollBarPolicy.ALWAYS, vertical = ScrollBarPolicy.ALWAYS)
 	JList xmlList;
-	
+
 	MutableList mutableList;
 
 	@UiInit
 	void init() {
 		mutableList.addElement("HELLO WORLD");
 		mutableList.addElement("WHO");
-		
+
 	}
 
 	public static void main(final String[] args) {

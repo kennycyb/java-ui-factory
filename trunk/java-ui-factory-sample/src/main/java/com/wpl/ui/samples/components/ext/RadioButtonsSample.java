@@ -1,12 +1,17 @@
 package com.wpl.ui.samples.components.ext;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 
-import com.wpl.ui.ext.RadioButtons;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.wpl.ui.ext.button.RadioButtons;
 import com.wpl.ui.factory.SwingFactory;
+import com.wpl.ui.factory.annotations.UiInit;
 import com.wpl.ui.factory.annotations.UiLayout;
 import com.wpl.ui.factory.annotations.components.JFrameProperties;
 import com.wpl.ui.factory.annotations.constraints.UiBorderLayoutConstraint;
@@ -18,6 +23,8 @@ import com.wpl.ui.factory.enums.WindowPosition;
 @JFrameProperties(frameCloseOperation = FrameCloseOperation.EXIT, windowPosition = WindowPosition.CENTER)
 public class RadioButtonsSample extends JFrame {
 
+	private static Logger LOGGER = LoggerFactory
+			.getLogger(RadioButtonsSample.class);
 	/**
 	 * 
 	 */
@@ -26,10 +33,21 @@ public class RadioButtonsSample extends JFrame {
 	@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
 	RadioButtons radioButtons;
 
-	void radioButtons_init() {
+	@UiInit
+	void uiInit() {
 
 		radioButtons.addRadioButton(new JRadioButton("Male"));
 		radioButtons.addRadioButton(new JRadioButton("Female"));
+	}
+
+	/**
+	 * Callback method when any radio button is clicked.
+	 * 
+	 * @param e
+	 */
+	void onRadioButtons_actionPerformed(ActionEvent e) {
+
+		LOGGER.debug("actionPerformed: {}", e.getActionCommand());
 	}
 
 	/**
@@ -38,5 +56,4 @@ public class RadioButtonsSample extends JFrame {
 	public static void main(String[] args) {
 		SwingFactory.create(RadioButtonsSample.class).setVisible(true);
 	}
-
 }

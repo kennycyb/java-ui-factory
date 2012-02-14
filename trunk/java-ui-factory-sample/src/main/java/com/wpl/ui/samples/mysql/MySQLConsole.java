@@ -11,7 +11,17 @@ import com.wpl.ui.factory.enums.WindowPosition;
 @JFrameProperties(frameCloseOperation = FrameCloseOperation.EXIT, height = 400, width = 400, windowPosition = WindowPosition.CENTER)
 public class MySQLConsole extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	class Content extends JPanel {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 
 	}
 

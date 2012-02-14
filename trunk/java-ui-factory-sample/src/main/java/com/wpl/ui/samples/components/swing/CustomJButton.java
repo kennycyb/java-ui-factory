@@ -39,6 +39,11 @@ public class CustomJButton extends JButton {
 
 	private class MyBevelBorder extends AbstractBorder {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		public MyBevelBorder() {
 		}
 

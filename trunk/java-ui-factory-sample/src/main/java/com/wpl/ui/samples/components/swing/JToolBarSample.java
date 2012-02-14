@@ -47,6 +47,11 @@ import com.wpl.ui.factory.enums.WindowPosition;
 @UiLayout(BorderLayout.class)
 public class JToolBarSample extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(JToolBarSample.class);
 
@@ -63,21 +68,20 @@ public class JToolBarSample extends JFrame {
 	}
 
 	void onToolbar_actionPerformed(ActionEvent e) {
-		JOptionPane.showMessageDialog(this, "onToolbar_actionPerformed: "
-				+ e.getActionCommand());
+		JOptionPane.showMessageDialog(this,
+				"onToolbar_actionPerformed: " + e.getActionCommand());
 	}
 
 	void onToolbar_itemStateChanged(final ItemEvent e) {
-		LOGGER
-				.debug(
-						"onToolbar_itemStateChanged: {} ({})",
-						e.getItem(),
-						e.getStateChange() == ItemEvent.DESELECTED ? "DESELECTED"
-								: e.getStateChange() == ItemEvent.ITEM_FIRST ? "ITEM_FIRST"
-										: e.getStateChange() == ItemEvent.ITEM_LAST ? "ITEM_LAST"
-												: e.getStateChange() == ItemEvent.ITEM_STATE_CHANGED ? "ITEM_STATE_CHANGED"
-														: e.getStateChange() == ItemEvent.SELECTED ? "SELECTED"
-																: "UNKNOWN");
+		LOGGER.debug(
+				"onToolbar_itemStateChanged: {} ({})",
+				e.getItem(),
+				e.getStateChange() == ItemEvent.DESELECTED ? "DESELECTED"
+						: e.getStateChange() == ItemEvent.ITEM_FIRST ? "ITEM_FIRST"
+								: e.getStateChange() == ItemEvent.ITEM_LAST ? "ITEM_LAST"
+										: e.getStateChange() == ItemEvent.ITEM_STATE_CHANGED ? "ITEM_STATE_CHANGED"
+												: e.getStateChange() == ItemEvent.SELECTED ? "SELECTED"
+														: "UNKNOWN");
 	}
 
 	public static void main(final String[] args) {

@@ -49,11 +49,26 @@ public class SampleFrameWithInnerClass extends JFrame {
 	@UiLayout(BorderLayout.class)
 	class ContentPanel extends JPanel {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		@UiLayout(FlowLayout.class)
 		class NorthContent extends JPanel {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@UiLayout(BorderLayout.class)
 			class NorthInnerContent extends JPanel {
+
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
 
 				@UiText("north")
 				@UiBorderLayoutConstraint(BorderLayoutConstraint.NORTH)
@@ -72,6 +87,11 @@ public class SampleFrameWithInnerClass extends JFrame {
 
 		@UiLayout(FlowLayout.class)
 		class SouthContent extends JPanel {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 
 			@UiText("southLabel")
 			JLabel southLabel;

@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.ext.GridView;
+import com.wpl.ui.ext.gridview.GridView;
 import com.wpl.ui.factory.SwingFactory;
 import com.wpl.ui.factory.annotations.UiLayout;
 import com.wpl.ui.factory.annotations.components.JFrameProperties;
