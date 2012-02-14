@@ -13,22 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.factory.annotations;
+package com.wpl.ui.components;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-import com.wpl.ui.factory.IComponentFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
  * @since 1.0
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface DefaultFactory {
-
-	Class<? extends IComponentFactory> value();
+public abstract class JxComponent implements IComponent {
+	@SuppressWarnings("unused")
+	private static Logger LOGGER = LoggerFactory.getLogger(JxComponent.class);
 }

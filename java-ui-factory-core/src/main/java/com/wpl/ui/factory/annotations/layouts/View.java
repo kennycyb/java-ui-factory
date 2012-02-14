@@ -13,22 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wpl.ui.factory.annotations;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-import com.wpl.ui.factory.IComponentFactory;
+package com.wpl.ui.factory.annotations.layouts;
 
 /**
  * 
  * @since 1.0
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface DefaultFactory {
+public @interface View {
+	String title() default "";
 
-	Class<? extends IComponentFactory> value();
+	String members();
 }

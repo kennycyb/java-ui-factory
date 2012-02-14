@@ -210,7 +210,7 @@ public class SwingFactory implements IUiFactory {
 
 	private final Map<Class<?>, IComponentFactory> mComponentFactory = new HashMap<Class<?>, IComponentFactory>();
 
-	public SwingFactory() {
+	protected SwingFactory() {
 		mComponentFactory.putAll(sDefaultFactory);
 		mLayoutHandlerMap.putAll(sDefaultLayout);
 	}
@@ -269,6 +269,11 @@ public class SwingFactory implements IUiFactory {
 
 		final IComponentFactory factory = findFactory(componentContext
 				.getType());
+
+		if (factory == null) {
+			throw new RuntimeException("Unknown Factory for "
+					+ componentContext.getType().getName());
+		}
 
 		try {
 			factory.createInstance(this, componentContext);
@@ -477,6 +482,12 @@ public class SwingFactory implements IUiFactory {
 
 		if (componentContext.getType().getPackage().getName()
 				.startsWith("java")) {
+			LOGGER.debug("{}|skip planning", componentContext.getId());
+			return;
+		}
+
+		if (IComponent.class.isAssignableFrom(componentContext.getType())) {
+			LOGGER.debug("{}|skip planning", componentContext.getId());
 			return;
 		}
 
