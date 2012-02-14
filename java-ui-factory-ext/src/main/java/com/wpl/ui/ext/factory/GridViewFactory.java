@@ -13,14 +13,14 @@ import javax.swing.JScrollPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wpl.ui.ext.GridView;
+import com.wpl.ui.ext.gridview.GridView;
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.impl.components.awt.ComponentFactory;
 
 public final class GridViewFactory extends JxComponentFactory {
 
 	private static Logger LOGGER = LoggerFactory
-			.getLogger(ComponentFactory.class);
+			.getLogger(GridViewFactory.class);
 
 	@Override
 	public void initialize(ComponentContext context) {

@@ -1,9 +1,9 @@
-package com.wpl.ui.ext;
+package com.wpl.ui.ext.button;
 
 import java.lang.reflect.Field;
 
-import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
+
 
 public class EnumRadioButtons<E extends Enum<?>> extends RadioButtons {
 

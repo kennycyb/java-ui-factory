@@ -1,9 +1,6 @@
-package com.wpl.ui.ext;
+package com.wpl.ui.ext.gridview;
 
 import java.awt.Component;
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +17,10 @@ import com.wpl.ui.factory.annotations.DefaultFactory;
 public class GridView<T> implements IComponent {
 
 	private class GridViewColumn extends TableColumn {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		private String mFieldName;
 
 		public String getFieldName() {
