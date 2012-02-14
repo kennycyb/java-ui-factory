@@ -4,13 +4,8 @@
 	<groupId>java-ui-factory</groupId>
 	<artifactId>java-ui-factory-sample</artifactId>
 	<version>0.1-SNAPSHOT</version>
-	<!-- 
-	<parent>
-		<artifactId>java-ui-factory-pom</artifactId>
-		<groupId>java-ui-factory</groupId>
-		<version>1.0-SNAPSHOT</version>
-	</parent>
-	 -->
+	<!-- <parent> <artifactId>java-ui-factory-pom</artifactId> <groupId>java-ui-factory</groupId> 
+		<version>1.0-SNAPSHOT</version> </parent> -->
 	<build>
 		<plugins>
 			<plugin>
@@ -24,7 +19,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-	</build>	 
+	</build>
 	<dependencies>
 		<dependency>
 			<groupId>java-ui-factory</groupId>
@@ -35,6 +30,11 @@
 			<groupId>java-ui-factory</groupId>
 			<artifactId>java-ui-factory-ext</artifactId>
 			<version>1.0-SNAPSHOT</version>
-		</dependency>		
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+		</dependency>
 	</dependencies>
 </project>

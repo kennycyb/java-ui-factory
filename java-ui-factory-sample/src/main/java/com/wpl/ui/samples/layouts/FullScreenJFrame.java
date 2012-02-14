@@ -29,7 +29,6 @@ import com.wpl.ui.factory.annotations.UiLayout;
 import com.wpl.ui.factory.annotations.UiRows;
 import com.wpl.ui.factory.annotations.UiScrollable;
 import com.wpl.ui.factory.annotations.UiText;
-import com.wpl.ui.factory.annotations.components.JFrameProperties;
 import com.wpl.ui.factory.annotations.frame.UiFrameCloseOperation;
 import com.wpl.ui.factory.annotations.frame.UiWindowPosition;
 import com.wpl.ui.factory.enums.FrameCloseOperation;
@@ -42,7 +41,9 @@ import com.wpl.ui.layout.managers.VerticalFlowLayout;
  * @since 1.0
  */
 @UiLayout(VerticalFlowLayout.class)
-@JFrameProperties(windowPosition=WindowPosition.FULL, title="Full Screen Sample", frameCloseOperation=FrameCloseOperation.EXIT)
+@UiFrameCloseOperation(FrameCloseOperation.EXIT)
+@UiText("Full Screen Sample")
+@UiWindowPosition(WindowPosition.FULL)
 public class FullScreenJFrame extends JFrame {
 	/**
 	 * 
