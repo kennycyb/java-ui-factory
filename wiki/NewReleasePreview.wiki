@@ -1,0 +1,62 @@
+#summary List of new feature in next release
+
+= GridView Control =
+
+A POJO:
+{{{
+public class Person implements Serializable {
+
+	private String mFirstName;
+	private String mLastName;
+
+	public String getmFirstName() {
+		return mFirstName;
+	}
+
+	public void setmFirstName(String mFirstName) {
+		this.mFirstName = mFirstName;
+	}
+
+	public String getmLastName() {
+		return mLastName;
+	}
+
+	public void setmLastName(String mLastName) {
+		this.mLastName = mLastName;
+	}
+}
+}}}
+
+Using GridView:
+
+{{{
+@JFrameProperties(frameCloseOperation = FrameCloseOperation.EXIT, height = 600, width = 800, title = "GridViewSample")
+@UiWindowPosition(WindowPosition.CENTER)
+@UiLayout(BorderLayout.class)
+public class GridViewSample extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private static Logger LOGGER = LoggerFactory
+			.getLogger(GridViewSample.class);
+
+	@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
+	private GridView<Person> gridView;
+
+	void onGridView_init() {
+		LOGGER.debug("mainGridView_init");
+		assert (gridView != null);
+
+	}
+
+	public static void main(final String[] args) {
+		SwingFactory.create(GridViewSample.class).setVisible(true);
+	}
+}
+}}}
+
+
+Result:
+[http://java-ui-factory.googlecode.com/svn/trunk/java-ui-factory-sample/docs/samples/GridViewOutput.png]
