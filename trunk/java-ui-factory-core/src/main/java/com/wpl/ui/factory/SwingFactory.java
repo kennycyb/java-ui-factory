@@ -522,12 +522,17 @@ public class SwingFactory implements IUiFactory {
 
 							if (ml != null) {
 								handler.addListener(ml);
-							}
 
-							LOGGER.debug(
-									"{}|CustomEventHandler added from {}",
-									new Object[] { componentContext.getId(),
-											f.getName() });
+								LOGGER.debug(
+										"{}|CustomEventHandler added from {}",
+										new Object[] {
+												componentContext.getId(),
+												f.getName() });
+
+							} else {
+								LOGGER.warn("Can't find listener: {}",
+										f.getName());
+							}
 
 						} catch (final IllegalArgumentException e) {
 							// TODO Auto-generated catch block

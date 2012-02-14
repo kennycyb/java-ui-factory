@@ -31,7 +31,7 @@ import com.wpl.ui.factory.IUiFactory;
  * @since 1.0
  */
 public class UComponentFactory implements IComponentFactory {
-	@SuppressWarnings("unused")
+
 	private static Logger LOGGER = LoggerFactory
 			.getLogger(UComponentFactory.class);
 
@@ -69,7 +69,7 @@ public class UComponentFactory implements IComponentFactory {
 			instance = context.getType().newInstance();
 		}
 
-		context.setComponent(IComponent.class.cast(instance));
+		context.setJxComponent(IComponent.class.cast(instance));
 	}
 
 }
