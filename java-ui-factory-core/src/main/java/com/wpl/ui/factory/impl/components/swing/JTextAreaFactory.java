@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.annotations.UiColumns;
+import com.wpl.ui.factory.annotations.UiEditable;
 import com.wpl.ui.factory.annotations.UiRows;
 import com.wpl.ui.factory.annotations.components.JTextAreaProperties;
 import com.wpl.ui.factory.annotations.textarea.UiLineWrap;
@@ -44,13 +45,13 @@ public class JTextAreaFactory extends JTextComponentFactory {
 			final JTextArea component, final JTextAreaProperties annotate) {
 
 		component.setText(annotate.text());
-		LOGGER.debug("{}|JTextArea.setText({})", context.getId(), annotate
-				.text());
+		LOGGER.debug("{}|JTextArea.setText({})", context.getId(),
+				annotate.text());
 
 		if (annotate.rows() > 0) {
 			component.setRows(annotate.rows());
-			LOGGER.debug("{}|JTextArea.setRows({})", context.getId(), annotate
-					.rows());
+			LOGGER.debug("{}|JTextArea.setRows({})", context.getId(),
+					annotate.rows());
 		}
 
 		if (annotate.columns() > 0) {
@@ -64,32 +65,39 @@ public class JTextAreaFactory extends JTextComponentFactory {
 	protected void handleUiRows(final ComponentContext context,
 			final JTextArea component, final UiRows annotate) {
 		component.setRows(annotate.value());
-		LOGGER.debug("{}|JTextArea.setRows({})", context.getId(), annotate
-				.value());
+		LOGGER.debug("{}|JTextArea.setRows({})", context.getId(),
+				annotate.value());
 	}
 
 	@UiAnnotationHandler(UiColumns.class)
 	protected void handleUiColumns(final ComponentContext context,
 			final JTextArea component, final UiColumns annotate) {
 		component.setColumns(annotate.value());
-		LOGGER.debug("{}|JTextArea.setColumns({})", context.getId(), annotate
-				.value());
+		LOGGER.debug("{}|JTextArea.setColumns({})", context.getId(),
+				annotate.value());
 	}
 
 	@UiAnnotationHandler(UiTabSize.class)
 	protected void handleUiTabSize(final ComponentContext context,
 			final JTextArea component, final UiTabSize annotate) {
 		component.setTabSize(annotate.value());
-		LOGGER.debug("{}|JTextArea.setTabSize({})", context.getId(), annotate
-				.value());
+		LOGGER.debug("{}|JTextArea.setTabSize({})", context.getId(),
+				annotate.value());
 	}
 
 	@UiAnnotationHandler(UiLineWrap.class)
 	protected void handleUiLineWrap(final ComponentContext context,
 			final JTextArea component, final UiLineWrap annotate) {
 		component.setLineWrap(annotate.value());
-		LOGGER.debug("{}|JTextArea.setLineWrap({})", context.getId(), annotate
-				.value());
+		LOGGER.debug("{}|JTextArea.setLineWrap({})", context.getId(),
+				annotate.value());
 	}
 
+	@UiAnnotationHandler(UiEditable.class)
+	protected void handleUiEditable(final ComponentContext context,
+			final JTextArea component, final UiEditable annotate) {
+		component.setEditable(annotate.value());
+		LOGGER.debug("{}|JTextArea.setEditable({})", context.getId(),
+				annotate.value());
+	}
 }

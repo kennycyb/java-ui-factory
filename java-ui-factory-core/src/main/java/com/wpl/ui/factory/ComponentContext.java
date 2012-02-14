@@ -52,8 +52,6 @@ public class ComponentContext {
 	/**
 	 * The component.
 	 */
-	private IComponent mComponent;
-
 	private IComponent mJxComponent;
 
 	/**
@@ -221,11 +219,7 @@ public class ComponentContext {
 			return mEnclosedComponent;
 		}
 
-		if (mComponent instanceof IComponent) {
-			return mComponent.getComponent();
-		}
-
-		return null;
+		return getComponent();
 	}
 
 	public void setEnclosedComponent(final Component enclosedComponent) {
@@ -266,21 +260,26 @@ public class ComponentContext {
 	 * @return Get the component.
 	 */
 	public Component getComponent() {
-		return mComponent.getComponent();
-	}
-
-	public void setComponent(final IComponent component) {
-		mComponent = component;
+		return mJxComponent.getComponent();
 	}
 
 	public void setComponent(final Component component) {
-		mComponent = new IComponent() {
+
+		setJxComponent(new IComponent() {
 
 			@Override
 			public Component getComponent() {
 				return component;
 			}
-		};
+		});
+	}
+
+	public IComponent getJxComponent() {
+		return mJxComponent;
+	}
+
+	public void setJxComponent(final IComponent jxComponent) {
+		mJxComponent = jxComponent;
 	}
 
 	public Container getContainer() {
@@ -289,13 +288,5 @@ public class ComponentContext {
 
 	public void setContainer(final Container container) {
 		mContainer = container;
-	}
-
-	public void setJxComponent(final IComponent jxComponent) {
-		mJxComponent = jxComponent;
-	}
-
-	public IComponent getJxComponent() {
-		return mJxComponent;
 	}
 }

@@ -200,13 +200,7 @@ public class ComponentFactory implements IComponentFactory {
 		LOGGER.debug("{}|listeners={}", context.getId(), context
 				.getActionListeners().size());
 
-		final Object c = context.getComponent();
-
-		if (!(c instanceof Component)) {
-			return;
-		}
-
-		final Component component = (Component) c;
+		final Component component = context.getComponent();
 
 		final MethodListenerProxy<MouseMotionListener> mouseMotionListenerProxy = new MethodListenerProxy<MouseMotionListener>(
 				MouseMotionListener.class, context.getActionListeners());

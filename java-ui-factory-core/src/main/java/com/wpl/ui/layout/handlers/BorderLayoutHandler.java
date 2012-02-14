@@ -32,9 +32,9 @@ public class BorderLayoutHandler implements ILayoutHandler {
 			.getLogger(BorderLayoutHandler.class);
 
 	@Override
-	public void layoutComponent(ComponentContext componentContext) {
+	public void layoutComponent(final ComponentContext componentContext) {
 
-		UiBorderLayoutConstraint constraint = componentContext
+		final UiBorderLayoutConstraint constraint = componentContext
 				.getAnnotatedElement().getAnnotation(
 						UiBorderLayoutConstraint.class);
 
@@ -55,7 +55,7 @@ public class BorderLayoutHandler implements ILayoutHandler {
 	}
 
 	@Override
-	public void finalLayout(ComponentContext containerContext) {
+	public void finalLayout(final ComponentContext containerContext) {
 		// TODO Auto-generated method stub
 
 	}
