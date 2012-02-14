@@ -1,4 +1,4 @@
-#summary List of new feature in next release
+#summary List of new feature in next release (available in SVN)
 
 = GridView Control =
 
@@ -60,3 +60,45 @@ public class GridViewSample extends JFrame {
 
 Result:
 [http://java-ui-factory.googlecode.com/svn/trunk/java-ui-factory-sample/docs/samples/GridViewOutput.png]
+
+
+= Radio Buttons =
+
+@UiLayout(BorderLayout.class)
+@JFrameProperties(frameCloseOperation = FrameCloseOperation.EXIT, windowPosition = WindowPosition.CENTER)
+public class RadioButtonsSample extends JFrame {
+
+	private static Logger LOGGER = LoggerFactory
+			.getLogger(RadioButtonsSample.class);
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@UiBorderLayoutConstraint(BorderLayoutConstraint.CENTER)
+	RadioButtons radioButtons;
+
+	@UiInit
+	void uiInit() {
+
+		radioButtons.addRadioButton(new JRadioButton("Male"));
+		radioButtons.addRadioButton(new JRadioButton("Female"));
+	}
+
+	/**
+	 * Callback method when any radio button is clicked.
+	 * 
+	 * @param e
+	 */
+	void onRadioButtons_actionPerformed(ActionEvent e) {
+
+		LOGGER.debug("actionPerformed: {}", e.getActionCommand());
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		SwingFactory.create(RadioButtonsSample.class).setVisible(true);
+	}
+}
