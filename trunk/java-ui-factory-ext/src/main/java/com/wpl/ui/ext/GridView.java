@@ -36,7 +36,7 @@ public class GridView<T> implements IComponent {
 
 	}
 
-	private class GridViewDataModel extends AbstractTableModel {
+	private class GridViewTableModel extends AbstractTableModel {
 
 		/**
 		 * 
@@ -64,12 +64,12 @@ public class GridView<T> implements IComponent {
 	private final List<T> mData = new ArrayList<T>();
 	private JTable mTable;
 	private GridViewColumnModel mColumnModel;
-	private GridViewDataModel mDataModel;
+	private GridViewTableModel mTableModel;
 
 	public GridView() {
 
 		this.mColumnModel = new GridViewColumnModel();
-		this.mDataModel = new GridViewDataModel();
+		this.mTableModel = new GridViewTableModel();
 	}
 
 	private List<String> mProperties = new ArrayList<String>();
@@ -91,7 +91,7 @@ public class GridView<T> implements IComponent {
 	@Override
 	public Component getComponent() {
 
-		this.mTable = new JTable(this.mDataModel, this.mColumnModel);
+		this.mTable = new JTable(this.mTableModel, this.mColumnModel);
 
 		return this.mTable;
 	}
