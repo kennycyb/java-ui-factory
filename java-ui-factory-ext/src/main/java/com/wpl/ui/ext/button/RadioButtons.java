@@ -20,9 +20,18 @@ public class RadioButtons extends JPanel {
 
 	private ButtonGroup mButtonGroup = new ButtonGroup();
 	private List<JRadioButton> mRadioButtons = new ArrayList<JRadioButton>();
+	
+	// ~ Events ----------------------------------------------------------------
+	
+	/**
+	 * actionPerformed - when any JRadioButton is clicked 
+	 */
 	private EventHandler<ActionEvent> actionPerformed = new EventHandler<ActionEvent>();
 
-	private ActionListener mButtonListener = new ActionListener() {
+	/**
+	 * Forward actionPerformed action to the owner of this control
+	 */
+	private final ActionListener mButtonListener = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -30,7 +39,7 @@ public class RadioButtons extends JPanel {
 		}
 	};
 
-	public void addRadioButton(JRadioButton button) {
+	public final void addRadioButton(JRadioButton button) {
 
 		button.addActionListener(mButtonListener);
 
@@ -38,4 +47,5 @@ public class RadioButtons extends JPanel {
 		mButtonGroup.add(button);
 		this.add(button);
 	}
+	
 }
