@@ -25,11 +25,10 @@ public class ULabelSample extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@SuppressWarnings("unused")
 	private static Logger LOGGER = LoggerFactory.getLogger(ULabelSample.class);
 
 	private ILabel myLabel;
-	
+
 	@UiInit
 	void init() {
 		LOGGER.debug("init OK");

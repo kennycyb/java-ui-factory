@@ -55,6 +55,9 @@ public class JSpinnerSample extends JFrame {
 	JSpinner integerSpinner;
 
 	public static void main(String[] args) {
+
+		LOGGER.debug("Application Start");
+
 		SwingFactory.create(JSpinnerSample.class).setVisible(true);
 	}
 }

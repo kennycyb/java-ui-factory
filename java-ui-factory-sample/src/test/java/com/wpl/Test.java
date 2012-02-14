@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import com.wpl.ui.ext.GridView;
+import com.wpl.ui.ext.gridview.GridView;
 import com.wpl.ui.samples.model.Person;
 
 public class Test {
