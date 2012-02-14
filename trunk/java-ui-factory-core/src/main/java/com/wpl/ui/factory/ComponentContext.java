@@ -54,6 +54,8 @@ public class ComponentContext {
 	 */
 	private IComponent mComponent;
 
+	private IComponent mJxComponent;
+
 	/**
 	 * The container that contain this component.
 	 */
@@ -292,5 +294,13 @@ public class ComponentContext {
 
 	public void setContainer(final Container container) {
 		mContainer = container;
+	}
+
+	public void setJxComponent(final IComponent jxComponent) {
+		mJxComponent = jxComponent;
+	}
+
+	public IComponent getJxComponent() {
+		return mJxComponent;
 	}
 }
