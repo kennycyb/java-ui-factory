@@ -39,6 +39,7 @@ public class WindowFactory extends ContainerFactory {
 		super.initialize(context);
 
 		if (context.isPack()) {
+			LOGGER.debug("{}|Packing", context.getId());
 			((Window) context.getComponent()).pack();
 		}
 	}

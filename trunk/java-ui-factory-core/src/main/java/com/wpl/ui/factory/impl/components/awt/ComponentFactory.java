@@ -109,6 +109,8 @@ public class ComponentFactory implements IComponentFactory {
 
 			instance = innerClassConstructor.newInstance(context
 					.getParentContext().getComponent());
+
+			LOGGER.debug("{}|creating from {}", context.getId(), innerClass);
 		} else {
 
 			LOGGER.debug("{}|creating from {}", context.getId(),
