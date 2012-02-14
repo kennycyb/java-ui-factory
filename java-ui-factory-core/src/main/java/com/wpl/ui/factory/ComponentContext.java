@@ -221,13 +221,8 @@ public class ComponentContext {
 			return mEnclosedComponent;
 		}
 
-		if (mComponent instanceof Component) {
-			return (Component) mComponent;
-		}
-
 		if (mComponent instanceof IComponent) {
-			// TODO:
-			return null;
+			return mComponent.getComponent();
 		}
 
 		return null;
