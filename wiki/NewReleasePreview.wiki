@@ -10,20 +10,20 @@ public class Person implements Serializable {
 	private String mFirstName;
 	private String mLastName;
 
-	public String getmFirstName() {
+	public String getFirstName() {
 		return mFirstName;
 	}
 
-	public void setmFirstName(String mFirstName) {
-		this.mFirstName = mFirstName;
+	public void setFirstName(String firstName) {
+		this.mFirstName = firstName;
 	}
 
-	public String getmLastName() {
+	public String getLastName() {
 		return mLastName;
 	}
 
-	public void setmLastName(String mLastName) {
-		this.mLastName = mLastName;
+	public void setLastName(String lastName) {
+		this.mLastName = lastName;
 	}
 }
 }}}
