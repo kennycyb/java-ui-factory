@@ -122,3 +122,6 @@ public class SampleFrameWithInnerClass extends JFrame {
 	}
 }
 }}}
+
+
+See also: Joseph Darcy's blog: [https://blogs.oracle.com/darcy/entry/nested_inner_member_and_top Nested, Inner, Member and Top-Level Classes]
