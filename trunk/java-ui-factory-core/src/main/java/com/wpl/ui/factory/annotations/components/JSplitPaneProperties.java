@@ -27,7 +27,7 @@ import com.wpl.ui.factory.enums.SplitPaneOrientation;
  * @since 1.0
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.FIELD })
+@Target({ ElementType.FIELD })
 public @interface JSplitPaneProperties {
 
 	/**

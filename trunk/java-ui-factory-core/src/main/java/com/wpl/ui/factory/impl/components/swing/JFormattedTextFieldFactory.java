@@ -35,33 +35,32 @@ import com.wpl.ui.factory.impl.UiAnnotationHandler;
  * @since 1.0
  */
 public class JFormattedTextFieldFactory extends JTextFieldFactory {
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(JFormattedTextFieldFactory.class);
 
 	@UiAnnotationHandler(UiTextFormat.class)
-	protected void handleUiTextFormat(ComponentContext context,
-			JFormattedTextField component, UiTextFormat annotate) {
+	protected void handleUiTextFormat(final ComponentContext context,
+			final JFormattedTextField component, final UiTextFormat annotate) {
 
 		JFormattedTextField.AbstractFormatter formatter = null;
 
 		if (annotate.formatter() == DateFormat.class) {
-			formatter = new DateFormatter(new SimpleDateFormat(annotate
-					.pattern()));
+			formatter = new DateFormatter(new SimpleDateFormat(
+					annotate.pattern()));
 		}
 
 		if (formatter == null) {
-			LOGGER
-					.warn(
-							"(JFormattedTextField){} - unable to construct formatter ({}, {})",
-							new Object[] { context.getId(),
-									annotate.formatter().getSimpleName(),
-									annotate.pattern() });
+			LOGGER.warn(
+					"(JFormattedTextField){} - unable to construct formatter ({}, {})",
+					new Object[] { context.getId(),
+							annotate.formatter().getSimpleName(),
+							annotate.pattern() });
 			return;
 		}
 
 		component.setFormatterFactory(new DefaultFormatterFactory(formatter));
-		LOGGER.debug("(JFormattedTextField){}.setFormatterFactory()", context
-				.getId());
+		LOGGER.debug("(JFormattedTextField){}.setFormatterFactory()",
+				context.getId());
 
 	}
 }

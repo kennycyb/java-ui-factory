@@ -30,17 +30,17 @@ import com.wpl.ui.listeners.MethodListenerProxy;
  */
 public class CheckboxFactory extends ComponentFactory {
 	@SuppressWarnings("unused")
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(CheckboxFactory.class);
 
 	@Override
-	protected void wireComponent(ComponentContext context) {
+	protected void wireComponent(final ComponentContext context) {
 
 		super.wireComponent(context);
 
-		Checkbox component = (Checkbox) context.getComponent();
+		final Checkbox component = (Checkbox) context.getComponent();
 
-		MethodListenerProxy<ItemListener> itemListener = new MethodListenerProxy<ItemListener>(
+		final MethodListenerProxy<ItemListener> itemListener = new MethodListenerProxy<ItemListener>(
 				ItemListener.class, context.getActionListeners());
 
 		if (itemListener.hasListeningMethod()) {

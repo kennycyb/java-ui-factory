@@ -32,7 +32,7 @@ import com.wpl.ui.factory.IUiFactory;
  */
 public class UComponentFactory implements IComponentFactory {
 
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(UComponentFactory.class);
 
 	@Override

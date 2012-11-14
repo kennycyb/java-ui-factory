@@ -24,7 +24,8 @@ import org.slf4j.LoggerFactory;
  */
 public class UComponent<E> {
 	@SuppressWarnings("unused")
-	private static Logger LOGGER = LoggerFactory.getLogger(UComponent.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(UComponent.class);
 
 	private E mComponent;
 

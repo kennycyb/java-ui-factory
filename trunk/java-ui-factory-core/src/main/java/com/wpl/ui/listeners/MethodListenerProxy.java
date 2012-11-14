@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  */
 public class MethodListenerProxy<E> implements MethodInterceptor {
 
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(MethodListenerProxy.class);
 
 	Map<String, MethodListener<?>> mMethodListeners = new HashMap<String, MethodListener<?>>();

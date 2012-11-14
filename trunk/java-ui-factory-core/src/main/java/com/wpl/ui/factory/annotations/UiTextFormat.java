@@ -22,7 +22,7 @@ import java.lang.annotation.Target;
 import java.text.Format;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.FIELD })
+@Target({ ElementType.FIELD })
 public @interface UiTextFormat {
 	Class<? extends Format> formatter();
 

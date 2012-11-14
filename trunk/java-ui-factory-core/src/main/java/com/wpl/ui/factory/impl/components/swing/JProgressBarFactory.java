@@ -29,7 +29,7 @@ import com.wpl.ui.factory.impl.UiAnnotationHandler;
  * @since 1.0
  */
 public class JProgressBarFactory extends JComponentFactory {
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(JProgressBarFactory.class);
 
 	/**
@@ -40,8 +40,8 @@ public class JProgressBarFactory extends JComponentFactory {
 	 * @since 1.0
 	 */
 	@UiAnnotationHandler(JProgressBarProperties.class)
-	void handleJProgressBarProperties(ComponentContext context,
-			JProgressBar component, JProgressBarProperties annotate) {
+	void handleJProgressBarProperties(final ComponentContext context,
+			final JProgressBar component, final JProgressBarProperties annotate) {
 
 		component.setOrientation(annotate.orientation().getSwingConstant());
 		LOGGER.debug("{}|JProgressBar.setOrientation({})", context.getId(),

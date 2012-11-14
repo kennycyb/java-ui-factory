@@ -27,7 +27,7 @@ import com.wpl.ui.factory.enums.CursorType;
  * @since 1.0
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.TYPE, ElementType.FIELD })
+@Target({ ElementType.TYPE, ElementType.FIELD })
 public @interface UiCursor {
 	CursorType value();
 }

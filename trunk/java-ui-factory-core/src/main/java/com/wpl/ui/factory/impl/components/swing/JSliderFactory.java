@@ -31,16 +31,16 @@ import com.wpl.ui.listeners.MethodListenerProxy;
  * @since 1.0
  */
 public class JSliderFactory extends JComponentFactory {
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(JSliderFactory.class);
 
 	@Override
-	protected void wireComponent(ComponentContext context) {
+	protected void wireComponent(final ComponentContext context) {
 		super.wireComponent(context);
 
-		JSlider component = (JSlider) context.getComponent();
+		final JSlider component = (JSlider) context.getComponent();
 
-		MethodListenerProxy<ChangeListener> changeListener = new MethodListenerProxy<ChangeListener>(
+		final MethodListenerProxy<ChangeListener> changeListener = new MethodListenerProxy<ChangeListener>(
 				ChangeListener.class, context.getActionListeners());
 
 		if (changeListener.hasListeningMethod()) {
@@ -49,28 +49,28 @@ public class JSliderFactory extends JComponentFactory {
 	}
 
 	@UiAnnotationHandler(JSliderProperties.class)
-	void handleJSliderProperties(ComponentContext context, JSlider component,
-			JSliderProperties annotate) {
+	void handleJSliderProperties(final ComponentContext context,
+			final JSlider component, final JSliderProperties annotate) {
 
 		component.setMaximum(annotate.maximum());
-		LOGGER.debug("{}|JSlider.setMaximum({})", context.getId(), annotate
-				.maximum());
+		LOGGER.debug("{}|JSlider.setMaximum({})", context.getId(),
+				annotate.maximum());
 
 		component.setMinimum(annotate.minimum());
-		LOGGER.debug("{}|JSlider.setMinimum({})", context.getId(), annotate
-				.minimum());
+		LOGGER.debug("{}|JSlider.setMinimum({})", context.getId(),
+				annotate.minimum());
 
 		component.setInverted(annotate.inverted());
-		LOGGER.debug("{}|JSlider.setInverted({})", context.getId(), annotate
-				.inverted());
+		LOGGER.debug("{}|JSlider.setInverted({})", context.getId(),
+				annotate.inverted());
 
 		component.setValue(annotate.value());
-		LOGGER.debug("{}|JSlider.setValue({})", context.getId(), annotate
-				.value());
+		LOGGER.debug("{}|JSlider.setValue({})", context.getId(),
+				annotate.value());
 
 		component.setOrientation(annotate.orientation().getSwingConstant());
-		LOGGER.debug("{}|JSlider.setOrientation({})", context.getId(), annotate
-				.orientation());
+		LOGGER.debug("{}|JSlider.setOrientation({})", context.getId(),
+				annotate.orientation());
 
 	}
 }

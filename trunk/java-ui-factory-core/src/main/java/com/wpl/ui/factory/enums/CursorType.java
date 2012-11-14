@@ -18,6 +18,7 @@ package com.wpl.ui.factory.enums;
 import java.awt.Cursor;
 
 /**
+ * Cursor Type. Use swing's constant with enum.
  * 
  * @since 1.0
  */
@@ -51,9 +52,7 @@ public enum CursorType {
 
 	WEST(Cursor.W_RESIZE_CURSOR),
 
-	WAIT(Cursor.WAIT_CURSOR),
-
-	;
+	WAIT(Cursor.WAIT_CURSOR);
 
 	private final int mSwingConstant;
 

@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 import com.wpl.ui.factory.enums.FontStyle;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.FIELD, ElementType.TYPE })
+@Target({ ElementType.FIELD, ElementType.TYPE })
 public @interface UiFont {
 
 	String name() default "Arial";

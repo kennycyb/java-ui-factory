@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  * @author kenny
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.FIELD, ElementType.TYPE })
+@Target({ ElementType.FIELD, ElementType.TYPE })
 public @interface UiName {
 
 	String value();

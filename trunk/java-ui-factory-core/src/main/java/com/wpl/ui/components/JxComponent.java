@@ -15,6 +15,8 @@
  */
 package com.wpl.ui.components;
 
+import java.awt.Component;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,5 +26,12 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class JxComponent implements IComponent {
 	@SuppressWarnings("unused")
-	private static Logger LOGGER = LoggerFactory.getLogger(JxComponent.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(JxComponent.class);
+
+	// ~ Implementation of IComponent ------------------------------------------
+	/**
+	 * @return The AWT component
+	 */
+	public abstract Component getComponent();
 }

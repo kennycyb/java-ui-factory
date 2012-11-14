@@ -27,9 +27,7 @@ public enum ListLayoutOrientation {
 
 	VERTICAL_WRAP(JList.VERTICAL_WRAP),
 
-	VERTICAL(JList.VERTICAL),
-
-	;
+	VERTICAL(JList.VERTICAL);
 
 	private int mSwingContant;
 

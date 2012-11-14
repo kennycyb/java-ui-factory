@@ -25,13 +25,13 @@ import com.wpl.ui.factory.ComponentContext;
  * @author kenny
  * @since 1.0
  */
-public class NullLayoutHandler implements ILayoutHandler {
+public final class NullLayoutHandler implements ILayoutHandler {
 
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(NullLayoutHandler.class);
 
 	@Override
-	public void layoutComponent(ComponentContext componentContext) {
+	public void layoutComponent(final ComponentContext componentContext) {
 
 		// Sanity checking
 		if (componentContext == null || componentContext.getContainer() == null
@@ -49,7 +49,7 @@ public class NullLayoutHandler implements ILayoutHandler {
 	}
 
 	@Override
-	public void finalLayout(ComponentContext containerContext) {
+	public void finalLayout(final ComponentContext containerContext) {
 		// TODO Auto-generated method stub
 
 	}

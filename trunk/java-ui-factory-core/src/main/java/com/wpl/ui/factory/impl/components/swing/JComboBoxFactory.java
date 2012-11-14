@@ -40,43 +40,43 @@ import com.wpl.ui.listeners.MethodListenerProxy;
  */
 public class JComboBoxFactory extends JComponentFactory {
 
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(JComboBoxFactory.class);
 
 	@UiAnnotationHandler(UiSimpleItems.class)
-	protected void handleUiSimpleItems(ComponentContext context,
-			JComboBox component, UiSimpleItems annotate) {
+	protected void handleUiSimpleItems(final ComponentContext context,
+			final JComboBox component, final UiSimpleItems annotate) {
 		component.setModel(new DefaultComboBoxModel(annotate.value()));
 	}
 
 	@UiAnnotationHandler(UiResource.class)
-	protected void handleUiResource(ComponentContext context,
-			JComboBox component, UiResource annotate) {
-		InputStream in = getClass().getClassLoader().getResourceAsStream(
+	protected void handleUiResource(final ComponentContext context,
+			final JComboBox component, final UiResource annotate) {
+		final InputStream in = getClass().getClassLoader().getResourceAsStream(
 				annotate.value());
 		if (in == null) {
 			LOGGER.error("UiResource {} not found", annotate.value());
 			return;
 		}
 
-		ComboBoxInfo info = JAXB.unmarshal(in, ComboBoxInfo.class);
+		final ComboBoxInfo info = JAXB.unmarshal(in, ComboBoxInfo.class);
 		if (info == null) {
 			LOGGER.error("UiResource {} is invalid", annotate.value());
 			return;
 		}
 
-		for (ComboBoxItemInfo itemInfo : info.getItem()) {
+		for (final ComboBoxItemInfo itemInfo : info.getItem()) {
 			component.addItem(itemInfo.getText());
 		}
 	}
 
 	@Override
-	public void wireComponent(ComponentContext context) {
+	public void wireComponent(final ComponentContext context) {
 		super.wireComponent(context);
 
-		JComboBox cb = (JComboBox) context.getComponent();
+		final JComboBox cb = (JComboBox) context.getComponent();
 
-		MethodListenerProxy<ItemListener> itemListenerProxy = new MethodListenerProxy<ItemListener>(
+		final MethodListenerProxy<ItemListener> itemListenerProxy = new MethodListenerProxy<ItemListener>(
 				ItemListener.class, context.getActionListeners());
 
 		if (itemListenerProxy.hasListeningMethod()) {

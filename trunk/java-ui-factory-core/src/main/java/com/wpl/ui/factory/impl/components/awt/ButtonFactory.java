@@ -30,16 +30,17 @@ import com.wpl.ui.listeners.MethodListenerProxy;
  */
 public class ButtonFactory extends ComponentFactory {
 	@SuppressWarnings("unused")
-	private static Logger LOGGER = LoggerFactory.getLogger(ButtonFactory.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(ButtonFactory.class);
 
 	@Override
-	protected void wireComponent(ComponentContext context) {
+	protected void wireComponent(final ComponentContext context) {
 
 		super.wireComponent(context);
 
-		Button button = (Button) context.getComponent();
+		final Button button = (Button) context.getComponent();
 
-		MethodListenerProxy<ActionListener> actionListener = new MethodListenerProxy<ActionListener>(
+		final MethodListenerProxy<ActionListener> actionListener = new MethodListenerProxy<ActionListener>(
 				ActionListener.class, context.getActionListeners());
 
 		if (actionListener.hasListeningMethod()) {

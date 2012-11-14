@@ -34,15 +34,16 @@ import com.wpl.ui.factory.impl.UiAnnotationHandler;
  */
 public class JPanelFactory extends JComponentFactory {
 
-	private static Logger LOGGER = LoggerFactory.getLogger(JPanelFactory.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(JPanelFactory.class);
 
 	@UiAnnotationHandler(UiGridLayoutConstraint.class)
-	protected void handleUiGridLayoutConstraint(ComponentContext context,
-			JPanel component, UiGridLayoutConstraint annotate) {
-		LayoutManager lm = component.getLayout();
+	protected void handleUiGridLayoutConstraint(final ComponentContext context,
+			final JPanel component, final UiGridLayoutConstraint annotate) {
+		final LayoutManager lm = component.getLayout();
 
 		if (lm instanceof GridLayout) {
-			GridLayout glm = (GridLayout) lm;
+			final GridLayout glm = (GridLayout) lm;
 
 			glm.setRows(annotate.rows());
 			glm.setColumns(annotate.cols());

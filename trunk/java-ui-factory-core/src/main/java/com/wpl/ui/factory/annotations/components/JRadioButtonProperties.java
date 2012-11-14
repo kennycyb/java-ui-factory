@@ -21,6 +21,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * JRadioButton properties.
  * 
  * @since 1.0
  */
@@ -31,7 +32,6 @@ public @interface JRadioButtonProperties {
 	/**
 	 * Display text of this JRadioButton.
 	 * 
-	 * @return Display text of this JRadioButton.
 	 * @since 1.0
 	 */
 	String text() default "";
@@ -39,7 +39,6 @@ public @interface JRadioButtonProperties {
 	/**
 	 * Radio button group ID.
 	 * 
-	 * @return Radio button group ID.
 	 * @since 1.0
 	 */
 	String groupId() default "";
@@ -47,7 +46,6 @@ public @interface JRadioButtonProperties {
 	/**
 	 * Is the button selected?
 	 * 
-	 * @return Is the button selected?
 	 * @since 1.0
 	 */
 	boolean selected() default false;

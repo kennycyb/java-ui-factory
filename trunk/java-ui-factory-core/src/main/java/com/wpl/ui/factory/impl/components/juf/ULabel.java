@@ -30,7 +30,7 @@ import com.wpl.ui.components.ILabel;
  */
 public class ULabel extends UComponent<JLabel> implements ILabel {
 	@SuppressWarnings("unused")
-	private static Logger LOGGER = LoggerFactory.getLogger(ULabel.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ULabel.class);
 
 	@Override
 	public void setText(final String text) {

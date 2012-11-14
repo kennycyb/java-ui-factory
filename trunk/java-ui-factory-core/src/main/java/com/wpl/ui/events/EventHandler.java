@@ -27,7 +27,8 @@ import org.slf4j.LoggerFactory;
  */
 public class EventHandler<E> implements IEventHandler<E> {
 
-	private static Logger LOGGER = LoggerFactory.getLogger(EventHandler.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(EventHandler.class);
 
 	private final List<IEventListener<E>> mListeners = new ArrayList<IEventListener<E>>();
 

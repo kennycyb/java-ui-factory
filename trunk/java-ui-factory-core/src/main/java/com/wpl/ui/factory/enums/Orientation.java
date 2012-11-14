@@ -25,13 +25,11 @@ public enum Orientation {
 
 	VERTICAL(SwingConstants.VERTICAL),
 
-	HORIZONTAL(SwingConstants.HORIZONTAL),
-
-	;
+	HORIZONTAL(SwingConstants.HORIZONTAL);
 
 	private final int mSwingConstant;
 
-	private Orientation(int swingConstant) {
+	private Orientation(final int swingConstant) {
 		mSwingConstant = swingConstant;
 	}
 

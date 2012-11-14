@@ -32,9 +32,11 @@ import com.wpl.ui.factory.impl.UiAnnotationHandler;
  */
 public class FrameFactory extends WindowFactory {
 
-	private static Logger LOGGER = LoggerFactory.getLogger(FrameFactory.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(FrameFactory.class);
 
-	protected void title(ComponentContext context, Frame frame, String title) {
+	protected void title(final ComponentContext context, final Frame frame,
+			final String title) {
 		frame.setTitle(title);
 
 		if (LOGGER.isDebugEnabled()) {
@@ -43,19 +45,19 @@ public class FrameFactory extends WindowFactory {
 	}
 
 	@UiAnnotationHandler(UiText.class)
-	protected void handleUiText(ComponentContext context, Frame frame,
-			UiText annotate) {
+	protected void handleUiText(final ComponentContext context,
+			final Frame frame, final UiText annotate) {
 		title(context, frame, annotate.value());
 	}
 
 	@UiAnnotationHandler(UiFrameResizable.class)
-	protected void handleUiResizable(ComponentContext context, Frame frame,
-			UiFrameResizable annotate) {
+	protected void handleUiResizable(final ComponentContext context,
+			final Frame frame, final UiFrameResizable annotate) {
 		frame.setResizable(annotate.value());
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("{}|Frame.setResizable({})", context.getId(), annotate
-					.value());
+			LOGGER.debug("{}|Frame.setResizable({})", context.getId(),
+					annotate.value());
 		}
 	}
 }

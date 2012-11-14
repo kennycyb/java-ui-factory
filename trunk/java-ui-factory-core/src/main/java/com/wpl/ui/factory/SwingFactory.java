@@ -126,7 +126,8 @@ import com.wpl.ui.listeners.MethodListener;
  * @since 1.0
  */
 public class SwingFactory implements IUiFactory {
-	private static Logger LOGGER = LoggerFactory.getLogger(SwingFactory.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(SwingFactory.class);
 
 	public static <T extends Component> T create(final Class<T> componentClass) {
 		return sInstance.createComponent(componentClass);
@@ -241,7 +242,7 @@ public class SwingFactory implements IUiFactory {
 
 				return factory;
 
-			} catch (final Throwable ignored) {
+			} catch (final Exception ignored) {
 				LOGGER.warn("Failed to create DefaultFactory {} for {}",
 						defaultFactory.value().getName(), type.getName());
 			}
@@ -449,19 +450,21 @@ public class SwingFactory implements IUiFactory {
 						.findChildContext(childContext.getId());
 				if (ownerChild != null) {
 
-					final Field f = (Field) childContext.getAnnotatedElement();
+					final Field field = (Field) childContext
+							.getAnnotatedElement();
 
-					f.setAccessible(true);
+					field.setAccessible(true);
 
 					try {
-						f.set(componentContext.getComponent(),
+						field.set(componentContext.getComponent(),
 								ownerChild.getComponent());
 					} catch (final IllegalArgumentException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+
+						LOGGER.warn("Illegal argument: {}", e);
+
 					} catch (final IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+
+						LOGGER.warn("Illegal access: {}", e);
 					}
 
 				}

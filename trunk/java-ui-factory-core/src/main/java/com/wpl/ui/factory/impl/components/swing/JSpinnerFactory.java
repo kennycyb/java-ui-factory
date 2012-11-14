@@ -30,12 +30,13 @@ import com.wpl.ui.factory.impl.UiAnnotationHandler;
  * @since 1.0
  */
 public class JSpinnerFactory extends JComponentFactory {
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(JSpinnerFactory.class);
 
 	@UiAnnotationHandler(SpinnerIntegerModelProperties.class)
-	void handleSpinnerIntegerModelProperties(ComponentContext context,
-			JSpinner component, SpinnerIntegerModelProperties annotate) {
+	void handleSpinnerIntegerModelProperties(final ComponentContext context,
+			final JSpinner component,
+			final SpinnerIntegerModelProperties annotate) {
 
 		component.setModel(new SpinnerNumberModel(annotate.value(), annotate
 				.minimum(), annotate.maximum(), annotate.stepSize()));

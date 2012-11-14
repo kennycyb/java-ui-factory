@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * @since 1.0
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.FIELD })
+@Target({ ElementType.FIELD })
 public @interface UiLineWrap {
 	boolean value() default true;
 }

@@ -28,7 +28,7 @@ import com.wpl.ui.factory.annotations.constraints.UiBorderLayoutConstraint;
  */
 public class BorderLayoutHandler implements ILayoutHandler {
 
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(BorderLayoutHandler.class);
 
 	@Override

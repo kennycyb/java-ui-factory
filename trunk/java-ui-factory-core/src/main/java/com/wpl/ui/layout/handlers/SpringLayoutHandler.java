@@ -34,7 +34,7 @@ import com.wpl.ui.utils.SpringUtilities;
  */
 public class SpringLayoutHandler implements ILayoutHandler {
 
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(SpringLayoutHandler.class);
 
 	@Override

@@ -30,7 +30,7 @@ import com.wpl.ui.factory.impl.UiAnnotationHandler;
  * @since 1.0
  */
 public class JPasswordFieldFactory extends JTextFieldFactory {
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(JPasswordFieldFactory.class);
 
 	/**
@@ -41,8 +41,8 @@ public class JPasswordFieldFactory extends JTextFieldFactory {
 	 * @since 1.0
 	 */
 	@UiAnnotationHandler(UiEchoChar.class)
-	protected void handleUiEchoChar(ComponentContext componentContext,
-			JPasswordField component, UiEchoChar annotate) {
+	protected void handleUiEchoChar(final ComponentContext componentContext,
+			final JPasswordField component, final UiEchoChar annotate) {
 		component.setEchoChar(annotate.value());
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("(JPasswordField){}.setEchoChar('{}')", new Object[] {

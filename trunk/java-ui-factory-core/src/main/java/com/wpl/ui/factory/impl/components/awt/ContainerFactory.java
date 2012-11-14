@@ -25,19 +25,19 @@ import com.wpl.ui.factory.annotations.UiLayout;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 
 public class ContainerFactory extends ComponentFactory {
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(ContainerFactory.class);
 
 	@UiAnnotationHandler(UiLayout.class)
-	protected void handleUiLayout(ComponentContext context,
-			Container component, UiLayout layout) {
+	protected void handleUiLayout(final ComponentContext context,
+			final Container component, final UiLayout layout) {
 
 		try {
 			component.setLayout(layout.value().newInstance());
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			LOGGER.error("{}|Failed to create Layout Manager - {}, error={} ",
 					new Object[] { context.getId(), layout.value(), e });
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			LOGGER.error("{}|Failed to create LayoutManager - {}, error={}",
 					new Object[] { context.getId(), layout.value(), e });
 		}

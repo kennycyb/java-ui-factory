@@ -18,13 +18,13 @@ package com.wpl.ui.factory.impl.components.awt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * 
  * @since 1.0
  */
 public class DialogFactory extends WindowFactory {
 	@SuppressWarnings("unused")
-	private static Logger LOGGER = LoggerFactory.getLogger(DialogFactory.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(DialogFactory.class);
 
 }

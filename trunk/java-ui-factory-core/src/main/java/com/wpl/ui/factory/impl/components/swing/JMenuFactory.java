@@ -32,7 +32,8 @@ import com.wpl.ui.factory.impl.UiAnnotationHandler;
  * @since 1.0
  */
 public class JMenuFactory extends JComponentFactory {
-	private static Logger LOGGER = LoggerFactory.getLogger(JMenuFactory.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(JMenuFactory.class);
 
 	/**
 	 * 
@@ -42,11 +43,11 @@ public class JMenuFactory extends JComponentFactory {
 	 * @since 1.0
 	 */
 	@UiAnnotationHandler(UiText.class)
-	protected void handleUiText(ComponentContext context, JMenu component,
-			UiText annotate) {
+	protected void handleUiText(final ComponentContext context,
+			final JMenu component, final UiText annotate) {
 		component.setText(annotate.value());
-		LOGGER.debug("(JMenu){}.setText(\"{}\")", context.getId(), annotate
-				.value());
+		LOGGER.debug("(JMenu){}.setText(\"{}\")", context.getId(),
+				annotate.value());
 	}
 
 	/**
@@ -57,17 +58,17 @@ public class JMenuFactory extends JComponentFactory {
 	 * @since 1.0
 	 */
 	@UiAnnotationHandler(UiMenuBarItems.class)
-	protected void handleUiMenuBarItems(ComponentContext context,
-			JMenu component, UiMenuBarItems annotate) {
+	protected void handleUiMenuBarItems(final ComponentContext context,
+			final JMenu component, final UiMenuBarItems annotate) {
 
-		for (String item : annotate.value()) {
+		for (final String item : annotate.value()) {
 
 			if (item.equals("-")) {
 				component.addSeparator();
 				continue;
 			}
 
-			JMenuItem m = new JMenuItem(item);
+			final JMenuItem m = new JMenuItem(item);
 			component.add(m);
 		}
 

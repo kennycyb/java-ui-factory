@@ -34,7 +34,8 @@ import com.wpl.ui.factory.impl.components.xinfo.list.ListInfo;
  * @since 1.0
  */
 public class JListFactory extends JComponentFactory {
-	private static Logger LOGGER = LoggerFactory.getLogger(JListFactory.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(JListFactory.class);
 
 	/**
 	 * 

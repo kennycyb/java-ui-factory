@@ -24,7 +24,7 @@ import com.wpl.ui.factory.ComponentContext;
  */
 public interface ILayoutHandler {
 
-	public void layoutComponent(ComponentContext componentContext);
+	void layoutComponent(ComponentContext componentContext);
 
-	public void finalLayout(ComponentContext containerContext);
+	void finalLayout(ComponentContext containerContext);
 }

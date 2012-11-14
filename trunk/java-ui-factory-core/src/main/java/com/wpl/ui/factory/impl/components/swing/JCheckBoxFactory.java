@@ -18,7 +18,6 @@ package com.wpl.ui.factory.impl.components.swing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * 
  * @author kenny
@@ -27,7 +26,7 @@ import org.slf4j.LoggerFactory;
 public class JCheckBoxFactory extends JToggleButtonFactory {
 
 	@SuppressWarnings("unused")
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(JCheckBoxFactory.class);
 
 }

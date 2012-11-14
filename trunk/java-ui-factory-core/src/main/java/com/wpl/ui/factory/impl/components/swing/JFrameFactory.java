@@ -38,10 +38,21 @@ import com.wpl.ui.layout.managers.NullLayout;
  */
 public class JFrameFactory extends FrameFactory {
 
-	private static Logger LOGGER = LoggerFactory.getLogger(JFrameFactory.class);
+	/**
+	 * The LOGGER.
+	 */
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(JFrameFactory.class);
 
-	protected void frameCloseOperation(ComponentContext context,
-			JFrame component, FrameCloseOperation value) {
+	/**
+	 * Setup frame close operation.
+	 * 
+	 * @param context
+	 * @param component
+	 * @param value
+	 */
+	protected final void frameCloseOperation(final ComponentContext context,
+			final JFrame component, final FrameCloseOperation value) {
 		component.setDefaultCloseOperation(value.getSwingConstant());
 
 		LOGGER.debug("{}|JFrame.setDefaultCloseOperation({})", context.getId(),
@@ -49,22 +60,23 @@ public class JFrameFactory extends FrameFactory {
 	}
 
 	@UiAnnotationHandler(UiFrameCloseOperation.class)
-	protected void handleUiFrameCloseOperation(ComponentContext context,
-			JFrame component, UiFrameCloseOperation annotate) {
+	protected void handleUiFrameCloseOperation(final ComponentContext context,
+			final JFrame component, final UiFrameCloseOperation annotate) {
 		frameCloseOperation(context, component, annotate.value());
 	}
 
 	@UiAnnotationHandler(JFrameProperties.class)
-	protected void handleJFrameProperties(ComponentContext context,
-			JFrame component, JFrameProperties annotate) {
+	protected void handleJFrameProperties(final ComponentContext context,
+			final JFrame component, final JFrameProperties annotate) {
 
 		windowPosition(context, component, annotate.windowPosition());
 
 		if (annotate.height() > 0 && annotate.width() > 0) {
 			component.setSize(annotate.width(), annotate.height());
 			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("{}|JFrame.setSize({},{})", new Object[] {
-						context.getId(), annotate.width(), annotate.height() });
+				LOGGER.debug("{}|JFrame.setSize({},{})",
+						new Object[] { context.getId(), annotate.width(),
+								annotate.height() });
 			}
 			context.setPack(false);
 		}
@@ -75,8 +87,8 @@ public class JFrameFactory extends FrameFactory {
 	}
 
 	@UiAnnotationHandler(UiLayout.class)
-	protected void handleUiLayout(ComponentContext context, JFrame component,
-			UiLayout annotate) {
+	protected void handleUiLayout(final ComponentContext context,
+			final JFrame component, final UiLayout annotate) {
 		if (annotate.value() == NullLayout.class) {
 			component.setLayout(null);
 			return;
@@ -84,16 +96,16 @@ public class JFrameFactory extends FrameFactory {
 
 		try {
 
-			LayoutManager lm = annotate.value().newInstance();
+			final LayoutManager lm = annotate.value().newInstance();
 			component.setLayout(lm);
 
-			LOGGER.debug("{}|using layout {}", context.getId(), annotate
-					.value());
+			LOGGER.debug("{}|using layout {}", context.getId(),
+					annotate.value());
 
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			LOGGER.error("UiLayout - InstantiationException - {} - {} ",
 					annotate.value(), e.getMessage());
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			LOGGER.error("UiLayout - IllegalAccessException - {} - {} ",
 					annotate.value(), e.getMessage());
 		}
