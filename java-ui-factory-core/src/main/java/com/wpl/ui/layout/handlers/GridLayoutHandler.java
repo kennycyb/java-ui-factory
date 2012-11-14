@@ -26,11 +26,13 @@ import com.wpl.ui.factory.ComponentContext;
  * @since 1.0
  */
 public class GridLayoutHandler implements ILayoutHandler {
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(GridLayoutHandler.class);
 
 	@Override
-	public void layoutComponent(ComponentContext componentContext) {
+	public void layoutComponent(final ComponentContext componentContext) {
+
+		LOGGER.debug("added {}", componentContext.getId());
 
 		componentContext.getContainer().add(
 				componentContext.getEnclosedComponent(), null);
@@ -38,7 +40,7 @@ public class GridLayoutHandler implements ILayoutHandler {
 	}
 
 	@Override
-	public void finalLayout(ComponentContext containerContext) {
+	public void finalLayout(final ComponentContext containerContext) {
 		// TODO Auto-generated method stub
 
 	}

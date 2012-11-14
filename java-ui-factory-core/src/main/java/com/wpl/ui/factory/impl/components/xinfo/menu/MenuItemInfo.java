@@ -27,11 +27,8 @@ public class MenuItemInfo {
 
 	private boolean mSelected;
 
-	public MenuItemInfo() {
-	}
-
-	public MenuItemInfo(String text) {
-		this.mText = text;
+	public MenuItemInfo(final String text) {
+		mText = text;
 	}
 
 	@XmlAttribute
@@ -39,7 +36,7 @@ public class MenuItemInfo {
 		return mSelected;
 	}
 
-	public void setSelected(boolean selected) {
+	public void setSelected(final boolean selected) {
 		mSelected = selected;
 	}
 
@@ -48,7 +45,7 @@ public class MenuItemInfo {
 		return mRadioGroupId;
 	}
 
-	public void setRadioGroupId(String radioGroupId) {
+	public void setRadioGroupId(final String radioGroupId) {
 		mRadioGroupId = radioGroupId;
 	}
 
@@ -57,7 +54,7 @@ public class MenuItemInfo {
 		return mIcon;
 	}
 
-	public void setIcon(String icon) {
+	public void setIcon(final String icon) {
 		mIcon = icon;
 	}
 
@@ -66,11 +63,11 @@ public class MenuItemInfo {
 		return mId;
 	}
 
-	public void setId(String id) {
+	public void setId(final String id) {
 		mId = id;
 	}
 
-	public void setText(String text) {
+	public void setText(final String text) {
 		mText = text;
 	}
 
@@ -84,7 +81,7 @@ public class MenuItemInfo {
 		return mType;
 	}
 
-	public void setType(MenuItemType type) {
+	public void setType(final MenuItemType type) {
 		mType = type;
 	}
 }

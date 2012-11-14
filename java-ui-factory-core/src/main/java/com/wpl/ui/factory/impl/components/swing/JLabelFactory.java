@@ -32,7 +32,8 @@ import com.wpl.ui.factory.impl.UiAnnotationHandler;
 
 public class JLabelFactory extends JComponentFactory {
 
-	private static Logger LOGGER = LoggerFactory.getLogger(JLabelFactory.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(JLabelFactory.class);
 
 	@UiAnnotationHandler(UiText.class)
 	protected void handleUiText(final ComponentContext context,

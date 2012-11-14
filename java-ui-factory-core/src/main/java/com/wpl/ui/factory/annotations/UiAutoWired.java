@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  * @author kenny
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.TYPE })
+@Target({ ElementType.TYPE })
 public @interface UiAutoWired {
 
 	boolean value() default true;

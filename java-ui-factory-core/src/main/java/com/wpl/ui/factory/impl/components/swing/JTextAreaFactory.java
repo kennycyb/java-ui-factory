@@ -37,7 +37,7 @@ import com.wpl.ui.factory.impl.UiAnnotationHandler;
  */
 public class JTextAreaFactory extends JTextComponentFactory {
 
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(JTextAreaFactory.class);
 
 	@UiAnnotationHandler(JTextAreaProperties.class)

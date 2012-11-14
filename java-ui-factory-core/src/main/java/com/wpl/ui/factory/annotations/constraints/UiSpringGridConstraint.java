@@ -27,7 +27,7 @@ import com.wpl.ui.factory.enums.SpringGridType;
  * @since 1.0
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.TYPE })
+@Target({ ElementType.TYPE })
 public @interface UiSpringGridConstraint {
 
 	int rows() default -1;

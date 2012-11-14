@@ -26,5 +26,5 @@ public interface IComponent {
 	/**
 	 * @return The AWT component
 	 */
-	public Component getComponent();
+	Component getComponent();
 }

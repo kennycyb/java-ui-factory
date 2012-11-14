@@ -18,14 +18,13 @@ package com.wpl.ui.factory.impl.components.awt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * 
  * @since 1.0
  */
 public class TextFieldFactory extends TextComponentFactory {
 	@SuppressWarnings("unused")
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(TextFieldFactory.class);
 
 }

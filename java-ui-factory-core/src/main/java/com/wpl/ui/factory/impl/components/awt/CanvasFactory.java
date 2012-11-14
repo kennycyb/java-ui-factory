@@ -24,5 +24,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CanvasFactory extends ComponentFactory {
 	@SuppressWarnings("unused")
-	private static Logger LOGGER = LoggerFactory.getLogger(CanvasFactory.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(CanvasFactory.class);
 }

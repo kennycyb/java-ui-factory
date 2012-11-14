@@ -26,7 +26,7 @@ import com.wpl.ui.factory.enums.BorderLayoutConstraint;
  * BorderLayout constraint.
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.FIELD })
+@Target({ ElementType.FIELD })
 public @interface UiBorderLayoutConstraint {
 
 	/**

@@ -32,7 +32,7 @@ import com.wpl.ui.listeners.MethodListener;
 
 public class ComponentContext {
 
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(ComponentContext.class);
 
 	private boolean mAutoWired = true;
@@ -78,9 +78,6 @@ public class ComponentContext {
 	private final List<Runnable> mInit = new ArrayList<Runnable>();
 
 	private final List<EventHandler<?>> mCustomEventHandler = new ArrayList<EventHandler<?>>();
-
-	public ComponentContext() {
-	}
 
 	public void addCustomEventHandler(final EventHandler<?> customEventHandler) {
 		mCustomEventHandler.add(customEventHandler);

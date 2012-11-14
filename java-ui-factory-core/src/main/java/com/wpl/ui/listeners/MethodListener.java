@@ -32,7 +32,7 @@ import com.wpl.ui.events.IEventListener;
  */
 public class MethodListener<E> implements IEventListener<E> {
 
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(MethodListener.class);
 
 	private final Method mMethod;

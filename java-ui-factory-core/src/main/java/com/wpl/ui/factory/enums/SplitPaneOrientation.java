@@ -32,9 +32,7 @@ public enum SplitPaneOrientation {
 	/**
 	 * Split horizontally.
 	 */
-	HORIZONTAL(JSplitPane.HORIZONTAL_SPLIT),
-
-	;
+	HORIZONTAL(JSplitPane.HORIZONTAL_SPLIT);
 
 	private final int mSwingConstant;
 

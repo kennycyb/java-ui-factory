@@ -33,7 +33,7 @@ import com.wpl.ui.factory.impl.components.awt.ComponentFactory;
  */
 public class JComponentFactory extends ComponentFactory {
 
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(JComponentFactory.class);
 
 	@UiAnnotationHandler(UiLayout.class)
@@ -42,14 +42,14 @@ public class JComponentFactory extends ComponentFactory {
 
 		try {
 			component.setLayout(layout.value().newInstance());
-			LOGGER.debug("{}|JComponent.setLayout({})", context.getId(), layout
-					.value());
+			LOGGER.debug("{}|JComponent.setLayout({})", context.getId(),
+					layout.value());
 		} catch (final InstantiationException e) {
-			LOGGER.error("{}|Unable to create layout manager {}", context
-					.getId(), layout.value());
+			LOGGER.error("{}|Unable to create layout manager {}",
+					context.getId(), layout.value());
 		} catch (final IllegalAccessException e) {
-			LOGGER.error("{}|Unable to create layout manager {}", context
-					.getId(), layout.value());
+			LOGGER.error("{}|Unable to create layout manager {}",
+					context.getId(), layout.value());
 		}
 	}
 

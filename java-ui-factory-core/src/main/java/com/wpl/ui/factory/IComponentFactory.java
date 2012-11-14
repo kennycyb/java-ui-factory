@@ -26,7 +26,7 @@ public interface IComponentFactory {
 	 * @throws Exception
 	 * @since 1.0
 	 */
-	public void createInstance(IUiFactory uiFactory, ComponentContext context)
+	void createInstance(IUiFactory uiFactory, ComponentContext context)
 			throws Exception;
 
 	/**
@@ -35,6 +35,6 @@ public interface IComponentFactory {
 	 * 
 	 * @param context
 	 */
-	public void initialize(ComponentContext context);
+	void initialize(ComponentContext context);
 
 }

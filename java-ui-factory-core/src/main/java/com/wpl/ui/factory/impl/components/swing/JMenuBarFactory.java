@@ -53,7 +53,7 @@ import com.wpl.ui.listeners.MethodListenerProxy;
  * @since 1.0
  */
 public class JMenuBarFactory extends JComponentFactory {
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(JMenuBarFactory.class);
 
 	/**

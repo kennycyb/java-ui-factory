@@ -18,10 +18,10 @@ package com.wpl.ui.factory.impl.components.awt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class PanelFactory extends ContainerFactory {
 
 	@SuppressWarnings("unused")
-	private static Logger LOGGER = LoggerFactory.getLogger(PanelFactory.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(PanelFactory.class);
 
 }

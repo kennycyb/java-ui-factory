@@ -28,7 +28,7 @@ import com.wpl.ui.factory.enums.ScrollBarPolicy;
  * @author kenny
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.FIELD })
+@Target({ ElementType.FIELD })
 public @interface UiScrollable {
 
 	/**

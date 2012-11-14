@@ -24,10 +24,10 @@ import com.wpl.ui.factory.impl.components.awt.DialogFactory;
  * 
  * @since 1.0
  */
-public class JDialogFactory extends DialogFactory {
+public final class JDialogFactory extends DialogFactory {
 
 	@SuppressWarnings("unused")
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(JDialogFactory.class);
 
 }

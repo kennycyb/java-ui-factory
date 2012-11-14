@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 import com.wpl.ui.factory.enums.WindowPosition;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.TYPE })
+@Target({ ElementType.TYPE })
 public @interface UiWindowPosition {
 	WindowPosition value();
 }

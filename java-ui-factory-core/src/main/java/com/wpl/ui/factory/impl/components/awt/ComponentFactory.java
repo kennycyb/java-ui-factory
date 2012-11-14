@@ -60,7 +60,7 @@ import com.wpl.ui.listeners.MethodListenerProxy;
  */
 public class ComponentFactory implements IComponentFactory {
 
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(ComponentFactory.class);
 
 	private final Map<Class<? extends Annotation>, Method> mAnnotationHandlerMap = new HashMap<Class<? extends Annotation>, Method>();

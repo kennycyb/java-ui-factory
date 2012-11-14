@@ -23,7 +23,7 @@ import javax.swing.Icon;
  */
 public interface ILabel extends IComponent {
 
-	public void setText(String text);
+	void setText(String text);
 
-	public void setIcon(final Icon icon);
+	void setIcon(final Icon icon);
 }

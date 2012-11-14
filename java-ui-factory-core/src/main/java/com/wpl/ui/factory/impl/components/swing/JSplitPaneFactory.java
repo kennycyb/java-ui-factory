@@ -24,6 +24,6 @@ import org.slf4j.LoggerFactory;
  */
 public class JSplitPaneFactory extends JComponentFactory {
 	@SuppressWarnings("unused")
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(JSplitPaneFactory.class);
 }

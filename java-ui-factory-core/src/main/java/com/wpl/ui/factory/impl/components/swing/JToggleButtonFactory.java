@@ -18,10 +18,10 @@ package com.wpl.ui.factory.impl.components.swing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class JToggleButtonFactory extends AbstractButtonFactory {
 
-	private static Logger LOGGER = LoggerFactory
+	@SuppressWarnings("unused")
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(JToggleButtonFactory.class);
 
 }

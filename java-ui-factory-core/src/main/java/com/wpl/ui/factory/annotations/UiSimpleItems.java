@@ -21,7 +21,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.FIELD })
+@Target({ ElementType.FIELD })
 public @interface UiSimpleItems {
+
+	/**
+	 * Specific the list of item.
+	 * 
+	 * @since 1.0
+	 * @return List if items.
+	 */
 	String[] value();
 }

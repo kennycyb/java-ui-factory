@@ -27,11 +27,13 @@ import com.wpl.ui.factory.ComponentContext;
  * @since 1.0
  */
 public class JTabbedPaneFactory extends JComponentFactory {
-	private static Logger LOGGER = LoggerFactory
+	@SuppressWarnings("unused")
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(JTabbedPaneFactory.class);
 
 	@Override
 	public void initialize(final ComponentContext context) {
+
 		super.initialize(context);
 
 		context.addPostInit(new Runnable() {

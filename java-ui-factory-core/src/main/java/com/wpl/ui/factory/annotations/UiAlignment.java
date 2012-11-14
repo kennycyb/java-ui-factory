@@ -28,7 +28,7 @@ import com.wpl.ui.factory.enums.VerticalAlignment;
  * @since 1.0
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.FIELD })
+@Target({ ElementType.FIELD })
 public @interface UiAlignment {
 
 	HorizontalAlignment horizontal() default HorizontalAlignment.DEFAULT;

@@ -25,7 +25,8 @@ import com.wpl.ui.factory.ComponentContext;
  * @since 1.0
  */
 public class VerticalFlowLayoutHandler implements ILayoutHandler {
-	private static Logger LOGGER = LoggerFactory
+	@SuppressWarnings("unused")
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(VerticalFlowLayoutHandler.class);
 
 	@Override

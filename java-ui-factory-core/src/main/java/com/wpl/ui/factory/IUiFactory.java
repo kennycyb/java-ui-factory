@@ -27,5 +27,5 @@ public interface IUiFactory {
 	 * @return IComponentFactory
 	 * @since 1.0
 	 */
-	public IComponentFactory findFactory(final Class<?> type);
+	IComponentFactory findFactory(final Class<?> type);
 }

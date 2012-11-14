@@ -31,18 +31,18 @@ public class MenuBarInfo {
 		return mId;
 	}
 
-	public void setId(String id) {
+	public void setId(final String id) {
 		mId = id;
 	}
 
 	private final List<MenuInfo> mItems = new ArrayList<MenuInfo>();
 
-	@XmlElements( { @XmlElement(type = MenuInfo.class) })
+	@XmlElements({ @XmlElement(type = MenuInfo.class) })
 	public List<MenuInfo> getMenu() {
 		return mItems;
 	}
 
-	public void addItem(MenuInfo item) {
+	public void addItem(final MenuInfo item) {
 		if (item == null) {
 			return;
 		}

@@ -41,7 +41,8 @@ import com.wpl.ui.listeners.MethodListenerProxy;
 
 public class JToolBarFactory extends JComponentFactory {
 
-	private static Logger LOGGER = LoggerFactory
+	@SuppressWarnings("unused")
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(JToolBarFactory.class);
 
 	@UiAnnotationHandler(UiResource.class)
@@ -55,10 +56,10 @@ public class JToolBarFactory extends JComponentFactory {
 			return;
 		}
 
-		MethodListenerProxy<ActionListener> actionListenerProxy = new MethodListenerProxy<ActionListener>(
+		final MethodListenerProxy<ActionListener> actionListenerProxy = new MethodListenerProxy<ActionListener>(
 				ActionListener.class, context.getActionListeners());
 
-		MethodListenerProxy<ItemListener> itemListenerProxy = new MethodListenerProxy<ItemListener>(
+		final MethodListenerProxy<ItemListener> itemListenerProxy = new MethodListenerProxy<ItemListener>(
 				ItemListener.class, context.getActionListeners());
 
 		final ToolbarInfo info = JAXB.unmarshal(xml, ToolbarInfo.class);
@@ -125,7 +126,7 @@ public class JToolBarFactory extends JComponentFactory {
 			}
 
 			if (childComponent != null) {
-				ComponentContext child = new ComponentContext();
+				final ComponentContext child = new ComponentContext();
 				child.setDeclared(false);
 				child.setId(item.getId());
 				child.setComponent(childComponent);

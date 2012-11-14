@@ -21,9 +21,9 @@ package com.wpl.ui.events;
  */
 public interface IEventHandler<E> {
 
-	public void invoke(E args);
+	void invoke(E args);
 
-	public void addListener(IEventListener<E> listener);
+	void addListener(IEventListener<E> listener);
 
-	public void removeListener(IEventListener<E> listener);
+	void removeListener(IEventListener<E> listener);
 }

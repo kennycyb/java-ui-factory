@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 import com.wpl.ui.factory.enums.FrameCloseOperation;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.TYPE })
+@Target({ ElementType.TYPE })
 public @interface UiFrameCloseOperation {
 
 	FrameCloseOperation value();

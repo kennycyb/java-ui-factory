@@ -34,27 +34,27 @@ import com.wpl.ui.factory.impl.UiAnnotationHandler;
  */
 public class JTextFieldFactory extends JTextComponentFactory {
 
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(JTextFieldFactory.class);
 
 	@UiAnnotationHandler(UiColumns.class)
-	void handleAnnotation(ComponentContext context, JTextField component,
-			UiColumns annotate) {
+	void handleAnnotation(final ComponentContext context,
+			final JTextField component, final UiColumns annotate) {
 
 		component.setColumns(annotate.value() < 0 ? 0 : annotate.value());
 
-		LOGGER.debug("{}|JTextField.setColumns({})", context.getId(), annotate
-				.value());
+		LOGGER.debug("{}|JTextField.setColumns({})", context.getId(),
+				annotate.value());
 	}
 
 	@UiAnnotationHandler(JTextFieldProperties.class)
-	void handleAnnotation(ComponentContext context, JTextField component,
-			JTextFieldProperties annotate) {
+	void handleAnnotation(final ComponentContext context,
+			final JTextField component, final JTextFieldProperties annotate) {
 
 		component.setText(annotate.text());
 
-		LOGGER.debug("{}|JTextField.setText(\"{}\")", context.getId(), annotate
-				.text());
+		LOGGER.debug("{}|JTextField.setText(\"{}\")", context.getId(),
+				annotate.text());
 	}
 
 }

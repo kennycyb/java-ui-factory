@@ -33,7 +33,7 @@ import com.wpl.ui.factory.impl.UiAnnotationHandler;
  * @since 1.0
  */
 public class JRadioButtonFactory extends JToggleButtonFactory {
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(JRadioButtonFactory.class);
 
 	private static final ThreadLocal<Map<String, ButtonGroup>> buttonGroups = new ThreadLocal<Map<String, ButtonGroup>>();

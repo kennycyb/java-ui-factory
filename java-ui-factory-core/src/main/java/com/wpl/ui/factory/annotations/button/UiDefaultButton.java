@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
  * Annotate a button as default button.
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD})
+@Target({ ElementType.FIELD })
 public @interface UiDefaultButton {
 	boolean value() default true;
 }

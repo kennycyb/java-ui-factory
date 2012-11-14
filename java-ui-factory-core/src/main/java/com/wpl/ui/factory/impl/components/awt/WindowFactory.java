@@ -32,7 +32,8 @@ import com.wpl.ui.factory.impl.UiAnnotationHandler;
 import com.wpl.ui.listeners.MethodListenerProxy;
 
 public class WindowFactory extends ContainerFactory {
-	private static Logger LOGGER = LoggerFactory.getLogger(WindowFactory.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(WindowFactory.class);
 
 	@Override
 	public void initialize(final ComponentContext context) {

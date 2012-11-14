@@ -28,7 +28,7 @@ import com.wpl.ui.factory.enums.WindowPosition;
  * @since 1.0
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.TYPE })
+@Target({ ElementType.TYPE })
 public @interface JFrameProperties {
 
 	/**

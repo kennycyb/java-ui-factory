@@ -39,7 +39,7 @@ import com.wpl.ui.listeners.MethodListenerProxy;
  */
 public abstract class AbstractButtonFactory extends JComponentFactory {
 
-	private static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(AbstractButtonFactory.class);
 
 	@Override
