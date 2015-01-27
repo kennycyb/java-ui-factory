@@ -24,6 +24,9 @@ import javax.xml.bind.annotation.XmlElements;
 
 public class MenuBarInfo {
 
+	public MenuBarInfo() {
+	}
+
 	private String mId;
 
 	@XmlAttribute

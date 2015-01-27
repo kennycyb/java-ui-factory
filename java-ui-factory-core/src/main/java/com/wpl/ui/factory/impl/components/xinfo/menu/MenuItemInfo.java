@@ -27,6 +27,9 @@ public class MenuItemInfo {
 
 	private boolean mSelected;
 
+	public MenuItemInfo() {
+	}
+
 	public MenuItemInfo(final String text) {
 		mText = text;
 	}

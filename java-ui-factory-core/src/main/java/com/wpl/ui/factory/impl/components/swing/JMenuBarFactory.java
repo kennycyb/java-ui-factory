@@ -48,7 +48,7 @@ import com.wpl.ui.factory.impl.components.xinfo.menu.MenuItemType;
 import com.wpl.ui.listeners.MethodListenerProxy;
 
 /**
- * 
+ *
  * @author kenny
  * @since 1.0
  */
@@ -57,7 +57,7 @@ public class JMenuBarFactory extends JComponentFactory {
 			.getLogger(JMenuBarFactory.class);
 
 	/**
-	 * 
+	 *
 	 * @since 1.0
 	 * @param context
 	 * @param component
@@ -74,12 +74,12 @@ public class JMenuBarFactory extends JComponentFactory {
 
 		if (context.getParentContext().getComponent() instanceof JFrame) {
 			((JFrame) context.getParentContext().getComponent())
-					.setJMenuBar(component);
+			.setJMenuBar(component);
 		}
 	}
 
 	/**
-	 * 
+	 *
 	 * @since 1.0
 	 * @param context
 	 * @param component
@@ -141,7 +141,7 @@ public class JMenuBarFactory extends JComponentFactory {
 			if (LOGGER.isDebugEnabled()) {
 				LOGGER.debug("(JMenuBar){}.addMenu(id=\"{}\", menu=\"{}\")",
 						new Object[] { context.getId(), menuItemInfo.getId(),
-								menuItemInfo.getText() });
+						menuItemInfo.getText() });
 			}
 
 			if (font != null) {
