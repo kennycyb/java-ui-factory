@@ -1,7 +1,7 @@
 # java-ui-factory
 Automatically exported from code.google.com/p/java-ui-factory
 
-= Java UI Factory =
+# Java UI Factory
 
 The Java UI Factory Library is a framework that help create Java Swing Application easily and faster.
 
@@ -15,11 +15,11 @@ There are three projects:
  * java-ui-factory-sample - Sample codes
 
 
-= Features =
+# Features
 
 * See [NewReleasePreview] for upcoming features.
 
-== Simplified Layouts ==
+## Simplified Layouts
 
 Standard Java Layout
  * Using [SpringLayout]
@@ -33,41 +33,41 @@ Custom Java Layout
 Layout Components with Inner Class
  * Using [InnerClasses]
 
-== Components ==
+## Components
 
 || [JTabbedPane] || [JMenuBar] || [JToolBar] || [JTextField] ||
 || [JToolBar]   || [JProgressBar] || [JRadioButton] || [JTextArea] || 
 || [JList] ||
 	
-{{{
+```
 @UiScrollable(horizontal = ScrollBarPolicy.ALWAYS, vertical = ScrollBarPolicy.ALWAYS)
 private JTextArea content;
-}}}
+```
 
 
-== Auto Wired of UI event ==
+## Auto Wired of UI event
 
  * Annotate with [AutoWired]
  * Method signature: 
-{{{
+```
     void on[ComponentName]_[Actions] () {}
-}}}
+```
 
 _See [SampleNotePadApplication], [WindowListener], [WindowFocusListener]_
 
-=== Standard Java AWT/Swing events ===
+### Standard Java AWT/Swing events
 
  * [WindowListener], [WindowFocusListener]
  * [ActionListener], [ItemListener]
  * [MouseMotionListener], [MouseListener], [MouseWheelListener]
  * [KeyListener]
 
-=== Using Custom Events ===
+### Using Custom Events
  * [EventHandler]
 
 === Sample ===
 
-{{{
+```
 private void onNotepad_windowClosing(WindowEvent e) {
 	LOGGER.debug("onNotepad_windowClosing: new state={}", e.getNewState());
 }
@@ -75,21 +75,21 @@ private void onNotepad_windowClosing(WindowEvent e) {
 private void onNotepad_windowActivated(WindowEvent e) {
 	LOGGER.debug("onNotepad_windowActivated");
 }
-}}}
+```
 
 
 
-== Generate Menu from XML ==
+## JMenuBar from XML
 
 * Declare the JMenuBar,
-{{{
+```
 @UiResource("Notepad-Menu.xml")
 private JMenuBar menuBar;
-}}}
+```
 
 * Create the XML file,
 
-{{{
+```
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <menuBar id="mainMenu">
     <menu text="File">
@@ -104,15 +104,15 @@ private JMenuBar menuBar;
 	<menuItem id="file.exit" text="Exit"/>
     </menu>
 </menuBar>
-}}}
+```
 
 More details at [SampleNotePadApplication]
 
-= Development Environment =
+# Development Environment
 
 * This library support JDK6/JDK7 only.
 
-= Others =
+# Others
 
 * Softpedia: http://mac.softpedia.com/get/Development/Java/Java-UI-Factory.shtml
 
