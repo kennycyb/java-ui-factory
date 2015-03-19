@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<root id="toolbar" text="Root">
-	<node id="1" type="LABEL" text="Inventory">
-		<node id="2" type="LABEL" text="Softwares">
-			
-		</node>
-	</node> 
-</root>
