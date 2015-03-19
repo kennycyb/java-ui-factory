@@ -4,17 +4,10 @@
 	<groupId>java-ui-factory</groupId>
 	<artifactId>java-ui-factory-core</artifactId>
 	<version>0.3-SNAPSHOT</version>
-	<url>https://code.google.com/p/java-ui-factory/</url>
-	<!-- 
-	<parent>
-		<artifactId>java-ui-factory-pom</artifactId>
-		<groupId>java-ui-factory</groupId>
-		<version>1.0-SNAPSHOT</version>
-	</parent>
-	 -->
+	<url>https://github.com/kennycyb/java-ui-factory/</url>
 	<issueManagement>
-		<system>GOOGLE</system>
-		<url>https://code.google.com/p/java-ui-factory/issues/list</url>
+		<system>GitHub Issues</system>
+    <url>https://github.com/kennycyb/java-ui-factory/issues</url>
 	</issueManagement>
 	<build>
 		<plugins>
