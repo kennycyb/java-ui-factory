@@ -7,14 +7,14 @@
 	<url>https://github.com/kennycyb/java-ui-factory/</url>
 	<issueManagement>
 		<system>GitHub Issues</system>
-    <url>https://github.com/kennycyb/java-ui-factory/issues</url>
+		<url>https://github.com/kennycyb/java-ui-factory/issues</url>
 	</issueManagement>
-  <scm>
-    <url>https://github.com/kennycyb/java-ui-factory</url>
-    <connection>scm:git:git://github.com/kennycyb/java-ui-factory.git</connection>
-    <developerConnection>scm:git:git@github.com:kennycyb/java-ui-factory.git</developerConnection>
-  </scm>
-  <build>
+	<scm>
+		<url>https://github.com/kennycyb/java-ui-factory</url>
+		<connection>scm:git:git://github.com/kennycyb/java-ui-factory.git</connection>
+		<developerConnection>scm:git:git@github.com:kennycyb/java-ui-factory.git</developerConnection>
+	</scm>
+	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -37,13 +37,18 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.10</version>
+			<version>4.12</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jmock</groupId>
+			<artifactId>jmock-junit4</artifactId>
+			<version>2.6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>0.9.15</version>
-		</dependency>	
+		</dependency>
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib-nodep</artifactId>
@@ -52,5 +57,5 @@
 	</dependencies>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>	
+	</properties>
 </project>
