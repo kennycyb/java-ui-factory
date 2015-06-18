@@ -20,31 +20,39 @@ import java.awt.event.InputMethodListener;
 import javax.swing.text.JTextComponent;
 
 import com.wpl.ui.factory.ComponentContext;
+import com.wpl.ui.factory.annotations.UiEditable;
 import com.wpl.ui.factory.annotations.UiText;
 import com.wpl.ui.factory.impl.UiAnnotationHandler;
 import com.wpl.ui.listeners.MethodListenerProxy;
 
 /**
- * 
+ *
  * @author kenny
  * @since 1.0
- * 
+ *
  */
 public abstract class JTextComponentFactory extends JComponentFactory {
 
 	@UiAnnotationHandler(UiText.class)
-	protected void handleUiText(ComponentContext context,
-			JTextComponent component, UiText annotate) {
+	protected void handleUiText(final ComponentContext context,
+			final JTextComponent component, final UiText annotate) {
 		component.setText(annotate.value());
 	}
 
+	@UiAnnotationHandler(UiEditable.class)
+	protected void handleUiEditable(final ComponentContext context,
+			final JTextComponent component, final UiEditable annotate) {
+		component.setEditable(annotate.value());
+	}
+
 	@Override
-	public void wireComponent(ComponentContext context) {
+	public void wireComponent(final ComponentContext context) {
 		super.wireComponent(context);
 
-		JTextComponent component = (JTextComponent) context.getComponent();
+		final JTextComponent component = (JTextComponent) context
+				.getComponent();
 
-		MethodListenerProxy<InputMethodListener> inputMethodListenerProxy = new MethodListenerProxy<InputMethodListener>(
+		final MethodListenerProxy<InputMethodListener> inputMethodListenerProxy = new MethodListenerProxy<InputMethodListener>(
 				InputMethodListener.class, context.getActionListeners());
 
 		if (inputMethodListenerProxy.hasListeningMethod()) {
