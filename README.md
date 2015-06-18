@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/kennycyb/java-ui-factory.svg?branch=master)](https://travis-ci.org/kennycyb/java-ui-factory)
+
 # java-ui-factory
 
 The Java UI Factory Library is a framework that helps create Java Swing Application easily and faster.
