@@ -122,7 +122,7 @@ import com.wpl.ui.layout.managers.VerticalFlowLayout;
 import com.wpl.ui.listeners.MethodListener;
 
 /**
- * 
+ *
  * @since 1.0
  */
 public class SwingFactory implements IUiFactory {
@@ -312,7 +312,7 @@ public class SwingFactory implements IUiFactory {
 
 		if (layout == null) {
 			componentContext.getAnnotatedElement()
-					.getAnnotation(UiLayout.class);
+			.getAnnotation(UiLayout.class);
 			LOGGER.debug("{}|looking @UiLayout from annotate element {}",
 					componentContext.getId(),
 					componentContext.getAnnotatedElement());
@@ -476,7 +476,7 @@ public class SwingFactory implements IUiFactory {
 
 	/**
 	 * Manufacturing Plan
-	 * 
+	 *
 	 * @param componentContext
 	 */
 	private void plan(final ComponentContext componentContext) {
@@ -521,7 +521,7 @@ public class SwingFactory implements IUiFactory {
 
 							@SuppressWarnings("rawtypes")
 							final MethodListener ml = componentContext
-									.getActionListeners().get(f.getName());
+							.getActionListeners().get(f.getName());
 
 							if (ml != null) {
 								handler.addListener(ml);
@@ -538,11 +538,7 @@ public class SwingFactory implements IUiFactory {
 							}
 
 						} catch (final IllegalArgumentException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
 						} catch (final IllegalAccessException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
 						}
 					}
 				});
@@ -597,10 +593,23 @@ public class SwingFactory implements IUiFactory {
 					public void run() {
 						f.setAccessible(true);
 						try {
-							f.set(componentContext.getComponent(),
-									childContext.getComponent());
+							LOGGER.debug("{}|Setting field: {}",
+									componentContext.getId(), f.getName());
+							if (IComponent.class.isAssignableFrom(f.getType())) {
+								f.set(componentContext.getComponent(),
+										childContext.getJxComponent());
+							} else {
+								f.set(componentContext.getComponent(),
+										childContext.getComponent());
+							}
+							LOGGER.debug("{}|Setting field: {} OK",
+									componentContext.getId(), f.getName());
 						} catch (final Throwable t) {
-
+							LOGGER.debug(
+									"{}|Setting field: {} ERROR - {}",
+									new Object[] { componentContext.getId(),
+											f.getName(), t.getMessage() });
+							LOGGER.error("ERROR {}", t);
 						}
 					}
 				});
@@ -688,7 +697,7 @@ public class SwingFactory implements IUiFactory {
 
 								final ComponentContext childContext = componentName
 										.equals("this") ? componentContext
-										: componentContext
+												: componentContext
 												.findChildContext(componentName);
 
 								if (childContext == null) {
@@ -711,7 +720,7 @@ public class SwingFactory implements IUiFactory {
 													"{}|component init method {} failed {}",
 													new Object[] {
 															componentContext
-																	.getId(),
+															.getId(),
 															m.getName(), t });
 										}
 									}
@@ -727,7 +736,7 @@ public class SwingFactory implements IUiFactory {
 						public void run() {
 							final ComponentContext childContext = componentName
 									.equals("this") ? componentContext
-									: componentContext
+											: componentContext
 											.findChildContext(componentName);
 
 							if (childContext == null) {
@@ -804,7 +813,7 @@ public class SwingFactory implements IUiFactory {
 
 	/**
 	 * Static instance.
-	 * 
+	 *
 	 * @return SwingFactory
 	 */
 	public static SwingFactory instance() {
