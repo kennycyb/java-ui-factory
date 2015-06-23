@@ -17,6 +17,8 @@ package com.wpl.ui.factory.impl.components.swing;
 
 import javax.swing.JButton;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.wpl.ui.factory.ComponentContext;
 import com.wpl.ui.factory.annotations.button.UiDefaultButton;
 import com.wpl.ui.factory.annotations.components.JButtonProperties;
@@ -25,14 +27,12 @@ import com.wpl.ui.factory.impl.UiAnnotationHandler;
 public class JButtonFactory extends AbstractButtonFactory {
 
 	@UiAnnotationHandler(UiDefaultButton.class)
-	public void handleUiDefaultButton(final ComponentContext context,
-			final JButton component, final UiDefaultButton annotate) {
+	public void handleUiDefaultButton(final ComponentContext context, final JButton component, final UiDefaultButton annotate) {
 		component.setDefaultCapable(true);
 	}
 
 	@UiAnnotationHandler(JButtonProperties.class)
-	protected void handleJFrameProperties(final ComponentContext context,
-			final JButton component, final JButtonProperties annotate) {
+	protected void handleJFrameProperties(final ComponentContext context, final JButton component, final JButtonProperties annotate) {
 
 		component.setText(annotate.text());
 	}
@@ -43,7 +43,7 @@ public class JButtonFactory extends AbstractButtonFactory {
 
 		final JButton component = (JButton) context.getComponent();
 		if (component.getText() == null || component.getText().length() == 0) {
-			component.setText(context.getId());
+			component.setText(StringUtils.capitalize(context.getId()));
 		}
 	}
 }

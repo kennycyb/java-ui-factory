@@ -34,7 +34,7 @@ import com.wpl.ui.factory.impl.components.xinfo.combobox.ComboBoxItemInfo;
 import com.wpl.ui.listeners.MethodListenerProxy;
 
 /**
- * 
+ *
  * @author kenny
  * @since 1.0
  */
@@ -43,6 +43,7 @@ public class JComboBoxFactory extends JComponentFactory {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(JComboBoxFactory.class);
 
+	@SuppressWarnings("rawtypes")
 	@UiAnnotationHandler(UiSimpleItems.class)
 	protected void handleUiSimpleItems(final ComponentContext context,
 			final JComboBox component, final UiSimpleItems annotate) {

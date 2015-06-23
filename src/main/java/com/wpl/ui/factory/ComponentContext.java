@@ -30,10 +30,13 @@ import com.wpl.ui.components.IComponent;
 import com.wpl.ui.events.EventHandler;
 import com.wpl.ui.listeners.MethodListener;
 
+/**
+ *
+ * @author Kenny
+ */
 public class ComponentContext {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(ComponentContext.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ComponentContext.class);
 
 	private boolean mAutoWired = true;
 	private boolean mPack = true;
@@ -147,7 +150,7 @@ public class ComponentContext {
 
 	/**
 	 * Add an action to be execute later when all component has been created.
-	 * 
+	 *
 	 * @param runnable
 	 */
 	public void addPostInit(final Runnable runnable) {
@@ -239,8 +242,7 @@ public class ComponentContext {
 		mAnnotatedElement = annotatedElement;
 	}
 
-	public void addActionListener(final String actionName,
-			final MethodListener<?> method) {
+	public void addActionListener(final String actionName, final MethodListener<?> method) {
 		mActionListeners.put(actionName, method);
 	}
 
@@ -253,7 +255,7 @@ public class ComponentContext {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return Get the component.
 	 */
 	public Component getComponent() {
