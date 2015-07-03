@@ -2,8 +2,24 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.kennycyb</groupId>
 	<artifactId>java-ui-factory-core</artifactId>
-	<version>0.5-SNAPSHOT</version>
-	<url>https://github.com/kennycyb/java-ui-factory/</url>
+	<version>0.4</version>
+  <name>Java UI Factory</name>
+  <description>JAVA UI Factory - build awt/swing applications by annotations</description>
+  <developers>
+    <developer>
+      <id>kennycyb</id>
+      <name>Kenny Chong</name>
+      <email>kennycyb@gmail.com</email>
+    </developer>
+  </developers>
+  <licenses>
+    <license>
+      <name>Apache 2</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <url>https://github.com/kennycyb/java-ui-factory/</url>
 	<issueManagement>
 		<system>GitHub Issues</system>
 		<url>https://github.com/kennycyb/java-ui-factory/issues</url>
@@ -75,7 +91,12 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-repository-plugin</artifactId>
+        <version>2.4</version>
+      </plugin>
+      <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.9.1</version>
