@@ -1,9 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.kennycyb</groupId>
 	<artifactId>java-ui-factory-core</artifactId>
-	<version>0.4-SNAPSHOT</version>
+	<version>0.4</version>
 	<url>https://github.com/kennycyb/java-ui-factory/</url>
 	<issueManagement>
 		<system>GitHub Issues</system>
@@ -23,7 +22,8 @@
 		<url>https://github.com/kennycyb/java-ui-factory</url>
 		<connection>scm:git:git://github.com/kennycyb/java-ui-factory.git</connection>
 		<developerConnection>scm:git:git@github.com:kennycyb/java-ui-factory.git</developerConnection>
-	</scm>
+	  <tag>java-ui-factory-core-0.4</tag>
+  </scm>
 	<build>
 		<plugins>
 			<plugin>
