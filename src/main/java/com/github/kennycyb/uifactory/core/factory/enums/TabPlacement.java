@@ -13,8 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.kennycyb.uifactory.core.factory.impl.components.awt;
+package com.github.kennycyb.uifactory.core.factory.enums;
 
-public class PanelFactory extends ContainerFactory {
+import javax.swing.JTabbedPane;
 
+/**
+ *
+ * @since 1.0
+ */
+public enum TabPlacement {
+
+	TOP(JTabbedPane.TOP),
+
+	BOTTOM(JTabbedPane.BOTTOM),
+
+	LEFT(JTabbedPane.LEFT),
+
+	RIGHT(JTabbedPane.RIGHT);
+
+	private final int mSwingConstant;
+
+	private TabPlacement(final int swingConstant) {
+		mSwingConstant = swingConstant;
+	}
+
+	public int getSwingConstant() {
+		return mSwingConstant;
+	}
 }

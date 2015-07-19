@@ -17,41 +17,52 @@ package com.github.kennycyb.uifactory.core.factory.impl.components.swing;
 
 import javax.swing.JTabbedPane;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.github.kennycyb.uifactory.core.factory.ComponentContext;
+import com.github.kennycyb.uifactory.core.factory.annotations.tabbed.UiTabLayoutPolicy;
+import com.github.kennycyb.uifactory.core.factory.annotations.tabbed.UiTabPlacement;
+import com.github.kennycyb.uifactory.core.factory.impl.UiAnnotationHandler;
 
 /**
- * 
- * @since 1.0
+ * ChangeLog:
+ *
+ * 0.5 - support ext, refactor with java8 lambda syntax
+ *
+ * 0.2 - new
+ *
+ *
+ * @since 0.2
  */
 public class JTabbedPaneFactory extends JComponentFactory {
-	@SuppressWarnings("unused")
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(JTabbedPaneFactory.class);
 
 	@Override
 	public void initialize(final ComponentContext context) {
 
 		super.initialize(context);
 
-		context.addPostInit(new Runnable() {
+		context.addPostInit(() -> {
 
-			@Override
-			public void run() {
+			final JTabbedPane tabPane = (JTabbedPane) context.getComponent();
 
-				final JTabbedPane tabPane = (JTabbedPane) context
-						.getComponent();
-
-				for (final ComponentContext child : context.getChildren()) {
-					if (child.getComponent() == null
-							|| child.getComponent() == null) {
-						continue;
-					}
-					tabPane.add(child.getComponent());
+			for (final ComponentContext child : context.getChildren()) {
+				if (child.getComponent() == null || child.getComponent() == null) {
+					continue;
 				}
+
+				final String title = child.getId();
+				tabPane.add(title, child.getEnclosedComponent());
 			}
+
 		});
 	}
+
+	@UiAnnotationHandler(UiTabPlacement.class)
+	void handleJSliderProperties(final ComponentContext context, final JTabbedPane component, final UiTabPlacement annotate) {
+		component.setTabPlacement(annotate.value().getSwingConstant());
+	}
+
+	@UiAnnotationHandler(UiTabLayoutPolicy.class)
+	void handleJSliderProperties(final ComponentContext context, final JTabbedPane component, final UiTabLayoutPolicy annotate) {
+		component.setTabPlacement(annotate.value().getSwingConstant());
+	}
+
 }

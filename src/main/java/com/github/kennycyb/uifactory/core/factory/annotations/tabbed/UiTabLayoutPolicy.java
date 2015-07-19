@@ -13,8 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.kennycyb.uifactory.core.factory.impl.components.awt;
+package com.github.kennycyb.uifactory.core.factory.annotations.tabbed;
 
-public class PanelFactory extends ContainerFactory {
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
+import com.github.kennycyb.uifactory.core.factory.enums.TabLayoutPolicy;
+
+/**
+ *
+ * @since 1.0
+ */
+@Retention(RetentionPolicy.RUNTIME)
+public @interface UiTabLayoutPolicy {
+	TabLayoutPolicy value() default TabLayoutPolicy.WRAP;
 }

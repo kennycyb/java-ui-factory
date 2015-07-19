@@ -15,15 +15,9 @@
  */
 package com.github.kennycyb.uifactory.core.factory.impl.components.swing;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
- * 
+ *
  * @since 1.0
  */
 public class JSplitPaneFactory extends JComponentFactory {
-	@SuppressWarnings("unused")
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(JSplitPaneFactory.class);
 }
