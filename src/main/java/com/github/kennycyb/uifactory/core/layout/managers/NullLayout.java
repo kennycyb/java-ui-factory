@@ -21,9 +21,10 @@ import java.awt.Dimension;
 import java.awt.LayoutManager;
 
 /**
- * This class is for @UiLayout. When using a NullLayoutManager using @UiLayout, @UiLocation
- * must be used to specify the location of the component, and @UiSize to specify
- * the size of a component.
+ * This class is for @UiLayout. When using a NullLayoutManager using @UiLayout, @UiLocation must be used to specify the location of the component, and @UiSize
+ * to specify the size of a component.
+ *
+ * @since 0.2
  */
 public class NullLayout implements LayoutManager {
 

@@ -20,35 +20,23 @@ import java.awt.Container;
 
 import javax.swing.RootPaneContainer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.github.kennycyb.uifactory.core.factory.ComponentContext;
 import com.github.kennycyb.uifactory.core.factory.annotations.constraints.UiSpringGridConstraint;
 import com.github.kennycyb.uifactory.core.factory.enums.SpringGridType;
 import com.github.kennycyb.uifactory.core.utils.SpringUtilities;
 
 /**
- * 
+ *
  * @since 1.0
  */
 public class SpringLayoutHandler implements ILayoutHandler {
-
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(SpringLayoutHandler.class);
 
 	@Override
 	public void layoutComponent(final ComponentContext componentContext) {
 
 		final Object enclosed = componentContext.getEnclosedComponent();
 		if (enclosed instanceof Component) {
-			componentContext.getContainer().add((Component) enclosed);
-		}
-
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("{}|added to container - {}",
-					componentContext.getId(), componentContext.getContainer()
-							.getClass().getSimpleName());
+			componentContext.getContainer().add((Component)enclosed);
 		}
 	}
 
@@ -57,15 +45,12 @@ public class SpringLayoutHandler implements ILayoutHandler {
 
 		Container container = null;
 		if (containerContext.getComponent() instanceof RootPaneContainer) {
-			container = ((RootPaneContainer) containerContext.getComponent())
-					.getContentPane();
+			container = ((RootPaneContainer)containerContext.getComponent()).getContentPane();
 		} else {
-			container = (Container) containerContext.getComponent();
+			container = (Container)containerContext.getComponent();
 		}
 
-		final UiSpringGridConstraint constraint = containerContext
-				.getAnnotatedElement().getAnnotation(
-						UiSpringGridConstraint.class);
+		final UiSpringGridConstraint constraint = containerContext.getAnnotatedElement().getAnnotation(UiSpringGridConstraint.class);
 
 		if (constraint == null) {
 
@@ -73,26 +58,17 @@ public class SpringLayoutHandler implements ILayoutHandler {
 			final int cols = 2;
 
 			SpringUtilities.makeCompactGrid(container, rows, cols, 5, 5, 5, 5);
-			LOGGER.debug("SpringUtilities.makeCompactGrid - rows={}, cols={}",
-					rows, cols);
 			return;
 		}
 
 		final int cols = constraint.cols() <= 0 ? 2 : constraint.cols();
-		final int rows = constraint.rows() <= 0 ? container.getComponentCount()
-				/ cols : constraint.rows();
+		final int rows = constraint.rows() <= 0 ? container.getComponentCount() / cols : constraint.rows();
 
 		if (constraint.gridType() == SpringGridType.COMPACT) {
-			SpringUtilities.makeCompactGrid(container, rows, cols,
-					constraint.initialX(), constraint.initialY(),
-					constraint.xPad(), constraint.yPad());
-			LOGGER.debug("SpringUtilities.makeCompactGrid - rows={}, cols={}",
-					rows, cols);
+			SpringUtilities.makeCompactGrid(container, rows, cols, constraint.initialX(), constraint.initialY(), constraint.xPad(), constraint.yPad());
 			return;
 		}
 
-		SpringUtilities.makeGrid(container, rows, cols, constraint.initialX(),
-				constraint.initialY(), constraint.xPad(), constraint.yPad());
-		LOGGER.debug("SpringUtilities.makeGrid - rows={}, cols={}", rows, cols);
+		SpringUtilities.makeGrid(container, rows, cols, constraint.initialX(), constraint.initialY(), constraint.xPad(), constraint.yPad());
 	}
 }

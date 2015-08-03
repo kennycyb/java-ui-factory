@@ -18,30 +18,23 @@ package com.github.kennycyb.uifactory.core.factory.impl.components.awt;
 import java.awt.Button;
 import java.awt.event.ActionListener;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.github.kennycyb.uifactory.core.factory.ComponentContext;
 import com.github.kennycyb.uifactory.core.listeners.MethodListenerProxy;
 
 /**
- * 
+ *
  * @since 1.0
  */
 public class ButtonFactory extends ComponentFactory {
-	@SuppressWarnings("unused")
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(ButtonFactory.class);
 
 	@Override
 	protected void wireComponent(final ComponentContext context) {
 
 		super.wireComponent(context);
 
-		final Button button = (Button) context.getComponent();
+		final Button button = (Button)context.getComponent();
 
-		final MethodListenerProxy<ActionListener> actionListener = new MethodListenerProxy<ActionListener>(
-				ActionListener.class, context.getActionListeners());
+		final MethodListenerProxy<ActionListener> actionListener = new MethodListenerProxy<ActionListener>(ActionListener.class, context.getActionListeners());
 
 		if (actionListener.hasListeningMethod()) {
 			button.addActionListener(actionListener.getProxy());

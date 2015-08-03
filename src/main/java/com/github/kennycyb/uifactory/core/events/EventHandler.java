@@ -18,38 +18,32 @@ package com.github.kennycyb.uifactory.core.events;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
- * 
+ *
  * @since 1.0
  */
 public class EventHandler<E> implements IEventHandler<E> {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(EventHandler.class);
-
 	private final List<IEventListener<E>> mListeners = new ArrayList<IEventListener<E>>();
 
 	public void addListener(final IEventListener<E> listener) {
+
+		// Sanity Checking
 		if (listener == null) {
-			LOGGER.warn("Trying to add a null listener");
 			return;
 		}
 
 		mListeners.add(listener);
-		LOGGER.debug("added listener: {}", listener);
 	}
 
 	public void removeListener(final IEventListener<E> listener) {
+
+		// Sanity Checking
 		if (listener == null) {
-			LOGGER.warn("Trying to remove a null listener");
 			return;
 		}
 
 		mListeners.remove(listener);
-		LOGGER.debug("removed listener: {}", listener);
 	}
 
 	public void invoke(final E args) {

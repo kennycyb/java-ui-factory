@@ -22,6 +22,12 @@ import java.lang.annotation.Target;
 
 import com.github.kennycyb.uifactory.core.factory.enums.FontStyle;
 
+/**
+ * Specify the font.
+ *
+ * @since 0.1
+ * @author kenny
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD, ElementType.TYPE })
 public @interface UiFont {

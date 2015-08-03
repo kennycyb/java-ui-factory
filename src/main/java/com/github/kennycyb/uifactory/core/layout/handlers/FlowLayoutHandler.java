@@ -19,27 +19,21 @@ import com.github.kennycyb.uifactory.core.factory.ComponentContext;
 import com.github.kennycyb.uifactory.core.factory.annotations.constraints.UiFlowLayoutConstraint;
 
 /**
- * 
+ *
  * @author kenny
  * @since 1.0
  */
 public class FlowLayoutHandler implements ILayoutHandler {
 
 	@Override
-	public void layoutComponent(ComponentContext componentContext) {
+	public void layoutComponent(final ComponentContext componentContext) {
 
-		UiFlowLayoutConstraint constraint = componentContext
-				.getAnnotatedElement().getAnnotation(
-						UiFlowLayoutConstraint.class);
+		final UiFlowLayoutConstraint constraint = componentContext.getAnnotatedElement().getAnnotation(UiFlowLayoutConstraint.class);
 
-		componentContext.getContainer().add(
-				componentContext.getEnclosedComponent(),
-				constraint == null ? null : constraint.value());
+		componentContext.getContainer().add(componentContext.getEnclosedComponent(), constraint == null ? null : constraint.value());
 	}
 
 	@Override
-	public void finalLayout(ComponentContext containerContext) {
-		// TODO Auto-generated method stub
-
+	public void finalLayout(final ComponentContext containerContext) {
 	}
 }

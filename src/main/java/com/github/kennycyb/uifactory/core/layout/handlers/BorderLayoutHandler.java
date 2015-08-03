@@ -22,41 +22,32 @@ import com.github.kennycyb.uifactory.core.factory.ComponentContext;
 import com.github.kennycyb.uifactory.core.factory.annotations.constraints.UiBorderLayoutConstraint;
 
 /**
- * 
+ *
  * @author kenny
  * @since 1.0
  */
 public class BorderLayoutHandler implements ILayoutHandler {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(BorderLayoutHandler.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(BorderLayoutHandler.class);
 
 	@Override
 	public void layoutComponent(final ComponentContext componentContext) {
 
-		final UiBorderLayoutConstraint constraint = componentContext
-				.getAnnotatedElement().getAnnotation(
-						UiBorderLayoutConstraint.class);
+		final UiBorderLayoutConstraint constraint = componentContext.getAnnotatedElement().getAnnotation(UiBorderLayoutConstraint.class);
 
 		if (constraint == null) {
 			return;
 		}
 
-		componentContext.getContainer().add(
-				componentContext.getEnclosedComponent(),
-				constraint.value().getSwingConstant());
+		componentContext.getContainer().add(componentContext.getEnclosedComponent(), constraint.value().getSwingConstant());
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("{} added to {} (BorderLayout={})", new Object[] {
-					componentContext.getId(),
-					componentContext.getContainer().getClass().getSimpleName(),
-					constraint.value() });
+			LOGGER.debug("{} added to {} (BorderLayout={})",
+					new Object[] { componentContext.getId(), componentContext.getContainer().getClass().getSimpleName(), constraint.value() });
 		}
 	}
 
 	@Override
 	public void finalLayout(final ComponentContext containerContext) {
-		// TODO Auto-generated method stub
-
 	}
 }

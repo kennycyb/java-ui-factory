@@ -15,42 +15,27 @@
  */
 package com.github.kennycyb.uifactory.core.layout.handlers;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.github.kennycyb.uifactory.core.factory.ComponentContext;
 
 /**
- * 
+ *
  * @author kenny
  * @since 1.0
  */
 public final class NullLayoutHandler implements ILayoutHandler {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(NullLayoutHandler.class);
-
 	@Override
 	public void layoutComponent(final ComponentContext componentContext) {
 
 		// Sanity checking
-		if (componentContext == null || componentContext.getContainer() == null
-				|| componentContext.getComponent() == null) {
+		if (componentContext == null || componentContext.getContainer() == null || componentContext.getComponent() == null) {
 			return;
 		}
 
-		componentContext.getContainer().add(
-				componentContext.getEnclosedComponent(), null);
-
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("{} added to {}", componentContext.getId(),
-					componentContext.getContainer().getClass());
-		}
+		componentContext.getContainer().add(componentContext.getEnclosedComponent(), null);
 	}
 
 	@Override
 	public void finalLayout(final ComponentContext containerContext) {
-		// TODO Auto-generated method stub
-
 	}
 }

@@ -15,33 +15,22 @@
  */
 package com.github.kennycyb.uifactory.core.layout.handlers;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.github.kennycyb.uifactory.core.factory.ComponentContext;
 
 /**
- * 
+ *
  * @author kenny
  * @since 1.0
  */
 public class GridLayoutHandler implements ILayoutHandler {
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(GridLayoutHandler.class);
 
 	@Override
 	public void layoutComponent(final ComponentContext componentContext) {
-
-		LOGGER.debug("added {}", componentContext.getId());
-
-		componentContext.getContainer().add(
-				componentContext.getEnclosedComponent(), null);
+		componentContext.getContainer().add(componentContext.getEnclosedComponent(), null);
 
 	}
 
 	@Override
 	public void finalLayout(final ComponentContext containerContext) {
-		// TODO Auto-generated method stub
-
 	}
 }

@@ -17,6 +17,13 @@ package com.github.kennycyb.uifactory.core.factory.enums;
 
 import java.awt.BorderLayout;
 
+/**
+ * BorderLayoutConstraint.
+ *
+ * @since 0.2
+ * @author kenny
+ *
+ */
 public enum BorderLayoutConstraint {
 
 	CENTER(BorderLayout.CENTER),
@@ -31,7 +38,7 @@ public enum BorderLayoutConstraint {
 
 	private final String mSwingConstant;
 
-	private BorderLayoutConstraint(String swingConstant) {
+	private BorderLayoutConstraint(final String swingConstant) {
 		mSwingConstant = swingConstant;
 	}
 
