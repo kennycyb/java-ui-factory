@@ -8,6 +8,37 @@ The library used annotations to build UI components.
 
 Read more in [docs](docs/) or https://code.google.com/p/java-ui-factory
 
+## maven
+
+### Release
+```
+<dependencies>
+    <dependency>
+        <groupId>com.github.kennycyb</groupId>
+        <artifactId>java-ui-factory</artifactId>
+        <version>0.4</version>
+    </dependency>
+</dependencies>
+```
+
+### Snapshot
+
+To use the snapshot, add the following to pom.xml or settings.xml
+```
+<repositories>
+    <repository>
+        <id>snapshots-repo</id>
+        <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        <releases>
+            <enabled>false</enabled>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </repository>
+</repositories>
+```
+
 ## java-ui-factory-ext
 
 This project extends java-ui-factory, see [java-ui-factory-ext](https://github.com/kennycyb/java-ui-factory-ext)
