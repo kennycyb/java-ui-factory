@@ -6,7 +6,7 @@ The Java UI Factory Library is a framework that helps create Java Swing Applicat
 
 The library used annotations to build UI components.
 
-Read more in [docs](docs/)
+Read more in [docs](docs/) or https://code.google.com/p/java-ui-factory
 
 ## java-ui-factory-ext
 
@@ -46,12 +46,25 @@ public class SpringLayoutCompactGridSample extends JFrame {
 }
 ```
 
+### Centralize A Window automatically annotated by with [WindowPosition](docs/layouts/WindowPosition.md)
+
+```java
+@UiWindowPosition(WindowPosition.CENTER)
+public class SampleComboBox extends Frame {
+}
+```
+
 ## Components
 
-### Create a scrollbar automatically for a JTextArea
+### Create a scrollbar automatically
 ```java
 @UiScrollable(horizontal = ScrollBarPolicy.ALWAYS, vertical = ScrollBarPolicy.ALWAYS)
 private JTextArea content;
+```
+
+```java
+@UiScrollable(horizontal = ScrollBarPolicy.ALWAYS, vertical = ScrollBarPolicy.ALWAYS)
+private JPanel content;
 ```
 
 ## Auto Wired UI Event
@@ -69,5 +82,3 @@ private void onNotepad_windowActivated(WindowEvent e) {
 # Migrated from Google Code
 
 This project was migrated from https://code.google.com/p/java-ui-factory
-
-

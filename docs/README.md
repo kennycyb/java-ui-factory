@@ -28,7 +28,7 @@ The Java UI Factory uses annotations to ease of creating Java Swing application 
 private JTextArea content;
 ```
 
-* JTabbedPane, JMenuBar, JToolBar, JTextField, JProgressBar, JRadioButton, JTextArea, JList
+* JTabbedPane(components/JTabbedPane.md), JMenuBar, JToolBar, JTextField, JProgressBar, JRadioButton, JTextArea, JList
 
 ## Auto Wired UI Event
 
