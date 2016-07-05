@@ -12,16 +12,20 @@ Read more in [docs](docs/) or https://code.google.com/p/java-ui-factory
 
 ### Release
 ```
-<dependencies>
-    <dependency>
-        <groupId>com.github.kennycyb</groupId>
-        <artifactId>java-ui-factory</artifactId>
-        <version>0.4</version>
-    </dependency>
-</dependencies>
+
 ```
 
 ### Snapshot
+
+```
+<dependencies>
+	<dependency>
+		<groupId>com.github.kennycyb</groupId>
+		<artifactId>java-ui-factory-core</artifactId>
+		<version>0.5-SNAPSHOT</version>
+	</dependency>
+</dependencies>
+```
 
 To use the snapshot, add the following to pom.xml or settings.xml
 ```
