@@ -186,6 +186,17 @@ public class ComponentContext {
 	}
 
 	public void addChild(final ComponentContext context) {
+		// Check for duplicate component IDs
+		final String newChildId = context.getId();
+		for (final ComponentContext existingChild : mChildren) {
+			if (existingChild.getId().equals(newChildId)) {
+				throw new IllegalArgumentException(
+						"Duplicate component ID detected: '" + newChildId + 
+						"' in parent component '" + getId() + "'. " +
+						"Each component must have a unique ID within its parent. " +
+						"Use @UiName annotation to specify a different name.");
+			}
+		}
 		mChildren.add(context);
 	}
 
