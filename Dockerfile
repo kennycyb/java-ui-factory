@@ -1,2 +1,2 @@
-FROM maven:3.2-jdk-8-onbuild
+FROM maven:3-jdk-9-onbuild
 CMD ["do-something-with-built-packages"]
