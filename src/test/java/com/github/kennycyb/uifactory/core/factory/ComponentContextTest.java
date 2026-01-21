@@ -98,4 +98,36 @@ public class ComponentContextTest extends TestCase {
 			assertTrue("Error message should suggest using @UiName", message.contains("@UiName"));
 		}
 	}
+
+	@Test
+	public void testAddChildWithNullContext() {
+		final ComponentContext parent = new ComponentContext();
+		parent.setId("parent");
+
+		try {
+			parent.addChild(null);
+			fail("Expected IllegalArgumentException for null context");
+		} catch (IllegalArgumentException e) {
+			assertTrue("Error message should mention null", 
+					e.getMessage().contains("null"));
+		}
+	}
+
+	@Test
+	public void testAddChildWithNullId() {
+		final ComponentContext parent = new ComponentContext();
+		parent.setId("parent");
+
+		final ComponentContext child1 = new ComponentContext();
+		child1.setId(null); // Null ID
+
+		final ComponentContext child2 = new ComponentContext();
+		child2.setId(null); // Another null ID
+
+		// Should succeed - null IDs don't trigger duplicate check
+		parent.addChild(child1);
+		parent.addChild(child2);
+
+		assertEquals(2, parent.getChildren().size());
+	}
 }
