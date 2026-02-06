@@ -185,7 +185,42 @@ public class ComponentContext {
 		mId = id;
 	}
 
+	/**
+	 * Adds a child component context to this parent context.
+	 * <p>
+	 * This method performs duplicate ID validation to ensure component uniqueness within 
+	 * the same parent. If a child with the same ID already exists, an exception is thrown.
+	 * <p>
+	 * <b>Performance Note:</b> The duplicate detection uses a linear search through existing 
+	 * children, resulting in O(n) complexity per call. When building a component hierarchy 
+	 * with n children, this results in O(n²) overall complexity. This is acceptable for 
+	 * typical UI component counts (dozens of components per container), but may become a 
+	 * bottleneck if components frequently have large numbers of children.
+	 * 
+	 * @param context the child context to add (must not be null)
+	 * @throws IllegalArgumentException if context is null or if a child with the same ID 
+	 *         already exists in this parent
+	 */
 	public void addChild(final ComponentContext context) {
+		// Validate context is not null
+		if (context == null) {
+			throw new IllegalArgumentException("Cannot add null child context");
+		}
+		
+		// Check for duplicate component IDs
+		final String newChildId = context.getId();
+		if (newChildId != null) {
+			for (final ComponentContext existingChild : mChildren) {
+				final String existingChildId = existingChild.getId();
+				if (existingChildId != null && existingChildId.equals(newChildId)) {
+					throw new IllegalArgumentException(
+							"Duplicate component ID detected: '" + newChildId + 
+							"' in parent component '" + getId() + "'. " +
+							"Each component must have a unique ID within its parent. " +
+							"Use @UiName annotation to specify a different name.");
+				}
+			}
+		}
 		mChildren.add(context);
 	}
 
